@@ -1,214 +1,497 @@
 <html>
     <head>
-        <title>WebPrefer</title>
-        <link rel="shortcut icon" type="image/png" href="wp.png"/>
+        <title>WebPrefer AB</title>
+        <link rel="shortcut icon" type="image/png" href="/img/wp.png"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <link href="https://fonts.googleapis.com/css?family=Arvo:400,700|Baloo+Bhaijaan|Basic" rel="stylesheet"/>
-        <style>
-            body {margin: 0;}
-            section {padding: 5em 0;}
-            
-            .section-header {background: #fff;color: #fff;height: 50vh;display: flex;align-items: center;justify-content: center;background-position: center center;}
-            .section-header > div {display: inline-block;text-align: left;}
-            .section-header > div h2 {font-size: 42px;margin: 0;font-family: Baloo Bhaijaan;}
-            .section-header > div div {font-size: 24px;text-align: left;font-family: Basic;}
-            
+        <link href="https://fonts.googleapis.com/css?family=Poppins:400,600" rel="stylesheet" />
+        <style id="wp-header-css">
+            body {margin: 0;font-family: 'Poppins', sans-serif;}
+            .button {background: #1968AA;padding: 5px 20px;border-radius: 100px;
+                display: inline-block;
+                margin: 0 15px;
+                text-decoration: none;
+                color: #fff;}
             .container {
-                max-width: 765px;
+                max-width: 1200px;
                 margin: 0 auto;
             }
-            .button {
+            .content-section {
+                display: flex;
+                margin-top: 50px;
+                margin-bottom: 50px;
+                flex-wrap: wrap;
+            }
+            .content-section > div {
+                width: 50%;
+                
+                line-height: 35px;
+                font-size: 18px;
+                text-align: justify;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .content-section > div > img {
+                max-width: 100%;
+            }
+            .content-section.right > div:first-child {order:1}
+            .content-section.right > div:last-child {order:0}
+            section>header {
+                height: 300px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #F2F2F2;
+            }
+            section>header h1 {font-size: 72px;display: inline-block;}
+            section>header em {font-size: 36px;display: block;color: #707070;}
+            h2 {
+                text-align: center;
+                font-weight: 600;
+                line-height: 70px;
+                font-size: 36px;
+            }
+            .gray-section {
+                background: #F2F2F2;
+            }
+
+            /**
+             * Header
+             */
+            #wp-header {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: space-between;
                 background: #2E7FC3;
-                border-radius: 50px;
-                font-family: Baloo Bhaijaan;
-                font-style: normal;
-                font-weight: normal;
-                line-height: normal;
+                height: 75px;
+                padding: 0 20px;
+            }
+            #wp-header svg {
+                height: 35px;
+            }
+            #wp-header svg path {fill: #fff;}
+            #wp-header nav {
+
+            }
+            #wp-header nav a {
+                display: inline-block;
+                margin: 0 15px;
+                text-decoration: none;
+                color: #fff;
+            }
+            #wp-header nav a:not(.button):after {
+                content: ' ';
+                display: block;
+                height: 2px;
+                width: 0%;
+                background: #fff;
+                transition: width .2s;
+            }
+            #wp-header nav a:hover:not(.button):after {
+                width: 100%;
+            }
+
+            /**
+             * Hero
+             */
+            #wp-hero {
+                height: calc(85vh - 75px);
+                background: #2E7FC3;
+                color: #fff;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            #wp-hero .wrap {
+                text-align: center;
+                display: inline-block;
+            }
+            #wp-hero .wrap h1 {
+                font-size: 72px;
+                margin: 0;
+            }
+            #wp-hero .wrap p {
                 font-size: 24px;
-                color: #FFFFFF;
-                padding: 7px 25px;
+                margin: 0;
+            }
+
+            /**
+            * About us
+            */
+            #wp-about-us {
+                
+            }
+            #wp-about-us .team {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            #wp-about-us .employee {
+                text-align: center;
+                width: 200px;
+                margin: 40px;
+            }
+            #wp-about-us .employee img {
+                width: 180px;
+            }
+            #wp-about-us .employee h3 {
+                font-weight: 600;
+                line-height: 16px;
+                font-size: 18px;
+            }
+            #wp-about-us .employee a {
+                display: block;
+                font-size: 12px;
+                color: #000;
                 text-decoration: none;
             }
-            .content {
-                font-family: Arvo;
-                font-style: normal;
-                font-weight: normal;
-                line-height: 36px;
-                font-size: 18px;
-                color: #000000;
-            }
 
-            #wp-hero {
-                min-height: calc(100vh - 30px);
-                margin: 15px;
-                background: #2E7FC3;
-            }
-            #wp-hero > svg {
-                height: 87px;
-                width: 123px;
-                margin: 15px;
-            }
-            #wp-hero > svg path {
-                fill: #FFFFFF;
-            }
-            #wp-hero > div {
-                position: absolute;
-                left: 90px;
-                top: 50vh;
-                transform: translateY(-50%);
-            }
-            #wp-hero > div .headline {
-                font-family: Baloo Bhaijaan;
-                font-style: normal;
-                font-weight: normal;
-                line-height: normal;
-                font-size: 96px;
-                color: #FFFFFF;
-            }
-            #wp-hero > div .tagline {
-                font-family: Basic;
-                font-style: normal;
-                font-weight: normal;
-                line-height: normal;
-                font-size: 32px;
-                color: #FFFFFF;
-            }
-
-            #wp-partners {
-                background: #F2F2F2;
+            /**
+             * Assignments
+             */
+            #wp-assignments {}
+            #wp-assignments .gray-section {
                 text-align: center;
+                padding: 40px 0;
             }
-            #wp-partners img {
-                max-width: 90%;
-            }
-
-            #wp-who {
-                padding-top: 0;
-            }
-            #wp-who .section-header {
-                background-image: url(https://i.imgur.com/Mf0CRBX.png);
-            }
-            #wp-what .section-header {
-                background-image: url(https://i.imgur.com/SGYJq6c.png);
-            }
-            #wp-join .section-header {
-                background-image: url(https://i.imgur.com/SGYJq6c.png);
+            #wp-assignments .gray-section img {
+                max-width: 600px;
+                width: 100%;
             }
 
-            #wp-join .open-position {
-                margin: 1em 0;
+            /**
+             * Career
+             */
+            #wp-career {
+
             }
-            #wp-join .open-position em {
-                opacity: .7;
-                font-size: .9em;
+            #wp-career .open-position {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 40px 0;
+                flex-wrap: wrap;
             }
-            #wp-join .open-position p {
-                line-height: 1.2em;
-                margin: .5em 0;
+            #wp-career .open-position h3 {
+                display: inline;
+                font-size: 18px;
+            }
+            #wp-career .open-position > div:first-child {
+                max-width: 680px;
+                width: 100%;
+                margin-right: 60px;
+            }
+            #wp-career .open-position > div:last-child a:not(.button) {
+                color: #000000;
+                text-decoration: none;
+            }
+
+            /**
+            * Footer
+            */
+            #wp-footer {
+                background: #2E7FC3;
+                color: #FFFFFF;
+                padding: 40px 0;
+            }
+            #wp-footer .offices {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            #wp-footer .offices .office {
+                max-width: 300px;
+                width: 100%;
+            }
+            #wp-footer .offices .office h3 {
+                font-weight: 600;
+                font-size: 18px;
+            }
+            #wp-footer .offices .office p {
+                font-weight: 500;
+                font-size: 14px;
+                padding-left: 40px;
+                background-size: 20px 20px;
+                background-position: top left;
+                background-repeat: no-repeat;
+            }
+            #wp-footer .offices .office p.adress {background-image: url(/img/adress.png)}
+            #wp-footer .offices .office p.tel {background-image: url(/img/tel.png)}
+            #wp-footer .offices .office p.mail {background-image: url(/img/mail.png)}
+
+            #wp-footer .offices .office a {
+                font-weight: 500;
+                font-size: 14px;
+                color: #FFFFFF;
+                text-decoration: none;
+            }
+            #wp-footer .container > p {
+                font-size: 18px;
+                text-align: center;
             }
 
             @media (max-width: 785px) {
-                #wp-hero > div {
-                    left: 0;
-                    right: 0;
+                section>header h1 {font-size: 48px;}
+                section>header em {font-size: 18px;}
+
+                .container {
+                    margin: 0 30px;
+                }
+                .content-section > div {
+                    width: 100%;
+                }
+                
+                #wp-header {
+                    justify-content: center;
+                }
+                #wp-header svg {
+                    margin: 15px;
+                }
+                #wp-header nav {
                     text-align: center;
                 }
-                #wp-hero > div .headline {
-                    font-size: 15vw;
+                #wp-header nav a {
+                    margin: 10px 15px;
                 }
-                .content {
-                    margin-left: 20px;
-                    margin-right: 20px;
+
+                #wp-career .open-position > div:first-child {
+                    margin-right: 0;
                 }
             }
         </style>
     </head>
     <body>
-        <header id="wp-hero">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 123 87" height="87"><path d="M73.301 45.31L99.461 0h21a2.14 2.14 0 0 1 1.9 1.1 2.14 2.14 0 0 1 0 2.19L74.061 87a.88.88 0 0 1-1.52 0l-19.68-34.13-19.36 33.53a.88.88 0 0 1-1.52 0l-11.65-20.16L58.581 0h24.8l-18.12 31.39 8 13.92zm-61 7L.121 31.23a.86.86 0 0 1 0-.88L17.381.46a.86.86 0 0 1 .76-.46h24.3l-30.17 52.27z" fill="#020202" fill-rule="evenodd"/></svg>
-            <div>
-                <div class="headline">Webprefer</div>
-                <div class="tagline">Builds your business.</div>
-            </div>
+        <header id="wp-header">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 515.88 87.39"><path d="M73.3 45.31L99.46 0h21a2.14 2.14 0 0 1 1.9 1.1 2.14 2.14 0 0 1 0 2.19L74.06 87a.88.88 0 0 1-1.52 0L52.86 52.87 33.5 86.4a.88.88 0 0 1-1.52 0L20.33 66.24 58.58 0h24.8L65.26 31.39l8 13.92zm-61 7L.12 31.23a.86.86 0 0 1 0-.88L17.38.46a.86.86 0 0 1 .76-.46h24.3L12.27 52.27z" fill="#020202" fill-rule="evenodd"/><path d="M140.72 21.79h10.54l7 28.15h.12l9.18-28.15h9l9.11 28.89h.12l7.38-28.89H203l-12.83 43.9h-8.62l-9.67-30.38h-.12l-9.67 30.38h-8.31zM207.68 21.79h29.82v8.93h-20.14v8.18h19v8.93h-19v8.93h21.27v8.93h-30.95zM246.37 21.79h16.37a41.42 41.42 0 0 1 5.74.4 15.7 15.7 0 0 1 5.18 1.61 9.92 9.92 0 0 1 3.72 3.38 10.36 10.36 0 0 1 1.43 5.77 9.21 9.21 0 0 1-2.08 6.17 11.42 11.42 0 0 1-5.49 3.5v.12a12.58 12.58 0 0 1 3.93 1.26 10.52 10.52 0 0 1 3 2.29 9.78 9.78 0 0 1 2 3.25 11.44 11.44 0 0 1 .68 4 10.55 10.55 0 0 1-1.49 5.8 11.69 11.69 0 0 1-3.85 3.66 16.82 16.82 0 0 1-5.3 2 28.33 28.33 0 0 1-5.86.62h-18zM256 39.34h7a9.87 9.87 0 0 0 2.2-.25 6.09 6.09 0 0 0 2-.81 4.22 4.22 0 0 0 1.4-1.49 4.47 4.47 0 0 0 .53-2.23 4.05 4.05 0 0 0-.59-2.26 4.11 4.11 0 0 0-1.54-1.4 7.29 7.29 0 0 0-2.11-.71 12.66 12.66 0 0 0-2.29-.22H256zm0 18.17h8.68a10.72 10.72 0 0 0 2.26-.25 6 6 0 0 0 2.08-.87 4.93 4.93 0 0 0 1.52-1.61 4.65 4.65 0 0 0 .59-2.42 3.89 3.89 0 0 0-.77-2.51 4.93 4.93 0 0 0-2-1.46 10.05 10.05 0 0 0-2.54-.68 19.06 19.06 0 0 0-2.54-.19H256zM286.55 21.79h16.31a32.3 32.3 0 0 1 6.45.62 14.68 14.68 0 0 1 5.3 2.14 10.83 10.83 0 0 1 3.6 4.09 14 14 0 0 1 1.33 6.48 15 15 0 0 1-1.24 6.45 10.58 10.58 0 0 1-3.41 4.15 13.84 13.84 0 0 1-5.15 2.2 30.19 30.19 0 0 1-6.45.65h-7.07v17.12h-9.67zm9.67 18.6h6.45a12.41 12.41 0 0 0 2.51-.25 6.65 6.65 0 0 0 2.17-.84 4.47 4.47 0 0 0 1.55-1.61 5.11 5.11 0 0 0 .59-2.57 4.35 4.35 0 0 0-.78-2.7 5.15 5.15 0 0 0-2-1.58 8.49 8.49 0 0 0-2.7-.71 27.52 27.52 0 0 0-2.85-.16h-5zM325.61 21.79h17a30 30 0 0 1 6.35.65 15.12 15.12 0 0 1 5.27 2.17 10.85 10.85 0 0 1 3.6 4.09 13.86 13.86 0 0 1 1.33 6.42 12.88 12.88 0 0 1-2.43 7.88 10.88 10.88 0 0 1-7.07 4.12l11.16 18.54h-11.59l-9.18-17.55h-4.77v17.58h-9.67zM335.28 40H341q1.3 0 2.76-.09a8.66 8.66 0 0 0 2.64-.56 4.57 4.57 0 0 0 2-1.46 4.44 4.44 0 0 0 .78-2.79 4.64 4.64 0 0 0-.68-2.67 4.57 4.57 0 0 0-1.74-1.52 7.73 7.73 0 0 0-2.42-.71 19.71 19.71 0 0 0-2.74-.2h-6.32zM366.15 21.79H396v8.93h-20.17v8.18h19v8.93h-19v8.93h21.27v8.93h-30.95zM405.21 21.79h29.45v8.93h-19.77v8.93h18.29v8.93h-18.29v17.11h-9.67zM442 21.79h29.8v8.93h-20.15v8.18h19v8.93h-19v8.93h21.27v8.93H442zM480.67 21.79h17a30 30 0 0 1 6.35.65 15.12 15.12 0 0 1 5.27 2.17 10.85 10.85 0 0 1 3.6 4.09 13.86 13.86 0 0 1 1.33 6.42 12.88 12.88 0 0 1-2.43 7.88 10.88 10.88 0 0 1-7.07 4.12l11.16 18.54h-11.59l-9.18-17.55h-4.77v17.58h-9.67zM490.34 40H496q1.3 0 2.76-.09a8.66 8.66 0 0 0 2.64-.56 4.57 4.57 0 0 0 2-1.46 4.44 4.44 0 0 0 .78-2.79 4.64 4.64 0 0 0-.68-2.67 4.57 4.57 0 0 0-1.74-1.52 7.73 7.73 0 0 0-2.42-.71 19.71 19.71 0 0 0-2.67-.19h-6.32z"/></svg>
+            <nav>
+                <a href="#wp-about-us">Om oss</a>
+                <a href="#wp-assignments">Uppdrag</a>
+                <a href="#wp-career">Karriär</a>
+                <a href="#wp-footer" class="button">Kontakta oss</a>
+            </nav>
         </header>
 
-        <section id="wp-partners">
-            <img src="https://i.imgur.com/id01mvN.png" />
-        </section>
-
-        <section id="wp-who">
-            <header class="section-header">
-                <div>
-                    <h2>Who we are</h2>
-                    <div>Meet the people</div>
-                </div>
-            </header>
-            <div class="container">
-                <div class="content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus ipsum ac ligula suscipit, ut vestibulum neque mattis. Quisque sem est, sodales nec gravida id, pulvinar eu dui.</p>
-                    <p>Consectetur adipiscing elit. Praesent luctus ipsum ac ligula suscipit, ut vestibulum neque mattis. Quisque sem est, sodales nec gravida id, pulvinar eu dui. Praesent ultrices tellus vel quam mollis porttitor. Aenean lorem orci, dictum fringilla lectus eget, sodales vehicula mauris. Aliquam vitae augue quis turpis auctor convallis at in ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum sed tempor nisl, id aliquet neque. Cras sed elementum risus. Nam non volutpat nulla. Donec mattis massa in lorem mattis, sit amet lacinia lectus feugiat. Vestibulum id neque feugiat ex consectetur consectetur. Donec id felis sed odio lacinia volutpat. Etiam pellentesque risus vel ligula suscipit sollicitudin. Proin consectetur lectus lorem, eu accumsan metus cursus ac.</p>
-                </div>
-
-                <a href="#team" class="button">Talk to us</a> 
-                <em>or</em>
-                <a href="#join" class="button">Join the team</a>
+        <section id="wp-hero">
+            <div class="wrap">
+                <h1>Lorem ipsum,</h1>
+                <p>dolor sit amet consectetur adipiscing elit.</p>
             </div>
         </section>
 
-        <section id="wp-what">
-            <header class="section-header">
+        <section id="wp-about-us">
+            <header><h1>/ Om oss <em> Vilka är vi?</em></h1></header>
+
+            <div class="content-section left container">
                 <div>
-                    <h2>What we do</h2>
-                    <div>Learn our process</div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis blandit, odio eget vulputate fermentum, enim nunc consequat magna, nec rhoncus augue neque sit amet arcu. Curabitur luctus mi in sagittis suscipit. Nunc a malesuada orci. Morbi sit amet magna ac arcu interdum bibendum efficitur a tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae feugiat urna. Integer congue quam sapien, sed tempor felis molestie non. Ut vehicula turpis sit amet quam semper tempor. Nunc tempor in tortor ac luctus. Etiam molestie vulputate dapibus. Proin in dapibus tortor. Donec purus lacus, finibus in tincidunt ac, aliquet non metus. Maecenas finibus aliquam ex, eget venenatis metus pharetra sed. Suspendisse euismod euismod turpis, quis sodales orci lacinia vel.</p>
                 </div>
-            </header>
-            <div class="container">
-                <div class="content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus ipsum ac ligula suscipit, ut vestibulum neque mattis. Quisque sem est, sodales nec gravida id, pulvinar eu dui.</p>
-                    <p>Consectetur adipiscing elit. Praesent luctus ipsum ac ligula suscipit, ut vestibulum neque mattis. Quisque sem est, sodales nec gravida id, pulvinar eu dui. Praesent ultrices tellus vel quam mollis porttitor. Aenean lorem orci, dictum fringilla lectus eget, sodales vehicula mauris. Aliquam vitae augue quis turpis auctor convallis at in ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum sed tempor nisl, id aliquet neque. Cras sed elementum risus. Nam non volutpat nulla. Donec mattis massa in lorem mattis, sit amet lacinia lectus feugiat. Vestibulum id neque feugiat ex consectetur consectetur. Donec id felis sed odio lacinia volutpat. Etiam pellentesque risus vel ligula suscipit sollicitudin. Proin consectetur lectus lorem, eu accumsan metus cursus ac.</p>
+                <div>
+                    <img src="/img/wp.png" alt="about us webprefer" />
                 </div>
             </div>
-        </section>
-
-        <section id="wp-join">
-                <header class="section-header">
-                    <div>
-                        <h2>Work with us</h2>
-                        <div>Open positions</div>
+            <div class="container">
+                <h2>/ Vi är Webprefer</h2>
+                <div class="team">
+                    <div class="employee">
+                        <img src="/img/aa.png" />
+                        <h3>Alexis <br/>Aho</h3>
+                        <a href="mailto:alexis@webprefer.com">alexis@webprefer.com</a>
+                        <a href="tel:0046702211832">(+46) 0702211832</a>
                     </div>
-                </header>
+                    <div class="employee">
+                        <img src="/img/mlc.png" />
+                        <h3>Mikael <br/>Lindberg Castell</h3>
+                        <a href="mailto:alexis@webprefer.com">mikael@webprefer.com</a>
+                        <a href="tel:0046702211832">(+46) 0702211832</a>
+                    </div>
+                    <div class="employee">
+                        <img src="/img/so.png" />
+                        <h3>Sebastian <br/>Österberg</h3>
+                        <a href="mailto:alexis@webprefer.com">sebastian@webprefer.com</a>
+                        <a href="tel:0046702211832">(+46) 0702211832</a>
+                    </div>
+                    <div class="employee">
+                        <img src="/img/jg.png" />
+                        <h3>Johan <br/>Gustafsson</h3>
+                        <a href="mailto:alexis@webprefer.com">johan@webprefer.com</a>
+                        <a href="tel:0046702211832">(+46) 0702211832</a>
+                    </div>
+                </div>
+                <div class="team">
+                    <div class="employee">
+                        <img src="/img/oh.png" />
+                        <h3>Orhan <br/>Hajderovic</h3>
+                        <a href="mailto:alexis@webprefer.com">orhan@webprefer.com</a>
+                    </div>
+                    <div class="employee">
+                        <img src="/img/ep.png" />
+                        <h3>Eddy <br/>Procca</h3>
+                        <a href="mailto:alexis@webprefer.com">eddy@webprefer.com</a>
+                    </div>
+                    <div class="employee">
+                        <img src="/img/hw.png" />
+                        <h3>Hanna <br/>Wilde</h3>
+                        <a href="mailto:alexis@webprefer.com">hanna@webprefer.com</a>
+                    </div>
+                </div>
+                <div class="team">
+                    <div class="employee">
+                        <img src="/img/js.png" />
+                        <h3>Johan<br/>Svensson</h3>
+                        <a href="mailto:alexis@webprefer.com">johans@webprefer.com</a>
+                    </div>
+                    <div class="employee">
+                        <img src="/img/cj.png" />
+                        <h3>Catharina<br/>Jarslet</h3>
+                        <a href="mailto:alexis@webprefer.com">finance@webprefer.com</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="wp-assignments">
+            <header><h1>/ Uppdrag <em> Vad vi gör?</em></h1></header>
+
+            <div class="content-section right container">
+                <div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis blandit, odio eget vulputate fermentum, enim nunc consequat magna, nec rhoncus augue neque sit amet arcu. Curabitur luctus mi in sagittis suscipit. Nunc a malesuada orci. Morbi sit amet magna ac arcu interdum bibendum efficitur a tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae feugiat urna. Integer congue quam sapien, sed tempor felis molestie non. Ut vehicula turpis sit amet quam semper tempor. Nunc tempor in tortor ac luctus. Etiam molestie vulputate dapibus. Proin in dapibus tortor. Donec purus lacus, finibus in tincidunt ac, aliquet non metus. Maecenas finibus aliquam ex, eget venenatis metus pharetra sed. Suspendisse euismod euismod turpis, quis sodales orci lacinia vel.</p>
+                </div>
+                <div>
+                    <img src="/img/wp.png" alt="about us webprefer" />
+                </div>
+            </div>
+
+            <div class="gray-section">
                 <div class="container">
-                    <div class="content">
-                        <div class="open-position">
-                            <b>Project manager / Coach</b> - <em>Fulltime, Växjö Sweden</em><br/>
-                            <p>Be our new hero! Help us out managing our projects and build better proucts. You will be the point of contact for both partners, developers & stakeholders. <a href="#">Apply now!</a></p>
-                        </div>
-                        <div class="open-position">
-                            <b>Backend developer</b> - <em>Fulltime, Växjö Sweden</em><br/>
-                            <p>Join our team of backend developers. Work in modern enterprice systems suce as .NET, SQLServer and more. <a href="#">Apply now!</a></p>
-                        </div>
-                        <div class="open-position">
-                            <b>Frontend developer</b> - <em>Fulltime, Växjö Sweden</em><br/>
-                            <p>Build the next generation gambling webistes. We’re using the most popular techics, including Javascript React, NodeJs, contentful etc. <a href="#">Apply now!</a></p>
-                        </div>
-                        <div class="open-position">
-                            <b>QA & Release Manager</b> - <em>Fulltime, Växjö Sweden</em><br/>
-                            <p>Be the one the manage our release and QA process. Be the one the manage our release and QA process.  <a href="#">Apply now!</a></p>
-                        </div>
-                        <div class="open-position">
-                            <b>DevOps</b> - <em>Fulltime, Växjö Sweden</em><br/>
-                            <p>Build the next generation gambling webistes. We’re using the most popular techics, including Javascript React, NodeJs, contentful etc. <a href="#">Apply now!</a></p>
-                        </div>
-                        <div class="open-position">
-                            <b>Test developer</b> - <em>Fulltime, Växjö Sweden</em><br/>
-                            <p>Be the new test leader in our projects! Build test to ensure the quality of our projects are the best possible. <a href="#">Apply now!</a></p>
-                        </div>
+                    <img src="/img/partners.png" />
+                </div>
+            </div>
+
+            <div class="content-section left container">
+                <div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis blandit, odio eget vulputate fermentum, enim nunc consequat magna, nec rhoncus augue neque sit amet arcu. Curabitur luctus mi in sagittis suscipit. Nunc a malesuada orci. Morbi sit amet magna ac arcu interdum bibendum efficitur a tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae feugiat urna. Integer congue quam sapien, sed tempor felis molestie non. Ut vehicula turpis sit amet quam semper tempor. Nunc tempor in tortor ac luctus. Etiam molestie vulputate dapibus. Proin in dapibus tortor. Donec purus lacus, finibus in tincidunt ac, aliquet non metus. Maecenas finibus aliquam ex, eget venenatis metus pharetra sed. Suspendisse euismod euismod turpis, quis sodales orci lacinia vel.</p>
+                </div>
+                <div>
+                    <img src="/img/wp.png" alt="about us webprefer" />
+                </div>
+            </div>
+        </section>
+
+        <section id="wp-career">
+            <header><h1>/ Karriär <em> Jobba med oss!</em></h1></header>
+
+            <div class="content-section right container">
+                <div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis blandit, odio eget vulputate fermentum, enim nunc consequat magna, nec rhoncus augue neque sit amet arcu. Curabitur luctus mi in sagittis suscipit. Nunc a malesuada orci. Morbi sit amet magna ac arcu interdum bibendum efficitur a tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae feugiat urna. Integer congue quam sapien, sed tempor felis molestie non. Ut vehicula turpis sit amet quam semper tempor. Nunc tempor in tortor ac luctus. Etiam molestie vulputate dapibus. Proin in dapibus tortor. Donec purus lacus, finibus in tincidunt ac, aliquet non metus. Maecenas finibus aliquam ex, eget venenatis metus pharetra sed. Suspendisse euismod euismod turpis, quis sodales orci lacinia vel.</p>
+                </div>
+                <div>
+                    <img src="/img/wp.png" alt="about us webprefer" />
+                </div>
+            </div>
+
+            <div class="container">
+                <h2>/ Lediga tjänster</h2>
+                <div class="open-position">
+                    <div>
+                        <h3>Project manager / Coach</h3> - <em>Fulltime, Växjö Sweden</em><br/>
+                        <p>Be our new hero! Help us out managing our projects and build better proucts. You will be the point of contact for both partners, developers & stakeholders.</p>
+                    </div>
+                    <div>
+                        <a href="#">Läs mer</a>
+                        <a href="#" class="button">Ansök nu</a>
                     </div>
                 </div>
-            </section>
+                <div class="open-position">
+                    <div>
+                        <h3>Backend developer</h3> - <em>Fulltime, Växjö Sweden</em><br/>
+                        <p>Join our team of backend developers. Work in modern enterprice systems suce as .NET, SQLServer and more.</p>
+                    </div>
+                    <div>
+                        <a href="#">Läs mer</a>
+                        <a href="#" class="button">Ansök nu</a>
+                    </div>
+                </div>
+                <div class="open-position">
+                    <div>
+                        <h3>Frontend developer</h3> - <em>Fulltime, Växjö Sweden</em><br/>
+                        <p>Build the next generation gambling webistes. We’re using the most popular techics, including Javascript React, NodeJs, contentful etc.</p>
+                    </div>
+                    <div>
+                        <a href="#">Läs mer</a>
+                        <a href="#" class="button">Ansök nu</a>
+                    </div>
+                </div>
+                <div class="open-position">
+                    <div>
+                        <h3>QA & Release Manager</h3> - <em>Fulltime, Växjö Sweden</em><br/>
+                        <p>Be the one the manage our release and QA process. Be the one the manage our release and QA process. </p>
+                    </div>
+                    <div>
+                        <a href="#">Läs mer</a>
+                        <a href="#" class="button">Ansök nu</a>
+                    </div>
+                </div>
+                <div class="open-position">
+                    <div>
+                        <h3>DevOps</h3> - <em>Fulltime, Växjö Sweden</em><br/>
+                        <p>Build the next generation gambling webistes. We’re using the most popular techics, including Javascript React, NodeJs, contentful etc.</p>
+                    </div>
+                    <div>
+                        <a href="#">Läs mer</a>
+                        <a href="#" class="button">Ansök nu</a>
+                    </div>
+                </div>
+                <div class="open-position">
+                    <div>
+                        <h3>Test developer</h3> - <em>Fulltime, Växjö Sweden</em><br/>
+                        <p>Be the new test leader in our projects! Build test to ensure the quality of our projects are the best possible.</p>
+                    </div>
+                    <div>
+                        <a href="#">Läs mer</a>
+                        <a href="#" class="button">Ansök nu</a>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <footer id="wp-footer">
-
+            <div class="container">
+                <div class="offices">
+                    <div class="office">
+                        <h3>Växjö</h3>
+                        <p class="adress">Södra Järnvägsgatan 4 A, <br />
+                            352 29 Växjö <br />
+                            Sweden</p>
+                        <p class="tel"><a href="tel:0046738861515">(+46) 073-886 15 15</a></p>
+                        <p class="mail"><a href="mailto:vaxjo@webprefer.com">vaxjo@webprefer.com</a></p>
+                    </div>
+                    <div class="office">
+                        <h3>Kalmar</h3>
+                        <p class="adress">Törnebyvägen 3, <br />
+                            392 41 Kalmar <br />
+                            Sweden</p>
+                        <p class="tel"><a href="tel:0046738861515">(+46) 073-886 15 15</a></p>
+                        <p class="mail"><a href="mailto:vaxjo@webprefer.com">kalmar@webprefer.com</a></p>
+                    </div>
+                    <div class="office">
+                        <h3>Linköping</h3>
+                        <p class="adress">Rörsångarevägen 2, <br />
+                            585 65 Linghem <br />
+                            Sweden</p>
+                        <p class="tel"><a href="tel:0046738861515">(+46) 073-886 15 15</a></p>
+                        <p class="mail"><a href="mailto:linkoping@webprefer.com">linkoping@webprefer.com</a></p>
+                    </div>
+                </div>
+                <p>Webprefer AB (556748-3523)</p>
+                <p>
+                    <a href="https://goo.gl/nyoJKH"><img src="/img/facebook.png" alt="Facebook Webprefer AB" /></a>
+                    <a href="https://goo.gl/NiFmv9"><img src="/img/instagram.png" alt="Instagram Webprefer AB" /></a>
+                    <a href="https://goo.gl/G7A5XL"><img src="/img/linkedin.png" alt="LinkedIn Webprefer AB" /></a>
+                </p>
+            </div>
         </footer>
     </body>
 </html>
