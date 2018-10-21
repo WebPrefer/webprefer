@@ -513,8 +513,9 @@
         if (window.hasOwnProperty('IntersectionObserver')) {
             var io = new IntersectionObserver(function(elements) {
                 elements.forEach(function(e) {
+                    var element = e.target || e;
                     if (e.intersectionRatio > 0)
-                        e.target.setAttribute('src', e.target.getAttribute('original-src'));
+                        element.setAttribute('src', element.getAttribute('original-src'));
                 })
             });
 
@@ -523,7 +524,8 @@
             })
         } else {
             imgElements.forEach(function(e) {
-                e.target.setAttribute('src', e.target.getAttribute('original-src'));
+                var element = e.target || e;
+                element.setAttribute('src', element.getAttribute('original-src'));
             })
         }
     </script>
