@@ -1,7 +1,7 @@
 <html lang="sv-SE">
     <head>
         <title>WebPrefer AB</title>
-        <meta name="description" content="WebPrefer, en utvecklings byrå i Växjö, Kalmar & Linköping." />
+        <meta name="description" content="WebPrefer, en utvecklingsbyrå i Växjö." />
         <link rel="manifest" href="manifest.json" />
         <link rel="shortcut icon" type="image/png" href="img/wp.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -99,20 +99,37 @@
              * Hero
              */
             #wp-hero {
-                height: calc(85vh - 75px);
-                background: #2E7FC3;
-                color: #fff;
+                height: 40vh;
+                color: white;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                overflow: auto;
+                position: relative;
+            }
+            #wp-hero:before {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                z-index: -1;
+                display: block;
+                background-image: url('img/hero.jpg');
+                background-size: cover;
+                background-position: 50% 50%;
+                width: 100%;
+                height: 100%;
+                filter: blur(8px);
             }
             #wp-hero .wrap {
                 text-align: center;
                 display: inline-block;
             }
             #wp-hero .wrap h1 {
-                font-size: 72px;
+                font-size: 90px;
+                text-transform: uppercase;
                 margin: 0;
+                display: none;
             }
             #wp-hero .wrap p {
                 font-size: 24px;
@@ -291,33 +308,33 @@
 
         <section id="wp-hero">
             <div class="wrap">
-                <h1>Webprefer</h1>
+                <h1>WebPrefer</h1>
             </div>
         </section>
 
         <section id="wp-about-us">
-            <header><h1>/ Om oss <em> Vilka är vi?</em></h1></header>
+            <header><h1>Om oss <em> Vilka är vi?</em></h1></header>
 
             <div class="content-section left container">
                 <div>
                     <div>
-                        <p>Webprefer AB är ett utvecklingsbolag med fokus på spelbranchen. Tillsammans med <a href="http://www.togethergaming.com">Together Gaming</a> och <a href="https://www.betharduniverse.com">Bethard Group Ltd</a> utvecklar vi nästa generations spelplatform för både B2B och B2C.</p>
-                        <p>På Webprefer är vi idag drygt 15 personer som skapar stora värden för bolaget genom att utveckla och implementera nya funktioner, med de senaste tekninkerna. I dagsläget har vi kontor i Växjö, Kalmar & Linköping.</p>
+                        <p>WebPrefer AB är ett utvecklingsbolag med fokus på spelbranchen. Tillsammans med <a href="http://www.togethergaming.com">Together Gaming</a> och <a href="https://www.betharduniverse.com">Bethard Group Ltd</a> utvecklar vi nästa generations spelplatform för både B2B och B2C.</p>
+                        <p>På WebPrefer är vi idag drygt 15 personer som skapar stora värden för bolaget genom att utveckla och implementera nya funktioner, med de senaste tekninkerna. I dagsläget har vi kontor i Växjö.</p>
                     </div>
                 </div>
                 <div>
-                    <img original-src="img/wp.png" alt="about us webprefer" />
+                    <img original-src="img/wp.png" alt="about us webPrefer" />
                 </div>
             </div>
             <div class="container">
-                <h2>/ Vi är Webprefer</h2>
+                <h2>Vi är WebPrefer</h2>
                 <div class="team">
                     <div class="employee">
                         <img original-src="img/aa.png" alt="Alexis Aho" />
                         <h3>Alexis <br/>Aho</h3>
                         <em>Partner / Utvecklare</em>
                         <a href="mailto:alexis@webprefer.com">alexis@webprefer.com</a>
-                        <a href="tel:0046702211832">(+46) 0702211832</a>
+                        <a href="tel:0046730661467">(+46) 0730661467</a>
                     </div>
                     <div class="employee">
                         <img original-src="img/mlc.png" alt="Mikael Lindberg Castell" />
@@ -327,18 +344,18 @@
                         <a href="tel:0046768935996">(+46) 0768935996</a>
                     </div>
                     <div class="employee">
-                        <img original-src="img/so.png" alt="Sebastian Österberg" />
-                        <h3>Sebastian <br/>Österberg</h3>
-                        <em>Partner / Utvecklare</em>
-                        <a href="mailto:sebastian@webprefer.com">sebastian@webprefer.com</a>
-                        <a href="tel:0046702211832">(+46) 0702211832</a>
-                    </div>
-                    <div class="employee">
                         <img original-src="img/jg.png" alt="Johan Gustafsson" />
                         <h3>Johan <br/>Gustafsson</h3>
                         <em>Partner / Utvecklare</em>
                         <a href="mailto:johan@webprefer.com">johan@webprefer.com</a>
-                        <a href="tel:0046702211832">(+46) 0702211832</a>
+                        <a href="tel:0046736965837">(+46) 0736965837</a>
+                    </div>
+                    <div class="employee">
+                        <img original-src="img/cl.png" alt="Catharina Lindberg" />
+                        <h3>Catharina<br/>Lindberg</h3>
+                        <em>Ekonomi / Administration</em>
+                        <a href="mailto:finance@webprefer.com">finance@webprefer.com</a>
+                        <a href="tel:0046705509375">(+46) 0705509375</a>
                     </div>
                 </div>
                 <div class="team">
@@ -359,12 +376,6 @@
                         <h3>Johan<br/>Svensson</h3>
                         <em>Utvecklare</em>
                         <a href="mailto:johans@webprefer.com">johans@webprefer.com</a>
-                    </div>
-                    <div class="employee">
-                        <img original-src="img/default.png" alt="Janne Aho" />
-                        <h3>Janne<br/>Aho</h3>
-                        <em>Utvecklare</em>
-                        <a href="mailto:janne@webprefer.com">janne@webprefer.com</a>
                     </div>
                 </div>
                 <div class="team">
@@ -393,19 +404,11 @@
                         <a href="mailto:lina@webprefer.com">lina@webprefer.com</a>
                     </div>
                 </div>
-                <div class="team">
-                    <div class="employee">
-                        <img original-src="img/cl.png" alt="Catharina Lindberg" />
-                        <h3>Catharina<br/>Lindberg</h3>
-                        <em>Administration</em>
-                        <a href="mailto:finance@webprefer.com">finance@webprefer.com</a>
-                    </div>
-                </div>
             </div>
         </section>
 
         <!--section id="wp-assignments">
-            <header><h1>/ Uppdrag <em> Vad vi gör?</em></h1></header>
+            <header><h1>Uppdrag <em> Vad vi gör?</em></h1></header>
 
             <div class="content-section right container">
                 <div>
@@ -433,19 +436,19 @@
         </section-->
 
         <section id="wp-career">
-            <header><h1>/ Karriär <em> Jobba med oss!</em></h1></header>
+            <header><h1>Karriär <em> Jobba med oss!</em></h1></header>
 
             <div class="content-section right container">
                 <div>
-                    <p>Vill du vara med att driva utvecklingen i en ansvarsfull, toppmodern & högpresterande iGaming platform?</p>
+                    <p>Vill du följa med oss på vår resa mot att realisera drömmar?<br>Vi söker dig som är driven och vill utmanas.</p>
                 </div>
                 <div>
-                    <img original-src="img/wp.png" alt="work with webprefer" />
+                    <img original-src="img/wp.png" alt="work with webprefer">
                 </div>
             </div>
 
             <div class="container">
-                <h2>/ Lediga tjänster</h2>
+                <h2>Lediga tjänster</h2>
                 <!-- <div class="open-position">
                     <div>
                         <h3>Project manager / Coach</h3> - <em>Fulltime, Växjö Sweden</em><br/>
@@ -458,24 +461,30 @@
                 </div> -->
                 <div class="open-position">
                     <div>
-                        <h3>Backend developer</h3> - <em>Fulltime, Växjö Sweden</em><br/>
-                        <p>Join our team of backend developers. Work in modern enterprice systems such as .NET, SQLServer and more.</p>
+                        <p>Vi är alltid på jakt efter drivna utvecklare med erfarenhet inom .Net, React, SQL och liknande. Kontakta oss om du känner att detta passar in på dig</p>
                     </div>
                     <div>
-                        <!-- <a href="https://bethard.bamboohr.co.uk/jobs/view.php?id=137">Läs mer</a> -->
+                        <a href="mailto:vaxjo@webprefer.com?subject=Developer application" class="button">Kontakta oss</a>
+                    </div>
+                </div>
+                <!-- <div class="open-position">
+                    <div>
+                        <h3>Backendutvecklare</h3>
+                        <p>Vi jobbar främst med .NET. Är du bekväm i det har du en plats hos oss. Är du dock en erfaren utvecklare, oavsett tidigare erfarenheter, så tycker vi att du ska höra av dig.</p>
+                    </div>
+                    <div>
                         <a href="mailto:vaxjo@webprefer.com?subject=Backend developer application" class="button">Ansök nu</a>
                     </div>
                 </div>
                 <div class="open-position">
                     <div>
-                        <h3>Frontend developer</h3> - <em>Fulltime, Växjö Sweden</em><br/>
+                        <h3>Senior frontendutvecklare</h3>
                         <p>Build the next generation gambling webistes. We’re using the most popular techics, including Javascript, React, NodeJs, contentful etc.</p>
                     </div>
                     <div>
-                        <!-- <a href="https://bethard.bamboohr.co.uk/jobs/view.php?id=136">Läs mer</a> -->
                         <a href="mailto:vaxjo@webprefer.com?subject=Frontend developer application" class="button">Ansök nu</a>
                     </div>
-                </div>
+                </div> -->
                 <!-- <div class="open-position">
                     <div>
                         <h3>QA & Release Manager</h3> - <em>Fulltime, Växjö Sweden</em><br/>
@@ -513,31 +522,15 @@
             <div class="container">
                 <div class="offices">
                     <div class="office">
-                        <h3>Växjö</h3>
+                        <h3>Kontaktuppgifter</h3>
                         <p class="adress">Södra Järnvägsgatan 4 A, <br />
                             352 29 Växjö <br />
                             Sweden</p>
                         <p class="tel"><a href="tel:0046705509375">(+46) 070-550 93 75</a></p>
                         <p class="mail"><a href="mailto:vaxjo@webprefer.com">vaxjo@webprefer.com</a></p>
                     </div>
-                    <div class="office">
-                        <h3>Kalmar</h3>
-                        <p class="adress">Törnebyvägen 3, <br />
-                            392 41 Kalmar <br />
-                            Sweden</p>
-                        <p class="tel"><a href="tel:0046702211832">(+46) 070-221 18 32</a></p>
-                        <p class="mail"><a href="mailto:kalmar@webprefer.com">kalmar@webprefer.com</a></p>
-                    </div>
-                    <div class="office">
-                        <h3>Linköping</h3>
-                        <p class="adress">Rörsångarevägen 2, <br />
-                            585 65 Linghem <br />
-                            Sweden</p>
-                        <p class="tel"><a href="tel:0046702211832">(+46) 070-221 18 32</a></p>
-                        <p class="mail"><a href="mailto:linkoping@webprefer.com">linkoping@webprefer.com</a></p>
-                    </div>
                 </div>
-                <p>Webprefer AB (556748-3523)</p>
+                <p>WebPrefer AB (556748-3523)</p>
                 <p>
                     <a href="https://goo.gl/nyoJKH"><img original-src="img/facebook.png" alt="Facebook Webprefer AB" /></a>
                     <a href="https://goo.gl/NiFmv9"><img original-src="img/instagram.png" alt="Instagram Webprefer AB" /></a>
