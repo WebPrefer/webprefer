@@ -1,378 +1,469 @@
-<html lang="sv-SE">
-    <head>
-        <title>WebPrefer AB</title>
-        <meta name="description" content="WebPrefer, Utvecklingsbyrå i Linköping" />
-        <link rel="manifest" href="manifest.json" />
-        <link rel="shortcut icon" type="image/png" href="img/wp.png" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#1968AA" />
-        <meta charset="utf-8">
-        <style id="wp-header-css">
-            body {margin: 0;font-family: 'Poppins', sans-serif;}
-            .button {background: #1968AA;padding: 5px 20px;border-radius: 100px;
-                display: inline-block;
-                margin: 0 15px;
-                text-decoration: none;
-                color: #fff;}
-            .container {
-                max-width: 1200px;
-                margin: 0 auto;
-            }
-            .content-section {
-                display: flex;
-                margin-top: 50px;
-                margin-bottom: 50px;
-                flex-wrap: wrap;
-            }
-            .content-section > div {
-                width: 50%;
-                
-                line-height: 35px;
-                font-size: 18px;
-
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            .content-section > div > img {
-                max-width: 100%;
-            }
-            .content-section.right > div:first-child {order:1}
-            .content-section.right > div:last-child {order:0}
-            section>header {
-                height: 300px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: #F2F2F2;
-            }
-            section>header h1 {font-size: 72px;display: inline-block;}
-            section>header em {font-size: 36px;display: block;color: #707070;}
-            h2 {
-                text-align: center;
-                font-weight: 600;
-                line-height: 70px;
-                font-size: 50px;
-            }
-            .gray-section {
-                background: #F2F2F2;
-            }
-
-            /**
-             * Header
-             */
-            #wp-header {
-                display: flex;
-                flex-wrap: wrap;
-                align-items: center;
-                justify-content: space-between;
-                background: #2E7FC3;
-                height: 75px;
-                padding: 0 20px;
-            }
-            #wp-header svg {
-                height: 35px;
-            }
-            #wp-header svg path {fill: #fff;}
-            #wp-header nav {
-
-            }
-            #wp-header nav a {
-                display: inline-block;
-                margin: 0 15px;
-                text-decoration: none;
-                color: #fff;
-            }
-            #wp-header nav a:not(.button):after {
-                content: ' ';
-                display: block;
-                height: 2px;
-                width: 0%;
-                background: #fff;
-                transition: width .2s;
-            }
-            #wp-header nav a:hover:not(.button):after {
-                width: 100%;
-            }
-
-            /**
-             * Hero
-             */
-            #wp-hero {
-                height: 40vh;
-                color: white;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                overflow: auto;
-                position: relative;
-            }
-            #wp-hero:before {
-                content: "";
-                position: absolute;
-                left: 0;
-                right: 0;
-                z-index: -1;
-                display: block;
-                background-image: url('img/hero.jpg');
-                background-size: cover;
-                background-position: 50% 50%;
-                width: 100%;
-                height: 100%;
-                filter: blur(8px);
-            }
-            #wp-hero .wrap {
-                text-align: center;
-                display: inline-block;
-            }
-            #wp-hero .wrap h1 {
-                font-size: 90px;
-                text-transform: uppercase;
-                margin: 0;
-                display: none;
-            }
-            #wp-hero .wrap p {
-                font-size: 24px;
-                margin: 0;
-            }
-
-            /**
-            * About us
-            */
-            #wp-about-us {
-                
-            }
-            #wp-about-us .team {
-                display: flex;
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-
-            #wp-about-us .employee {
-                text-align: center;
-                width: 200px;
-                margin: 40px;
-            }
-            #wp-about-us .employee img {
-                width: 180px;
-            }
-            #wp-about-us .employee h3 {
-                font-weight: 600;
-                line-height: 16px;
-                font-size: 18px;
-                margin-bottom: 0;
-            }
-            #wp-about-us .employee em {
-                display: block;
-                margin: .5em 0;
-                font-size: 14px;
-            }
-            #wp-about-us .employee a {
-                display: block;
-                font-size: 12px;
-                color: #000;
-                text-decoration: none;
-            }
-
-            /**
-             * Assignments
-             */
-            #wp-assignments {}
-            #wp-assignments .gray-section {
-                text-align: center;
-                padding: 40px 0;
-            }
-            #wp-assignments .gray-section img {
-                max-width: 600px;
-                width: 100%;
-            }
-
-            /**
-             * Career
-             */
-            #wp-career {
-
-            }
-            #wp-career .open-position {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin: 40px 0;
-                flex-wrap: wrap;
-            }
-            #wp-career .open-position h3 {
-                display: inline;
-                font-size: 18px;
-            }
-            #wp-career .open-position > div:first-child {
-                max-width: 680px;
-                width: 100%;
-                margin-right: 60px;
-            }
-            #wp-career .open-position > div:last-child a:not(.button) {
-                color: #000000;
-                text-decoration: none;
-            }
-
-            /**
-            * Footer
-            */
-            #wp-footer {
-                background: #2E7FC3;
-                color: #FFFFFF;
-                padding: 40px 0;
-            }
-            #wp-footer .offices {
-                display: flex;
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-            #wp-footer .offices .office {
-                max-width: 300px;
-                width: 100%;
-            }
-            #wp-footer .offices .office h3 {
-                font-weight: 600;
-                font-size: 18px;
-            }
-            #wp-footer .offices .office p {
-                font-weight: 500;
-                font-size: 14px;
-                padding-left: 40px;
-                background-size: 20px 20px;
-                background-position: top left;
-                background-repeat: no-repeat;
-            }
-            #wp-footer .offices .office p.adress {background-image: url(img/adress.png)}
-            #wp-footer .offices .office p.tel {background-image: url(img/tel.png)}
-            #wp-footer .offices .office p.mail {background-image: url(img/mail.png)}
-
-            #wp-footer .offices .office a {
-                font-weight: 500;
-                font-size: 14px;
-                color: #FFFFFF;
-                text-decoration: none;
-            }
-            #wp-footer .container > p {
-                font-size: 18px;
-                text-align: center;
-            }
-
-            @media (max-width: 785px) {
-                section>header h1 {font-size: 48px;}
-                section>header em {font-size: 18px;}
-
-                .container {
-                    margin: 0 30px;
-                }
-                .content-section > div {
-                    width: 100%;
-                }
-                
-                #wp-header {
-                    justify-content: center;
-                }
-                #wp-header svg {
-                    margin: 15px;
-                }
-                #wp-header nav {
-                    text-align: center;
-                }
-                #wp-header nav a {
-                    margin: 10px 15px;
-                }
-
-                #wp-hero .wrap h1 {
-                    font-size: 48px;
-                }
-                #wp-hero .wrap p {
-                    font-size: 14px;
-                }
-
-                #wp-career .open-position > div:first-child {
-                    margin-right: 0;
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <header id="wp-header">
-            <a href="#" aria-label="Home"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 515.88 87.39"><path d="M73.3 45.31L99.46 0h21a2.14 2.14 0 0 1 1.9 1.1 2.14 2.14 0 0 1 0 2.19L74.06 87a.88.88 0 0 1-1.52 0L52.86 52.87 33.5 86.4a.88.88 0 0 1-1.52 0L20.33 66.24 58.58 0h24.8L65.26 31.39l8 13.92zm-61 7L.12 31.23a.86.86 0 0 1 0-.88L17.38.46a.86.86 0 0 1 .76-.46h24.3L12.27 52.27z" fill="#020202" fill-rule="evenodd"/><path d="M140.72 21.79h10.54l7 28.15h.12l9.18-28.15h9l9.11 28.89h.12l7.38-28.89H203l-12.83 43.9h-8.62l-9.67-30.38h-.12l-9.67 30.38h-8.31zM207.68 21.79h29.82v8.93h-20.14v8.18h19v8.93h-19v8.93h21.27v8.93h-30.95zM246.37 21.79h16.37a41.42 41.42 0 0 1 5.74.4 15.7 15.7 0 0 1 5.18 1.61 9.92 9.92 0 0 1 3.72 3.38 10.36 10.36 0 0 1 1.43 5.77 9.21 9.21 0 0 1-2.08 6.17 11.42 11.42 0 0 1-5.49 3.5v.12a12.58 12.58 0 0 1 3.93 1.26 10.52 10.52 0 0 1 3 2.29 9.78 9.78 0 0 1 2 3.25 11.44 11.44 0 0 1 .68 4 10.55 10.55 0 0 1-1.49 5.8 11.69 11.69 0 0 1-3.85 3.66 16.82 16.82 0 0 1-5.3 2 28.33 28.33 0 0 1-5.86.62h-18zM256 39.34h7a9.87 9.87 0 0 0 2.2-.25 6.09 6.09 0 0 0 2-.81 4.22 4.22 0 0 0 1.4-1.49 4.47 4.47 0 0 0 .53-2.23 4.05 4.05 0 0 0-.59-2.26 4.11 4.11 0 0 0-1.54-1.4 7.29 7.29 0 0 0-2.11-.71 12.66 12.66 0 0 0-2.29-.22H256zm0 18.17h8.68a10.72 10.72 0 0 0 2.26-.25 6 6 0 0 0 2.08-.87 4.93 4.93 0 0 0 1.52-1.61 4.65 4.65 0 0 0 .59-2.42 3.89 3.89 0 0 0-.77-2.51 4.93 4.93 0 0 0-2-1.46 10.05 10.05 0 0 0-2.54-.68 19.06 19.06 0 0 0-2.54-.19H256zM286.55 21.79h16.31a32.3 32.3 0 0 1 6.45.62 14.68 14.68 0 0 1 5.3 2.14 10.83 10.83 0 0 1 3.6 4.09 14 14 0 0 1 1.33 6.48 15 15 0 0 1-1.24 6.45 10.58 10.58 0 0 1-3.41 4.15 13.84 13.84 0 0 1-5.15 2.2 30.19 30.19 0 0 1-6.45.65h-7.07v17.12h-9.67zm9.67 18.6h6.45a12.41 12.41 0 0 0 2.51-.25 6.65 6.65 0 0 0 2.17-.84 4.47 4.47 0 0 0 1.55-1.61 5.11 5.11 0 0 0 .59-2.57 4.35 4.35 0 0 0-.78-2.7 5.15 5.15 0 0 0-2-1.58 8.49 8.49 0 0 0-2.7-.71 27.52 27.52 0 0 0-2.85-.16h-5zM325.61 21.79h17a30 30 0 0 1 6.35.65 15.12 15.12 0 0 1 5.27 2.17 10.85 10.85 0 0 1 3.6 4.09 13.86 13.86 0 0 1 1.33 6.42 12.88 12.88 0 0 1-2.43 7.88 10.88 10.88 0 0 1-7.07 4.12l11.16 18.54h-11.59l-9.18-17.55h-4.77v17.58h-9.67zM335.28 40H341q1.3 0 2.76-.09a8.66 8.66 0 0 0 2.64-.56 4.57 4.57 0 0 0 2-1.46 4.44 4.44 0 0 0 .78-2.79 4.64 4.64 0 0 0-.68-2.67 4.57 4.57 0 0 0-1.74-1.52 7.73 7.73 0 0 0-2.42-.71 19.71 19.71 0 0 0-2.74-.2h-6.32zM366.15 21.79H396v8.93h-20.17v8.18h19v8.93h-19v8.93h21.27v8.93h-30.95zM405.21 21.79h29.45v8.93h-19.77v8.93h18.29v8.93h-18.29v17.11h-9.67zM442 21.79h29.8v8.93h-20.15v8.18h19v8.93h-19v8.93h21.27v8.93H442zM480.67 21.79h17a30 30 0 0 1 6.35.65 15.12 15.12 0 0 1 5.27 2.17 10.85 10.85 0 0 1 3.6 4.09 13.86 13.86 0 0 1 1.33 6.42 12.88 12.88 0 0 1-2.43 7.88 10.88 10.88 0 0 1-7.07 4.12l11.16 18.54h-11.59l-9.18-17.55h-4.77v17.58h-9.67zM490.34 40H496q1.3 0 2.76-.09a8.66 8.66 0 0 0 2.64-.56 4.57 4.57 0 0 0 2-1.46 4.44 4.44 0 0 0 .78-2.79 4.64 4.64 0 0 0-.68-2.67 4.57 4.57 0 0 0-1.74-1.52 7.73 7.73 0 0 0-2.42-.71 19.71 19.71 0 0 0-2.67-.19h-6.32z"/></svg></a>
-            <nav>
-                <a href="#wp-about-us">About</a>
-                <!-- <a href="#wp-assignments">Uppdrag</a> -->
-                <a href="#wp-footer" class="button">Contact</a>
-            </nav>
-        </header>
-
-        <section id="wp-hero">
-            <div class="wrap">
-                <h1>WebPrefer</h1>
-            </div>
-        </section>
-
-        <section id="wp-about-us">
-            <header><h2>iGaming Innovations</h2></header>
-
-            <div class="content-section left container">
-                <div>
-                    <div>
-                        <p>Are you in search of a reliable and experienced tech company that excels in providing top-notch technical software solutions? Look no further than WebPrefer! With over 10+ years of extensive experience, WebPrefer has established itself as a leading authority in the realm of iGaming platforms, boasting a robust and feature-rich Platform Management System (PAM) designed specifically for online gaming.</p>
-                        <p>At WebPrefer, we take pride in our unparalleled expertise in developing iGaming platforms that are second to none. Our platform is equipped with top-of-the-line features and offers seamless integrations with a diverse range of providers including Casino, Sportsbook, Payment, and more.</p>
-                        <p>Rest assured, our platform has been rigorously certified and approved for operation in 5 different regulated markets, underscoring our commitment to compliance and quality.</p>
-                        <p>Furthermore, our iGaming platform has successfully navigated numerous technical and security audits over the years, ensuring that it meets the highest standards of reliability and security.</p>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebPrefer AB</title>
+    <meta
+      name="description"
+      content="WebPrefer, Utvecklingsbyrå i Linköping."
+    />
+    <meta charset="UTF-8" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" type="image/png" href="/favicon.2a2e97fc.png" />
+    <meta name="theme-color" content="#1968AA" />
+    <link href="/index.61d3354a.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="bg-white">
+      <header class="absolute inset-x-0 top-0 z-50">
+        <nav
+          class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+          aria-label="Global"
+        >
+          <div class="flex lg:flex-1">
+            <a href="#" class="-m-1.5 p-1.5">
+              <span class="sr-only"
+                >WebPrefer: Excellence in iGaming Tech Solutions</span
+              >
+              <img class="h-8 w-auto" src="/logo.4bcd4013.svg" alt="" />
+            </a>
+          </div>
+        </nav>
+      </header>
+      <main>
+        <div class="relative isolate">
+          <svg
+            class="absolute inset-x-0 top-0 -z-10 h-[64rem] w-full stroke-gray-200 [mask-image:radial-gradient(32rem_32rem_at_center,white,transparent)]"
+            aria-hidden="true"
+          >
+            <defs>
+              <pattern
+                id="1f932ae7-37de-4c0a-a8b0-a6e3b4d44b84"
+                width="200"
+                height="200"
+                x="50%"
+                y="-1"
+                patternunits="userSpaceOnUse"
+              >
+                <path d="M.5 200V.5H200" fill="none"></path>
+              </pattern>
+            </defs>
+            <svg x="50%" y="-1" class="overflow-visible fill-gray-50">
+              <path
+                d="M-200 0h201v201h-201Z M600 0h201v201h-201Z M-400 600h201v201h-201Z M200 800h201v201h-201Z"
+                stroke-width="0"
+              ></path>
+            </svg>
+            <rect
+              width="100%"
+              height="100%"
+              stroke-width="0"
+              fill="url(#1f932ae7-37de-4c0a-a8b0-a6e3b4d44b84)"
+            ></rect>
+          </svg>
+          <div
+            class="absolute left-1/2 right-0 top-0 -z-10 -ml-24 transform-gpu overflow-hidden blur-3xl lg:ml-24 xl:ml-48"
+            aria-hidden="true"
+          >
+            <div
+              class="aspect-[801/1036] w-[50.0625rem] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30"
+              style="
+                clip-path: polygon(
+                  63.1% 29.5%,
+                  100% 17.1%,
+                  76.6% 3%,
+                  48.4% 0%,
+                  44.6% 4.7%,
+                  54.5% 25.3%,
+                  59.8% 49%,
+                  55.2% 57.8%,
+                  44.4% 57.2%,
+                  27.8% 47.9%,
+                  35.1% 81.5%,
+                  0% 97.7%,
+                  39.2% 100%,
+                  35.2% 81.4%,
+                  97.2% 52.8%,
+                  63.1% 29.5%
+                );
+              "
+            ></div>
+          </div>
+          <div class="overflow-hidden">
+            <div
+              class="mx-auto max-w-7xl px-6 pb-32 pt-36 sm:pt-60 lg:px-8 lg:pt-32"
+            >
+              <div
+                class="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center"
+              >
+                <div class="relative w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
+                  <h1
+                    class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
+                  >
+                    WebPrefer: Excellence in iGaming Tech Solutions
+                  </h1>
+                  <p
+                    class="mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none"
+                  >
+                    Discover WebPrefer's unrivaled expertise in iGaming
+                    platforms. With over 10 years of experience, our certified
+                    and robust Platform Management System integrates seamlessly
+                    with top gaming services, ensuring top-tier security and
+                    market compliance.
+                  </p>
+                  <div class="mt-10 flex items-center gap-x-6">
+                    <a
+                      href="#"
+                      class="rounded-md bg-[#1d6fb9] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#1d6fb9] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1d6fb9]"
+                      >Contact us</a
+                    >
+                  </div>
+                </div>
+                <div
+                  class="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0"
+                >
+                  <div
+                    class="ml-auto w-44 flex-none space-y-8 pt-32 sm:ml-0 sm:pt-80 lg:order-last lg:pt-36 xl:order-none xl:pt-80"
+                  >
+                    <div class="relative">
+                      <img
+                        src="https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=528&q=80"
+                        alt=""
+                        class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
+                      />
+                      <div
+                        class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10"
+                      ></div>
                     </div>
-                </div>
-                <div>
-                    <img original-src="img/wp.png" alt="about us webPrefer" />
-                </div>
-            </div>
-            
-            </div>
-        </section>
-
-
-        <footer id="wp-footer">
-            <div class="container">
-                <div class="offices">
-                    <div class="office">
-                        <h3>Contact</h3>
-                        <p class="adress">S:t Larsgatan 7, <br />
-                            582 24 Linköping <br />
-                            Sweden</p>
-                        <p class="mail"><a href="mailto:sales@webprefer.com">sales@webprefer.com</a></p>
+                  </div>
+                  <div
+                    class="mr-auto w-44 flex-none space-y-8 sm:mr-0 sm:pt-52 lg:pt-36"
+                  >
+                    <div class="relative">
+                      <img
+                        src="https://images.unsplash.com/photo-1485217988980-11786ced9454?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=528&q=80"
+                        alt=""
+                        class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
+                      />
+                      <div
+                        class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10"
+                      ></div>
                     </div>
+                    <div class="relative">
+                      <img
+                        src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&crop=focalpoint&fp-x=.4&w=396&h=528&q=80"
+                        alt=""
+                        class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
+                      />
+                      <div
+                        class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="w-44 flex-none space-y-8 pt-32 sm:pt-0">
+                    <div class="relative">
+                      <img
+                        src="https://images.unsplash.com/photo-1670272504528-790c24957dda?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&crop=left&w=400&h=528&q=80"
+                        alt=""
+                        class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
+                      />
+                      <div
+                        class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10"
+                      ></div>
+                    </div>
+                    <div class="relative">
+                      <img
+                        src="https://images.unsplash.com/photo-1670272505284-8faba1c31f7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&h=528&q=80"
+                        alt=""
+                        class="aspect-[2/3] w-full rounded-xl bg-gray-900/5 object-cover shadow-lg"
+                      />
+                      <div
+                        class="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-900/10"
+                      ></div>
+                    </div>
+                  </div>
                 </div>
-                <p>WebPrefer AB (556748-3523)</p>
-                <p>
-                    <a href="https://goo.gl/nyoJKH"><img original-src="img/facebook.png" alt="Facebook Webprefer AB" /></a>
-                    <a href="https://goo.gl/NiFmv9"><img original-src="img/instagram.png" alt="Instagram Webprefer AB" /></a>
-                    <a href="https://goo.gl/G7A5XL"><img original-src="img/linkedin.png" alt="LinkedIn Webprefer AB" /></a>
-                </p>
+              </div>
             </div>
-        </footer>
-    </body>
-    <script type="text/javascript">
-
-        var imgElements = window.document.querySelectorAll('[original-src]');
-        if (window.hasOwnProperty('IntersectionObserver')) {
-            var io = new IntersectionObserver(function(elements) {
-                elements.forEach(function(e) {
-                    var element = e.target || e;
-                    if (e.intersectionRatio > 0)
-                        element.setAttribute('src', element.getAttribute('original-src'));
-                })
-            });
-
-            imgElements.forEach(function(e) {
-                io.observe(e);
-            })
-        } else {
-            imgElements.forEach(function(e) {
-                var element = e.target || e;
-                element.setAttribute('src', element.getAttribute('original-src'));
-            }) 
-        }
-    </script>
-    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600" rel="stylesheet" media="screen" />
+          </div>
+        </div>
+      </main>
+    </div>
+    <div class="bg-slate-50 py-24 sm:py-32">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div
+          class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3"
+        >
+          <h2
+            class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
+          >
+            WebPrefer: iGaming Innovation Unleashed
+          </h2>
+          <dl
+            class="col-span-2 grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2"
+          >
+            <div>
+              <dt class="text-base font-semibold leading-7 text-gray-900">
+                <div
+                  class="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-[#1d6fb9]"
+                >
+                  <svg
+                    class="h-6 w-6 text-white"
+                    fill="none"
+                    viewbox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokelinecap="round"
+                      strokelinejoin="round"
+                      d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
+                    ></path>
+                  </svg>
+                </div>
+                Cutting-Edge iGaming Solutions
+              </dt>
+              <dd class="mt-1 text-base leading-7 text-gray-600">
+                Discover WebPrefer's advanced iGaming platforms, crafted with
+                over 8 years of expertise, featuring a robust, tailor-made
+                Platform Management System for online gaming excellence.
+              </dd>
+            </div>
+            <div>
+              <dt class="text-base font-semibold leading-7 text-gray-900">
+                <div
+                  class="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-[#1d6fb9]"
+                >
+                  <svg
+                    class="h-6 w-6 text-white"
+                    fill="none"
+                    viewbox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokelinecap="round"
+                      strokelinejoin="round"
+                      d="m6.75 7.5 3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z"
+                    ></path>
+                  </svg>
+                </div>
+                Unparalleled Development Expertise
+              </dt>
+              <dd class="mt-1 text-base leading-7 text-gray-600">
+                At WebPrefer, unparalleled expertise in iGaming platform
+                development shines, offering unparalleled features and seamless
+                integrations with Casino, Sportsbook, and Payment providers.
+              </dd>
+            </div>
+            <div>
+              <dt class="text-base font-semibold leading-7 text-gray-900">
+                <div
+                  class="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-[#1d6fb9]"
+                >
+                  <svg
+                    class="h-6 w-6 text-white"
+                    fill="none"
+                    viewbox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokelinecap="round"
+                      strokelinejoin="round"
+                      d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0 1 20.25 6v12A2.25 2.25 0 0 1 18 20.25H6A2.25 2.25 0 0 1 3.75 18V6A2.25 2.25 0 0 1 6 3.75h1.5m9 0h-9"
+                    ></path>
+                  </svg>
+                </div>
+                Market-Approved Compliance
+              </dt>
+              <dd class="mt-1 text-base leading-7 text-gray-600">
+                Our platform stands out with certifications and approvals in 5
+                key regulated markets, emphasizing our deep commitment to
+                compliance and quality in the iGaming sector.
+              </dd>
+            </div>
+            <div>
+              <dt class="text-base font-semibold leading-7 text-gray-900">
+                <div
+                  class="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-[#1d6fb9]"
+                >
+                  <svg
+                    class="h-6 w-6 text-white"
+                    fill="none"
+                    viewbox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokelinecap="round"
+                      strokelinejoin="round"
+                      d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"
+                    ></path>
+                  </svg>
+                </div>
+                Advanced Security Protocols
+              </dt>
+              <dd class="mt-1 text-base leading-7 text-gray-600">
+                WebPrefer's iGaming platforms are fortified with stringent
+                security measures, having passed numerous technical and security
+                audits, ensuring top-tier reliability and safety.
+              </dd>
+            </div>
+            <div>
+              <dt class="text-base font-semibold leading-7 text-gray-900">
+                <div
+                  class="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-[#1d6fb9]"
+                >
+                  <svg
+                    class="h-6 w-6 text-white"
+                    fill="none"
+                    viewbox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokelinecap="round"
+                      strokelinejoin="round"
+                      d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59"
+                    ></path>
+                  </svg>
+                </div>
+                Seamless Provider Integration
+              </dt>
+              <dd class="mt-1 text-base leading-7 text-gray-600">
+                Experience seamless integration capabilities with WebPrefer's
+                iGaming solutions, enabling easy and efficient collaboration
+                with various gaming and payment service providers.
+              </dd>
+            </div>
+            <div>
+              <dt class="text-base font-semibold leading-7 text-gray-900">
+                <div
+                  class="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-[#1d6fb9]"
+                >
+                  <svg
+                    class="h-6 w-6 text-white"
+                    fill="none"
+                    viewbox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokelinecap="round"
+                      strokelinejoin="round"
+                      d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"
+                    ></path>
+                  </svg>
+                </div>
+                Elevate Your Gaming Venture
+              </dt>
+              <dd class="mt-1 text-base leading-7 text-gray-600">
+                Partner with WebPrefer to elevate your iGaming experience. Our
+                cutting-edge solutions are designed to revolutionize your
+                business, backed by a history of enhancing online gaming
+                operations.
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <footer class="bg-white">
+      <div
+        class="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8"
+      >
+        <nav
+          class="-mb-6 lg:columns-2 sm:flex sm:justify-center sm:space-x-12 text-center"
+          aria-label="Footer"
+        >
+          <div class="pb-6">
+            <span class="text-sm leading-6 text-gray-600 hover:text-gray-900"
+              >Address: S:t Larsgatan 7, 582 24 Linköping Sweden</span
+            >
+          </div>
+          <div class="pb-6">
+            <span class="text-sm leading-6 text-gray-600 hover:text-gray-900"
+              >Email: sales@webprefer.com</span
+            >
+          </div>
+          <div class="pb-6">
+            <span class="text-sm leading-6 text-gray-600 hover:text-gray-900"
+              >WebPrefer AB (556748-3523)</span
+            >
+          </div>
+        </nav>
+        <div class="mt-10 flex justify-center space-x-10">
+          <a
+            href="https://goo.gl/nyoJKH"
+            title="Facebook Webprefer AB"
+            class="text-gray-400 hover:text-gray-500"
+            target="_blank"
+          >
+            <span class="sr-only">Facebook</span>
+            <svg
+              class="h-6 w-6"
+              fill="currentColor"
+              viewbox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </a>
+          <a
+            href="https://goo.gl/NiFmv9"
+            title="Instagram Webprefer AB"
+            class="text-gray-400 hover:text-gray-500"
+            target="_blank"
+          >
+            <span class="sr-only">Instagram</span>
+            <svg
+              class="h-6 w-6"
+              fill="currentColor"
+              viewbox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </a>
+          <a
+            href="https://goo.gl/G7A5XL"
+            title="LinkedIn Webprefer AB"
+            class="text-gray-400 hover:text-gray-500"
+            target="_blank"
+          >
+            <span class="sr-only">Linkedin</span>
+            <svg
+              class="h-6 w-6"
+              fill="currentColor"
+              viewbox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                d="M12 0.48C5.63758 0.48 0.47998 5.6376 0.47998 12C0.47998 18.3624 5.63758 23.52 12 23.52C18.3624 23.52 23.52 18.3624 23.52 12C23.52 5.6376 18.3624 0.48 12 0.48ZM9.17998 16.7748H6.84718V9.2676H9.17998V16.7748ZM7.99918 8.346C7.26238 8.346 6.78598 7.824 6.78598 7.1784C6.78598 6.5196 7.27678 6.0132 8.02918 6.0132C8.78158 6.0132 9.24238 6.5196 9.25678 7.1784C9.25678 7.824 8.78158 8.346 7.99918 8.346ZM17.7 16.7748H15.3672V12.6144C15.3672 11.646 15.0288 10.9884 14.1852 10.9884C13.5408 10.9884 13.158 11.4336 12.9888 11.862C12.9264 12.0144 12.9108 12.2304 12.9108 12.4452V16.7736H10.5768V11.6616C10.5768 10.7244 10.5468 9.9408 10.5156 9.2664H12.5424L12.6492 10.3092H12.696C13.0032 9.8196 13.7556 9.0972 15.0144 9.0972C16.5492 9.0972 17.7 10.1256 17.7 12.336V16.7748Z"
+              ></path>
+            </svg>
+          </a>
+        </div>
+        <p class="mt-10 text-center text-xs leading-5 text-gray-500">
+          &copy; 2024 Web Prefer AB. All rights reserved.
+        </p>
+      </div>
+    </footer>
+    <script src="/web-prefer.59712999.js"></script>
+  </body>
 </html>
