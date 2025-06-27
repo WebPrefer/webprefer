@@ -1,0 +1,17 @@
+<svg id="First." xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="190.672" height="39.356" viewBox="0 0 190.672 39.356">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_2906" data-name="Rectangle 2906" width="190.672" height="39.356" fill="none"/>
+    </clipPath>
+  </defs>
+  <path id="Path_9398" data-name="Path 9398" d="M151.055,24.035l-1.463,7.147,6.34,3.6,5.383-4.92L158.3,23.221Z" transform="translate(29.356 4.572)" fill="#fff"/>
+  <g id="Group_10039" data-name="Group 10039">
+    <g id="Group_10038" data-name="Group 10038" clip-path="url(#clip-path)">
+      <path id="Path_9399" data-name="Path 9399" d="M111.045,15.835H89.168V7.687H115.7V0H88.5a7.01,7.01,0,0,0-7.009,7.013v9.8A6.711,6.711,0,0,0,88.2,23.524h21.648v8.148H81.865v7.686h28.88a7.011,7.011,0,0,0,7.009-7.014v-9.8a6.711,6.711,0,0,0-6.709-6.712" transform="translate(15.991 0)" fill="#fff"/>
+      <path id="Path_9400" data-name="Path 9400" d="M153.541,0H114.582V7.686h15.592v31.67h7.776V7.686h15.592Z" transform="translate(22.486 -0.001)" fill="#fff"/>
+      <rect id="Rectangle_2905" data-name="Rectangle 2905" width="7.776" height="39.356" transform="translate(38.658)" fill="#fff"/>
+      <path id="Path_9401" data-name="Path 9401" d="M31.016,7.687V0H0V39.356H7.775V23.522H31.016V15.835H7.775V7.687Z" transform="translate(0 -0.001)" fill="#fff"/>
+      <path id="Path_9402" data-name="Path 9402" d="M66.234,23.523H76.551A6.711,6.711,0,0,0,83.26,16.81V7.89A7.887,7.887,0,0,0,75.374,0H45.205V39.356h7.776V23.523H54.3L72.569,39.358H84.5ZM52.981,15.836V7.686H75.758v8.15Z" transform="translate(8.871 -0.001)" fill="#fff"/>
+    </g>
+  </g>
+</svg>
