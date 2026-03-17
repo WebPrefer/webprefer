@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L3M Streaming Platform — Architecture Documentation</title>
+  <style>
+    /* ── Reset & Base ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brand:       #e63946;
+      --brand-dark:  #c1121f;
+      --accent:      #457b9d;
+      --accent-light:#a8dadc;
+      --bg:          #f8f9fa;
+      --surface:     #ffffff;
+      --surface2:    #f1f3f5;
+      --border:      #dee2e6;
+      --text:        #212529;
+      --text-muted:  #6c757d;
+      --code-bg:     #1e1e2e;
+      --code-text:   #cdd6f4;
+      --green:       #2d6a4f;
+      --green-bg:    #d8f3dc;
+      --blue:        #1d3557;
+      --blue-bg:     #e0f0ff;
+      --amber:       #7b4f00;
+      --amber-bg:    #fff3cd;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    /* ── Layout ───────────────────────────────────────────── */
+    .page-wrapper {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar TOC */
+    .sidebar {
+      width: 270px;
+      min-width: 270px;
+      background: var(--blue);
+      color: #e8f4f8;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 0 0 2rem;
+      z-index: 100;
+    }
+
+    .sidebar-logo {
+      padding: 1.5rem 1.5rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar-logo .brand {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--brand);
+      letter-spacing: -0.5px;
+    }
+
+    .sidebar-logo .subtitle {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 2px;
+    }
+
+    .sidebar nav ul {
+      list-style: none;
+      padding: 0 0.75rem;
+    }
+
+    .sidebar nav > ul > li {
+      margin-bottom: 2px;
+    }
+
+    .sidebar nav a {
+      display: block;
+      padding: 0.38rem 0.75rem;
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .sidebar nav a:hover {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+    }
+
+    .sidebar nav .section-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: rgba(255,255,255,0.35);
+      padding: 1rem 0.75rem 0.3rem;
+      display: block;
+    }
+
+    /* Main content */
+    .content {
+      margin-left: 270px;
+      flex: 1;
+      max-width: 940px;
+      padding: 3rem 3.5rem;
+    }
+
+    /* ── Header ───────────────────────────────────────────── */
+    .doc-header {
+      background: linear-gradient(135deg, var(--blue) 0%, #2c3e6b 50%, #1a1a2e 100%);
+      color: #fff;
+      border-radius: 16px;
+      padding: 3rem 3rem 2.5rem;
+      margin-bottom: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .doc-header::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: rgba(230,57,70,0.18);
+    }
+
+    .doc-header::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; right: 100px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: rgba(69,123,157,0.15);
+    }
+
+    .doc-header .badge {
+      display: inline-block;
+      background: var(--brand);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+    }
+
+    .doc-header h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.75rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .doc-header .tagline {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .doc-meta {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .doc-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .doc-meta-item .label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: rgba(255,255,255,0.45);
+    }
+
+    .doc-meta-item .value {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.9);
+    }
+
+    /* ── Section Headings ─────────────────────────────────── */
+    .section {
+      margin-bottom: 3.5rem;
+    }
+
+    h2 {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: var(--blue);
+      border-bottom: 3px solid var(--brand);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    h2 .num {
+      background: var(--brand);
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      min-width: 2rem;
+      text-align: center;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+      padding-left: 0.75rem;
+      border-left: 3px solid var(--accent-light);
+    }
+
+    h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: 1.25rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    p {
+      margin-bottom: 0.9rem;
+      color: var(--text);
+    }
+
+    /* ── Tables ───────────────────────────────────────────── */
+    .table-wrap {
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    thead tr {
+      background: linear-gradient(135deg, var(--blue) 0%, #2c4a7c 100%);
+      color: #fff;
+    }
+
+    thead th {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.1s;
+    }
+
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:nth-child(even) { background: var(--surface2); }
+    tbody tr:hover { background: #e8f4ff; }
+
+    td {
+      padding: 0.65rem 1rem;
+      vertical-align: top;
+    }
+
+    td code {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.82rem;
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      color: var(--brand-dark);
+    }
+
+    /* ── Code Blocks ─────────────────────────────────────── */
+    pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 1.25rem 1.5rem;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-size: 0.82rem;
+      line-height: 1.65;
+      margin: 1.25rem 0;
+      position: relative;
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    }
+
+    pre .lang-label {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.75rem;
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    code {
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    }
+
+    /* Inline code */
+    p code, li code {
+      background: #f0f4ff;
+      border: 1px solid #c9d8ff;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.85em;
+      color: #2c3e99;
+    }
+
+    /* ── Info Cards ───────────────────────────────────────── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .card .card-icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card .card-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 0.3rem;
+    }
+
+    .card .card-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Callout boxes */
+    .callout {
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin: 1.25rem 0;
+      display: flex;
+      gap: 0.75rem;
+      font-size: 0.88rem;
+    }
+
+    .callout-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+
+    .callout.info {
+      background: var(--blue-bg);
+      border-left: 4px solid var(--accent);
+      color: var(--blue);
+    }
+
+    .callout.warning {
+      background: var(--amber-bg);
+      border-left: 4px solid #f59e0b;
+      color: var(--amber);
+    }
+
+    .callout.success {
+      background: var(--green-bg);
+      border-left: 4px solid #40916c;
+      color: var(--green);
+    }
+
+    /* Badges */
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.75rem 0;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .badge-blue   { background: #dbeafe; color: #1e40af; }
+    .badge-red    { background: #fee2e2; color: #991b1b; }
+    .badge-green  { background: #dcfce7; color: #166534; }
+    .badge-amber  { background: #fef3c7; color: #92400e; }
+    .badge-purple { background: #ede9fe; color: #6d28d9; }
+    .badge-gray   { background: #f3f4f6; color: #374151; }
+
+    /* ── Diagram Boxes ───────────────────────────────────── */
+    .diagram {
+      background: #f8fafd;
+      border: 1px solid #c5d3e8;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      overflow-x: auto;
+    }
+
+    .diagram pre {
+      background: transparent;
+      color: var(--text);
+      box-shadow: none;
+      padding: 0;
+      margin: 0;
+      font-size: 0.8rem;
+    }
+
+    /* ── Divider ─────────────────────────────────────────── */
+    hr {
+      border: none;
+      border-top: 2px solid var(--border);
+      margin: 3rem 0;
+    }
+
+    /* ── Footer ──────────────────────────────────────────── */
+    .doc-footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 2px solid var(--border);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+
+    /* ── Print / PDF ─────────────────────────────────────── */
+    @media print {
+      .sidebar { display: none !important; }
+      .content { margin-left: 0; padding: 1rem 2rem; max-width: 100%; }
+      .doc-header { border-radius: 8px; }
+      pre { break-inside: avoid; }
+      h2, h3 { break-after: avoid; }
+      .section { break-inside: avoid; }
+      a { text-decoration: none; color: inherit; }
+    }
+
+    /* Scrollbar */
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <!-- ── Sidebar ─────────────────────────────────────────── -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="brand">L3M Platform</div>
+      <div class="subtitle">Architecture Documentation</div>
+    </div>
+    <nav>
+      <ul>
+        <span class="section-label">Introduction</span>
+        <li><a href="#overview">1. System Overview</a></li>
+        <li><a href="#high-level">2. High-Level Architecture</a></li>
+        <li><a href="#services">3. Services &amp; Repositories</a></li>
+
+        <span class="section-label">Live Streaming</span>
+        <li><a href="#streaming">4. Streaming Architecture</a></li>
+        <li><a href="#rtmp">4.1 RTMP Ingestion</a></li>
+        <li><a href="#hls">4.2 HLS Adaptive Bitrate</a></li>
+        <li><a href="#restream">4.3 Multi-Platform Re-stream</a></li>
+        <li><a href="#auth">4.4 Stream Authentication</a></li>
+        <li><a href="#vod">4.5 Recording &amp; VOD Pipeline</a></li>
+
+        <span class="section-label">Live Chat</span>
+        <li><a href="#chat">5. Live Chat Architecture</a></li>
+
+        <span class="section-label">Cloud &amp; Infrastructure</span>
+        <li><a href="#aws">6. AWS Infrastructure</a></li>
+
+        <span class="section-label">Platform</span>
+        <li><a href="#frontend">7. Frontend &amp; Playback</a></li>
+        <li><a href="#api">8. Backend API</a></li>
+        <li><a href="#cms">9. CMS Integration</a></li>
+        <li><a href="#gameserver">10. Game Server</a></li>
+
+        <span class="section-label">Reference</span>
+        <li><a href="#dataflow">11. Data Flow Diagrams</a></li>
+        <li><a href="#deployment">12. Deployment</a></li>
+        <li><a href="#stack">13. Tech Stack Reference</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- ── Main Content ──────────────────────────────────────── -->
+  <main class="content">
+
+    <!-- Header -->
+    <header class="doc-header">
+      <span class="badge">Internal Documentation</span>
+      <h1>L3M Streaming Platform<br>Architecture Documentation</h1>
+      <p class="tagline">Live Streaming (RTMP) · Live Chat · AWS Infrastructure · Full-Stack Overview</p>
+      <div class="doc-meta">
+        <div class="doc-meta-item">
+          <span class="label">Version</span>
+          <span class="value">1.0</span>
+        </div>
+        <div class="doc-meta-item">
+          <span class="label">Last Updated</span>
+          <span class="value">March 2026</span>
+        </div>
+        <div class="doc-meta-item">
+          <span class="label">Primary Focus</span>
+          <span class="value">RTMP · HLS · Live Chat</span>
+        </div>
+        <div class="doc-meta-item">
+          <span class="label">Hosting</span>
+          <span class="value">AWS ECS</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── 1. System Overview ─────────────────────────────── -->
+    <section class="section" id="overview">
+      <h2><span class="num">1</span> System Overview</h2>
+      <p>
+        The L3M platform is a <strong>live streaming and casino entertainment platform</strong> built as four independent
+        services that communicate over HTTP/REST and WebSocket APIs. The platform enables real-time live streams,
+        simultaneous multi-platform distribution, adaptive bitrate video delivery, and a real-time live chat experience.
+      </p>
+
+      <div class="callout info">
+        <span class="callout-icon">ℹ️</span>
+        <div>
+          <strong>AWS-hosted Streaming:</strong> The live streaming server (<code>casinogambitz-live</code>) is deployed
+          on <strong>AWS ECS</strong>. This ensures low-latency RTMP ingest, fast
+          HLS segment delivery, and minimized push-latency to AWS IVS — all running on AWS backbone networking.
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Service</th>
+              <th>Repository</th>
+              <th>Purpose</th>
+              <th>Runtime</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Main App</strong></td>
+              <td><code>casinogambitz-app</code></td>
+              <td>Next.js frontend + Express.js API</td>
+              <td>Node.js / TypeScript</td>
+            </tr>
+            <tr>
+              <td><strong>Live Streaming Server</strong></td>
+              <td><code>casinogambitz-live</code></td>
+              <td>RTMP ingest, HLS output, recording, encoding</td>
+              <td>nginx-rtmp + Node.js / AWS ECS</td>
+            </tr>
+            <tr>
+              <td><strong>CMS</strong></td>
+              <td><code>casinogambitz-cms</code></td>
+              <td>WordPress/Bedrock content &amp; media management</td>
+              <td>PHP 7.4 / WordPress 5.8</td>
+            </tr>
+            <tr>
+              <td><strong>Game Server</strong></td>
+              <td><code>CasinoGambitz.GameServer</code></td>
+              <td>Casino game mechanics</td>
+              <td>C# / .NET / ASP.NET Core</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── 2. High-Level Architecture ──────────────────────── -->
+    <section class="section" id="high-level">
+      <h2><span class="num">2</span> High-Level Architecture</h2>
+
+      <div class="diagram">
+        <pre>
+  ┌───────────────────────────────────────────────────────────────────────────┐
+  │                       STREAMER (OBS / Encoder)                            │
+  │               rtmp://live.casinogambitz.com:1935/show/{key}               │
+  └─────────────────────────────────────┬─────────────────────────────────────┘
+                                        │ RTMP (port 1935)
+                                        ▼
+  ┌───────────────────────────────────────────────────────────────────────────┐
+  │                      AWS ECS  ·  casinogambitz-live                       │
+  │                                                                           │
+  │   ┌───────────────────────────────────────────────────────────────────┐  │
+  │   │                    nginx-rtmp  (port 1935)                         │  │
+  │   │                                                                   │  │
+  │   │  ┌──────────────┐   ┌─────────────────┐   ┌───────────────────┐  │  │
+  │   │  │  RTMP Auth   │   │   HLS Output    │   │    Recording      │  │  │
+  │   │  │  /api/auth   │   │  /hls/*.m3u8   │   │  /stream/records/ │  │  │
+  │   │  └──────────────┘   └─────────────────┘   └────────┬──────────┘  │  │
+  │   └─────────────────────────────────────────────────────┼─────────────┘  │
+  │                                                          │                │
+  │   ┌──────────────────────────────────────────────────────┼─────────────┐  │
+  │   │                  Node.js / Express  (port 8081)       │             │  │
+  │   │                  recordsApiController.ts              │             │  │
+  │   │                  ·  FFmpeg encode FLV → MP4           │             │  │
+  │   │                  ·  Upload → WordPress CMS            ◄─────────────┘  │
+  │   │                  ·  Upload assets → AWS S3            │                │
+  │   └───────────────────────────────────────────────────────┘               │
+  └───────────────────────────────────────────────────────────────────────────┘
+          │                      │                       │
+          │ RTMP push            │ HLS segments          │ RTMP re-stream
+          ▼                      ▼                       ▼
+    ┌───────────┐     ┌────────────────────┐    ┌───────────────────────┐
+    │  AWS IVS  │     │   casinogambitz-   │    │  Twitch / YouTube /   │
+    │  (CDN)    │     │   app (Next.js)    │    │  Facebook             │
+    └───────────┘     │                    │    └───────────────────────┘
+                      │  Video.js + HLS    │
+                      │  PlayerWithoutIVS  │
+                      │                   │
+                      └─────────┬──────────┘
+                                │ WebSocket (socket.io)
+                                ▼
+                      ┌──────────────────────┐
+                      │      Live Chat       │
+                      │  socket.io + tmi.js  │
+                      └──────────────────────┘</pre>
+      </div>
+    </section>
+
+    <!-- ── 3. Services ─────────────────────────────────────── -->
+    <section class="section" id="services">
+      <h2><span class="num">3</span> Services &amp; Repositories</h2>
+
+      <h3>3.1 casinogambitz-live (Streaming Server)</h3>
+      <p>The operational heart of live streaming. Runs in a Docker container on <strong>AWS ECS</strong>.</p>
+      <pre><code class="lang-label">Directory</code>casinogambitz-live/
+├── nginx/
+│   ├── nginx.conf              ← RTMP + HLS server configuration
+│   └── stunnel/stunnel.conf    ← SSL tunnel for Facebook RTMP
+├── api/
+│   ├── authApiController.ts    ← RTMP stream token authentication
+│   └── recordsApiController.ts ← VOD encoding + CMS upload
+├── helpers/
+│   ├── awsHelper.ts            ← AWS S3 upload utility
+│   └── tokenHelper.ts          ← JWT / token validation
+├── apiRequestClient/           ← HTTP client for WordPress REST API
+├── core/serverWorker.ts        ← Express server bootstrap
+├── .aws/
+│   ├── prod-ecs-services.json  ← Production ECS task definition
+│   └── stage-ecs-services.json ← Staging ECS task definition
+├── Dockerfile                  ← nginx-rtmp base image build
+└── .docker/docker-entrypoint.sh</pre>
+
+      <h3>3.2 casinogambitz-app (Main Application)</h3>
+      <p>Next.js frontend with a bundled Express.js API server.</p>
+      <pre>casinogambitz-app/
+├── src/
+│   ├── pages/                          ← Next.js routes
+│   ├── components/
+│   │   ├── base/VideoPlayer.tsx        ← Multi-source video player
+│   │   ├── base/VideoJs.tsx            ← Video.js / HLS integration
+│   │   └── molecule/TopStreamingBlock.tsx
+│   ├── utils/chatUtil.tsx              ← Chat message processing
+│   └── stores/                         ← Client-side state management
+└── server/                             ← Express.js API
+    ├── api/                            ← Route controllers
+    ├── services/                       ← Business logic
+    └── models/                         ← TypeORM entities (MySQL)</pre>
+
+      <h3>3.3 casinogambitz-cms (WordPress)</h3>
+      <p>WordPress Bedrock CMS. Stores all content, video posts, and media assets.</p>
+      <pre>casinogambitz-cms/
+├── web/app/mu-plugins/
+│   └── api/                ← Custom REST API endpoint controllers
+├── config/                 ← Per-environment configuration
+├── docker-compose.yml
+└── Dockerfile</pre>
+
+      <h3>3.4 CasinoGambitz.GameServer (.NET)</h3>
+      <p>C# ASP.NET Core game server for casino mechanics (slots, wheel, draws). Uses MySQL (production) and SQLite (development). Managed via Entity Framework Core migrations.</p>
+    </section>
+
+    <hr>
+
+    <!-- ── 4. Live Streaming Architecture ─────────────────── -->
+    <section class="section" id="streaming">
+      <h2><span class="num">4</span> Live Streaming Architecture</h2>
+
+      <div class="badge-row">
+        <span class="badge badge-red">RTMP</span>
+        <span class="badge badge-blue">HLS</span>
+        <span class="badge badge-blue">DASH</span>
+        <span class="badge badge-green">AWS ECS</span>
+        <span class="badge badge-purple">FFmpeg</span>
+        <span class="badge badge-amber">nginx-rtmp</span>
+      </div>
+
+      <p>
+        The live streaming pipeline is built on <strong>nginx with the RTMP module</strong>, running inside a Docker container
+        on <strong>AWS ECS</strong>. AWS hosting provides the backbone network needed for low-latency RTMP ingestion
+        and fast global HLS delivery, as well as minimal push-latency to AWS IVS.
+      </p>
+
+      <!-- 4.1 RTMP Ingestion -->
+      <section id="rtmp">
+        <h3>4.1 RTMP Ingestion</h3>
+        <p>Streamers connect with any standard encoder (OBS, Streamlabs, vMix, etc.):</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Setting</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>RTMP URL</td><td><code>rtmp://live.casinogambitz.com:1935/show</code></td></tr>
+              <tr><td>Stream Key</td><td><code>{STREAM_TOKEN}</code> (from env)</td></tr>
+              <tr><td>Protocol</td><td>RTMP on TCP port 1935</td></tr>
+              <tr><td>Auth callback</td><td><code>GET /api/auth?name={key}</code> (before accepting stream)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>On receiving an RTMP connection, nginx-rtmp:</p>
+        <ol style="margin:0.75rem 0 0 1.5rem;line-height:2;">
+          <li>Calls the auth callback to validate the stream key</li>
+          <li>Begins HLS segmentation to <code>/stream/hls/</code></li>
+          <li>Starts recording to <code>/stream/records/{name}.flv</code></li>
+          <li>Pushes the stream to all configured re-stream destinations simultaneously</li>
+        </ol>
+
+        <pre><code class="lang-label">nginx.conf</code>rtmp {
+  server {
+    listen 1935;
+    chunk_size 4096;
+
+    application show {
+      live on;
+
+      # Authenticate before accepting stream
+      on_publish  http://localhost:8081/api/auth;
+      on_done     http://localhost:8081/api/recorded;
+
+      # HLS output
+      hls on;
+      hls_path /stream/hls;
+      hls_fragment 1s;
+      hls_playlist_length 10s;
+
+      # Full stream recording
+      record all;
+      record_path /stream/records;
+      record_suffix _%Y%m%d_%H%M%S.flv;
+      on_record_done http://localhost:8081/api/recorded;
+
+      # Re-stream to all platforms simultaneously
+      push rtmp://127.0.0.1:1937/app/${AWS_IVS_KEY};
+      push rtmp://atl.contribute.live-video.net/app/${TWITCH_KEY};
+      push rtmp://a.rtmp.youtube.com/live2/${YOUTUBE_KEY};
+      push rtmp://127.0.0.1:1936/rtmp/${FACEBOOK_KEY};  # via Stunnel (TLS)
+    }
+  }
+}</pre>
+      </section>
+
+      <!-- 4.2 HLS -->
+      <section id="hls">
+        <h3>4.2 HLS Adaptive Bitrate Output</h3>
+        <p>
+          The stream is transcoded into <strong>5 quality tiers</strong> using FFmpeg internally by nginx-rtmp.
+          Viewers automatically switch quality based on available bandwidth.
+        </p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Profile</th>
+                <th>Resolution</th>
+                <th>Video Bitrate</th>
+                <th>Total Bitrate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>160p</td><td>284 × 160</td><td>200 kbps</td><td>~230 kbps</td></tr>
+              <tr><td>360p</td><td>640 × 360</td><td>600 kbps</td><td>~630 kbps</td></tr>
+              <tr><td>480p</td><td>854 × 480</td><td>1,400 kbps</td><td>~1.5 Mbps</td></tr>
+              <tr><td>720p</td><td>1,280 × 720</td><td>3,400 kbps</td><td>~3.5 Mbps</td></tr>
+              <tr><td>1080p (source)</td><td>1,920 × 1,080</td><td>7,000 kbps</td><td>~7.2 Mbps</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Playback URLs:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Format</th><th>URL Pattern</th></tr></thead>
+            <tbody>
+              <tr><td>HLS Master Playlist</td><td><code>http://live.casinogambitz.com/hls/{streamName}.m3u8</code></td></tr>
+              <tr><td>DASH Manifest</td><td><code>http://live.casinogambitz.com/dash/{streamName}.mpd</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout success">
+          <span class="callout-icon">✅</span>
+          <div>CORS headers are enabled on all HLS/DASH endpoints, allowing cross-origin playback from the main app domain.</div>
+        </div>
+      </section>
+
+      <!-- 4.3 Re-streaming -->
+      <section id="restream">
+        <h3>4.3 Multi-Platform Re-streaming</h3>
+        <p>When a stream goes live, it is <strong>simultaneously pushed</strong> to all platforms:</p>
+
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-icon">☁️</div>
+            <div class="card-title">AWS IVS</div>
+            <div class="card-desc">Primary CDN for platform viewers. RTMP push on localhost:1937.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🎮</div>
+            <div class="card-title">Twitch</div>
+            <div class="card-desc">Public re-stream via <code>atl.contribute.live-video.net</code>.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">▶️</div>
+            <div class="card-title">YouTube</div>
+            <div class="card-desc">Public re-stream via <code>a.rtmp.youtube.com/live2</code>.</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">📘</div>
+            <div class="card-title">Facebook</div>
+            <div class="card-desc">Requires TLS — RTMP is tunneled through Stunnel (SSL) to Facebook Live API.</div>
+          </div>
+        </div>
+
+        <p><strong>Facebook Stunnel configuration</strong> (Facebook requires TLS on port 443):</p>
+        <pre><code class="lang-label">stunnel.conf</code>[facebook]
+client  = yes
+accept  = 127.0.0.1:1936
+connect = live-api-s.facebook.com:443</pre>
+      </section>
+
+      <!-- 4.4 Auth -->
+      <section id="auth">
+        <h3>4.4 Stream Authentication</h3>
+        <p>
+          Before nginx-rtmp accepts an incoming RTMP stream, it makes an HTTP callback to the Node.js server.
+          If the token is invalid, the stream is rejected immediately.
+        </p>
+        <pre>nginx → GET http://localhost:8081/api/auth?name={streamKey}
+
+authApiController.ts:
+  · Validates streamKey === STREAM_TOKEN (env var)
+  · Returns 200 OK     → nginx accepts stream
+  · Returns 4xx        → nginx rejects stream</pre>
+
+        <p>RTMP statistics are also available (protected by the same token):</p>
+        <pre>GET http://live.casinogambitz.com/stat?token={STREAM_TOKEN}</pre>
+      </section>
+
+      <!-- 4.5 VOD Pipeline -->
+      <section id="vod">
+        <h3>4.5 Recording &amp; VOD Pipeline</h3>
+        <p>
+          After a stream ends, the recorded <code>.flv</code> file is encoded to MP4 and automatically published
+          as a WordPress post with video embedded.
+        </p>
+
+        <div class="diagram">
+          <pre>
+  Stream ends
+      │
+      │  nginx calls  on_record_done
+      ▼
+  GET /api/recorded?name={name}&path={flvPath}
+      │
+      ├──  Wait 2 hours  (ensures file is fully written to disk)
+      │
+      ├──  FFmpeg encode:  .flv  →  .mp4
+      │    ·  Video codec:  libx264
+      │    ·  Audio codec:  AAC
+      │    ·  Preset:       medium  ·  CRF: 31
+      │    ·  Output:       /stream/records/{name}.mp4
+      │
+      ├──  POST /wp-json/custom/media        Upload MP4 to WordPress
+      │
+      ├──  POST /wp-json/custom/media        Upload preview image (keyframe)
+      │
+      ├──  POST /wp-json/custom/posts        Create WordPress post
+      │    ·  Category: 440 (video)
+      │    ·  ACF: video_url, main_image
+      │    ·  Status: private → published
+      │
+      ├──  S3 Upload  (awsHelper.ts)
+      │    ·  Bucket: casinogambitz-cms-test-assets
+      │    ·  Path:   records/YYMMDD/{filename}
+      │    ·  ACL:    public-read
+      │    ·  Cache:  max-age=31536000, immutable
+      │
+      └──  Cleanup:  delete .flv  ·  .mp4  ·  preview files</pre>
+        </div>
+      </section>
+    </section>
+
+    <hr>
+
+    <!-- ── 5. Live Chat Architecture ──────────────────────── -->
+    <section class="section" id="chat">
+      <h2><span class="num">5</span> Live Chat Architecture</h2>
+
+      <div class="badge-row">
+        <span class="badge badge-green">socket.io 4.0</span>
+        <span class="badge badge-purple">tmi.js 1.8</span>
+        <span class="badge badge-blue">DOMPurify</span>
+        <span class="badge badge-amber">emoji-mart</span>
+      </div>
+
+      <p>
+        The live chat system combines <strong>Socket.io</strong> (platform-internal WebSocket) and
+        <strong>tmi.js</strong> (Twitch IRC protocol) with a shared message processing pipeline.
+        The chat UI is embedded directly in the video player as an overlay panel.
+      </p>
+
+      <h3>5.1 Message Processing Pipeline</h3>
+      <p>All messages — regardless of origin — pass through <code>chatUtil.tsx</code>:</p>
+
+      <div class="diagram">
+        <pre>
+  Raw message input
+        │
+        ├── DOMPurify sanitize
+        │   Allowed HTML tags:  &lt;img&gt;  &lt;a&gt;  &lt;b&gt;
+        │
+        ├── Profanity filter  (bad-words package)
+        │   Automatically replaces flagged words with ***
+        │
+        ├── ASCII emoticon → Unicode emoji conversion
+        │     :)  →  🙂    ;)  →  😉    :D  →  😁
+        │     :P  →  😛    8)  →  😎
+        │
+        └── Autolinker
+            Detects URLs and wraps them in  &lt;a&gt;  tags</pre>
+      </div>
+
+      <h3>5.2 Chat Transport Layer</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Transport</th><th>Library</th><th>Version</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>WebSocket</strong></td>
+              <td><code>socket.io</code></td>
+              <td>4.0.0</td>
+              <td>Internal platform chat (bi-directional, room-based)</td>
+            </tr>
+            <tr>
+              <td><strong>Twitch IRC</strong></td>
+              <td><code>tmi.js</code></td>
+              <td>1.8.5</td>
+              <td>Reads Twitch channel chat and bridges to platform</td>
+            </tr>
+            <tr>
+              <td><strong>Emoji Picker UI</strong></td>
+              <td><code>emoji-mart</code></td>
+              <td>3.0.1</td>
+              <td>Emoji picker component in chat toolbar</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>5.3 Video Player Chat Integration</h3>
+      <p>The chat is embedded directly inside the video player as an overlay via a custom Video.js plugin:</p>
+
+      <div class="diagram">
+        <pre>
+  [...page].tsx  (Next.js page)
+      └──  PlayerWithoutIVS  (@eggspot/core)
+              └──  Video.js  (videojs)
+                      ├──  @videojs/http-streaming     ← HLS / DASH adaptive playback
+                      ├──  @eggspot/vjs-chatbox-button ← Chat overlay panel
+                      └──  @eggspot/vjs-theatre-mode   ← Theatre / fullscreen toggle</pre>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">💬</span>
+        <div>
+          The <code>@eggspot/vjs-chatbox-button</code> plugin renders the chat panel as an overlay on the video
+          player, enabling viewers to watch and chat simultaneously without leaving the stream page.
+        </div>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- ── 6. AWS Infrastructure ──────────────────────────── -->
+    <section class="section" id="aws">
+      <h2><span class="num">6</span> AWS Infrastructure</h2>
+
+      <div class="callout success">
+        <span class="callout-icon">🚀</span>
+        <div>
+          <strong>Why AWS for Live Streaming?</strong> The <code>casinogambitz-live</code> service runs on
+          <strong>AWS ECS</strong> to leverage AWS backbone networking for low-latency RTMP ingestion,
+          fast HLS segment delivery globally, and co-location with AWS IVS to minimize re-stream push latency.
+          The Network Load Balancer handles RTMP (port 1935) and HTTP (80/443) with high throughput.
+        </div>
+      </div>
+
+      <h3>6.1 AWS Services Used</h3>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon">🖥️</div>
+          <div class="card-title">ECS</div>
+          <div class="card-desc">Runs the nginx-rtmp + Node.js container. Staging uses on-demand tasks; Production uses a persistent service.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🪣</div>
+          <div class="card-title">S3</div>
+          <div class="card-desc">Stores encoded VOD files and media assets with <code>public-read</code> ACL and long-lived cache headers.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">📺</div>
+          <div class="card-title">IVS</div>
+          <div class="card-desc">Interactive Video Service. Primary CDN re-stream target for platform viewers.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚖️</div>
+          <div class="card-title">Network Load Balancer</div>
+          <div class="card-desc">Exposes port 1935 (RTMP) and port 80/443 (HLS/HTTP) with high-throughput TCP handling.</div>
+        </div>
+      </div>
+
+      <h3>6.2 ECS Task Configuration</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Setting</th><th>Staging</th><th>Production</th></tr></thead>
+          <tbody>
+            <tr><td>Docker Image</td><td colspan="2"><code>eggspot/nginx:1.19.9-rtmp</code></td></tr>
+            <tr><td>RTMP Port</td><td colspan="2">1935 (TCP)</td></tr>
+            <tr><td>API Port</td><td colspan="2">8081 (TCP)</td></tr>
+            <tr><td>Task Type</td><td>On-demand</td><td>Persistent service</td></tr>
+            <tr><td>Config file</td><td><code>stage-ecs-services.json</code></td><td><code>prod-ecs-services.json</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>6.3 S3 Asset Path Structure</h3>
+      <pre>s3://casinogambitz-cms-test-assets/
+└── records/
+    └── YYMMDD/
+        ├── {streamName}.mp4          ← Encoded video (H.264/AAC)
+        └── {streamName}-preview.jpg  ← Keyframe preview image</pre>
+
+      <h3>6.4 Environment Variables</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Variable</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><code>STREAM_TOKEN</code></td><td>Shared secret for RTMP auth and stats endpoint</td></tr>
+            <tr><td><code>AWS_REGION</code></td><td>Configured via environment variable</td></tr>
+            <tr><td><code>AWS_S3_BUCKET_NAME</code></td><td>Target S3 bucket for VOD assets</td></tr>
+            <tr><td><code>AWS_ACCESS_KEY_ID</code></td><td>IAM access key</td></tr>
+            <tr><td><code>AWS_SECRET_ACCESS_KEY</code></td><td>IAM secret</td></tr>
+            <tr><td><code>AWS_IVS_KEY</code></td><td>IVS stream key for re-streaming</td></tr>
+            <tr><td><code>TWITCH_KEY</code></td><td>Twitch stream key</td></tr>
+            <tr><td><code>YOUTUBE_KEY</code></td><td>YouTube stream key</td></tr>
+            <tr><td><code>FACEBOOK_KEY</code></td><td>Facebook stream key</td></tr>
+            <tr><td><code>CMS_URL</code></td><td>WordPress base URL</td></tr>
+            <tr><td><code>CMS_API_URL</code></td><td>WordPress REST API base URL</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- ── 7. Frontend ─────────────────────────────────────── -->
+    <section class="section" id="frontend">
+      <h2><span class="num">7</span> Frontend &amp; Playback</h2>
+
+      <h3>7.1 Page Routes</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Route</th><th>Component</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>/</code></td><td><code>index.tsx</code></td><td>Homepage with featured live stream</td></tr>
+            <tr><td><code>/[...page]</code></td><td><code>[...page].tsx</code></td><td>WordPress pages and video posts (includes player)</td></tr>
+            <tr><td><code>/casino</code></td><td><code>casino/index.tsx</code></td><td>Casino game listing</td></tr>
+            <tr><td><code>/game/[...slug]</code></td><td>Dynamic</td><td>Individual game pages</td></tr>
+            <tr><td><code>/quantsport/play</code></td><td><code>quantsport/play.tsx</code></td><td>Sports betting interface</td></tr>
+            <tr><td><code>/login</code>, <code>/sign-up</code></td><td>Auth pages</td><td>User authentication</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>7.2 Video Player</h3>
+      <p>
+        The primary playback component is <code>PlayerWithoutIVS</code> from <code>@eggspot/core</code>.
+        It accepts an HLS <code>.m3u8</code> URL from the WordPress ACF field <code>video_url</code>,
+        renders a Video.js player with adaptive bitrate, and mounts the live chat overlay.
+      </p>
+
+      <h3>7.3 State Management</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Store</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><code>UserClientStore</code></td><td>Authenticated user state and session</td></tr>
+            <tr><td><code>HomePageStore</code></td><td>Featured streams and homepage data</td></tr>
+            <tr><td><code>PageStore</code></td><td>Current page content from CMS</td></tr>
+            <tr><td><code>LanguageStore</code></td><td>Active language / i18n (WPML)</td></tr>
+            <tr><td><code>BasePostStore</code></td><td>Cached WordPress post data</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── 8. Backend API ──────────────────────────────────── -->
+    <section class="section" id="api">
+      <h2><span class="num">8</span> Backend API</h2>
+
+      <h3>8.1 User Endpoints</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Method</th><th>Path</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-blue">POST</span></td><td><code>/api/user/login</code></td><td>Authenticate user, return JWT</td></tr>
+            <tr><td><span class="badge badge-blue">POST</span></td><td><code>/api/user/register</code></td><td>Register new user</td></tr>
+            <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/user/info</code></td><td>Get current user profile</td></tr>
+            <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/user/check-is-login</code></td><td>Session validity check</td></tr>
+            <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/user/logout</code></td><td>Invalidate session</td></tr>
+            <tr><td><span class="badge badge-blue">POST</span></td><td><code>/api/user-password/forgot-password</code></td><td>Trigger password reset email</td></tr>
+            <tr><td><span class="badge badge-blue">POST</span></td><td><code>/api/user-password/reset-password-by-token</code></td><td>Complete password reset</td></tr>
+            <tr><td><span class="badge badge-blue">POST</span></td><td><code>/api/user-password/change-password</code></td><td>Change existing password</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>8.2 Streaming Endpoints</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Method</th><th>Path</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/user-stream/track-watch-time</code></td><td>Record viewing duration</td></tr>
+            <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/user-stream/total-view</code></td><td>Total views by user</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>8.3 Live Streaming Server Endpoints</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Method</th><th>Path</th><th>Caller</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/auth</code></td><td>nginx-rtmp</td><td>Validate RTMP stream key</td></tr>
+            <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/recorded</code></td><td>nginx-rtmp</td><td>Trigger VOD processing on stream end</td></tr>
+            <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/recorded-preview</code></td><td>nginx-rtmp</td><td>Capture preview image from keyframe</td></tr>
+            <tr><td><span class="badge badge-green">GET</span></td><td><code>/stat</code></td><td>Admin</td><td>RTMP server statistics (token-protected)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>8.4 Leaderboard &amp; Gamification</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Method</th><th>Path</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/user-leaderboard/get-all-participants</code></td><td>Leaderboard entries</td></tr>
+            <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/user-leaderboard/get-points-histories</code></td><td>Points history per user</td></tr>
+            <tr><td><span class="badge badge-green">GET</span></td><td><code>/api/user-leaderboard/get-points-actions</code></td><td>Available point actions</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── 9. CMS ──────────────────────────────────────────── -->
+    <section class="section" id="cms">
+      <h2><span class="num">9</span> CMS Integration</h2>
+      <p>
+        WordPress (Bedrock) acts as the <strong>content database and media store</strong>. Custom REST API
+        endpoints are registered via a must-use plugin under <code>/wp-json/custom/</code>.
+      </p>
+
+      <h3>9.1 Custom REST Endpoints</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Endpoint</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td><code>/wp-json/custom/posts</code></td><td>CRUD for posts and video entries</td></tr>
+            <tr><td><code>/wp-json/custom/media</code></td><td>Upload video files and images</td></tr>
+            <tr><td><code>/wp-json/custom/acf</code></td><td>Read/write Advanced Custom Fields</td></tr>
+            <tr><td><code>/wp-json/custom/leaderboards</code></td><td>Leaderboard data</td></tr>
+            <tr><td><code>/wp-json/custom/menus</code></td><td>Navigation menu structure</td></tr>
+            <tr><td><code>/wp-json/custom/settings</code></td><td>Global site settings</td></tr>
+            <tr><td><code>/wp-json/custom/languages</code></td><td>WPML language data</td></tr>
+            <tr><td><code>/wp-json/custom/affiliate</code></td><td>Affiliate program data</td></tr>
+            <tr><td><code>/wp-json/custom/email-subscriptions</code></td><td>Email sign-up</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>9.2 Video Post Structure</h3>
+      <p>Each recorded stream is published as a WordPress post with ACF custom fields:</p>
+      <pre>Post Type:    post
+Category ID:  440  (video category)
+ACF Fields:
+  · video_url    →  WordPress media attachment URL (.mp4)
+  · main_image   →  Featured image (preview keyframe)
+Status:       publish</pre>
+    </section>
+
+    <!-- ── 10. Game Server ─────────────────────────────────── -->
+    <section class="section" id="gameserver">
+      <h2><span class="num">10</span> Game Server</h2>
+      <p>C# ASP.NET Core service handling all casino game mechanics.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Entity</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><code>Player</code></td><td>Player state and game progress</td></tr>
+            <tr><td><code>PlayerSingleSpinAward</code></td><td>Per-spin reward records</td></tr>
+            <tr><td><code>ReelConfiguration</code></td><td>Slot machine reel setup</td></tr>
+            <tr><td><code>DrawList</code></td><td>Draw/lottery management</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Uses <strong>MySQL</strong> in production and <strong>SQLite</strong> for development. Database schema is managed via Entity Framework Core migrations.</p>
+    </section>
+
+    <hr>
+
+    <!-- ── 11. Data Flow Diagrams ──────────────────────────── -->
+    <section class="section" id="dataflow">
+      <h2><span class="num">11</span> Data Flow Diagrams</h2>
+
+      <h3>11.1 Live Stream End-to-End</h3>
+      <div class="diagram">
+        <pre>
+  1.  Streamer publishes RTMP
+      └──  OBS  →  rtmp://live.casinogambitz.com:1935/show/{key}
+
+  2.  nginx-rtmp authenticates
+      └──  GET /api/auth  →  200 OK  (or 401 stream refused)
+
+  3.  Stream goes live simultaneously
+      ├──  HLS segments  →  /hls/{name}.m3u8  (for viewers)
+      ├──  RTMP push     →  AWS IVS
+      ├──  RTMP push     →  Twitch
+      ├──  RTMP push     →  YouTube
+      └──  RTMP push     →  Facebook  (via Stunnel TLS)
+
+  4.  Viewer loads page
+      └──  Browser  →  Next.js /[...page]
+              └──  PlayerWithoutIVS
+                      └──  Video.js  +  HLS.js
+                              └──  GET /hls/{name}.m3u8
+                                      └──  GET /hls/{name}_{quality}.ts  (segments)
+
+  5.  Live chat is active
+      ├──  socket.io WebSocket  →  platform internal chat
+      └──  tmi.js               →  Twitch chat bridge</pre>
+      </div>
+
+      <h3>11.2 VOD Processing Flow</h3>
+      <div class="diagram">
+        <pre>
+  Stream ends  →  nginx calls on_record_done
+      │
+      ▼
+  GET /api/recorded?name={name}&path={flvPath}
+      │
+      ├── [ 2-hour delay ]
+      │
+      ├── FFmpeg:  .flv  →  .mp4  (H.264 / AAC)
+      │
+      ├── POST /wp-json/custom/media     ← upload MP4
+      ├── POST /wp-json/custom/media     ← upload preview image
+      ├── POST /wp-json/custom/posts     ← create video post (category 440)
+      │
+      ├── S3 upload  →  records/YYMMDD/{filename}
+      │
+      └── Cleanup:  delete local .flv · .mp4 · preview</pre>
+      </div>
+
+      <h3>11.3 Chat Message Flow</h3>
+      <div class="diagram">
+        <pre>
+  User types message
+      │
+      ├──  chatUtil.tsx
+      │      ├──  DOMPurify sanitize
+      │      ├──  Profanity filter
+      │      ├──  Emoji conversion
+      │      └──  Autolink URLs
+      │
+      ├──  socket.io  emit  →  server
+      │
+      ├──  Broadcast to all clients in stream room
+      │
+      └──  Rendered in @eggspot/vjs-chatbox-button overlay</pre>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- ── 12. Deployment ──────────────────────────────────── -->
+    <section class="section" id="deployment">
+      <h2><span class="num">12</span> Environment &amp; Deployment</h2>
+
+      <h3>12.1 Environments</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Env</th><th>App URL</th><th>CMS URL</th><th>RTMP</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Local</strong></td>
+              <td><code>localhost:5000</code></td>
+              <td><code>localhost:3000</code></td>
+              <td><code>rtmp://localhost:19350</code></td>
+              <td>Docker Compose with hot reload</td>
+            </tr>
+            <tr>
+              <td><strong>Staging</strong></td>
+              <td><code>stage.casinogambitz.com</code></td>
+              <td><code>stage-cms.casinogambitz.com</code></td>
+              <td>AWS ECS (on-demand task)</td>
+              <td>Test with OBS streaming</td>
+            </tr>
+            <tr>
+              <td><strong>Production</strong></td>
+              <td><code>casinogambitz.com</code></td>
+              <td><code>cms.casinogambitz.com</code></td>
+              <td>AWS ECS (persistent service)</td>
+              <td>Network Load Balancer on port 1935</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>12.2 Docker Build</h3>
+      <pre><code class="lang-label">Dockerfile</code># Base: custom nginx-rtmp image
+FROM eggspot/nginx:1.19.9-rtmp
+
+# Add Node.js Express API on Alpine Linux
+# Configure nginx with custom nginx.conf
+# EXPOSE 1935 (RTMP) and 8081 (Node API)
+
+# docker-entrypoint.sh starts both nginx and Node.js</pre>
+
+      <h3>12.3 CI/CD (Bitbucket Pipelines)</h3>
+      <p>Both <code>casinogambitz-app</code> and <code>casinogambitz-live</code> have Bitbucket Pipelines:</p>
+      <ol style="margin:0.75rem 0 0 1.5rem;line-height:2.2;">
+        <li>Automated build on push to branch</li>
+        <li>Docker image build and push to container registry</li>
+        <li>ECS task/service update for staging or production</li>
+      </ol>
+    </section>
+
+    <hr>
+
+    <!-- ── 13. Tech Stack ──────────────────────────────────── -->
+    <section class="section" id="stack">
+      <h2><span class="num">13</span> Technology Stack Reference</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Layer</th><th>Technology</th><th>Version</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Frontend Framework</strong></td><td>Next.js</td><td>11.0.1</td></tr>
+            <tr><td><strong>UI Library</strong></td><td>React</td><td>17.0.2</td></tr>
+            <tr><td><strong>Language</strong></td><td>TypeScript</td><td>4.3.5</td></tr>
+            <tr><td><strong>Styling</strong></td><td>Tailwind CSS</td><td>2.2.4</td></tr>
+            <tr><td><strong>Video Player</strong></td><td>Video.js + @videojs/http-streaming</td><td>—</td></tr>
+            <tr><td><strong>Chat (Platform)</strong></td><td>socket.io / socket.io-client</td><td>4.0.0</td></tr>
+            <tr><td><strong>Chat (Twitch)</strong></td><td>tmi.js</td><td>1.8.5</td></tr>
+            <tr><td><strong>Emoji Picker</strong></td><td>emoji-mart</td><td>3.0.1</td></tr>
+            <tr><td><strong>Sanitizer</strong></td><td>DOMPurify</td><td>2.3.1</td></tr>
+            <tr><td><strong>Profanity Filter</strong></td><td>bad-words</td><td>3.0.4</td></tr>
+            <tr><td><strong>Backend</strong></td><td>Express.js</td><td>4.17.1</td></tr>
+            <tr><td><strong>ORM</strong></td><td>TypeORM</td><td>0.2.37</td></tr>
+            <tr><td><strong>Database (App)</strong></td><td>MySQL</td><td>8</td></tr>
+            <tr><td><strong>Authentication</strong></td><td>JWT (jsonwebtoken)</td><td>8.5.1</td></tr>
+            <tr><td><strong>Streaming Server</strong></td><td>nginx with rtmp module</td><td>1.19.9</td></tr>
+            <tr><td><strong>Video Encoding</strong></td><td>FFmpeg (fluent-ffmpeg)</td><td>2.1.2</td></tr>
+            <tr><td><strong>CMS</strong></td><td>WordPress (Bedrock)</td><td>5.8.2</td></tr>
+            <tr><td><strong>CMS Language</strong></td><td>PHP</td><td>7.4+</td></tr>
+            <tr><td><strong>Game Server</strong></td><td>C# / ASP.NET Core</td><td>—</td></tr>
+            <tr><td><strong>Game DB</strong></td><td>SQLite / MySQL</td><td>—</td></tr>
+            <tr><td><strong>Cloud Hosting</strong></td><td>AWS (ECS, S3, IVS)</td><td>—</td></tr>
+            <tr><td><strong>Containers</strong></td><td>Docker</td><td>—</td></tr>
+            <tr><td><strong>Protocols</strong></td><td>RTMP · HLS · DASH · WebSocket</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="doc-footer">
+      <p>L3M Streaming Platform &mdash; Architecture Documentation &mdash; Version 1.0 &mdash; March 2026</p>
+      <p style="margin-top:0.4rem;">Internal use only. Do not distribute outside the team.</p>
+    </footer>
+
+  </main>
+</div>
+
+</body>
+</html>
