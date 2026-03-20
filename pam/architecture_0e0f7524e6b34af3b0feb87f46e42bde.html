@@ -836,7 +836,9 @@
                     <div class="arch-layer-title">Integrations (PAM.Integrations.*)</div>
                     <div style="font-size:0.85rem;">
                         <p><strong>Payment:</strong> PaymentIQ &bull; Hexopay &bull; SafeCharge</p>
-                        <p><strong>Games:</strong> SportTech &bull; JMJ &bull; PlayStar &bull; AleaPlay &bull; Cogg &bull; St8 &bull; XJGames &bull; 100HPGaming &bull; QuantSport &bull; First &bull; BitVille &bull; NetEnt &bull; PragmaticPlay &bull; Yggdrasil &bull; Evolution &bull; NoLimitCity &bull; QuickSpin &bull; PushGaming &bull; Relax &bull; RedTigerGaming &bull; ISoftBet &bull; Endorphina &bull; BetConstruct &bull; Betby &bull; SBTech &bull; NYX &bull; QuickFire &bull; Aurum &bull; AuthenticGaming &bull; DeltaGaming &bull; GaminGenius &bull; Ganapati &bull; Cubeia &bull; MetricGaming &bull; NightRush &bull; SafeCharge &bull; ScoutFantasy &bull; LottoWarehouse &bull; Lottoland</p>
+                        <p><strong>Games:</strong> SportTech &bull; JMJ &bull; PlayStar &bull; AleaPlay &bull; St8 &bull; XJGames &bull; 100HPGaming &bull; First &bull; NetEnt &bull; PragmaticPlay &bull; Yggdrasil &bull; Evolution &bull; NoLimitCity &bull; QuickSpin &bull; PushGaming &bull; Relax &bull; RedTigerGaming &bull; ISoftBet &bull; Endorphina &bull; BetConstruct &bull; Betby &bull; NYX &bull; QuickFire &bull; AuthenticGaming &bull; DeltaGaming &bull; GaminGenius &bull; Ganapati &bull; Cubeia &bull; MetricGaming &bull; NightRush &bull; SafeCharge</p>
+                        <p><strong>Lotto:</strong> LottoWarehouse &bull; Lottoland &bull; BitVille</p>
+                        <p><strong>Fantasy Sports:</strong> ScoutFantasy</p>
                         <p><strong>Communications:</strong> Twilio (SMS) &bull; SendGrid (Email) &bull; AWS SES (Email) &bull; Nexmo (SMS) &bull; Jojka (SMS) &bull; FortyTwo (SMS) &bull; Carma &bull; Mandrill (Email) &bull; SwiftMTA (Email)</p>
                         <p><strong>Other:</strong> FastTrack (CRM) &bull; DevCodeIdentity (SSO)</p>
                     </div>
@@ -1258,9 +1260,11 @@
                 <table>
                     <tr><th>Category</th><th>Providers</th></tr>
                     <tr><td>Payment</td><td>PaymentIQ, Hexopay, SafeCharge</td></tr>
-                    <tr><td>Casino / Games</td><td>SportTech, PlayStar, AleaPlay, Cogg, St8, 100HPGaming, QuantSport, BitVille, NetEnt, PragmaticPlay, Yggdrasil, Evolution, NoLimitCity, QuickSpin, PushGaming, Relax, RedTigerGaming, ISoftBet, Endorphina, Ganapati, Cubeia, GaminGenius, Aurum, AuthenticGaming, DeltaGaming, MetricGaming, NightRush, NYX, QuickFire</td></tr>
-                    <tr><td>Sportsbook</td><td>First, JMJ, XJGames, SBTech, BetConstruct, Betby, ScoutFantasy</td></tr>
-                    <tr><td>Lotto / Bingo</td><td>LottoWarehouse, Lottoland, End2End (Bingo)</td></tr>
+                    <tr><td>Casino / Games</td><td>SportTech, PlayStar, AleaPlay, St8, 100HPGaming, NetEnt, PragmaticPlay, Yggdrasil, Evolution, NoLimitCity, QuickSpin, PushGaming, Relax, RedTigerGaming, ISoftBet, Endorphina, Ganapati, Cubeia, GaminGenius, AuthenticGaming, DeltaGaming, MetricGaming, NightRush, NYX, QuickFire</td></tr>
+                    <tr><td>Sportsbook</td><td>First, JMJ, XJGames, BetConstruct, Betby</td></tr>
+                    <tr><td>Lotto</td><td>LottoWarehouse, Lottoland, BitVille</td></tr>
+                    <tr><td>Bingo</td><td>End2End</td></tr>
+                    <tr><td>Fantasy Sports</td><td>ScoutFantasy</td></tr>
                     <tr><td>Communications</td><td>Twilio, SendGrid, AWS SES, Nexmo, Jojka, FortyTwo, Carma, Mandrill, SwiftMTA</td></tr>
                     <tr><td>Notifications</td><td>Slack, Email (SendGrid, AWS SES, Mandrill, SwiftMTA)</td></tr>
                     <tr><td>CRM</td><td>FastTrack</td></tr>
@@ -1284,7 +1288,7 @@
                     <li><strong>Sportsbook</strong> &mdash; Sports betting integration (JMJ)</li>
                     <li><strong>Bingo / Lotto / Tournament</strong> &mdash; Additional game verticals</li>
                     <li><strong>SSO, Support, Messaging, Affiliate</strong> &mdash; Platform services</li>
-                    <li><strong>BitVille</strong> &mdash; Crypto-focused gaming integration</li>
+                    <li><strong>BitVille</strong> &mdash; Crypto-focused lotto integration</li>
                 </ul>
 
                 <h3>Configuration System</h3>
@@ -2453,7 +2457,7 @@
                         <tr><td>JWT</td><td>Ganapati, ScoutFantasy, First, JMJ</td></tr>
                         <tr><td>SOAP / WCF</td><td>NetEnt (CallerId + Password)</td></tr>
                         <tr><td>JSON-RPC 2.0</td><td>NoLimitCity</td></tr>
-                        <tr><td>Basic Auth</td><td>Aurum, NightRush, Hexopay</td></tr>
+                        <tr><td>Basic Auth</td><td>NightRush, Hexopay</td></tr>
                         <tr><td>SharedSecret + IP whitelist</td><td>DeltaGaming</td></tr>
                         <tr><td>OAuth Bearer</td><td>Lottoland, PaymentIQ</td></tr>
                         <tr><td>Encryption (Key + IV)</td><td>XJGames</td></tr>
@@ -2477,12 +2481,6 @@
                         <td>90-day tokens, operator code "wepam001"</td>
                     </tr>
                     <tr>
-                        <td><strong>Cogg</strong></td>
-                        <td>Authorization header token</td>
-                        <td>auth, balance, withdraw, deposit, withdrawanddeposit, cancel</td>
-                        <td>Combined wager+payout endpoint, real/bonus split</td>
-                    </tr>
-                    <tr>
                         <td><strong>AleaPlay</strong></td>
                         <td>Session token (casinoSessionId)</td>
                         <td>Players/{id}/balance, Transactions</td>
@@ -2493,18 +2491,6 @@
                         <td>Game launcher token</td>
                         <td>Auth, Balance, Deposit, Withdrawal, BonusWin, Rollback</td>
                         <td>Player segment tracking, test/real account detection</td>
-                    </tr>
-                    <tr>
-                        <td><strong>QuantSport</strong></td>
-                        <td>Authorization header token</td>
-                        <td>auth, balance, withdraw, deposit</td>
-                        <td>Round management, game repository integration</td>
-                    </tr>
-                    <tr>
-                        <td><strong>BitVille</strong></td>
-                        <td>Token-based</td>
-                        <td>Game listing, session token generation</td>
-                        <td>Crypto-focused, multi-currency support</td>
                     </tr>
                     <tr><td><strong>NetEnt</strong></td><td>SOAP (CallerId + Password)</td><td>withdraw, deposit, rollback, getBalance</td><td>WCF/SOAP service, jackpot contributions, data exchange module, game round management</td></tr>
                     <tr><td><strong>PragmaticPlay</strong></td><td>Token validation</td><td>authenticate, bet, result, balance, endround</td><td>Real/bonus split, freeruns/freespin support, jackpot contributions</td></tr>
@@ -2520,7 +2506,6 @@
                     <tr><td><strong>Ganapati</strong></td><td>JWT (custom validation)</td><td>authenticate, deposit, withdraw</td><td>JWT decryption for PlayerId/SessionId, token expiry handling</td></tr>
                     <tr><td><strong>Cubeia</strong></td><td>URL token parameter</td><td>authenticate/{token}, balance, transact</td><td>Poker and table games, player block validation</td></tr>
                     <tr><td><strong>GaminGenius</strong></td><td>PlayerId parameter</td><td>deposit, withdraw, balance, cancel</td><td>Freerounds bonus mapping, real vs bonus round handling</td></tr>
-                    <tr><td><strong>Aurum</strong></td><td>HTTP Basic Auth</td><td>GET /transactions (CSV export)</td><td>Reconciliation/reporting endpoint, date range filtering (max 3 days)</td></tr>
                     <tr><td><strong>AuthenticGaming</strong></td><td>Token validation</td><td>Single POST with action dispatch (GETBALANCE, ADDTRANSACTION)</td><td>Live roulette from real casinos, 2-hour mobile token expiry</td></tr>
                     <tr><td><strong>DeltaGaming</strong></td><td>SharedSecret + IP whitelist</td><td>auth, deposit, withdraw, bonus</td><td>Bingo and side games, pool betting product type</td></tr>
                     <tr><td><strong>MetricGaming</strong></td><td>Query parameter (PlayerId)</td><td>appendwagerresult, appendwagergoods, cancelwager</td><td>Sportsbook-focused, payout amount validation</td></tr>
@@ -2556,13 +2541,22 @@
                         <td>Authentication, PlaceBet, SettleBet, CashOut, MemberBalance, ReceiveWagers</td>
                         <td>Encryption-based auth (Key + IV), 2-year tokens, Euro odds support</td>
                     </tr>
-                    <tr><td><strong>SBTech</strong></td><td>cust_id query parameter</td><td>balance, add2bet, add2betconfirm</td><td>Full sportsbook platform, pre-match and live betting</td></tr>
                     <tr><td><strong>BetConstruct</strong></td><td>AuthToken (TokenType.BetConstruct)</td><td>BetPlaced, BetResulted</td><td>Sportsbook + live casino, display currency exchange, RG limits enforcement</td></tr>
                     <tr><td><strong>Betby</strong></td><td>Token validation</td><td>bet/make, bet/commit, bet/discard</td><td>AI-driven sportsbook, esports, bet lifecycle management (make/commit/discard)</td></tr>
-                    <tr><td><strong>ScoutFantasy</strong></td><td>JWT Bearer token</td><td>cancelfantasyteam, canceltournament</td><td>Daily fantasy sports, admin role validation, pool/bet-level cancellation</td></tr>
-                    <tr><td><strong>PoolBetting</strong></td><td>Token-based</td><td>Seamless wallet</td><td>Pool betting platform</td></tr>
+                </table>
+
+                <h3>Lotto Providers</h3>
+                <table>
+                    <tr><th>Provider</th><th>Auth Method</th><th>Endpoints</th><th>Features</th></tr>
                     <tr><td><strong>LottoWarehouse</strong></td><td>Admin (no auth)</td><td>Single POST with type dispatch (gametype-update, drawing-update, drawing-winners, drawing-payout-table)</td><td>Lotto game sync, drawing and payout configuration</td></tr>
                     <tr><td><strong>Lottoland</strong></td><td>OAuth Bearer token</td><td>POST /transactions (Debit/Credit/Refund)</td><td>Lottery betting, amounts in cents, drawing instance management</td></tr>
+                    <tr><td><strong>BitVille</strong></td><td>Token-based</td><td>Game listing, session token generation</td><td>Crypto-focused lotto, multi-currency support</td></tr>
+                </table>
+
+                <h3>Fantasy Sports</h3>
+                <table>
+                    <tr><th>Provider</th><th>Auth Method</th><th>Endpoints</th><th>Features</th></tr>
+                    <tr><td><strong>ScoutFantasy</strong></td><td>JWT Bearer token</td><td>CreateFantasyTeam, Winners, CancelFantasyTeam, CancelTournament</td><td>Daily fantasy sports, team creation, winner payouts, admin role validation, pool/bet-level cancellation</td></tr>
                 </table>
 
                 <h3>Payment Integrations</h3>
@@ -4056,7 +4050,7 @@
                     <tr>
                         <td>BitVille Integration</td>
                         <td><span class="status status-ready"><span class="status-dot"></span> Ready</span></td>
-                        <td>Crypto-focused gaming integration with token-based auth</td>
+                        <td>Crypto-focused lotto integration with token-based auth</td>
                     </tr>
                     <tr>
                         <td>Web3 Wallet Connection</td>
@@ -4212,7 +4206,7 @@
                     <tr><td><code>PAM.BL/Exchange/ExchangeService.cs</code></td><td>Fiat + crypto rate management</td></tr>
                     <tr><td><code>PAM.BL/Exchange/Providers/CoinMarketCapExchangeRateProvider.cs</code></td><td>CoinMarketCap API integration</td></tr>
                     <tr><td><code>PAM.Web.Common/Crypto/CryptoHelper.cs</code></td><td>Currency code mappings (XBT&rarr;BTC, etc.)</td></tr>
-                    <tr><td><code>PAM.BL/BitVille/BitVilleSystem.cs</code></td><td>Crypto-focused gaming integration</td></tr>
+                    <tr><td><code>PAM.BL/BitVille/BitVilleSystem.cs</code></td><td>Crypto-focused lotto integration</td></tr>
                     <tr><td><code>PAM.Tests/Casino/CryptoCasinoServiceTest.cs</code></td><td>Unit tests (EUR-to-BTC scenarios)</td></tr>
                 </table>
 
