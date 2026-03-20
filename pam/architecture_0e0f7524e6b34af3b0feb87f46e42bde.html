@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
     <meta name="googlebot" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="favicon.png">
     <title>Wepam — System Documentation</title>
     <style>
         :root {
@@ -4326,23 +4327,46 @@ Examples:
 </div>
 
 <script>
-    // Tab navigation
+    function switchTab(tabId) {
+        // Update sidebar active state
+        document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+        const activeLink = document.querySelector('.sidebar a[data-tab="' + tabId + '"]');
+        if (activeLink) activeLink.classList.add('active');
+
+        // Show target panel
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        const panel = document.getElementById('tab-' + tabId);
+        if (panel) panel.classList.add('active');
+
+        // Update URL hash without scrolling
+        history.replaceState(null, '', '#' + tabId);
+
+        // Scroll main to top
+        document.querySelector('.main').scrollTo(0, 0);
+    }
+
+    // Tab click navigation
     document.querySelectorAll('.sidebar a[data-tab]').forEach(link => {
         link.addEventListener('click', e => {
             e.preventDefault();
-            const tabId = link.dataset.tab;
-
-            // Update sidebar active state
-            document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
-            link.classList.add('active');
-
-            // Show target panel
-            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-            document.getElementById('tab-' + tabId).classList.add('active');
-
-            // Scroll main to top
-            document.querySelector('.main').scrollTo(0, 0);
+            switchTab(link.dataset.tab);
         });
+    });
+
+    // Load tab from URL hash on page load
+    window.addEventListener('DOMContentLoaded', () => {
+        const hash = window.location.hash.replace('#', '');
+        if (hash && document.getElementById('tab-' + hash)) {
+            switchTab(hash);
+        }
+    });
+
+    // Handle browser back/forward
+    window.addEventListener('hashchange', () => {
+        const hash = window.location.hash.replace('#', '');
+        if (hash && document.getElementById('tab-' + hash)) {
+            switchTab(hash);
+        }
     });
 </script>
 
