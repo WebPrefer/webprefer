@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0d3459"/>
+      <stop offset="100%" stop-color="#1968AA"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="900" height="480" rx="16" fill="url(#bgGrad)"/>
+
+  <!-- Title -->
+  <text x="450" y="40" text-anchor="middle" fill="#93c5fd" font-size="11" font-weight="700" letter-spacing="2">COMPLIANCE ARCHITECTURE</text>
+  <text x="450" y="66" text-anchor="middle" fill="white" font-size="18" font-weight="700">Rules Are Data, Not Code</text>
+
+  <!-- OLD WAY (left) -->
+  <rect x="40" y="100" width="380" height="340" rx="12" fill="white" fill-opacity="0.06" stroke="#ef4444" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="230" y="128" text-anchor="middle" fill="#fca5a5" font-size="13" font-weight="700">Before: Code Per Jurisdiction</text>
+
+  <rect x="70" y="148" width="320" height="32" rx="6" fill="#ef4444" opacity="0.15"/>
+  <text x="230" y="169" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="500">if (jurisdiction == "SE") { kycDays = 30; sowThreshold = 5000; }</text>
+
+  <rect x="70" y="188" width="320" height="32" rx="6" fill="#ef4444" opacity="0.15"/>
+  <text x="230" y="209" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="500">if (jurisdiction == "ON") { kycDays = 14; sowThreshold = 3000; }</text>
+
+  <rect x="70" y="228" width="320" height="32" rx="6" fill="#ef4444" opacity="0.15"/>
+  <text x="230" y="249" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="500">if (jurisdiction == "CW") { kycDays = 90; sowThreshold = 10000; }</text>
+
+  <rect x="70" y="268" width="320" height="32" rx="6" fill="#ef4444" opacity="0.1"/>
+  <text x="230" y="289" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="500">if (jurisdiction == "MT") { ... } // TODO</text>
+
+  <!-- Old way consequences -->
+  <text x="230" y="330" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="600">Every new market = deployment</text>
+  <text x="230" y="346" text-anchor="middle" fill="#fca5a5" font-size="10">Regression risk across all markets</text>
+  <text x="230" y="362" text-anchor="middle" fill="#fca5a5" font-size="10">Weeks to add a jurisdiction</text>
+
+  <!-- Arrow -->
+  <text x="450" y="280" text-anchor="middle" fill="white" font-size="28" font-weight="300">→</text>
+
+  <!-- NEW WAY (right) -->
+  <rect x="480" y="100" width="380" height="340" rx="12" fill="white" fill-opacity="0.06" stroke="#16a34a" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="670" y="128" text-anchor="middle" fill="#86efac" font-size="13" font-weight="700">Now: Declarative Configuration</text>
+
+  <!-- Config blocks -->
+  <rect x="510" y="148" width="155" height="110" rx="8" fill="#16a34a" fill-opacity="0.12" stroke="#16a34a" stroke-width="0.5" stroke-opacity="0.3"/>
+  <text x="588" y="168" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">🇸🇪 Sweden</text>
+  <text x="588" y="186" text-anchor="middle" fill="#86efac" font-size="9">KYC: 30 days</text>
+  <text x="588" y="200" text-anchor="middle" fill="#86efac" font-size="9">SOW: 5,000 SEK</text>
+  <text x="588" y="214" text-anchor="middle" fill="#86efac" font-size="9">Deposit limit: configurable</text>
+  <text x="588" y="228" text-anchor="middle" fill="#86efac" font-size="9">Self-exclusion: cross-brand</text>
+  <text x="588" y="242" text-anchor="middle" fill="#86efac" font-size="9">Reality check: mandatory</text>
+
+  <rect x="690" y="148" width="155" height="110" rx="8" fill="#16a34a" fill-opacity="0.12" stroke="#16a34a" stroke-width="0.5" stroke-opacity="0.3"/>
+  <text x="768" y="168" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">🇨🇦 Ontario</text>
+  <text x="768" y="186" text-anchor="middle" fill="#86efac" font-size="9">KYC: 14 days</text>
+  <text x="768" y="200" text-anchor="middle" fill="#86efac" font-size="9">SOW: 3,000 CAD</text>
+  <text x="768" y="214" text-anchor="middle" fill="#86efac" font-size="9">Deposit limit: mandatory</text>
+  <text x="768" y="228" text-anchor="middle" fill="#86efac" font-size="9">Self-exclusion: province-wide</text>
+  <text x="768" y="242" text-anchor="middle" fill="#86efac" font-size="9">Reality check: opt-in</text>
+
+  <rect x="510" y="270" width="155" height="80" rx="8" fill="#16a34a" fill-opacity="0.12" stroke="#16a34a" stroke-width="0.5" stroke-opacity="0.3"/>
+  <text x="588" y="290" text-anchor="middle" fill="#86efac" font-size="11" font-weight="700">🇨🇼 Curacao</text>
+  <text x="588" y="308" text-anchor="middle" fill="#86efac" font-size="9">KYC: 90 days</text>
+  <text x="588" y="322" text-anchor="middle" fill="#86efac" font-size="9">SOW: 10,000 USD</text>
+  <text x="588" y="336" text-anchor="middle" fill="#86efac" font-size="9">Self-exclusion: brand-local</text>
+
+  <rect x="690" y="270" width="155" height="80" rx="8" fill="#3b82f6" fill-opacity="0.12" stroke="#3b82f6" stroke-width="0.5" stroke-opacity="0.3"/>
+  <text x="768" y="290" text-anchor="middle" fill="#93c5fd" font-size="11" font-weight="700">+ New Market</text>
+  <text x="768" y="310" text-anchor="middle" fill="#93c5fd" font-size="9">Add configuration</text>
+  <text x="768" y="324" text-anchor="middle" fill="#93c5fd" font-size="9">No deployment needed</text>
+  <text x="768" y="338" text-anchor="middle" fill="#93c5fd" font-size="9">No regression risk</text>
+
+  <!-- New way consequences -->
+  <text x="670" y="385" text-anchor="middle" fill="#86efac" font-size="10" font-weight="600">Regulatory change = config update</text>
+  <text x="670" y="401" text-anchor="middle" fill="#86efac" font-size="10">Zero risk to other jurisdictions</text>
+  <text x="670" y="417" text-anchor="middle" fill="#86efac" font-size="10">Hours, not weeks</text>
+
+  <!-- Footer -->
+  <text x="450" y="465" text-anchor="middle" fill="#93c5fd" font-size="10" opacity="0.6">webprefer.com — PAM Platform</text>
+</svg>

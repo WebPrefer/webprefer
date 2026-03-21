@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="WebPrefer — Enterprise iGaming platform. PAM, CMS, BeAware and streaming solutions built for operators who can't afford to guess.">
+  <title>WebPrefer — PAM Platform for iGaming Operators</title>
+  <meta property="og:title" content="WebPrefer — PAM Platform for iGaming Operators">
+  <meta property="og:description" content="10+ years. 18,000+ commits. 5 regulated markets. Every feature has a production scar behind it.">
+  <meta property="og:image" content="https://webprefer.com/screenshot.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://webprefer.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="WebPrefer — PAM Platform for iGaming Operators">
+  <meta name="twitter:description" content="10+ years. 18,000+ commits. 5 regulated markets. Every feature has a production scar behind it.">
+  <meta name="twitter:image" content="https://webprefer.com/screenshot.png">
+  <meta name="theme-color" content="#1968AA">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HC29B7MQF3"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HC29B7MQF3');</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { DEFAULT: '#1968AA', dark: '#134f82', darker: '#0d3459', light: '#2a7ec4' },
+          },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    .gradient-hero { background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%); }
+    .gradient-dark { background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%); }
+    .card-hover { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+    .stat-number { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1; }
+    .section-label { letter-spacing: 0.12em; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+    .nav-link { transition: color 0.15s ease; }
+    img { max-width: 100%; height: auto; }
+    section[id] { scroll-margin-top: 80px; }
+  </style>
+</head>
+<body class="font-sans bg-white text-gray-900 antialiased">
+
+  <!-- NAV -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2">
+        <img src="images/logo.svg" alt="WebPrefer" class="h-8 w-auto">
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#platform" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Platform</a>
+        <a href="#products" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Products</a>
+        <a href="#proof" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Customers</a>
+        <a href="#partners" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Partners</a>
+        <a href="#contact" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Contact</a>
+        <a href="articles/index.html" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Articles</a>
+      </div>
+      <a href="#contact" class="bg-brand hover:bg-[#134f82] text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors hidden md:inline-flex">
+        Book a Demo
+      </a>
+      <!-- Mobile hamburger -->
+      <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+        <svg id="icon-open" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </nav>
+    <!-- Mobile menu drawer -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-1">
+      <a href="#platform" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Platform</a>
+      <a href="#products" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Products</a>
+      <a href="#proof" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Customers</a>
+      <a href="#partners" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Partners</a>
+      <a href="#contact" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Contact</a>
+      <a href="articles/index.html" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Articles</a>
+      <a href="#contact" class="block mt-2 bg-brand text-white text-sm font-semibold px-5 py-2.5 rounded-lg text-center mobile-nav-link">Book a Demo</a>
+    </div>
+  </header>
+  <script>
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('icon-open');
+    const iconClose = document.getElementById('icon-close');
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+      iconOpen.classList.toggle('hidden');
+      iconClose.classList.toggle('hidden');
+    });
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        menu.classList.add('hidden');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+      });
+    });
+  </script>
+
+  <!-- HERO -->
+  <section class="gradient-hero pt-32 pb-24 px-6 lg:px-8 text-white relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute top-0 right-0 w-96 h-96 rounded-full bg-white/20 blur-3xl translate-x-1/2 -translate-y-1/2"></div>
+      <div class="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-blue-300/30 blur-3xl -translate-x-1/3 translate-y-1/3"></div>
+    </div>
+    <div class="max-w-7xl mx-auto relative">
+      <div class="max-w-3xl">
+        <div class="section-label text-blue-300 mb-4">Player Account Management</div>
+        <h1 class="text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
+          Built for operators<br>who can't afford to guess.
+        </h1>
+        <p class="text-xl text-blue-100 leading-relaxed mb-10 max-w-2xl">
+          WebPrefer's PAM platform has been running live gaming operations since 2013.
+          10+ years. 18,000+ commits. 5 regulated markets. Every feature has a production
+          scar behind it.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="#contact" class="bg-white text-brand font-bold px-7 py-3.5 rounded-lg hover:bg-blue-50 transition-colors text-sm">
+            Book a Demo
+          </a>
+          <a href="#platform" class="border border-white/40 text-white font-semibold px-7 py-3.5 rounded-lg hover:bg-white/10 transition-colors text-sm">
+            See the Platform
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero: Animated Dashboard -->
+    <div class="max-w-7xl mx-auto mt-16 relative">
+      <div class="rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-[#0c1222]">
+        <!-- Browser chrome -->
+        <div class="flex items-center gap-2 px-4 py-2.5 bg-[#0a0f1c] border-b border-white/5">
+          <div class="flex gap-1.5">
+            <div class="w-3 h-3 rounded-full bg-[#ff5f57]"></div>
+            <div class="w-3 h-3 rounded-full bg-[#febc2e]"></div>
+            <div class="w-3 h-3 rounded-full bg-[#28c840]"></div>
+          </div>
+          <div class="flex-1 text-center">
+            <div class="inline-flex items-center gap-2 bg-white/5 rounded-md px-3 py-1 text-xs text-gray-500">
+              <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+              pam.webprefer.com
+            </div>
+          </div>
+        </div>
+
+        <div class="flex min-h-[380px] lg:min-h-[420px]">
+          <!-- Sidebar -->
+          <div class="hidden sm:flex flex-col w-48 bg-[#0a0f1c] border-r border-white/5 py-4 px-3 gap-0.5">
+            <div class="flex items-center gap-2 px-3 py-2 rounded-lg bg-brand/20 text-brand text-xs font-semibold">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0h4"/></svg>
+              Dashboard
+            </div>
+            <div class="flex items-center gap-2 px-3 py-2 text-gray-500 text-xs"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>Reporting</div>
+            <div class="flex items-center gap-2 px-3 py-2 text-gray-500 text-xs"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>Players</div>
+            <div class="flex items-center gap-2 px-3 py-2 text-gray-500 text-xs"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>BeAware</div>
+            <div class="flex items-center gap-2 px-3 py-2 text-gray-500 text-xs"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg>Bonuses</div>
+            <div class="flex items-center gap-2 px-3 py-2 text-gray-500 text-xs"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>Banking</div>
+            <div class="flex items-center gap-2 px-3 py-2 text-gray-500 text-xs"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/></svg>Casino</div>
+            <div class="flex items-center gap-2 px-3 py-2 text-gray-500 text-xs"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>KYC</div>
+            <div class="flex items-center gap-2 px-3 py-2 text-gray-500 text-xs"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Settings</div>
+          </div>
+
+          <!-- Main content -->
+          <div class="flex-1 p-4 lg:p-6 space-y-4">
+            <!-- Top bar -->
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-3">
+                <h3 class="text-white text-sm font-bold">Dashboard</h3>
+                <div class="flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-2.5 py-0.5">
+                  <div class="w-1.5 h-1.5 rounded-full bg-emerald-400 hero-pulse"></div>
+                  <span class="text-emerald-400 text-[10px] font-semibold">LIVE</span>
+                </div>
+              </div>
+              <div class="text-gray-600 text-[10px]">Last updated: just now</div>
+            </div>
+
+            <!-- Stat cards -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+              <div class="bg-white/[0.03] border border-white/5 rounded-xl p-3.5">
+                <div class="text-gray-500 text-[10px] font-medium mb-1">Active Players</div>
+                <div class="text-white text-lg font-bold" data-counter="2847">0</div>
+                <div class="flex items-center gap-1 mt-1">
+                  <svg class="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                  <span class="text-emerald-400 text-[10px] font-semibold">12.4%</span>
+                </div>
+                <!-- Mini chart -->
+                <svg class="w-full h-8 mt-2" viewBox="0 0 100 30" preserveAspectRatio="none">
+                  <polyline points="0,25 10,22 20,18 30,20 40,15 50,17 60,12 70,10 80,8 90,6 100,4" fill="none" stroke="#34d399" stroke-width="1.5" stroke-linecap="round"/>
+                  <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#34d399" stop-opacity="0.2"/><stop offset="100%" stop-color="#34d399" stop-opacity="0"/></linearGradient>
+                  <polyline points="0,25 10,22 20,18 30,20 40,15 50,17 60,12 70,10 80,8 90,6 100,4 100,30 0,30" fill="url(#g1)"/>
+                </svg>
+              </div>
+              <div class="bg-white/[0.03] border border-white/5 rounded-xl p-3.5">
+                <div class="text-gray-500 text-[10px] font-medium mb-1">Deposits Today</div>
+                <div class="flex items-baseline gap-1">
+                  <span class="text-white text-lg font-bold" data-counter="46389">0</span>
+                  <span class="text-gray-600 text-[10px]">EUR</span>
+                </div>
+                <div class="flex items-center gap-1 mt-1">
+                  <svg class="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                  <span class="text-emerald-400 text-[10px] font-semibold">8.2%</span>
+                </div>
+                <svg class="w-full h-8 mt-2" viewBox="0 0 100 30" preserveAspectRatio="none">
+                  <polyline points="0,20 10,22 20,19 30,14 40,16 50,11 60,13 70,9 80,7 90,10 100,5" fill="none" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round"/>
+                  <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#60a5fa" stop-opacity="0.2"/><stop offset="100%" stop-color="#60a5fa" stop-opacity="0"/></linearGradient>
+                  <polyline points="0,20 10,22 20,19 30,14 40,16 50,11 60,13 70,9 80,7 90,10 100,5 100,30 0,30" fill="url(#g2)"/>
+                </svg>
+              </div>
+              <div class="bg-white/[0.03] border border-white/5 rounded-xl p-3.5">
+                <div class="text-gray-500 text-[10px] font-medium mb-1">Game Rounds</div>
+                <div class="text-white text-lg font-bold" data-counter="18420">0</div>
+                <div class="flex items-center gap-1 mt-1">
+                  <svg class="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                  <span class="text-emerald-400 text-[10px] font-semibold">23.1%</span>
+                </div>
+                <svg class="w-full h-8 mt-2" viewBox="0 0 100 30" preserveAspectRatio="none">
+                  <polyline points="0,22 10,18 20,20 30,15 40,17 50,12 60,14 70,8 80,10 90,6 100,3" fill="none" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round"/>
+                  <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a78bfa" stop-opacity="0.2"/><stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/></linearGradient>
+                  <polyline points="0,22 10,18 20,20 30,15 40,17 50,12 60,14 70,8 80,10 90,6 100,3 100,30 0,30" fill="url(#g3)"/>
+                </svg>
+              </div>
+              <div class="bg-white/[0.03] border border-white/5 rounded-xl p-3.5">
+                <div class="text-gray-500 text-[10px] font-medium mb-1">BeAware Rules</div>
+                <div class="text-white text-lg font-bold" data-counter="342">0</div>
+                <div class="flex items-center gap-1 mt-1">
+                  <div class="w-1.5 h-1.5 rounded-full bg-emerald-400 hero-pulse"></div>
+                  <span class="text-gray-500 text-[10px]">all firing</span>
+                </div>
+                <svg class="w-full h-8 mt-2" viewBox="0 0 100 30" preserveAspectRatio="none">
+                  <polyline points="0,15 10,14 20,15 30,14 40,15 50,13 60,14 70,13 80,14 90,13 100,14" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+                  <linearGradient id="g4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fbbf24" stop-opacity="0.15"/><stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/></linearGradient>
+                  <polyline points="0,15 10,14 20,15 30,14 40,15 50,13 60,14 70,13 80,14 90,13 100,14 100,30 0,30" fill="url(#g4)"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Live activity feed -->
+            <div class="grid lg:grid-cols-3 gap-3">
+              <div class="lg:col-span-2 bg-white/[0.03] border border-white/5 rounded-xl p-3.5">
+                <div class="text-gray-500 text-[10px] font-semibold uppercase tracking-wider mb-3">Live Activity</div>
+                <div class="space-y-2 overflow-hidden max-h-[120px]" id="hero-feed">
+                  <div class="flex items-center gap-2 text-[11px] feed-row"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0"></div><span class="text-gray-400">Deposit</span><span class="text-white font-medium">500 SEK</span><span class="text-gray-600">Player #8412</span><span class="text-gray-700 ml-auto">2s ago</span></div>
+                  <div class="flex items-center gap-2 text-[11px] feed-row"><div class="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0"></div><span class="text-gray-400">Game Round</span><span class="text-white font-medium">Win 1,240 EUR</span><span class="text-gray-600">PlayStar</span><span class="text-gray-700 ml-auto">5s ago</span></div>
+                  <div class="flex items-center gap-2 text-[11px] feed-row"><div class="w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0"></div><span class="text-gray-400">BeAware</span><span class="text-white font-medium">SOW flag triggered</span><span class="text-gray-600">SE jurisdiction</span><span class="text-gray-700 ml-auto">8s ago</span></div>
+                  <div class="flex items-center gap-2 text-[11px] feed-row"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0"></div><span class="text-gray-400">KYC</span><span class="text-white font-medium">Verified</span><span class="text-gray-600">Player #2091</span><span class="text-gray-700 ml-auto">12s ago</span></div>
+                  <div class="flex items-center gap-2 text-[11px] feed-row"><div class="w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0"></div><span class="text-gray-400">Bonus</span><span class="text-white font-medium">Welcome 100% credited</span><span class="text-gray-600">Player #9337</span><span class="text-gray-700 ml-auto">15s ago</span></div>
+                  <div class="flex items-center gap-2 text-[11px] feed-row"><div class="w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0"></div><span class="text-gray-400">Withdrawal</span><span class="text-white font-medium">2,100 EUR approved</span><span class="text-gray-600">PaymentIQ</span><span class="text-gray-700 ml-auto">18s ago</span></div>
+                </div>
+              </div>
+              <div class="bg-white/[0.03] border border-white/5 rounded-xl p-3.5">
+                <div class="text-gray-500 text-[10px] font-semibold uppercase tracking-wider mb-3">Integrations</div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-gray-400 text-[10px]">PaymentIQ</span></div>
+                  <div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-gray-400 text-[10px]">SportTech</span></div>
+                  <div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-gray-400 text-[10px]">PlayStar</span></div>
+                  <div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-gray-400 text-[10px]">FastTrack</span></div>
+                  <div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-gray-400 text-[10px]">SendGrid</span></div>
+                  <div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-gray-400 text-[10px]">Twilio</span></div>
+                  <div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-gray-400 text-[10px]">AleaPlay</span></div>
+                  <div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-gray-400 text-[10px]">DevCode ID</span></div>
+                  <div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-gray-400 text-[10px]">WorldLine</span></div>
+                  <div class="flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-gray-600"></div><span class="text-gray-600 text-[10px]">+41 more</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero animation script -->
+    <script>
+    (function() {
+      // Animate counters
+      document.querySelectorAll('[data-counter]').forEach(el => {
+        const target = parseInt(el.dataset.counter);
+        const duration = 2000;
+        const start = performance.now();
+        function update(now) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.floor(target * eased).toLocaleString();
+          if (progress < 1) requestAnimationFrame(update);
+        }
+        const observer = new IntersectionObserver(entries => {
+          if (entries[0].isIntersecting) { requestAnimationFrame(update); observer.disconnect(); }
+        });
+        observer.observe(el);
+      });
+
+      // Pulse animation
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes heroPulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+        .hero-pulse { animation: heroPulse 2s ease-in-out infinite; }
+        @keyframes feedSlide { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+        .feed-row { animation: feedSlide 0.3s ease-out both; }
+      `;
+      document.head.appendChild(style);
+    })();
+    </script>
+  </section>
+
+  <!-- STATS -->
+  <section class="py-16 px-6 lg:px-8 bg-gray-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="text-center">
+          <div class="stat-number text-brand">10+</div>
+          <div class="text-sm text-gray-500 mt-2 font-medium">Years in production</div>
+        </div>
+        <div class="text-center">
+          <div class="stat-number text-brand">18K+</div>
+          <div class="text-sm text-gray-500 mt-2 font-medium">Commits shipped</div>
+        </div>
+        <div class="text-center">
+          <div class="stat-number text-brand">5</div>
+          <div class="text-sm text-gray-500 mt-2 font-medium">Regulated markets</div>
+        </div>
+        <div class="text-center">
+          <div class="stat-number text-brand">50+</div>
+          <div class="text-sm text-gray-500 mt-2 font-medium">Provider integrations</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLATFORM OVERVIEW -->
+  <section id="platform" class="py-24 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="max-w-2xl mb-16">
+        <div class="section-label text-brand mb-3">The Platform</div>
+        <h2 class="text-4xl font-bold mb-5">One platform. Every layer of a gaming operation.</h2>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          PAM isn't a collection of tools stitched together. It's a single, coherent system where
+          every part knows about the others — without being coupled to them.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-12 items-center mb-20">
+        <div>
+          <h3 class="text-2xl font-bold mb-4">Player-facing API</h3>
+          <p class="text-gray-600 leading-relaxed mb-6">
+            Registration, authentication, deposits, withdrawals, game launches, and session
+            management — built for high concurrency. Rate limiting, IP blocking, and fraud
+            detection enforced at the request level, before any business logic executes.
+          </p>
+          <hr class="border-gray-200 my-6">
+          <h3 class="text-2xl font-bold mb-4">Back-office portal</h3>
+          <p class="text-gray-600 leading-relaxed">
+            Complete visibility into every player, transaction, bonus, and compliance event.
+            Every action is logged with operator identity and timestamp. Nothing happens
+            without an audit trail.
+          </p>
+        </div>
+        <!-- Architecture layers diagram -->
+        <div class="rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-[#0c1222] p-5 lg:p-6">
+          <div class="space-y-2.5">
+            <!-- Client layer -->
+            <div class="bg-white/[0.04] border border-white/10 rounded-xl p-3.5">
+              <div class="text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-2">Client</div>
+              <div class="flex flex-wrap gap-2">
+                <span class="bg-blue-500/10 text-blue-400 text-[10px] font-medium px-2.5 py-1 rounded-md border border-blue-500/20">Player Browser</span>
+                <span class="bg-blue-500/10 text-blue-400 text-[10px] font-medium px-2.5 py-1 rounded-md border border-blue-500/20">Mobile App</span>
+                <span class="bg-blue-500/10 text-blue-400 text-[10px] font-medium px-2.5 py-1 rounded-md border border-blue-500/20">Back-office UI</span>
+              </div>
+            </div>
+            <div class="text-center text-gray-600 text-xs">↓ CORS + Cookies / JWT ↓</div>
+            <!-- API layer -->
+            <div class="bg-white/[0.04] border border-white/10 rounded-xl p-3.5">
+              <div class="text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-2">API &amp; Back-Office</div>
+              <div class="grid grid-cols-2 gap-2">
+                <div class="bg-brand/10 border border-brand/20 rounded-lg p-2.5">
+                  <div class="text-brand text-[11px] font-bold">Player API</div>
+                  <div class="text-gray-500 text-[9px] mt-1">Secure · Real-time · Multi-brand</div>
+                  <div class="text-gray-600 text-[9px]">Rate limiting · Fraud detection</div>
+                </div>
+                <div class="bg-brand/10 border border-brand/20 rounded-lg p-2.5">
+                  <div class="text-brand text-[11px] font-bold">Operator Portal</div>
+                  <div class="text-gray-500 text-[9px] mt-1">Full visibility · Role-based access</div>
+                  <div class="text-gray-600 text-[9px]">Audit trail on every action</div>
+                </div>
+              </div>
+            </div>
+            <div class="text-center text-gray-600 text-xs">↓</div>
+            <!-- BL layer -->
+            <div class="bg-white/[0.04] border border-white/10 rounded-xl p-3.5">
+              <div class="text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-2">Platform Modules</div>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="bg-emerald-500/10 text-emerald-400 text-[9px] px-2 py-0.5 rounded border border-emerald-500/15">Players</span>
+                <span class="bg-emerald-500/10 text-emerald-400 text-[9px] px-2 py-0.5 rounded border border-emerald-500/15">Banking</span>
+                <span class="bg-emerald-500/10 text-emerald-400 text-[9px] px-2 py-0.5 rounded border border-emerald-500/15">Bonus</span>
+                <span class="bg-emerald-500/10 text-emerald-400 text-[9px] px-2 py-0.5 rounded border border-emerald-500/15">Casino</span>
+                <span class="bg-emerald-500/10 text-emerald-400 text-[9px] px-2 py-0.5 rounded border border-emerald-500/15">KYC</span>
+                <span class="bg-emerald-500/10 text-emerald-400 text-[9px] px-2 py-0.5 rounded border border-emerald-500/15">Wallet</span>
+                <span class="bg-emerald-500/10 text-emerald-400 text-[9px] px-2 py-0.5 rounded border border-emerald-500/15">Sportsbook</span>
+                <span class="bg-emerald-500/10 text-emerald-400 text-[9px] px-2 py-0.5 rounded border border-emerald-500/15">Resp. Gaming</span>
+                <span class="bg-gray-500/10 text-gray-500 text-[9px] px-2 py-0.5 rounded border border-gray-500/15">+32 more</span>
+              </div>
+            </div>
+            <div class="text-center text-gray-600 text-xs">↓</div>
+            <!-- Infrastructure -->
+            <div class="bg-white/[0.04] border border-white/10 rounded-xl p-3.5">
+              <div class="text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-2">Infrastructure</div>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="bg-amber-500/10 text-amber-400 text-[9px] px-2 py-0.5 rounded border border-amber-500/15">SQL Server</span>
+                <span class="bg-amber-500/10 text-amber-400 text-[9px] px-2 py-0.5 rounded border border-amber-500/15">RabbitMQ</span>
+                <span class="bg-amber-500/10 text-amber-400 text-[9px] px-2 py-0.5 rounded border border-amber-500/15">Redis</span>
+                <span class="bg-amber-500/10 text-amber-400 text-[9px] px-2 py-0.5 rounded border border-amber-500/15">SignalR</span>
+                <span class="bg-amber-500/10 text-amber-400 text-[9px] px-2 py-0.5 rounded border border-amber-500/15">OpenTelemetry</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <!-- Player card + segmentation diagram -->
+        <div class="rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-[#0c1222] p-5 lg:p-6 order-2 lg:order-1">
+          <!-- Player card -->
+          <div class="bg-white/[0.04] border border-white/10 rounded-xl p-4 mb-3">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-9 h-9 rounded-full bg-brand/20 flex items-center justify-center text-brand text-sm font-bold">JD</div>
+              <div>
+                <div class="text-white text-sm font-semibold">John D. <span class="text-[9px] text-gray-500 font-normal ml-1">#4821</span></div>
+                <div class="text-gray-500 text-[10px]">Sweden · Registered 14 Mar 2024</div>
+              </div>
+              <div class="ml-auto flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-2 py-0.5">
+                <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
+                <span class="text-emerald-400 text-[9px] font-semibold">KYC Verified</span>
+              </div>
+            </div>
+            <div class="grid grid-cols-3 gap-2">
+              <div class="bg-white/[0.03] rounded-lg p-2 text-center">
+                <div class="text-white text-sm font-bold">2,340</div>
+                <div class="text-gray-600 text-[9px]">Balance SEK</div>
+              </div>
+              <div class="bg-white/[0.03] rounded-lg p-2 text-center">
+                <div class="text-white text-sm font-bold">47</div>
+                <div class="text-gray-600 text-[9px]">Deposits</div>
+              </div>
+              <div class="bg-white/[0.03] rounded-lg p-2 text-center">
+                <div class="text-white text-sm font-bold">312</div>
+                <div class="text-gray-600 text-[9px]">Game rounds</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Segments -->
+          <div class="bg-white/[0.04] border border-white/10 rounded-xl p-4 mb-3">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-2.5">Player Segments</div>
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between bg-white/[0.03] rounded-lg px-3 py-2">
+                <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-brand"></div><span class="text-white text-[11px] font-medium">High Value</span></div>
+                <span class="text-gray-500 text-[9px]">Lifetime deposit &gt; 10,000</span>
+              </div>
+              <div class="flex items-center justify-between bg-white/[0.03] rounded-lg px-3 py-2">
+                <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-emerald-400"></div><span class="text-white text-[11px] font-medium">Active Last 7d</span></div>
+                <span class="text-gray-500 text-[9px]">Last login &lt; 7 days</span>
+              </div>
+              <div class="flex items-center justify-between bg-white/[0.03] rounded-lg px-3 py-2">
+                <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-amber-400"></div><span class="text-white text-[11px] font-medium">Bonus Eligible</span></div>
+                <span class="text-gray-500 text-[9px]">Wagering complete, opted in</span>
+              </div>
+              <div class="flex items-center justify-between bg-white/[0.03] rounded-lg px-3 py-2">
+                <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-purple-400"></div><span class="text-white text-[11px] font-medium">SE Jurisdiction</span></div>
+                <span class="text-gray-500 text-[9px]">Swedish compliance rules</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active bonus -->
+          <div class="bg-white/[0.04] border border-white/10 rounded-xl p-4">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-2.5">Active Bonus</div>
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-white text-[11px] font-medium">Welcome 100% Match</div>
+                <div class="text-gray-500 text-[9px]">Wagering: 24/35x · Expires in 18 days</div>
+              </div>
+              <div class="text-right">
+                <div class="text-emerald-400 text-sm font-bold">500 SEK</div>
+                <div class="text-gray-600 text-[9px]">bonus balance</div>
+              </div>
+            </div>
+            <div class="mt-2 bg-white/5 rounded-full h-1.5 overflow-hidden">
+              <div class="bg-brand h-full rounded-full" style="width:68%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="order-1 lg:order-2">
+          <h3 class="text-2xl font-bold mb-4">Player segmentation & groups</h3>
+          <p class="text-gray-600 leading-relaxed mb-6">
+            Define player segments by any combination of attributes — deposit history, activity
+            patterns, KYC status, jurisdiction, bonus tier. Target with precision. Export for
+            analysis. Apply compliance rules at the segment level.
+          </p>
+          <h3 class="text-2xl font-bold mb-4">Bonus & reward engine</h3>
+          <p class="text-gray-600 leading-relaxed">
+            Complex wagering policies, freespin lifecycles, withdraw-cancellation logic,
+            cashback calculations — all configurable. The industry's most common source of
+            edge cases, handled.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTION SCARS — Problems we solved -->
+  <section class="py-24 px-6 lg:px-8 gradient-dark text-white">
+    <div class="max-w-7xl mx-auto">
+      <div class="max-w-2xl mb-16">
+        <div class="section-label text-blue-400 mb-3">Built From Real Problems</div>
+        <h2 class="text-4xl font-bold mb-5">Every feature has a production scar behind it.</h2>
+        <p class="text-lg text-blue-200 leading-relaxed">
+          None of this was designed on a whiteboard. It was built by watching what breaks
+          in production, fixing it, and making sure it couldn't break the same way again.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-7 card-hover">
+          <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold mb-2">Deadlocks in high-concurrency wallet operations</h3>
+          <p class="text-blue-200 text-sm leading-relaxed">
+            We built an optimistic transaction pattern with automatic retry logic — tested under real promotion traffic, not hypothetical load tests.
+          </p>
+        </div>
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-7 card-hover">
+          <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold mb-2">Concurrent duplicate wallet creation</h3>
+          <p class="text-blue-200 text-sm leading-relaxed">
+            Fixed at the database layer, not papered over with a try/catch. The constraint lives where it can't be bypassed.
+          </p>
+        </div>
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-7 card-hover">
+          <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          </div>
+          <h3 class="text-lg font-bold mb-2">Audit log queries choking on large player groups</h3>
+          <p class="text-blue-200 text-sm leading-relaxed">
+            We profiled, indexed, and rewrote the query path — not the ORM abstraction. Back-office stays fast at scale.
+          </p>
+        </div>
+
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-7 card-hover">
+          <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/></svg>
+          </div>
+          <h3 class="text-lg font-bold mb-2">Cross-jurisdiction compliance without custom code per market</h3>
+          <p class="text-blue-200 text-sm leading-relaxed">
+            KYC timelines, SOW triggers, self-exclusion rules — all declarative configuration. Adding a market is not a deployment.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="products" class="py-24 px-6 lg:px-8 bg-gray-50">
+    <div class="max-w-7xl mx-auto">
+      <div class="max-w-2xl mb-16">
+        <div class="section-label text-brand mb-3">Products</div>
+        <h2 class="text-4xl font-bold mb-5">Three products. One coherent platform.</h2>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          A PAM alone doesn't retain players. WebPrefer's full suite covers
+          operations, content, and engagement — all from the same team.
+        </p>
+      </div>
+
+      <!-- PAM -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-8">
+        <div class="grid lg:grid-cols-2">
+          <div class="p-10 lg:p-14 flex flex-col justify-center">
+            <div class="section-label text-brand mb-4">PAM</div>
+            <h3 class="text-3xl font-bold mb-5">Player Account Management</h3>
+            <p class="text-gray-600 leading-relaxed mb-8">
+              The operational core. Multi-tenant, multi-jurisdiction, multi-brand. Handles
+              player accounts, wallets, payments, bonuses, KYC, and back-office administration
+              across all your brands from a single deployment.
+            </p>
+            <ul class="space-y-3 text-sm text-gray-600">
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Real-time wallet with SignalR balance push</li>
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> 40+ business modules — banking, casino, sportsbook, bingo, KYC, CRM</li>
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> RBAC permissions down to controller and action level</li>
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Live in 5 regulated markets</li>
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Built on .NET 10, SQL Server, Redis, RabbitMQ</li>
+            </ul>
+          </div>
+          <!-- PAM mini dashboard -->
+          <div class="bg-[#0c1222] flex items-center p-6 lg:p-8">
+            <div class="w-full space-y-3">
+              <div class="flex items-center gap-2 mb-4">
+                <div class="text-white text-xs font-bold">Player Overview</div>
+                <div class="flex items-center gap-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-2 py-0.5 ml-auto"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400 hero-pulse"></div><span class="text-emerald-400 text-[9px] font-semibold">LIVE</span></div>
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3"><div class="text-gray-500 text-[9px]">Active Sessions</div><div class="text-white text-base font-bold">1,247</div></div>
+                <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3"><div class="text-gray-500 text-[9px]">Today's Revenue</div><div class="text-white text-base font-bold">€34,829</div></div>
+                <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3"><div class="text-gray-500 text-[9px]">KYC Pending</div><div class="text-amber-400 text-base font-bold">12</div></div>
+                <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3"><div class="text-gray-500 text-[9px]">Brands Online</div><div class="text-emerald-400 text-base font-bold">3/3</div></div>
+              </div>
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+                <div class="text-gray-500 text-[9px] mb-2">Jurisdictions</div>
+                <div class="flex flex-wrap gap-1.5">
+                  <span class="bg-emerald-500/10 text-emerald-400 text-[9px] px-2 py-0.5 rounded border border-emerald-500/15">🇸🇪 Sweden</span>
+                  <span class="bg-emerald-500/10 text-emerald-400 text-[9px] px-2 py-0.5 rounded border border-emerald-500/15">🇨🇦 Ontario</span>
+                  <span class="bg-emerald-500/10 text-emerald-400 text-[9px] px-2 py-0.5 rounded border border-emerald-500/15">🇨🇼 Curacao</span>
+                  <span class="bg-emerald-500/10 text-emerald-400 text-[9px] px-2 py-0.5 rounded border border-emerald-500/15">🇲🇹 Malta</span>
+                  <span class="bg-blue-500/10 text-blue-400 text-[9px] px-2 py-0.5 rounded border border-blue-500/15">+ more</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BeAware -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-8">
+        <div class="grid lg:grid-cols-2">
+          <!-- BeAware rule tree mini -->
+          <div class="bg-[#0c1222] flex items-center p-6 lg:p-8 order-2 lg:order-1">
+            <div class="w-full space-y-2.5">
+              <div class="text-white text-xs font-bold mb-3">Rule Tree — Active</div>
+              <!-- Trigger -->
+              <div class="bg-amber-500/10 border border-amber-500/20 rounded-lg p-2.5 flex items-center gap-2">
+                <svg class="w-4 h-4 text-amber-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                <div><div class="text-amber-400 text-[10px] font-bold">EVENT: Deposit Completed</div><div class="text-gray-500 text-[9px]">Any brand · Any amount</div></div>
+              </div>
+              <div class="text-center text-gray-600 text-[10px]">↓ evaluate conditions</div>
+              <!-- Conditions -->
+              <div class="grid grid-cols-2 gap-2">
+                <div class="bg-purple-500/10 border border-purple-500/20 rounded-lg p-2.5">
+                  <div class="text-purple-400 text-[10px] font-bold">IF amount &gt; 5,000</div>
+                  <div class="text-gray-500 text-[9px]">Sweden jurisdiction</div>
+                </div>
+                <div class="bg-purple-500/10 border border-purple-500/20 rounded-lg p-2.5">
+                  <div class="text-purple-400 text-[10px] font-bold">IF first deposit</div>
+                  <div class="text-gray-500 text-[9px]">Bonus opted in</div>
+                </div>
+              </div>
+              <div class="text-center text-gray-600 text-[10px]">↓ execute actions</div>
+              <!-- Actions -->
+              <div class="space-y-1.5">
+                <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-2.5 py-1.5 flex items-center gap-2">
+                  <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
+                  <span class="text-emerald-400 text-[10px]">Flag SOW review</span>
+                </div>
+                <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-2.5 py-1.5 flex items-center gap-2">
+                  <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
+                  <span class="text-emerald-400 text-[10px]">Credit welcome bonus 100%</span>
+                </div>
+                <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-2.5 py-1.5 flex items-center gap-2">
+                  <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
+                  <span class="text-emerald-400 text-[10px]">Send confirmation email</span>
+                </div>
+                <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-2.5 py-1.5 flex items-center gap-2">
+                  <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
+                  <span class="text-emerald-400 text-[10px]">Update CRM segment</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="p-10 lg:p-14 flex flex-col justify-center order-1 lg:order-2">
+            <div class="section-label text-brand mb-4">BeAware</div>
+            <h3 class="text-3xl font-bold mb-5">Behavior Engine</h3>
+            <p class="text-gray-600 leading-relaxed mb-8">
+              The system that watches everything a player does and decides what happens next.
+              Configurable rule trees across multiple brands, jurisdictions, and event types —
+              no code changes, no deployments, just configuration.
+            </p>
+            <ul class="space-y-3 text-sm text-gray-600">
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Deposit thresholds → bonus tiers, SOW flags, emails</li>
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Loss pattern detection → responsible gaming prompts</li>
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> KYC completion → automatic limit unlocks</li>
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Rules fire in real time — not on the next scheduled job</li>
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Multi-brand, multi-jurisdiction, parallel execution</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- CMS -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-8">
+        <div class="grid lg:grid-cols-2">
+          <div class="p-10 lg:p-14 flex flex-col justify-center">
+            <div class="section-label text-brand mb-4">CMS</div>
+            <h3 class="text-3xl font-bold mb-5">Content Management System</h3>
+            <p class="text-gray-600 leading-relaxed mb-8">
+              Built specifically for iGaming operators — not adapted from a generic CMS.
+              Game menus, promotion pages, skin-specific layouts, jurisdiction-specific
+              content rules. Operators control it. Developers stay focused on what
+              actually needs them.
+            </p>
+            <ul class="space-y-3 text-sm text-gray-600">
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Game menu management across brands</li>
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Promotion and bonus content pages</li>
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Skin-specific layouts without developer involvement</li>
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Blazor-based — fast, reactive, no page reloads</li>
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Same permission model as the rest of the platform</li>
+            </ul>
+          </div>
+          <!-- CMS mini -->
+          <div class="bg-[#0c1222] flex items-center p-6 lg:p-8">
+            <div class="w-full space-y-3">
+              <div class="text-white text-xs font-bold mb-3">Content Manager</div>
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+                <div class="text-gray-500 text-[9px] font-semibold uppercase tracking-wider mb-2">Pages</div>
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-between bg-white/[0.03] rounded px-2.5 py-1.5"><span class="text-white text-[10px]">🏠 Homepage</span><span class="bg-emerald-500/15 text-emerald-400 text-[8px] px-1.5 py-0.5 rounded">Published</span></div>
+                  <div class="flex items-center justify-between bg-white/[0.03] rounded px-2.5 py-1.5"><span class="text-white text-[10px]">🎰 Casino Lobby</span><span class="bg-emerald-500/15 text-emerald-400 text-[8px] px-1.5 py-0.5 rounded">Published</span></div>
+                  <div class="flex items-center justify-between bg-white/[0.03] rounded px-2.5 py-1.5"><span class="text-white text-[10px]">🎁 Spring Promotion</span><span class="bg-amber-500/15 text-amber-400 text-[8px] px-1.5 py-0.5 rounded">Draft</span></div>
+                  <div class="flex items-center justify-between bg-white/[0.03] rounded px-2.5 py-1.5"><span class="text-white text-[10px]">📋 Terms &amp; Conditions</span><span class="bg-emerald-500/15 text-emerald-400 text-[8px] px-1.5 py-0.5 rounded">Published</span></div>
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+                  <div class="text-gray-500 text-[9px] mb-1">Game Menus</div>
+                  <div class="text-white text-sm font-bold">24</div>
+                  <div class="text-gray-600 text-[9px]">across 3 brands</div>
+                </div>
+                <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+                  <div class="text-gray-500 text-[9px] mb-1">Active Skins</div>
+                  <div class="text-white text-sm font-bold">6</div>
+                  <div class="text-gray-600 text-[9px]">per jurisdiction</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Streaming -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="grid lg:grid-cols-2">
+          <!-- Streaming flow mini -->
+          <div class="bg-[#0c1222] flex items-center p-6 lg:p-8 order-2 lg:order-1">
+            <div class="w-full space-y-3">
+              <div class="text-white text-xs font-bold mb-3">Live Stream</div>
+              <!-- Source -->
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3 text-center">
+                <div class="text-white text-[10px] font-semibold">🎥 Operator Encoder (OBS)</div>
+                <div class="text-gray-600 text-[9px]">Single RTMP stream</div>
+              </div>
+              <div class="text-center text-gray-600 text-[10px]">↓ simultaneous push</div>
+              <!-- Destinations -->
+              <div class="grid grid-cols-2 gap-2">
+                <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-2.5 flex items-center gap-2">
+                  <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
+                  <div><div class="text-emerald-400 text-[10px] font-semibold">Operator Site</div><div class="text-gray-600 text-[8px]">HLS adaptive</div></div>
+                </div>
+                <div class="bg-purple-500/10 border border-purple-500/20 rounded-lg p-2.5 flex items-center gap-2">
+                  <div class="w-1.5 h-1.5 rounded-full bg-purple-400"></div>
+                  <div><div class="text-purple-400 text-[10px] font-semibold">Twitch</div><div class="text-gray-600 text-[8px]">Gaming audience</div></div>
+                </div>
+                <div class="bg-red-500/10 border border-red-500/20 rounded-lg p-2.5 flex items-center gap-2">
+                  <div class="w-1.5 h-1.5 rounded-full bg-red-400"></div>
+                  <div><div class="text-red-400 text-[10px] font-semibold">YouTube</div><div class="text-gray-600 text-[8px]">Auto VOD archive</div></div>
+                </div>
+                <div class="bg-blue-500/10 border border-blue-500/20 rounded-lg p-2.5 flex items-center gap-2">
+                  <div class="w-1.5 h-1.5 rounded-full bg-blue-400"></div>
+                  <div><div class="text-blue-400 text-[10px] font-semibold">Facebook</div><div class="text-gray-600 text-[8px]">via TLS tunnel</div></div>
+                </div>
+              </div>
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-2.5 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <div class="w-1.5 h-1.5 rounded-full bg-emerald-400 hero-pulse"></div>
+                  <span class="text-gray-400 text-[9px]">Auto-VOD: record → encode → publish to CMS</span>
+                </div>
+                <span class="text-emerald-400 text-[9px] font-semibold">Active</span>
+              </div>
+            </div>
+          </div>
+          <div class="p-10 lg:p-14 flex flex-col justify-center order-1 lg:order-2">
+            <div class="section-label text-brand mb-4">Streaming</div>
+            <h3 class="text-3xl font-bold mb-5">Re-streaming &amp; Retention</h3>
+            <p class="text-gray-600 leading-relaxed mb-8">
+              Your players are on Twitch, YouTube, and Facebook. This tool meets them there.
+              Broadcast live content simultaneously across platforms with branded overlays —
+              turning passive viewers into active players and inactive accounts into
+              re-engaged ones.
+            </p>
+            <ul class="space-y-3 text-sm text-gray-600">
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Simultaneous broadcast to Twitch, YouTube, Facebook</li>
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Branded overlays and operator channel integration</li>
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Retention and reactivation focused</li>
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Live with Trustplay in production</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH STACK -->
+  <section class="py-20 px-6 lg:px-8 border-t border-gray-100">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <div class="section-label text-brand mb-3">Technical Foundation</div>
+        <h2 class="text-3xl font-bold mb-4">Built on technology that doesn't need to be replaced.</h2>
+        <p class="text-gray-600">Proven, well-supported, with long support windows. We chose reliability over novelty.</p>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-gray-50 rounded-xl p-5 text-center border border-gray-100">
+          <div class="text-2xl font-bold text-brand mb-1">.NET 10</div>
+          <div class="text-xs text-gray-500">Runtime</div>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-5 text-center border border-gray-100">
+          <div class="text-2xl font-bold text-brand mb-1">SQL Server</div>
+          <div class="text-xs text-gray-500">Database + EF Core 10</div>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-5 text-center border border-gray-100">
+          <div class="text-2xl font-bold text-brand mb-1">Redis</div>
+          <div class="text-xs text-gray-500">Caching + SignalR backplane</div>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-5 text-center border border-gray-100">
+          <div class="text-2xl font-bold text-brand mb-1">RabbitMQ</div>
+          <div class="text-xs text-gray-500">Async messaging</div>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-5 text-center border border-gray-100">
+          <div class="text-2xl font-bold text-brand mb-1">SignalR</div>
+          <div class="text-xs text-gray-500">Real-time balance push</div>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-5 text-center border border-gray-100">
+          <div class="text-2xl font-bold text-brand mb-1">OpenTelemetry</div>
+          <div class="text-xs text-gray-500">Distributed tracing</div>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-5 text-center border border-gray-100">
+          <div class="text-2xl font-bold text-brand mb-1">JWT + Cookie</div>
+          <div class="text-xs text-gray-500">Dual auth strategy</div>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-5 text-center border border-gray-100">
+          <div class="text-2xl font-bold text-brand mb-1">Gemini AI</div>
+          <div class="text-xs text-gray-500">Context-aware agent</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI SECTION -->
+  <section class="py-24 px-6 lg:px-8 bg-slate-900 text-white">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <div class="section-label text-blue-400 mb-4">AI Support Layer</div>
+          <h2 class="text-4xl font-bold mb-6">Not a chatbot.<br>A system-aware agent.</h2>
+          <p class="text-blue-200 leading-relaxed mb-8">
+            PAM's AI module is integrated directly into the platform — not bolted on.
+            The assistant has access to live player session context, account state, and
+            payment history. It follows multi-turn conversations. It respects the same
+            permission model as every other part of the back office.
+          </p>
+          <p class="text-blue-200 leading-relaxed mb-8">
+            An agent with limited access gets limited context — automatically. Regulated
+            industries can't afford AI that leaks context. We built ours so it can't.
+          </p>
+          <ul class="space-y-3 text-sm text-blue-100">
+            <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5">✓</span> Live player session context in every reply</li>
+            <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5">✓</span> Multi-turn conversations with full history</li>
+            <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5">✓</span> Permission-scoped — sees what the agent sees</li>
+            <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5">✓</span> Powered by Google Gemini</li>
+            <li class="flex items-start gap-3"><span class="text-blue-400 mt-0.5">✓</span> Continuously trained on platform-specific data</li>
+          </ul>
+        </div>
+        <!-- AI chat mini -->
+        <div class="rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-[#0c1222] p-5 lg:p-6">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-7 h-7 rounded-lg bg-brand/20 flex items-center justify-center"><svg class="w-4 h-4 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+            <div class="text-white text-xs font-bold">AI Assistant</div>
+            <div class="flex items-center gap-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-2 py-0.5 ml-auto"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400 hero-pulse"></div><span class="text-emerald-400 text-[9px] font-semibold">Online</span></div>
+          </div>
+          <!-- Permission badge -->
+          <div class="bg-amber-500/10 border border-amber-500/20 rounded-lg px-3 py-2 mb-4 flex items-center gap-2">
+            <svg class="w-3.5 h-3.5 text-amber-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            <span class="text-amber-400 text-[10px]">Context scoped to <strong>Agent Sarah</strong> — Level 1 Support permissions</span>
+          </div>
+          <!-- Chat messages -->
+          <div class="space-y-3">
+            <div class="flex gap-2">
+              <div class="w-6 h-6 rounded-full bg-brand/20 flex-shrink-0 flex items-center justify-center text-[9px] text-brand font-bold">S</div>
+              <div class="bg-white/[0.06] rounded-lg rounded-tl-none px-3 py-2 max-w-[85%]">
+                <div class="text-white text-[11px]">Why was player #4821's withdrawal declined last week?</div>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <div class="w-6 h-6 rounded-full bg-emerald-500/20 flex-shrink-0 flex items-center justify-center"><svg class="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg rounded-tl-none px-3 py-2 max-w-[85%]">
+                <div class="text-gray-300 text-[11px] leading-relaxed">Player #4821 (John D.) had a withdrawal of <strong class="text-white">2,100 EUR</strong> declined on <strong class="text-white">March 14</strong>. Reason: <strong class="text-amber-400">KYC documentation incomplete</strong> — identity verification was pending at the time of the request.</div>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <div class="w-6 h-6 rounded-full bg-brand/20 flex-shrink-0 flex items-center justify-center text-[9px] text-brand font-bold">S</div>
+              <div class="bg-white/[0.06] rounded-lg rounded-tl-none px-3 py-2 max-w-[85%]">
+                <div class="text-white text-[11px]">Has their KYC been submitted since then?</div>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <div class="w-6 h-6 rounded-full bg-emerald-500/20 flex-shrink-0 flex items-center justify-center"><svg class="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg rounded-tl-none px-3 py-2 max-w-[85%]">
+                <div class="text-gray-300 text-[11px] leading-relaxed">Yes. KYC was submitted on <strong class="text-white">March 16</strong> and <strong class="text-emerald-400">verified on March 17</strong>. The player is now fully verified. Withdrawal limits have been unlocked per Swedish jurisdiction rules.</div>
+              </div>
+            </div>
+          </div>
+          <!-- Input -->
+          <div class="mt-4 bg-white/[0.04] border border-white/5 rounded-lg px-3 py-2.5 flex items-center gap-2">
+            <span class="text-gray-600 text-[11px] flex-1">Ask about this player...</span>
+            <svg class="w-4 h-4 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CUSTOMER PROOF -->
+  <section id="proof" class="py-24 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <div class="section-label text-brand mb-3">Customer</div>
+        <h2 class="text-4xl font-bold mb-5">Live in production. Not a pilot.</h2>
+      </div>
+
+      <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl overflow-hidden border border-blue-100">
+        <div class="grid lg:grid-cols-2 gap-0">
+          <div class="p-12 lg:p-16 flex flex-col justify-center">
+            <div class="inline-block bg-brand/10 text-brand text-xs font-bold px-3 py-1.5 rounded-full mb-8 w-fit">
+              Case Study
+            </div>
+            <h3 class="text-3xl font-bold mb-6">
+              Trustplay partners with WebPrefer to elevate iGaming experience
+            </h3>
+            <p class="text-gray-600 leading-relaxed mb-6">
+              Trustplay Technology Sweden AB — under the ownership of Tangiamo Touch Technology AB —
+              selected WebPrefer's PAM and re-streaming solution for their live operation.
+              PAM handles secure gaming transactions, data compliance, and player account management
+              across regulated markets.
+            </p>
+            <blockquote class="border-l-4 border-brand pl-6 italic text-gray-700 mb-8">
+              "This partnership highlights the versatility of our products and our commitment to
+              bringing cutting-edge solutions to the iGaming industry."
+              <footer class="mt-3 not-italic text-sm font-semibold text-gray-900">
+                — Mikael Lindberg Castell, CEO, WebPrefer AB
+              </footer>
+            </blockquote>
+            <a href="news/trustplay-partnership.html"
+               class="inline-flex items-center gap-2 text-brand font-semibold text-sm hover:gap-3 transition-all">
+              Read the full press release
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+          </div>
+          <div class="relative">
+            <img src="images/news-1.png" alt="Trustplay Partnership" class="w-full h-full object-cover lg:min-h-96">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESPONSIBLE GAMING -->
+  <section class="py-24 px-6 lg:px-8 bg-gradient-to-br from-emerald-50 to-teal-50 border-t border-emerald-100">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <div class="section-label text-emerald-700 mb-4">Responsible Gaming</div>
+          <h2 class="text-4xl font-bold mb-6">Built in, not bolted on.</h2>
+          <p class="text-lg text-gray-600 leading-relaxed mb-8">
+            Every intervention type — self-exclusion, deposit limits, loss limits, session reminders,
+            reality checks — runs on the same behavior engine as bonuses and payments. Same event stream.
+            Same reliability guarantees.
+          </p>
+          <div class="space-y-4">
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3.5 h-3.5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div>
+              <p class="text-gray-700 text-sm"><strong class="text-gray-900">Wallet-level enforcement</strong> — deposit limits checked where money moves, not in a middleware layer</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3.5 h-3.5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div>
+              <p class="text-gray-700 text-sm"><strong class="text-gray-900">Cross-brand self-exclusion</strong> — propagates automatically per jurisdiction rules</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3.5 h-3.5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div>
+              <p class="text-gray-700 text-sm"><strong class="text-gray-900">Compliance team ownership</strong> — threshold changes without deployments</p>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3.5 h-3.5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div>
+              <p class="text-gray-700 text-sm"><strong class="text-gray-900">Live in 5 regulated markets</strong> — auditable, documented, production-proven</p>
+            </div>
+          </div>
+          <a href="articles/responsible-gaming.html" class="inline-flex items-center gap-2 text-emerald-700 font-semibold text-sm mt-8 hover:gap-3 transition-all">
+            Read the full article
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+        <!-- RG intervention diagram -->
+        <div class="bg-[#0c1222] rounded-2xl p-6 lg:p-8">
+          <div class="text-white text-xs font-bold mb-4">Responsible Gaming Interventions</div>
+          <div class="space-y-2">
+            <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3 flex items-center justify-between">
+              <div class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-white text-[11px] font-medium">Deposit Limits</span></div>
+              <span class="text-emerald-400 text-[9px] font-semibold">Wallet-level</span>
+            </div>
+            <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3 flex items-center justify-between">
+              <div class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-white text-[11px] font-medium">Loss Limits</span></div>
+              <span class="text-emerald-400 text-[9px] font-semibold">Session-level</span>
+            </div>
+            <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3 flex items-center justify-between">
+              <div class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-white text-[11px] font-medium">Self-Exclusion</span></div>
+              <span class="text-emerald-400 text-[9px] font-semibold">Cross-brand</span>
+            </div>
+            <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3 flex items-center justify-between">
+              <div class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-white text-[11px] font-medium">Reality Checks</span></div>
+              <span class="text-gray-500 text-[9px]">Mandatory / opt-in per jurisdiction</span>
+            </div>
+            <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3 flex items-center justify-between">
+              <div class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-white text-[11px] font-medium">Session Time Limits</span></div>
+              <span class="text-gray-500 text-[9px]">Configurable per market</span>
+            </div>
+            <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3 flex items-center justify-between">
+              <div class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-white text-[11px] font-medium">Cool-off / Timeout</span></div>
+              <span class="text-gray-500 text-[9px]">Auto-reactivation after period</span>
+            </div>
+          </div>
+          <div class="mt-4 bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-3 py-2 flex items-center gap-2">
+            <svg class="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            <span class="text-emerald-400 text-[10px]">All powered by BeAware — configured, not coded</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO PAM IS FOR -->
+  <section class="py-24 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <div class="section-label text-brand mb-3">Use Cases</div>
+        <h2 class="text-4xl font-bold mb-5">Built for operators who've outgrown generic platforms.</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white rounded-2xl border border-gray-100 p-7 card-hover">
+          <div class="w-11 h-11 bg-brand/10 rounded-xl flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+          </div>
+          <h3 class="font-bold text-lg mb-3">Launching a new brand</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">Multi-tenant architecture means your new brand shares infrastructure with existing operations — with full data isolation, independent compliance, and its own provider setup.</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 p-7 card-hover">
+          <div class="w-11 h-11 bg-brand/10 rounded-xl flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          </div>
+          <h3 class="font-bold text-lg mb-3">Migrating platforms</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">The integration layer accepts data migrations without disrupting live operations. Compliance configuration is portable across jurisdictions. We've done this before.</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 p-7 card-hover">
+          <div class="w-11 h-11 bg-brand/10 rounded-xl flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          </div>
+          <h3 class="font-bold text-lg mb-3">White-label / B2B</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">Multiple operators on a single deployment, each with their own skin, jurisdiction config, and back-office access. Permission boundaries enforced automatically.</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 p-7 card-hover">
+          <div class="w-11 h-11 bg-brand/10 rounded-xl flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <h3 class="font-bold text-lg mb-3">Regulated market entry</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">KYC, AML, SOW, self-exclusion, cross-brand blocking — built for regulated markets from the start. It's not a plugin. It's in the core.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTNERS -->
+  <section id="partners" class="py-20 px-6 lg:px-8 bg-slate-900">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-xl font-semibold text-white mb-2">Providers &amp; Partners</h2>
+        <p class="text-slate-400 text-sm">Integrated and live across the platform</p>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div class="bg-slate-800 rounded-xl p-5 flex items-center justify-center h-20 hover:bg-slate-700 transition-colors">
+          <img src="partners/first.svg" alt="First" class="max-h-8 max-w-full object-contain brightness-0 invert opacity-80">
+        </div>
+        <div class="bg-slate-800 rounded-xl p-5 flex items-center justify-center h-20 hover:bg-slate-700 transition-colors">
+          <img src="partners/Tugi.png" alt="Tugi Tark" class="max-h-8 max-w-full object-contain brightness-0 invert opacity-80">
+        </div>
+        <div class="bg-slate-800 rounded-xl p-5 flex items-center justify-center h-20 hover:bg-slate-700 transition-colors">
+          <img src="partners/100hp.png" alt="100HP Gaming" class="max-h-8 max-w-full object-contain brightness-0 invert opacity-80">
+        </div>
+        <div class="bg-slate-800 rounded-xl p-5 flex items-center justify-center h-20 hover:bg-slate-700 transition-colors">
+          <img src="partners/PlayStar.svg" alt="PlayStar" class="max-h-8 max-w-full object-contain brightness-0 invert opacity-80">
+        </div>
+        <div class="bg-slate-800 rounded-xl p-5 flex items-center justify-center h-20 hover:bg-slate-700 transition-colors">
+          <img src="partners/did.png" alt="DevCode Identity" class="max-h-8 max-w-full object-contain brightness-0 invert opacity-80">
+        </div>
+        <div class="bg-slate-800 rounded-xl p-5 flex items-center justify-center h-20 hover:bg-slate-700 transition-colors">
+          <img src="partners/worldline.svg" alt="WorldLine" class="max-h-8 max-w-full object-contain brightness-0 invert opacity-80">
+        </div>
+        <div class="bg-slate-800 rounded-xl p-5 flex items-center justify-center h-20 hover:bg-slate-700 transition-colors">
+          <img src="partners/fasttrack.svg" alt="FastTrack" class="max-h-8 max-w-full object-contain brightness-0 invert opacity-80">
+        </div>
+        <div class="bg-slate-800 rounded-xl p-5 flex items-center justify-center h-20 hover:bg-slate-700 transition-colors">
+          <img src="partners/alea.webp" alt="Alea" class="max-h-8 max-w-full object-contain brightness-0 invert opacity-80">
+        </div>
+        <div class="bg-slate-800 rounded-xl p-5 flex items-center justify-center h-20 hover:bg-slate-700 transition-colors">
+          <img src="partners/st8.png" alt="ST8" class="max-h-8 max-w-full object-contain brightness-0 invert opacity-80">
+        </div>
+        <div class="bg-slate-800 rounded-xl p-5 flex items-center justify-center h-20 hover:bg-slate-700 transition-colors">
+          <img src="partners/Sendgrid.png" alt="SendGrid" class="max-h-8 max-w-full object-contain brightness-0 invert opacity-80">
+        </div>
+        <div class="bg-slate-800 rounded-xl p-5 flex items-center justify-center h-20 hover:bg-slate-700 transition-colors">
+          <img src="partners/income-access.svg" alt="Income Access" class="max-h-8 max-w-full object-contain brightness-0 invert opacity-80">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-24 px-6 lg:px-8 border-t border-gray-100">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-14">
+        <div class="section-label text-brand mb-3">FAQ</div>
+        <h2 class="text-4xl font-bold mb-4">Common questions</h2>
+      </div>
+      <div class="space-y-4">
+        <details class="group bg-white border border-gray-100 rounded-xl overflow-hidden">
+          <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors">
+            <span class="font-semibold text-gray-900">How long does onboarding take for a new operator?</span>
+            <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform flex-shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-6 text-gray-600 text-sm leading-relaxed">The core platform is already deployed. Onboarding a new operator means configuring their brand, integrating their chosen payment providers and game content, and setting up jurisdiction compliance rules. Most of this is configuration, not development.</div>
+        </details>
+        <details class="group bg-white border border-gray-100 rounded-xl overflow-hidden">
+          <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors">
+            <span class="font-semibold text-gray-900">Can we bring our own game providers?</span>
+            <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform flex-shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-6 text-gray-600 text-sm leading-relaxed">Yes. The integration layer is designed to accept new providers without touching the core platform. If we don't have a pre-built integration for your provider, we build it as an isolated module. It doesn't affect anything else.</div>
+        </details>
+        <details class="group bg-white border border-gray-100 rounded-xl overflow-hidden">
+          <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors">
+            <span class="font-semibold text-gray-900">How do you handle regulatory requirements that change?</span>
+            <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform flex-shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-6 text-gray-600 text-sm leading-relaxed">Compliance configuration is declarative and separate from application code. When a regulatory requirement changes — a new KYC timeline, an updated SOW trigger threshold, a new self-exclusion rule — it's a configuration update, not a deployment. For structural changes, we've shipped jurisdiction-specific updates without affecting other markets.</div>
+        </details>
+        <details class="group bg-white border border-gray-100 rounded-xl overflow-hidden">
+          <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors">
+            <span class="font-semibold text-gray-900">What does the AI assistant actually do?</span>
+            <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform flex-shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-6 text-gray-600 text-sm leading-relaxed">It gives back-office agents fast access to player context — account state, payment history, bonus status, recent communications — without navigating multiple screens. It follows multi-turn conversations and respects the same permission model as the rest of the back office, so it never surfaces data an agent isn't authorized to see. It's a tool that makes agents faster, not a replacement for them.</div>
+        </details>
+        <details class="group bg-white border border-gray-100 rounded-xl overflow-hidden">
+          <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors">
+            <span class="font-semibold text-gray-900">Is PAM cloud-native?</span>
+            <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform flex-shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-6 text-gray-600 text-sm leading-relaxed">PAM is deployed on IIS and Windows Services today, providing operators familiar, auditable infrastructure in regulated markets. The architecture supports cloud deployment — the event-driven design, Redis caching, and RabbitMQ messaging are cloud-compatible. A migration path exists for operators who require cloud deployment.</div>
+        </details>
+        <details class="group bg-white border border-gray-100 rounded-xl overflow-hidden">
+          <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors">
+            <span class="font-semibold text-gray-900">How do you support multi-currency operations?</span>
+            <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform flex-shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="px-6 pb-6 text-gray-600 text-sm leading-relaxed">Currency handling is built into the money layer, not treated as a formatting concern. Exchange rates, display precision, wallet denomination, and cross-currency reconciliation are all handled at the platform level. Operators can run multiple currencies per brand without custom logic.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTICLES -->
+  <section id="articles" class="py-24 px-6 lg:px-8 bg-gray-50">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-14">
+        <div class="section-label text-brand mb-4">Engineering Journal</div>
+        <h2 class="text-4xl font-bold mb-4">The production stories behind PAM</h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">Deep-dive articles on the real technical challenges of building a live iGaming platform — written by the team that built it.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <a href="articles/wallet-concurrency.html" class="group bg-white rounded-xl border border-gray-100 overflow-hidden hover:border-brand/30 hover:shadow-lg transition-all card-hover">
+          <img src="articles/diagrams/wallet-concurrency.svg" alt="Wallet concurrency diagram" class="w-full h-36 object-cover">
+          <div class="p-6">
+            <div class="text-xs font-semibold text-brand bg-brand/10 px-2.5 py-1 rounded-full inline-block mb-3">Concurrency</div>
+            <h3 class="font-bold text-gray-900 group-hover:text-brand transition-colors mb-2">The Wallet Problem</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Race conditions in high-concurrency wallet operations and the optimistic concurrency pattern that fixed them.</p>
+            <div class="mt-4 text-brand text-sm font-semibold">Read &rarr;</div>
+          </div>
+        </a>
+        <a href="articles/compliance-declarative.html" class="group bg-white rounded-xl border border-gray-100 overflow-hidden hover:border-brand/30 hover:shadow-lg transition-all card-hover">
+          <img src="articles/diagrams/compliance-declarative.svg" alt="Compliance architecture diagram" class="w-full h-36 object-cover">
+          <div class="p-6">
+            <div class="text-xs font-semibold text-green-700 bg-green-50 px-2.5 py-1 rounded-full inline-block mb-3">Compliance</div>
+            <h3 class="font-bold text-gray-900 group-hover:text-brand transition-colors mb-2">Making Compliance Declarative</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Why adding a jurisdiction used to be a 3-month project — and how we made it configuration.</p>
+            <div class="mt-4 text-brand text-sm font-semibold">Read &rarr;</div>
+          </div>
+        </a>
+        <a href="articles/beaware-rules-at-scale.html" class="group bg-white rounded-xl border border-gray-100 overflow-hidden hover:border-brand/30 hover:shadow-lg transition-all card-hover">
+          <img src="articles/diagrams/beaware-rules.svg" alt="BeAware rule tree diagram" class="w-full h-36 object-cover">
+          <div class="p-6">
+            <div class="text-xs font-semibold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-full inline-block mb-3">BeAware</div>
+            <h3 class="font-bold text-gray-900 group-hover:text-brand transition-colors mb-2">Rules at Scale</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">The behavior engine and visual graph editor that lets operators own their rules.</p>
+            <div class="mt-4 text-brand text-sm font-semibold">Read &rarr;</div>
+          </div>
+        </a>
+        <a href="articles/ai-regulated-industry.html" class="group bg-white rounded-xl border border-gray-100 overflow-hidden hover:border-brand/30 hover:shadow-lg transition-all card-hover">
+          <img src="articles/diagrams/ai-permission-funnel.svg" alt="AI permission scoping diagram" class="w-full h-36 object-cover">
+          <div class="p-6">
+            <div class="text-xs font-semibold text-rose-700 bg-rose-50 px-2.5 py-1 rounded-full inline-block mb-3">AI</div>
+            <h3 class="font-bold text-gray-900 group-hover:text-brand transition-colors mb-2">AI in a Regulated Industry</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Permission-scoped AI context — the hardest part isn't the model.</p>
+            <div class="mt-4 text-brand text-sm font-semibold">Read &rarr;</div>
+          </div>
+        </a>
+      </div>
+      <div class="text-center mt-10">
+        <a href="articles/index.html" class="inline-flex items-center gap-2 bg-brand hover:bg-[#134f82] text-white font-semibold px-7 py-3 rounded-lg transition-colors text-sm">
+          View all 12 articles &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-24 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-16">
+        <div>
+          <div class="section-label text-brand mb-4">Get in Touch</div>
+          <h2 class="text-4xl font-bold mb-6">Ready to see it?</h2>
+          <p class="text-lg text-gray-600 leading-relaxed mb-10">
+            We offer live demos scoped to your specific operation type — whether you're
+            launching a new brand, migrating from an existing platform, or evaluating
+            options for a white-label deployment.
+          </p>
+          <div class="space-y-5">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </div>
+              <div>
+                <div class="font-semibold text-gray-900">Address</div>
+                <div class="text-gray-600 text-sm mt-1">S:t Larsgatan 7, 582 24 Linköping, Sweden</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              </div>
+              <div>
+                <div class="font-semibold text-gray-900">Email</div>
+                <a href="mailto:sales@webprefer.com" class="text-brand text-sm mt-1 block hover:underline">sales@webprefer.com</a>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+              </div>
+              <div>
+                <div class="font-semibold text-gray-900">Mikael Lindberg Castell</div>
+                <a href="mailto:mikael@webprefer.com" class="text-brand text-sm mt-1 block hover:underline">mikael@webprefer.com</a>
+                <div class="text-gray-500 text-xs mt-0.5">CEO &amp; Founder, WebPrefer AB</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact form -->
+        <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
+          <form id="contact-form" class="space-y-5">
+            <div class="grid sm:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1.5">Full name</label>
+                <input type="text" name="name" required
+                  class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent"
+                  placeholder="Your name">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1.5">Company</label>
+                <input type="text" name="company"
+                  class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent"
+                  placeholder="Your company">
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
+              <input type="email" name="email" required
+                class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent"
+                placeholder="you@company.com">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1.5">I am a...</label>
+              <select name="role"
+                class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent bg-white">
+                <option value="">Select your role</option>
+                <option>Operator</option>
+                <option>Investor</option>
+                <option>Affiliate</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1.5">Message</label>
+              <textarea name="message" rows="4" required
+                class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent resize-none"
+                placeholder="Tell us about your operation and what you're looking for..."></textarea>
+            </div>
+            <button type="submit" id="submit-btn"
+              class="w-full bg-brand hover:bg-brand-dark text-white font-semibold py-3.5 rounded-lg transition-colors text-sm">
+              Send message
+            </button>
+            <div id="form-success" class="hidden text-center text-green-600 font-medium text-sm py-2">
+              Thank you! We'll be in touch shortly.
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-white py-12 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+          <img src="images/logo.svg" alt="WebPrefer" class="h-8 w-auto brightness-0 invert">
+          <span class="text-gray-400 text-sm">WebPrefer AB (556748-3523)</span>
+        </div>
+        <div class="flex items-center gap-6 text-sm text-gray-400">
+          <a href="#platform" class="hover:text-white transition-colors">Platform</a>
+          <a href="#products" class="hover:text-white transition-colors">Products</a>
+          <a href="#proof" class="hover:text-white transition-colors">Customers</a>
+          <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+          <a href="articles/index.html" class="hover:text-white transition-colors">Articles</a>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="https://www.linkedin.com/company/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          </a>
+          <a href="https://www.facebook.com/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="Facebook">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="Instagram">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+        </div>
+        <div class="text-gray-500 text-xs">
+          &copy; 2026 WebPrefer AB. All rights reserved.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- EmailJS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function() {
+      emailjs.init({ publicKey: 'J-Ouq1kFXZl7x5bEZ' });
+    })();
+
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      emailjs.sendForm('service_aefyiw9', 'template_q5n6qyl', this).then(() => {
+        document.getElementById('form-success').classList.remove('hidden');
+        this.reset();
+        btn.textContent = 'Send message';
+        btn.disabled = false;
+      }, () => {
+        btn.textContent = 'Send message';
+        btn.disabled = false;
+      });
+    });
+  </script>
+</body>
+</html>

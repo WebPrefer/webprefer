@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0d3459"/>
+      <stop offset="100%" stop-color="#1968AA"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="900" height="480" rx="16" fill="url(#bgGrad)"/>
+
+  <!-- Title -->
+  <text x="450" y="40" text-anchor="middle" fill="#93c5fd" font-size="11" font-weight="700" letter-spacing="2">AI CONTEXT SCOPING</text>
+  <text x="450" y="66" text-anchor="middle" fill="white" font-size="18" font-weight="700">Permission-Scoped AI — Not a Chatbot</text>
+
+  <!-- LEFT: Full platform data -->
+  <text x="140" y="108" text-anchor="middle" fill="white" font-size="12" font-weight="700">Platform Data</text>
+  <text x="140" y="122" text-anchor="middle" fill="#93c5fd" font-size="9">(everything in the system)</text>
+
+  <rect x="40" y="138" width="200" height="28" rx="5" fill="white" opacity="0.08"/>
+  <text x="140" y="157" text-anchor="middle" fill="white" font-size="9" opacity="0.7">All player accounts</text>
+  <rect x="40" y="172" width="200" height="28" rx="5" fill="white" opacity="0.08"/>
+  <text x="140" y="191" text-anchor="middle" fill="white" font-size="9" opacity="0.7">All payment history</text>
+  <rect x="40" y="206" width="200" height="28" rx="5" fill="white" opacity="0.08"/>
+  <text x="140" y="225" text-anchor="middle" fill="white" font-size="9" opacity="0.7">All KYC / SOW documents</text>
+  <rect x="40" y="240" width="200" height="28" rx="5" fill="white" opacity="0.08"/>
+  <text x="140" y="259" text-anchor="middle" fill="white" font-size="9" opacity="0.7">All compliance events</text>
+  <rect x="40" y="274" width="200" height="28" rx="5" fill="white" opacity="0.08"/>
+  <text x="140" y="293" text-anchor="middle" fill="white" font-size="9" opacity="0.7">All operator / brand configs</text>
+  <rect x="40" y="308" width="200" height="28" rx="5" fill="white" opacity="0.08"/>
+  <text x="140" y="327" text-anchor="middle" fill="white" font-size="9" opacity="0.7">Full audit trail</text>
+  <rect x="40" y="342" width="200" height="28" rx="5" fill="white" opacity="0.08"/>
+  <text x="140" y="361" text-anchor="middle" fill="white" font-size="9" opacity="0.7">Cross-brand player data</text>
+
+  <!-- Arrow into funnel -->
+  <line x1="240" y1="260" x2="310" y2="260" stroke="#93c5fd" stroke-width="2" opacity="0.5"/>
+  <text x="275" y="252" text-anchor="middle" fill="#93c5fd" font-size="18">→</text>
+
+  <!-- FUNNEL: Permission filter -->
+  <polygon points="320,140 580,140 540,380 360,380" fill="#818cf8" opacity="0.08" stroke="#818cf8" stroke-width="1.5"/>
+  <text x="450" y="170" text-anchor="middle" fill="#c4b5fd" font-size="12" font-weight="700">RBAC Permission Filter</text>
+
+  <!-- Agent info -->
+  <rect x="365" y="190" width="170" height="36" rx="6" fill="white" opacity="0.1"/>
+  <text x="450" y="207" text-anchor="middle" fill="white" font-size="10" font-weight="600">Agent: Sarah (Level 1)</text>
+  <text x="450" y="220" text-anchor="middle" fill="#93c5fd" font-size="8">Role: Support Agent</text>
+
+  <!-- What gets filtered -->
+  <rect x="370" y="240" width="160" height="20" rx="4" fill="#ef4444" opacity="0.15"/>
+  <text x="450" y="254" text-anchor="middle" fill="#fca5a5" font-size="8">✕ SOW documents blocked</text>
+  <rect x="370" y="264" width="160" height="20" rx="4" fill="#ef4444" opacity="0.15"/>
+  <text x="450" y="278" text-anchor="middle" fill="#fca5a5" font-size="8">✕ Other brands blocked</text>
+  <rect x="370" y="288" width="160" height="20" rx="4" fill="#ef4444" opacity="0.15"/>
+  <text x="450" y="302" text-anchor="middle" fill="#fca5a5" font-size="8">✕ Operator configs blocked</text>
+  <rect x="370" y="312" width="160" height="20" rx="4" fill="#16a34a" opacity="0.15"/>
+  <text x="450" y="326" text-anchor="middle" fill="#86efac" font-size="8">✓ Player context allowed</text>
+  <rect x="370" y="336" width="160" height="20" rx="4" fill="#16a34a" opacity="0.15"/>
+  <text x="450" y="350" text-anchor="middle" fill="#86efac" font-size="8">✓ Payment history allowed</text>
+
+  <!-- Arrow out of funnel -->
+  <line x1="540" y1="260" x2="610" y2="260" stroke="#93c5fd" stroke-width="2" opacity="0.5"/>
+  <text x="575" y="252" text-anchor="middle" fill="#93c5fd" font-size="18">→</text>
+
+  <!-- RIGHT: AI sees only filtered context -->
+  <rect x="620" y="160" width="240" height="200" rx="12" fill="#16a34a" opacity="0.1" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="740" y="186" text-anchor="middle" fill="#86efac" font-size="12" font-weight="700">AI Context</text>
+  <text x="740" y="202" text-anchor="middle" fill="#86efac" font-size="9">(only what Sarah can see)</text>
+
+  <rect x="640" y="218" width="200" height="24" rx="4" fill="white" opacity="0.08"/>
+  <text x="740" y="234" text-anchor="middle" fill="#86efac" font-size="9">Player: John D. (#4821)</text>
+  <rect x="640" y="248" width="200" height="24" rx="4" fill="white" opacity="0.08"/>
+  <text x="740" y="264" text-anchor="middle" fill="#86efac" font-size="9">Balance: 2,340 SEK</text>
+  <rect x="640" y="278" width="200" height="24" rx="4" fill="white" opacity="0.08"/>
+  <text x="740" y="294" text-anchor="middle" fill="#86efac" font-size="9">Last deposit: 500 SEK (3h ago)</text>
+  <rect x="640" y="308" width="200" height="24" rx="4" fill="white" opacity="0.08"/>
+  <text x="740" y="324" text-anchor="middle" fill="#86efac" font-size="9">KYC: Verified ✓</text>
+  <rect x="640" y="338" width="200" height="24" rx="4" fill="white" opacity="0.08"/>
+  <text x="740" y="354" text-anchor="middle" fill="#86efac" font-size="9">Active bonus: Welcome 100%</text>
+
+  <!-- Key message -->
+  <rect x="180" y="420" width="540" height="36" rx="8" fill="white" fill-opacity="0.06" stroke="white" stroke-width="0.5" stroke-opacity="0.2"/>
+  <text x="450" y="438" text-anchor="middle" fill="white" font-size="11" font-weight="600">The AI sees exactly what a human agent with the same permissions would see</text>
+  <text x="450" y="452" text-anchor="middle" fill="#93c5fd" font-size="9">Enforced structurally — not by prompting the model to refuse</text>
+</svg>

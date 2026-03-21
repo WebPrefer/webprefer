@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Why polling fails in iGaming — and how SignalR plus RabbitMQ give operators genuine real-time visibility, not the illusion of it.">
+  <title>Real-Time or Nothing — WebPrefer Engineering</title>
+  <meta property="og:title" content="Real-Time or Nothing — WebPrefer Engineering">
+  <meta property="og:description" content="30-second polling. Stale balances. Compliance alerts arriving 15 minutes late. Real-time in iGaming isn't a feature — it's a requirement.">
+  <meta property="og:image" content="https://webprefer.com/bonuses.png">
+  <meta property="og:type" content="article">
+  <meta name="theme-color" content="#1968AA">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HC29B7MQF3"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HC29B7MQF3');</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { brand: { DEFAULT: '#1968AA', dark: '#134f82', darker: '#0d3459', light: '#2a7ec4' } },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    .gradient-hero { background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%); }
+    .nav-link { transition: color 0.15s ease; }
+    .prose-article h2 { font-size: 1.35rem; font-weight: 700; color: #111827; margin: 2.5rem 0 0.75rem; }
+    .prose-article h3 { font-size: 1.1rem; font-weight: 600; color: #374151; margin: 2rem 0 0.5rem; }
+    .prose-article p { color: #374151; line-height: 1.8; margin-bottom: 1.25rem; }
+    .prose-article ul { margin: 0 0 1.25rem 1.5rem; }
+    .prose-article li { color: #374151; line-height: 1.8; margin-bottom: 0.35rem; }
+    .prose-article strong { color: #111827; }
+    .callout-incident { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout-solution { background: #eff6ff; border-left: 4px solid #1968AA; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout-today { background: #f0fdf4; border-left: 4px solid #16a34a; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .flow-diagram { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+    .flow-step { display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0; font-size: 0.88rem; }
+    .flow-node { background: #eff6ff; color: #1968AA; border: 1px solid #bfdbfe; padding: 0.3rem 0.7rem; border-radius: 6px; font-weight: 500; white-space: nowrap; }
+    .flow-arrow { color: #94a3b8; font-size: 1rem; }
+    .linkedin-box { background: #0f172a; border-radius: 12px; padding: 2rem; margin: 3rem 0; }
+  </style>
+</head>
+<body class="font-sans bg-white text-gray-900 antialiased">
+
+  <!-- NAV -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="../index.html" class="flex items-center gap-2">
+        <img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto">
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="../index.html#platform" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Platform</a>
+        <a href="../index.html#products" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Products</a>
+        <a href="../index.html#proof" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Customers</a>
+        <a href="../index.html#partners" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Partners</a>
+        <a href="../index.html#contact" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Contact</a>
+        <a href="index.html" class="nav-link text-sm font-medium text-brand font-semibold">Articles</a>
+      </div>
+      <a href="../index.html#contact" class="bg-brand hover:bg-[#134f82] text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors hidden md:inline-flex">
+        Book a Demo
+      </a>
+      <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+        <svg id="icon-open" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-1">
+      <a href="../index.html" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Home</a>
+      <a href="../index.html#platform" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Platform</a>
+      <a href="../index.html#products" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Products</a>
+      <a href="../index.html#proof" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Customers</a>
+      <a href="../index.html#partners" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Partners</a>
+      <a href="#contact" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Contact</a>
+      <a href="index.html" class="block py-2.5 text-sm font-medium text-brand font-semibold mobile-nav-link">Articles</a>
+      <a href="#contact" class="block mt-2 bg-brand text-white text-sm font-semibold px-5 py-2.5 rounded-lg text-center mobile-nav-link">Book a Demo</a>
+    </div>
+  </header>
+  <script>
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('icon-open');
+    const iconClose = document.getElementById('icon-close');
+    btn.addEventListener('click', () => { menu.classList.toggle('hidden'); iconOpen.classList.toggle('hidden'); iconClose.classList.toggle('hidden'); });
+    document.querySelectorAll('.mobile-nav-link').forEach(l => { l.addEventListener('click', () => { menu.classList.add('hidden'); iconOpen.classList.remove('hidden'); iconClose.classList.add('hidden'); }); });
+  </script>
+
+  <!-- ARTICLE HERO -->
+  <section class="gradient-hero pt-32 pb-16 px-6 lg:px-8 text-white">
+    <div class="max-w-3xl mx-auto">
+      <a href="index.html" class="inline-flex items-center gap-2 text-blue-300 text-sm mb-6 hover:text-white transition-colors">
+        &larr; All articles
+      </a>
+      <div class="flex flex-wrap gap-2 mb-4">
+        <span class="bg-yellow-400/30 text-yellow-200 text-xs font-semibold px-3 py-1 rounded-full">Real-Time</span>
+        <span class="bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full">Architecture</span>
+        <span class="text-blue-300 text-xs">7 min read</span>
+      </div>
+      <h1 class="text-4xl lg:text-5xl font-extrabold leading-tight mb-5">Real-Time or Nothing</h1>
+      <p class="text-xl text-blue-100 leading-relaxed">Why polling fails in iGaming — and how SignalR plus RabbitMQ give operators genuine real-time visibility, not the illusion of it.</p>
+      <div class="mt-8 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center"><span class="text-brand font-extrabold text-sm">W</span></div>
+        <div>
+          <div class="text-sm font-semibold">WebPrefer Engineering</div>
+          <div class="text-blue-300 text-xs">March 2026</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIAGRAM -->
+  <section class="bg-gray-50 py-10 px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <img src="diagrams/real-time-comparison.svg" alt="Polling vs event-driven push — stale data gap vs instant SignalR delivery" class="w-full rounded-xl shadow-lg">
+    </div>
+  </section>
+
+  <!-- ARTICLE BODY -->
+  <article class="py-16 px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto prose-article">
+
+      <p>A lot of gaming platforms describe themselves as real-time. What they usually mean is: we refresh the data every 30 seconds. That's not real-time. That's polling with a short interval — and in iGaming, the difference matters more than most people expect.</p>
+
+      <h2>Why polling fails at scale</h2>
+
+      <p>The intuitive model for keeping data fresh is polling: every N seconds, the client asks the server "has anything changed?" The server queries the database, returns the current state, and the client updates its view.</p>
+
+      <p>This works at low volume. It breaks in three ways as scale increases:</p>
+
+      <p><strong>Performance cost.</strong> Every polling client generates constant read load on the database, regardless of whether anything changed. With thousands of concurrent sessions, this load is significant — and it peaks during exactly the moments when the system is already under most stress (large promotions, jackpot events, high-traffic periods).</p>
+
+      <p><strong>Latency mismatch.</strong> A 30-second polling interval means a player's displayed balance can be 30 seconds stale. On a fast-paced slot session, that's many game rounds. On a withdrawal flow, it means the player sees the pre-withdrawal balance for up to 30 seconds after the transaction completes. Players notice.</p>
+
+      <p><strong>Rule timing errors.</strong> The behavior engine is the most critical failure mode. If behavioral rules fire on a schedule — every N minutes — rather than on events, the timing gap creates real operational problems.</p>
+
+      <div class="callout-incident">
+        <div class="font-bold text-amber-800 mb-2">A concrete example</div>
+        <p style="margin:0;color:#92400e;">A player triggers a bonus threshold at 11:58pm. The rule evaluation job runs at midnight. The bonus credits at 12:00am. The player's session ends at 11:59pm because they didn't see the bonus arrive. They contact support. The audit trail shows the bonus was applied — correctly — two minutes after the threshold was hit. But the player's experience was that they triggered a condition and nothing happened. The platform did everything right, just too late.</p>
+      </div>
+
+      <h2>The real-time architecture</h2>
+
+      <p>PAM's real-time layer is built on two complementary technologies: SignalR for the player-facing connection, and RabbitMQ for internal event propagation.</p>
+
+      <p>They serve different purposes:</p>
+
+      <ul>
+        <li><strong>RabbitMQ</strong> is the internal event bus. When something happens in the platform — a deposit completes, a game round resolves, a bonus is credited, a KYC document is approved — an event is published to the queue. Every service that cares about that event type receives it immediately and processes it asynchronously.</li>
+        <li><strong>SignalR</strong> is the delivery mechanism to the player's browser. When a balance update needs to reach the player — immediately, without a poll request — SignalR pushes it over a persistent WebSocket connection.</li>
+      </ul>
+
+      <p>The combination means that the full path from "something happened" to "player sees it" involves no polling and no scheduled jobs. It's event-driven end to end.</p>
+
+      <h2>The balance update path</h2>
+
+      <p>When a game round completes and a payout is credited:</p>
+
+      <div class="flow-diagram">
+        <div class="flow-step"><span class="flow-node">Game Provider</span><span class="flow-arrow">&rarr;</span><span style="color:#374151;font-size:0.85rem;">Sends payout callback to PAM integration endpoint</span></div>
+        <div class="flow-step"><span class="flow-node">PAM.BL.Casino</span><span class="flow-arrow">&rarr;</span><span style="color:#374151;font-size:0.85rem;">Processes payout, updates wallet balance atomically</span></div>
+        <div class="flow-step"><span class="flow-node">RabbitMQ</span><span class="flow-arrow">&rarr;</span><span style="color:#374151;font-size:0.85rem;">Publishes <code style="background:#eff6ff;color:#134f82;padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em;">BalanceChanged</code> event</span></div>
+        <div class="flow-step"><span class="flow-node">PAM.Service.Behave</span><span class="flow-arrow">&rarr;</span><span style="color:#374151;font-size:0.85rem;">Evaluates behavior rules against the event (parallel)</span></div>
+        <div class="flow-step"><span class="flow-node">SignalR Hub</span><span class="flow-arrow">&rarr;</span><span style="color:#374151;font-size:0.85rem;">Pushes <code style="background:#eff6ff;color:#134f82;padding:0.1rem 0.3rem;border-radius:3px;font-size:0.85em;">BalanceChange</code> event to player's connection</span></div>
+        <div class="flow-step"><span class="flow-node">Player Browser</span><span class="flow-arrow">&rarr;</span><span style="color:#374151;font-size:0.85rem;">Balance updates without a page refresh or poll request</span></div>
+      </div>
+
+      <p>The entire path — from provider callback to player seeing the updated balance — takes milliseconds. Not because the servers are fast, but because the architecture has no waiting: no poll timer to expire, no scheduled job to run, no batch to process.</p>
+
+      <h2>SignalR at scale: the Redis backplane</h2>
+
+      <p>SignalR runs on a single server by default. When the player API is load-balanced across multiple instances, a SignalR push sent to one instance won't reach players connected to other instances.</p>
+
+      <p>PAM solves this with a Redis backplane. When a balance update needs to be pushed, it's published to the Redis backplane. Every API instance subscribes to the backplane and forwards the message to any player connected to that instance. The player gets the update regardless of which instance they connected to.</p>
+
+      <p>This is also why Redis (Valkey/ElastiCache in production) is a hard dependency, not an optional performance enhancement. The real-time delivery model depends on it.</p>
+
+      <h2>Real-time in the back office</h2>
+
+      <p>The same event stream that feeds player-facing real-time updates feeds the back-office portal. An operator watching a player's session in the back office sees balance changes, transaction events, and compliance flags as they happen — not after a page refresh.</p>
+
+      <p>This has a practical compliance value. When a suspicious pattern emerges — a sequence of deposits and withdrawals that suggests structuring, or a rapid escalation through bonus thresholds — the compliance team sees it as it develops, not after a batch report runs.</p>
+
+      <div class="callout-solution">
+        <div class="font-bold mb-2" style="color:#134f82;">The compliance window</div>
+        <p style="margin:0;color:#1e3a5f;">In regulated markets, the time between a compliance event and an operator's response to it matters. A suspicious pattern that's visible in real-time can be reviewed while the player is still active. The same pattern surfaced in a next-day report is historical — the intervention opportunity has passed. Real-time isn't a UX feature. For compliance, it's operationally meaningful.</p>
+      </div>
+
+      <h2>Behavior rules fire on events, not schedules</h2>
+
+      <p>BeAware, the behavior engine, consumes the same RabbitMQ event stream. This means behavioral rules fire the moment the triggering event occurs — not at the next job interval.</p>
+
+      <p>When a player crosses a deposit threshold that triggers a responsible gaming intervention, BeAware receives the <code>DepositCompleted</code> event and evaluates the rule immediately. The intervention is dispatched — a prompt, an email, a flag for review — while the player is still in session. Not the next morning. Not the next scheduled run. Now.</p>
+
+      <p>This changes what responsible gaming interventions can accomplish. An intervention that reaches a player while they're actively playing has a different opportunity for impact than one that arrives in their inbox the next day. The timing is not incidental — it's the point.</p>
+
+      <h2>Connection management and reliability</h2>
+
+      <p>SignalR connections drop. Network conditions change. Mobile players move between WiFi and cellular. The real-time model needs to handle reconnection gracefully.</p>
+
+      <p>PAM's SignalR configuration includes automatic reconnect with exponential backoff, client-side connection state management, and a fallback to polling if WebSocket connections are unavailable in the player's environment. The polling fallback is significantly less efficient than the WebSocket path, but it ensures players on constrained networks still receive balance updates — slower, but reliably.</p>
+
+      <p>When a client reconnects after a dropped connection, it receives the current state as a fresh push — not a diff from the last known state, which may no longer be accurate.</p>
+
+      <div class="callout-today">
+        <div class="font-bold text-green-800 mb-2">Today</div>
+        <p style="margin:0;color:#14532d;">PAM's real-time layer handles continuous event streams across all active operators and brands simultaneously. Balance updates reach players within milliseconds of a transaction committing. Compliance events are visible to back-office operators as they occur. Behavioral rules fire on events, with no scheduling lag. The system generates no polling load — read queries happen in response to actual data changes, not on timers.</p>
+      </div>
+
+      <h2>The constraint real-time imposes</h2>
+
+      <p>Building a genuinely real-time system means accepting that your architecture has to be event-driven from the start. You can't retrofit real-time onto a polling-based system cleanly — you end up with a polling system that also has a WebSocket layer, and the two models conflict. The WebSocket pushes data that clients also poll for, creating inconsistency.</p>
+
+      <p>The event-driven model has to be the primary model. Polling — where it exists — is a fallback for degraded conditions, not the default path. That design decision shapes every layer: how the database is updated, how services communicate, how the back office is built, how the behavior engine fires rules.</p>
+
+      <p>In iGaming, real-time is not a feature. It's a constraint that shapes your architecture. The alternative isn't "slightly delayed real-time" — it's a different class of product.</p>
+
+      <!-- LINKEDIN POST -->
+      <div class="linkedin-box">
+        <div class="text-blue-400 text-xs font-bold uppercase tracking-widest mb-3">LinkedIn Post — copy to share</div>
+        <div class="text-gray-200 text-sm leading-relaxed whitespace-pre-line">Most gaming platforms tell you what happened.
+PAM tells you what's happening.
+
+Balance updates push to the back office the moment a transaction commits — no polling, no refresh.
+
+Game round events propagate through the event engine in real time. Behavioral rules fire the instant a condition is met, not on the next scheduled job.
+
+This matters more than it sounds.
+
+When a player triggers a bonus threshold at 11:58pm and the rule engine runs at midnight — they notice. When a suspicious pattern emerges and your compliance team sees it 15 minutes later — regulators notice.
+
+Real-time isn't a feature. In this industry, it's a requirement.
+
+Want to see it in action? Link in bio.
+
+#iGaming #PAM #GamingTech #GamingCompliance</div>
+      </div>
+
+    </div>
+  </article>
+
+  <!-- MORE ARTICLES -->
+  <section class="py-12 px-6 lg:px-8 bg-gray-50 border-t border-gray-100">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">More articles</div>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <a href="wallet-concurrency.html" class="group bg-white rounded-xl border border-gray-100 p-5 hover:border-brand/30 hover:shadow-md transition-all">
+          <div class="text-xs font-semibold text-orange-700 bg-orange-50 px-2 py-0.5 rounded-full inline-block mb-2">Production Incident</div>
+          <div class="font-semibold text-gray-900 group-hover:text-brand transition-colors text-sm">The Wallet Problem</div>
+          <div class="text-gray-500 text-xs mt-1">High-concurrency failures and optimistic concurrency</div>
+        </a>
+        <a href="integration-architecture.html" class="group bg-white rounded-xl border border-gray-100 p-5 hover:border-brand/30 hover:shadow-md transition-all">
+          <div class="text-xs font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full inline-block mb-2">Architecture</div>
+          <div class="font-semibold text-gray-900 group-hover:text-brand transition-colors text-sm">50+ Providers, Zero Coupling</div>
+          <div class="text-gray-500 text-xs mt-1">Module isolation across all integrations</div>
+        </a>
+      </div>
+      <div class="mt-6">
+        <a href="index.html" class="text-brand text-sm font-semibold hover:underline">&larr; View all articles</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-24 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-16">
+        <div>
+          <div class="text-xs font-bold uppercase tracking-widest text-brand mb-4" style="letter-spacing:0.12em;">Get in Touch</div>
+          <h2 class="text-4xl font-bold mb-6">Ready to see it?</h2>
+          <p class="text-lg text-gray-600 leading-relaxed mb-10">We offer live demos scoped to your specific operation type — whether you're launching a new brand, migrating from an existing platform, or evaluating options for a white-label deployment.</p>
+          <div class="space-y-5">
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div><div><div class="font-semibold text-gray-900">Address</div><div class="text-gray-600 text-sm mt-1">S:t Larsgatan 7, 582 24 Linköping, Sweden</div></div></div>
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div><div><div class="font-semibold text-gray-900">Email</div><a href="mailto:sales@webprefer.com" class="text-brand text-sm mt-1 block hover:underline">sales@webprefer.com</a></div></div>
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></div><div><div class="font-semibold text-gray-900">Mikael Lindberg Castell</div><a href="mailto:mikael@webprefer.com" class="text-brand text-sm mt-1 block hover:underline">mikael@webprefer.com</a><div class="text-gray-500 text-xs mt-0.5">CEO &amp; Founder, WebPrefer AB</div></div></div>
+          </div>
+        </div>
+        <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
+          <form id="contact-form" class="space-y-5">
+            <div class="grid sm:grid-cols-2 gap-5"><div><label class="block text-sm font-medium text-gray-700 mb-1.5">Full name</label><input type="text" name="name" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="Your name"></div><div><label class="block text-sm font-medium text-gray-700 mb-1.5">Company</label><input type="text" name="company" class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="Your company"></div></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">Email</label><input type="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="you@company.com"></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">I am a...</label><select name="role" class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent bg-white"><option value="">Select your role</option><option>Operator</option><option>Investor</option><option>Affiliate</option><option>Other</option></select></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">Message</label><textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent resize-none" placeholder="Tell us about your operation and what you're looking for..."></textarea></div>
+            <button type="submit" id="submit-btn" class="w-full bg-brand hover:bg-brand-dark text-white font-semibold py-3.5 rounded-lg transition-colors text-sm">Send message</button>
+            <div id="form-success" class="hidden text-center text-green-600 font-medium text-sm py-2">Thank you! We'll be in touch shortly.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-white py-12 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+          <img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto brightness-0 invert">
+          <span class="text-gray-400 text-sm">WebPrefer AB (556748-3523)</span>
+        </div>
+        <div class="flex items-center gap-6 text-sm text-gray-400">
+          <a href="../index.html#platform" class="hover:text-white transition-colors">Platform</a>
+          <a href="../index.html#products" class="hover:text-white transition-colors">Products</a>
+          <a href="../index.html#proof" class="hover:text-white transition-colors">Customers</a>
+          <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+          <a href="index.html" class="hover:text-white transition-colors">Articles</a>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="https://www.linkedin.com/company/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+          <a href="https://www.facebook.com/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="Facebook"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+          <a href="https://www.instagram.com/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="Instagram"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+        </div>
+        <div class="text-gray-500 text-xs">&copy; 2026 WebPrefer AB. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function(){emailjs.init({publicKey:'J-Ouq1kFXZl7x5bEZ'})})();
+    document.getElementById('contact-form').addEventListener('submit',function(e){
+      e.preventDefault();var b=document.getElementById('submit-btn');b.disabled=true;b.textContent='Sending...';
+      emailjs.sendForm('service_aefyiw9','template_q5n6qyl',this).then(()=>{document.getElementById('form-success').classList.remove('hidden');this.reset();b.textContent='Send message';b.disabled=false;},()=>{b.textContent='Send message';b.disabled=false;});
+    });
+  </script>
+</body>
+</html>

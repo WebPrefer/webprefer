@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0d3459"/>
+      <stop offset="100%" stop-color="#1968AA"/>
+    </linearGradient>
+    <marker id="arrowW" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="white" opacity="0.6"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="480" rx="16" fill="url(#bgGrad)"/>
+
+  <!-- Title -->
+  <text x="450" y="40" text-anchor="middle" fill="#93c5fd" font-size="11" font-weight="700" letter-spacing="2">RE-STREAMING ARCHITECTURE</text>
+  <text x="450" y="66" text-anchor="middle" fill="white" font-size="18" font-weight="700">One Stream → Five Destinations</text>
+
+  <!-- Source: OBS -->
+  <rect x="50" y="170" width="150" height="70" rx="12" fill="white" fill-opacity="0.1" stroke="white" stroke-width="1.5" stroke-opacity="0.4"/>
+  <text x="125" y="198" text-anchor="middle" fill="white" font-size="12" font-weight="700">OBS / Encoder</text>
+  <text x="125" y="216" text-anchor="middle" fill="#93c5fd" font-size="9">RTMP stream out</text>
+  <text x="125" y="230" text-anchor="middle" fill="#93c5fd" font-size="8" opacity="0.6">Single stream key</text>
+
+  <!-- Arrow to nginx -->
+  <line x1="200" y1="205" x2="290" y2="205" stroke="white" stroke-width="1.5" opacity="0.4" marker-end="url(#arrowW)"/>
+  <text x="245" y="197" text-anchor="middle" fill="#93c5fd" font-size="8">RTMP</text>
+
+  <!-- Center: nginx-rtmp -->
+  <rect x="300" y="135" width="200" height="140" rx="12" fill="#1968AA" opacity="0.3" stroke="#93c5fd" stroke-width="2"/>
+  <text x="400" y="162" text-anchor="middle" fill="white" font-size="12" font-weight="700">nginx-rtmp</text>
+  <text x="400" y="178" text-anchor="middle" fill="#93c5fd" font-size="9">AWS ECS Container</text>
+
+  <rect x="320" y="190" width="160" height="20" rx="4" fill="white" opacity="0.06"/>
+  <text x="400" y="204" text-anchor="middle" fill="white" font-size="8" opacity="0.6">Auth callback → validate key</text>
+  <rect x="320" y="216" width="160" height="20" rx="4" fill="white" opacity="0.06"/>
+  <text x="400" y="230" text-anchor="middle" fill="white" font-size="8" opacity="0.6">HLS segmentation (5 tiers)</text>
+  <rect x="320" y="242" width="160" height="20" rx="4" fill="white" opacity="0.06"/>
+  <text x="400" y="256" text-anchor="middle" fill="white" font-size="8" opacity="0.6">Recording → FLV → MP4</text>
+
+  <!-- Output destinations -->
+  <!-- AWS IVS -->
+  <rect x="600" y="90" width="140" height="48" rx="8" fill="white" opacity="0.08" stroke="#86efac" stroke-width="1.5"/>
+  <text x="670" y="112" text-anchor="middle" fill="#86efac" font-size="10" font-weight="700">☁️ AWS IVS</text>
+  <text x="670" y="128" text-anchor="middle" fill="#86efac" font-size="8">CDN for own site</text>
+  <line x1="500" y1="175" x2="600" y2="115" stroke="#86efac" stroke-width="1.5" opacity="0.4" marker-end="url(#arrowW)"/>
+
+  <!-- Twitch -->
+  <rect x="620" y="155" width="140" height="48" rx="8" fill="white" opacity="0.08" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="690" y="177" text-anchor="middle" fill="#c4b5fd" font-size="10" font-weight="700">🎮 Twitch</text>
+  <text x="690" y="193" text-anchor="middle" fill="#c4b5fd" font-size="8">Gaming audience</text>
+  <line x1="500" y1="195" x2="620" y2="180" stroke="#c4b5fd" stroke-width="1.5" opacity="0.4" marker-end="url(#arrowW)"/>
+
+  <!-- YouTube -->
+  <rect x="640" y="220" width="140" height="48" rx="8" fill="white" fill-opacity="0.08" stroke="#ef4444" stroke-width="1" stroke-opacity="0.6"/>
+  <text x="710" y="242" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="700">▶️ YouTube</text>
+  <text x="710" y="258" text-anchor="middle" fill="#fca5a5" font-size="8">Auto-archived VOD</text>
+  <line x1="500" y1="215" x2="640" y2="240" stroke="#fca5a5" stroke-width="1.5" opacity="0.4" marker-end="url(#arrowW)"/>
+
+  <!-- Facebook -->
+  <rect x="620" y="285" width="140" height="48" rx="8" fill="white" opacity="0.08" stroke="#60a5fa" stroke-width="1.5"/>
+  <text x="690" y="307" text-anchor="middle" fill="#93c5fd" font-size="10" font-weight="700">📘 Facebook</text>
+  <text x="690" y="323" text-anchor="middle" fill="#93c5fd" font-size="8">via Stunnel (TLS)</text>
+  <line x1="500" y1="240" x2="620" y2="305" stroke="#93c5fd" stroke-width="1.5" opacity="0.4" marker-end="url(#arrowW)"/>
+
+  <!-- HLS Player -->
+  <rect x="580" y="350" width="160" height="48" rx="8" fill="white" opacity="0.08" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="660" y="372" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="700">🌐 Operator Site</text>
+  <text x="660" y="388" text-anchor="middle" fill="#fbbf24" font-size="8">HLS adaptive bitrate</text>
+  <line x1="500" y1="255" x2="580" y2="370" stroke="#fbbf24" stroke-width="1.5" opacity="0.4" marker-end="url(#arrowW)"/>
+
+  <!-- VOD Pipeline (bottom) -->
+  <line x1="400" y1="275" x2="400" y2="380" stroke="white" stroke-width="1" stroke-dasharray="4,4" opacity="0.2"/>
+  <rect x="300" y="385" width="200" height="55" rx="8" fill="white" fill-opacity="0.06" stroke="white" stroke-width="0.5" stroke-opacity="0.2"/>
+  <text x="400" y="405" text-anchor="middle" fill="white" font-size="10" font-weight="600">Automatic VOD</text>
+  <text x="400" y="420" text-anchor="middle" fill="#93c5fd" font-size="8">FFmpeg encode → MP4</text>
+  <text x="400" y="433" text-anchor="middle" fill="#93c5fd" font-size="8">Upload → S3 + CMS post</text>
+
+  <!-- Quality tiers -->
+  <text x="125" y="290" text-anchor="middle" fill="white" font-size="9" font-weight="600" opacity="0.5">Adaptive Bitrate Tiers</text>
+  <rect x="55" y="300" width="55" height="18" rx="4" fill="white" opacity="0.06"/>
+  <text x="82" y="313" text-anchor="middle" fill="white" font-size="7" opacity="0.5">1080p</text>
+  <rect x="55" y="322" width="55" height="18" rx="4" fill="white" opacity="0.05"/>
+  <text x="82" y="335" text-anchor="middle" fill="white" font-size="7" opacity="0.4">720p</text>
+  <rect x="55" y="344" width="55" height="18" rx="4" fill="white" opacity="0.04"/>
+  <text x="82" y="357" text-anchor="middle" fill="white" font-size="7" opacity="0.4">480p</text>
+  <rect x="55" y="366" width="55" height="18" rx="4" fill="white" opacity="0.03"/>
+  <text x="82" y="379" text-anchor="middle" fill="white" font-size="7" opacity="0.3">360p</text>
+  <rect x="55" y="388" width="55" height="18" rx="4" fill="white" opacity="0.02"/>
+  <text x="82" y="401" text-anchor="middle" fill="white" font-size="7" opacity="0.3">160p</text>
+
+  <!-- Footer -->
+  <text x="450" y="465" text-anchor="middle" fill="#93c5fd" font-size="9" opacity="0.5">Live with Trustplay — webprefer.com</text>
+</svg>
