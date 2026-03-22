@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /v2/images/og/
+
+Sitemap: https://webprefer.com/sitemap.xml
