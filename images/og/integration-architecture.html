@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { brand: { DEFAULT: '#1968AA' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>body { margin: 0; width: 1200px; height: 630px; overflow: hidden; font-family: Inter, system-ui, sans-serif; }</style>
+</head>
+<body style="background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%);">
+  <div class="flex h-[630px] items-center px-16">
+    <div class="flex-1">
+      <div class="flex gap-2 mb-5">
+        <span class="bg-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full">Architecture</span>
+        <span class="bg-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full">Integrations</span>
+      </div>
+      <h1 class="text-white text-5xl font-extrabold leading-tight mb-5 max-w-2xl">50+ Providers, Zero Coupling</h1>
+      <p class="text-blue-200 text-xl leading-relaxed max-w-xl mb-8">Designing an integration layer that scales to dozens of third-party providers without tangling the core.</p>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center"><span class="text-[#1968AA] font-extrabold text-lg">W</span></div>
+        <div>
+          <div class="text-white text-sm font-bold">WebPrefer Engineering</div>
+          <div class="text-blue-300 text-xs">webprefer.com</div>
+        </div>
+      </div>
+    </div>
+    <div class="w-[380px] flex-shrink-0">
+      <div class="bg-[#0c1222] rounded-xl border border-white/5 p-6">
+        <div class="relative flex items-center justify-center" style="height: 260px;">
+          <!-- Center hub -->
+          <div class="absolute bg-brand/30 border-2 border-brand rounded-full w-20 h-20 flex items-center justify-center z-10">
+            <div class="text-white text-[10px] font-bold text-center leading-tight">PAM<br>Core</div>
+          </div>
+          <!-- Spokes - positioned around center -->
+          <div class="absolute top-2 left-1/2 -translate-x-1/2">
+            <div class="bg-emerald-500/15 border border-emerald-500/30 rounded-lg px-3 py-2 text-center">
+              <div class="text-emerald-400 text-[10px] font-bold">PaymentIQ</div>
+            </div>
+          </div>
+          <div class="absolute top-12 right-4">
+            <div class="bg-amber-500/15 border border-amber-500/30 rounded-lg px-3 py-2 text-center">
+              <div class="text-amber-400 text-[10px] font-bold">SportTech</div>
+            </div>
+          </div>
+          <div class="absolute bottom-12 right-4">
+            <div class="bg-purple-500/15 border border-purple-500/30 rounded-lg px-3 py-2 text-center">
+              <div class="text-purple-400 text-[10px] font-bold">Twilio</div>
+            </div>
+          </div>
+          <div class="absolute bottom-2 left-1/2 -translate-x-1/2">
+            <div class="bg-cyan-500/15 border border-cyan-500/30 rounded-lg px-3 py-2 text-center">
+              <div class="text-cyan-400 text-[10px] font-bold">FastTrack</div>
+            </div>
+          </div>
+          <div class="absolute bottom-12 left-4">
+            <div class="bg-rose-500/15 border border-rose-500/30 rounded-lg px-3 py-2 text-center">
+              <div class="text-rose-400 text-[10px] font-bold">Hexopay</div>
+            </div>
+          </div>
+          <div class="absolute top-12 left-4">
+            <div class="bg-sky-500/15 border border-sky-500/30 rounded-lg px-3 py-2 text-center">
+              <div class="text-sky-400 text-[10px] font-bold">SendGrid</div>
+            </div>
+          </div>
+          <!-- Connecting lines via SVG -->
+          <svg class="absolute inset-0 w-full h-full" viewBox="0 0 340 260">
+            <line x1="170" y1="100" x2="170" y2="36" stroke="#ffffff15" stroke-width="1" stroke-dasharray="4,4"/>
+            <line x1="200" y1="120" x2="270" y2="70" stroke="#ffffff15" stroke-width="1" stroke-dasharray="4,4"/>
+            <line x1="200" y1="150" x2="270" y2="195" stroke="#ffffff15" stroke-width="1" stroke-dasharray="4,4"/>
+            <line x1="170" y1="170" x2="170" y2="230" stroke="#ffffff15" stroke-width="1" stroke-dasharray="4,4"/>
+            <line x1="140" y1="150" x2="70" y2="195" stroke="#ffffff15" stroke-width="1" stroke-dasharray="4,4"/>
+            <line x1="140" y1="120" x2="70" y2="70" stroke="#ffffff15" stroke-width="1" stroke-dasharray="4,4"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

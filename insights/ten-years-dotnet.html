@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="What we learned running .NET in production for a decade — from .NET Framework 4.5 to .NET 10, Aspire, and first-class observability.">
+  <title>Ten Years on .NET — WebPrefer Engineering</title>
+  <meta property="og:title" content="Ten Years on .NET — WebPrefer Engineering">
+  <meta property="og:description" content="10 years. One platform. From .NET Framework to .NET 10 — what changed, what held, and why runtime is not an afterthought.">
+  <meta property="og:image" content="https://webprefer.com/images/og-images/ten-years-dotnet.png">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://webprefer.com/insights/ten-years-dotnet.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ten Years on .NET — WebPrefer Engineering">
+  <meta name="twitter:description" content="10 years. One platform. From .NET Framework to .NET 10 — what changed, what held, and why runtime is not an afterthought.">
+  <meta name="twitter:image" content="https://webprefer.com/images/og-images/ten-years-dotnet.png">
+  <meta name="theme-color" content="#1968AA">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="canonical" href="https://webprefer.com/insights/ten-years-dotnet.html">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HC29B7MQF3"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HC29B7MQF3');</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { brand: { DEFAULT: '#1968AA', dark: '#134f82', darker: '#0d3459', light: '#2a7ec4' } },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    img { max-width: 100%; height: auto; }
+    body { overflow-x: hidden; }
+    .gradient-hero { background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%); }
+    .nav-link { transition: color 0.15s ease; }
+    .prose-article h2 { font-size: 1.35rem; font-weight: 700; color: #111827; margin: 2.5rem 0 0.75rem; }
+    .prose-article h3 { font-size: 1.1rem; font-weight: 600; color: #374151; margin: 2rem 0 0.5rem; }
+    .prose-article { overflow-wrap: break-word; word-break: break-word; }
+    .prose-article p { color: #374151; line-height: 1.8; margin-bottom: 1.25rem; }
+    .prose-article ul { margin: 0 0 1.25rem 1.5rem; }
+    .prose-article li { color: #374151; line-height: 1.8; margin-bottom: 0.35rem; }
+    .prose-article strong { color: #111827; }
+    .callout-incident { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout-solution { background: #eff6ff; border-left: 4px solid #1968AA; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout-today { background: #f0fdf4; border-left: 4px solid #16a34a; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .timeline-item { display: flex; gap: 1rem; margin: 1rem 0; }
+    .timeline-dot { width: 12px; height: 12px; min-width: 12px; background: #1968AA; border-radius: 50%; margin-top: 0.35rem; }
+    .timeline-line { width: 2px; background: #e2e8f0; margin: 0 auto; }
+    .linkedin-box { background: #0f172a; border-radius: 12px; padding: 2rem; margin: 3rem 0; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Ten Years on .NET — WebPrefer Engineering","description":"10 years. One platform. From .NET Framework to .NET 10 — what changed, what held, and why runtime is not an afterthought.","image":"https://webprefer.com/images/og-images/ten-years-dotnet.png","datePublished":"2026-01-15","author":{"@type":"Organization","name":"WebPrefer AB","url":"https://webprefer.com"},"publisher":{"@type":"Organization","name":"WebPrefer AB","logo":{"@type":"ImageObject","url":"https://webprefer.com/images/logo.svg"}}}</script>
+</head>
+<body class="font-sans bg-white text-gray-900 antialiased">
+
+  <!-- NAV -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="../index.html" class="flex items-center gap-2">
+        <img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto">
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="../index.html#platform" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Platform</a>
+        <a href="../index.html#products" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Products</a>
+        <a href="../index.html#proof" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Customers</a>
+        <a href="../index.html#partners" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Partners</a>
+        <a href="../index.html#contact" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Contact</a>
+        <a href="index.html" class="nav-link text-sm font-medium text-brand font-semibold">Insights</a>
+      </div>
+      <a href="../index.html#contact" class="bg-brand hover:bg-[#134f82] text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors hidden md:inline-flex">
+        Book a Demo
+      </a>
+      <button id="mobile-menu-btn" aria-label="Toggle navigation menu" class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+        <svg id="icon-open" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-1">
+      <a href="../index.html" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Home</a>
+      <a href="../index.html#platform" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Platform</a>
+      <a href="../index.html#products" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Products</a>
+      <a href="../index.html#proof" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Customers</a>
+      <a href="../index.html#partners" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Partners</a>
+      <a href="#contact" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Contact</a>
+      <a href="index.html" class="block py-2.5 text-sm font-medium text-brand font-semibold mobile-nav-link">Insights</a>
+      <a href="#contact" class="block mt-2 bg-brand text-white text-sm font-semibold px-5 py-2.5 rounded-lg text-center mobile-nav-link">Book a Demo</a>
+    </div>
+  </header>
+  <script>
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('icon-open');
+    const iconClose = document.getElementById('icon-close');
+    btn.addEventListener('click', () => { menu.classList.toggle('hidden'); iconOpen.classList.toggle('hidden'); iconClose.classList.toggle('hidden'); });
+    document.querySelectorAll('.mobile-nav-link').forEach(l => { l.addEventListener('click', () => { menu.classList.add('hidden'); iconOpen.classList.remove('hidden'); iconClose.classList.add('hidden'); }); });
+  </script>
+
+  <!-- ARTICLE HERO -->
+  <section class="gradient-hero pt-32 pb-16 px-6 lg:px-8 text-white">
+    <div class="max-w-3xl mx-auto">
+      <a href="index.html" class="inline-flex items-center gap-2 text-blue-300 text-sm mb-6 hover:text-white transition-colors">
+        &larr; All insights
+      </a>
+      <div class="flex flex-wrap gap-2 mb-4">
+        <span class="bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full">.NET</span>
+        <span class="bg-orange-400/30 text-orange-200 text-xs font-semibold px-3 py-1 rounded-full">Platform Evolution</span>
+        <span class="text-blue-300 text-xs">11 min read</span>
+      </div>
+      <h1 class="text-4xl lg:text-5xl font-extrabold leading-tight mb-5">Ten Years on .NET</h1>
+      <p class="text-xl text-blue-100 leading-relaxed">What we learned running .NET in production for a decade — from .NET Framework to .NET 10, Aspire, and first-class observability.</p>
+      <div class="mt-8 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center"><span class="text-brand font-extrabold text-sm">W</span></div>
+        <div>
+          <div class="text-sm font-semibold">WebPrefer Engineering</div>
+          <div class="text-blue-300 text-xs">January 2026</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIAGRAM -->
+  <section class="bg-gray-50 py-10 px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <div class="bg-[#0c1222] rounded-2xl p-6 lg:p-8">
+        <div class="text-center mb-6">
+          <div class="text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-2">Platform Evolution</div>
+          <div class="text-white text-sm font-bold">Ten Years on .NET — 2013 to 2026</div>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+          <div class="bg-amber-500/10 border border-amber-500/15 rounded-lg p-3">
+            <div class="text-amber-400 text-[11px] font-bold">2013</div>
+            <div class="text-white text-[10px] font-semibold mt-1">.NET 4.5</div>
+            <div class="text-gray-500 text-[9px] mt-1">MVC + EF · IIS · SQL Server</div>
+          </div>
+          <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+            <div class="text-gray-400 text-[11px] font-bold">2016</div>
+            <div class="text-white text-[10px] font-semibold mt-1">Multi-tenant</div>
+            <div class="text-gray-500 text-[9px] mt-1">Redis · RabbitMQ · First jurisdictions</div>
+          </div>
+          <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+            <div class="text-gray-400 text-[11px] font-bold">2019</div>
+            <div class="text-white text-[10px] font-semibold mt-1">SignalR</div>
+            <div class="text-gray-500 text-[9px] mt-1">Real-time · 37+ integrations</div>
+          </div>
+          <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+            <div class="text-gray-400 text-[11px] font-bold">2022</div>
+            <div class="text-white text-[10px] font-semibold mt-1">BeAware + CMS</div>
+            <div class="text-gray-500 text-[9px] mt-1">Graph editor · Blazor</div>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-3 mb-4">
+          <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-4">
+            <div class="text-emerald-400 text-[11px] font-bold">2023 — New Era</div>
+            <div class="text-gray-400 text-[9px] mt-1">Restructured architecture · Module isolation · RBAC overhaul · 16+ clean integrations</div>
+          </div>
+          <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-4">
+            <div class="text-emerald-400 text-[11px] font-bold">2026 — .NET 10 LTS</div>
+            <div class="text-gray-400 text-[9px] mt-1">EF Core 10 · OpenTelemetry · .NET Aspire · AI (Gemini)</div>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3 text-center"><div class="text-white text-lg font-extrabold">18K+</div><div class="text-gray-500 text-[9px]">commits</div></div>
+          <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3 text-center"><div class="text-white text-lg font-extrabold">5</div><div class="text-gray-500 text-[9px]">regulated markets</div></div>
+          <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3 text-center"><div class="text-white text-lg font-extrabold">40+</div><div class="text-gray-500 text-[9px]">business modules</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTICLE BODY -->
+  <article class="py-16 px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto prose-article">
+
+      <p>PAM has been running on .NET since 2013. That's a long time in the .NET ecosystem — long enough to have lived through the framework-to-core transition, the annual release cadence, the move to LTS versions, and the introduction of capabilities that simply didn't exist when the platform was first built.</p>
+
+      <p>Runtime choices are not purely technical decisions. They're investment decisions. A runtime that loses vendor support, loses the ecosystem around it, or requires expensive migration to maintain affects the platform's economics for years. Getting this right over a decade of continuous operation requires a deliberate upgrade strategy — not chasing versions, and not ignoring them either.</p>
+
+      <h2>Where we started: .NET Framework</h2>
+
+      <p>PAM started on .NET Framework 4.5. In 2013, this was the obvious choice. .NET Core didn't exist yet. ASP.NET MVC was mature, Entity Framework was the standard ORM, and the Windows deployment model (IIS + Windows Services) matched the operational requirements of the operators we were building for.</p>
+
+      <p>The technology choices from 2013 are visible in the architecture today: IIS hosting, Windows Services for background processing, SQL Server as the primary data store, and an MVC-based back office. These weren't wrong choices — they were appropriate for the environment and have proven durable. The deployment model that runs PAM in production today is recognizably descended from the 2013 architecture.</p>
+
+      <h2>The framework-to-core transition</h2>
+
+      <p>The hardest version decision in PAM's history was moving from .NET Framework to .NET Core — which became .NET 5, then .NET 6, then the unified platform.</p>
+
+      <div class="callout-incident">
+        <div class="font-bold text-amber-800 mb-2">The transition risk</div>
+        <p style="margin:0;color:#92400e;">A platform that's been running live operations for a decade doesn't migrate lightly. .NET Framework to .NET Core isn't a recompile — it requires evaluating every dependency, every platform-specific API call, every deployment assumption. For a system with 40+ business modules, 16+ integrations, and continuous live deployments, a migration that breaks something in production is unacceptable.</p>
+      </div>
+
+      <p>The decision was made deliberately: the current generation of PAM was rebuilt targeting .NET (not Framework) from the beginning — not migrated line by line from the existing codebase, but restructured with the lessons of the previous decade built in. The business logic, domain knowledge, and compliance rules accumulated over 10 years are preserved. The infrastructure layer was rebuilt with modern capabilities as first-class design inputs.</p>
+
+      <h2>Why .NET 10</h2>
+
+      <p>We don't upgrade versions because they're new. We upgrade when the platform genuinely benefits. .NET 10 cleared that bar on three dimensions:</p>
+
+      <p><strong>EF Core performance.</strong> Entity Framework Core 10 includes substantial improvements to query translation and bulk operation performance. PAM's high-volume query paths — wallet balance reads, audit log queries, player segment evaluations — benefit directly. The improvement is measurable in production without touching application code.</p>
+
+      <p><strong>OpenTelemetry integration.</strong> .NET 10's built-in OpenTelemetry support is meaningfully better than earlier versions. Traces, metrics, and logs integrate cleanly with the Aspire dashboard without custom instrumentation setup. For a platform that needs end-to-end visibility across API, business logic, background services, and integrations, observability that works by default is worth upgrading for.</p>
+
+      <p><strong>Long-term support.</strong> .NET 10 is an LTS release. Operators running live operations in regulated markets need confidence that the runtime under their platform is supported for years, not months. LTS designation provides that guarantee from Microsoft. Non-LTS versions don't.</p>
+
+      <h2>.NET Aspire: development-time observability</h2>
+
+      <p>The most operationally valuable addition in recent versions isn't a runtime capability — it's .NET Aspire, the developer orchestration framework.</p>
+
+      <p>Aspire provides a local development dashboard that mirrors production observability: live service health, dependency graphs, distributed traces, and log streams — all in one view, running locally without infrastructure setup. When a developer is working on the deposit flow and wants to trace what happens from the API endpoint through the business logic, down to the database query, and out to the integration callback, they can see the full trace in the Aspire dashboard without any additional tooling.</p>
+
+      <div class="callout-solution">
+        <div class="font-bold mb-2" style="color:#134f82;">What this changes</div>
+        <p style="margin:0;color:#1e3a5f;">Before Aspire, understanding how a request flowed through a multi-service system required either extensive logging, a separate tracing setup, or careful manual inspection. With Aspire, the trace is visible by default during development — the same trace structure that runs in production. Bugs that previously required a production deploy to diagnose can be identified locally, in a reproducible environment, before they reach production.</p>
+      </div>
+
+      <h2>OpenTelemetry in production</h2>
+
+      <p>PAM ships with full OpenTelemetry instrumentation across every service. This isn't an add-on — it's a first-class architectural requirement in the current generation.</p>
+
+      <p>Every API request carries a trace ID. That trace propagates through the API layer into the business logic, down to the database query, and out to any external integration call. If a player's deposit is slow, the trace shows exactly where the time was spent: in the payment provider's response time, in the bonus evaluation logic, or in a database query that needs an index. The diagnostic path is the trace — not log file archaeology.</p>
+
+      <p>Correlation IDs flow from the player's browser through every layer of the stack. When a support agent asks "what happened to this transaction?", the answer is a trace ID lookup — not a manual search across multiple log files from different services.</p>
+
+      <h2>The deployment model: IIS and Windows Services</h2>
+
+      <p>PAM runs on IIS (web/API) and Windows Services (background processing). This is not the cloud-native container model, and it's intentional.</p>
+
+      <p>Operators in regulated markets often have specific infrastructure requirements — on-premises deployments, specific audit controls, familiar operational tooling. IIS and Windows Services are well-understood, well-supported, and operate within the compliance frameworks operators already have. They also integrate cleanly with the AWS services PAM uses in production: RDS (SQL Server), Amazon MQ (RabbitMQ), ElastiCache (Valkey/Redis), and SES.</p>
+
+      <p>The architecture is cloud-compatible — the event-driven design, the Redis backplane, the RabbitMQ messaging layer are all cloud-ready. The current deployment model isn't a constraint; it's a deliberate fit to where our operators are today.</p>
+
+      <h2>What a decade of .NET teaches you</h2>
+
+      <p>The most important lesson isn't technical. It's organizational: <strong>the team that understands why a decision was made is more valuable than the decision itself.</strong></p>
+
+      <p>PAM has been built by the same core team across its entire history. When the ORM behavior changed between EF Core versions and a query started returning different results, the person who fixed it knew why that query was written the way it was — because they wrote it. When the RabbitMQ connection handling needed to change for a new deployment topology, the person who made the change understood the full message flow, because they designed it.</p>
+
+      <p>This institutional knowledge doesn't appear in the codebase. It's in the team. And it's the most durable asset the platform has — more durable than any specific technology choice, because technology choices can be changed. Accumulated domain understanding can't be transferred by documentation alone.</p>
+
+      <div class="callout-today">
+        <div class="font-bold text-green-800 mb-2">Today</div>
+        <p style="margin:0;color:#14532d;">PAM runs on .NET 10, EF Core 10, with full OpenTelemetry instrumentation and .NET Aspire for development orchestration. The background services run on Windows as deployed services. The web and API layers run on IIS. The AWS infrastructure handles persistence, messaging, and caching. The stack is deliberately unsexy — proven, well-supported, with large talent pools and long support windows. These are the right properties for a platform that has to be running ten years from now.</p>
+      </div>
+
+      <h2>The principle</h2>
+
+      <p>Runtime is not an afterthought. The choice of runtime affects performance characteristics, the talent pool you can hire from, the support window you can commit to operators, and the observability tools available to your team. Getting these decisions right — and revisiting them deliberately when the landscape changes — is part of platform stewardship.</p>
+
+      <p>We don't chase versions. We upgrade when the platform benefits. The test is simple: does this change make the platform more reliable, more observable, more maintainable, or more performant for the operations it runs? If yes, we upgrade. If the answer is "because it's new," we wait.</p>
+
+      <!-- SHARE -->
+      <div class="linkedin-box">
+        <div class="flex items-center justify-between mb-4">
+          <div class="text-blue-400 text-xs font-bold uppercase tracking-widest">Share this insight</div>
+          <div class="flex gap-2">
+            <button onclick="navigator.clipboard.writeText(this.closest('.linkedin-box').querySelector('.share-text').textContent.trim());this.textContent='Copied!';setTimeout(()=>this.textContent='Copy text',2000)" class="bg-white/10 hover:bg-white/20 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors">Copy text</button>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://webprefer.com/insights/ten-years-dotnet.html" target="_blank" rel="noopener" class="bg-[#0A66C2] hover:bg-[#004182] text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors inline-flex items-center gap-2"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>Share on LinkedIn</a>
+          </div>
+        </div>
+        <details class="group">
+          <summary class="text-gray-500 text-xs cursor-pointer hover:text-gray-300 transition-colors">Preview post text</summary>
+          <div class="share-text text-gray-200 text-sm leading-relaxed whitespace-pre-line mt-3">Most platforms treat their runtime as an afterthought. We don't.
+
+PAM runs on .NET 10 — not because it's new, but because it's the right foundation for where the platform is going.
+
+— Better EF Core performance means our high-volume query paths get faster without touching application code.
+— Improved OpenTelemetry integration means observability is a first-class citizen, not an afterthought.
+— Long-term Microsoft support means operators have confidence the infrastructure under them isn't going anywhere.
+
+We don't chase versions. We upgrade when the platform genuinely benefits.
+
+This one did.
+
+Running on an older runtime and feeling the friction? Link in bio.
+
+#DotNet10 #PAM #iGaming #GamingTech</div>
+        </details>
+      </div>
+
+    </div>
+  </article>
+
+  <!-- MORE ARTICLES -->
+  <section class="py-12 px-6 lg:px-8 bg-gray-50 border-t border-gray-100">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">More insights</div>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <a href="ai-regulated-industry.html" class="group bg-white rounded-xl border border-gray-100 p-5 hover:border-brand/30 hover:shadow-md transition-all">
+          <div class="text-xs font-semibold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-full inline-block mb-2">AI</div>
+          <div class="font-semibold text-gray-900 group-hover:text-brand transition-colors text-sm">AI in a Regulated Industry</div>
+          <div class="text-gray-500 text-xs mt-1">Permission-scoped context — not just a chatbot</div>
+        </a>
+        <a href="wallet-concurrency.html" class="group bg-white rounded-xl border border-gray-100 p-5 hover:border-brand/30 hover:shadow-md transition-all">
+          <div class="text-xs font-semibold text-orange-700 bg-orange-50 px-2 py-0.5 rounded-full inline-block mb-2">Production Incident</div>
+          <div class="font-semibold text-gray-900 group-hover:text-brand transition-colors text-sm">The Wallet Problem</div>
+          <div class="text-gray-500 text-xs mt-1">Concurrency, optimistic locking, and retry logic</div>
+        </a>
+      </div>
+      <div class="mt-6">
+        <a href="index.html" class="text-brand text-sm font-semibold hover:underline">&larr; View all insights</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-24 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-16">
+        <div>
+          <div class="text-xs font-bold uppercase tracking-widest text-brand mb-4" style="letter-spacing:0.12em;">Get in Touch</div>
+          <h2 class="text-4xl font-bold mb-6">Ready to see it?</h2>
+          <p class="text-lg text-gray-600 leading-relaxed mb-10">We offer live demos scoped to your specific operation type — whether you're launching a new brand, migrating from an existing platform, or evaluating options for a white-label deployment.</p>
+          <div class="space-y-5">
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div><div><div class="font-semibold text-gray-900">Address</div><div class="text-gray-600 text-sm mt-1">S:t Larsgatan 7, 582 24 Linköping, Sweden</div></div></div>
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div><div><div class="font-semibold text-gray-900">Email</div><a href="mailto:sales@webprefer.com" class="text-brand text-sm mt-1 block hover:underline">sales@webprefer.com</a></div></div>
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></div><div><div class="font-semibold text-gray-900">Mikael Lindberg Castell</div><a href="mailto:mikael@webprefer.com" class="text-brand text-sm mt-1 block hover:underline">mikael@webprefer.com</a><div class="text-gray-500 text-xs mt-0.5">CEO &amp; Founder, WebPrefer AB</div></div></div>
+          </div>
+        </div>
+        <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
+          <form id="contact-form" class="space-y-5">
+            <div class="grid sm:grid-cols-2 gap-5"><div><label class="block text-sm font-medium text-gray-700 mb-1.5">Full name</label><input type="text" name="name" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="Your name"></div><div><label class="block text-sm font-medium text-gray-700 mb-1.5">Company</label><input type="text" name="company" class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="Your company"></div></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">Email</label><input type="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="you@company.com"></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">I am a...</label><select name="role" class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent bg-white"><option value="">Select your role</option><option>Operator</option><option>Investor</option><option>Affiliate</option><option>Other</option></select></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">Message</label><textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent resize-none" placeholder="Tell us about your operation and what you're looking for..."></textarea></div>
+            <button type="submit" id="submit-btn" class="w-full bg-brand hover:bg-brand-dark text-white font-semibold py-3.5 rounded-lg transition-colors text-sm">Send message</button>
+            <div id="form-success" class="hidden text-center text-green-600 font-medium text-sm py-2">Thank you! We'll be in touch shortly.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-white py-12 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+          <img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto brightness-0 invert">
+          <span class="text-gray-400 text-sm">WebPrefer AB (556748-3523)</span>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm text-gray-400">
+          <a href="../index.html#platform" class="hover:text-white transition-colors">Platform</a>
+          <a href="../index.html#products" class="hover:text-white transition-colors">Products</a>
+          <a href="../index.html#proof" class="hover:text-white transition-colors">Customers</a>
+          <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+          <a href="index.html" class="hover:text-white transition-colors">Insights</a>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="https://www.linkedin.com/company/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+          <a href="https://www.facebook.com/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="Facebook"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+          <a href="https://www.instagram.com/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="Instagram"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+        </div>
+        <div class="text-gray-500 text-xs">&copy; <span id="footer-year">2026</span> WebPrefer AB. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function(){emailjs.init({publicKey:'J-Ouq1kFXZl7x5bEZ'})})();
+    document.getElementById('contact-form').addEventListener('submit',function(e){
+      e.preventDefault();var b=document.getElementById('submit-btn');b.disabled=true;b.textContent='Sending...';
+      emailjs.sendForm('service_aefyiw9','template_q5n6qyl',this).then(()=>{document.getElementById('form-success').classList.remove('hidden');this.reset();b.textContent='Send message';b.disabled=false;},()=>{b.textContent='Send message';b.disabled=false;});
+    });
+  </script>
+  <script>document.querySelectorAll("#footer-year").forEach(e=>e.textContent=new Date().getFullYear())</script>
+</body>
+</html>

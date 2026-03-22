@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { brand: { DEFAULT: '#1968AA' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>body { margin: 0; width: 1200px; height: 630px; overflow: hidden; font-family: Inter, system-ui, sans-serif; }</style>
+</head>
+<body style="background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%);">
+  <div class="flex h-[630px] items-center px-16">
+    <div class="flex-1">
+      <div class="flex gap-2 mb-5">
+        <span class="bg-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full">Concurrency</span>
+        <span class="bg-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full">Production Incident</span>
+      </div>
+      <h1 class="text-white text-5xl font-extrabold leading-tight mb-5 max-w-2xl">The Wallet Problem</h1>
+      <p class="text-blue-200 text-xl leading-relaxed max-w-xl mb-8">How concurrent requests can silently corrupt player balances -- and the patterns we use to prevent it.</p>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center"><span class="text-[#1968AA] font-extrabold text-lg">W</span></div>
+        <div>
+          <div class="text-white text-sm font-bold">WebPrefer Engineering</div>
+          <div class="text-blue-300 text-xs">webprefer.com</div>
+        </div>
+      </div>
+    </div>
+    <div class="w-[380px] flex-shrink-0">
+      <div class="bg-[#0c1222] rounded-xl border border-white/5 p-6">
+        <div class="flex gap-4 mb-4">
+          <div class="flex-1 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 text-center">
+            <div class="text-amber-400 text-xs font-bold mb-1">Request A</div>
+            <div class="text-white/60 text-[10px]">READ balance</div>
+            <div class="text-white/40 text-[10px]">= $100</div>
+          </div>
+          <div class="flex-1 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 text-center">
+            <div class="text-amber-400 text-xs font-bold mb-1">Request B</div>
+            <div class="text-white/60 text-[10px]">READ balance</div>
+            <div class="text-white/40 text-[10px]">= $100</div>
+          </div>
+        </div>
+        <div class="flex justify-center mb-3">
+          <svg width="20" height="24" viewBox="0 0 20 24"><path d="M10 0 L10 18 M4 12 L10 18 L16 12" stroke="#64748b" stroke-width="2" fill="none"/></svg>
+        </div>
+        <div class="flex gap-4 mb-4">
+          <div class="flex-1 bg-white/5 border border-white/10 rounded-lg p-3 text-center">
+            <div class="text-white/50 text-[10px]">WRITE $80</div>
+          </div>
+          <div class="flex-1 bg-white/5 border border-white/10 rounded-lg p-3 text-center">
+            <div class="text-white/50 text-[10px]">WRITE $70</div>
+          </div>
+        </div>
+        <div class="bg-red-500/15 border border-red-500/40 rounded-lg p-3 text-center">
+          <div class="text-red-400 text-sm font-bold">LOST UPDATE</div>
+          <div class="text-red-300/60 text-[10px] mt-1">Balance = $70 (should be $50)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

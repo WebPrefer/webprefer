@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { brand: { DEFAULT: '#1968AA' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>body { margin: 0; width: 1200px; height: 630px; overflow: hidden; font-family: Inter, system-ui, sans-serif; }</style>
+</head>
+<body style="background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%);">
+  <div class="flex h-[630px] items-center px-16">
+    <div class="flex-1">
+      <div class="flex gap-2 mb-5">
+        <span class="bg-purple-400/30 text-purple-200 text-sm font-semibold px-4 py-1.5 rounded-full">Cashback</span>
+        <span class="bg-teal-400/30 text-teal-200 text-sm font-semibold px-4 py-1.5 rounded-full">Retention</span>
+      </div>
+      <h1 class="text-white text-5xl font-extrabold leading-tight mb-5 max-w-2xl">Cashback Without the Gaming Math Headaches</h1>
+      <p class="text-blue-200 text-xl leading-relaxed max-w-xl mb-8">Per-product loss tracking, 4 specialized executors, and event-driven accumulation.</p>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center"><span class="text-[#1968AA] font-extrabold text-lg">W</span></div>
+        <div><div class="text-white text-sm font-bold">WebPrefer Engineering</div><div class="text-blue-300 text-xs">webprefer.com</div></div>
+      </div>
+    </div>
+    <div class="w-[380px] flex-shrink-0">
+      <div class="bg-[#0c1222] rounded-xl border border-white/10 p-5 space-y-3">
+        <div class="text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-3">Cashback Executors</div>
+        <div class="flex items-center gap-3 bg-white/[0.04] rounded-lg px-4 py-3 border border-white/5">
+          <div class="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 text-xs font-bold">C</div>
+          <div><div class="text-white text-xs font-semibold">Casino</div><div class="text-gray-500 text-[10px]">% of net loss</div></div>
+        </div>
+        <div class="flex items-center gap-3 bg-white/[0.04] rounded-lg px-4 py-3 border border-white/5">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-xs font-bold">S</div>
+          <div><div class="text-white text-xs font-semibold">Sportsbook</div><div class="text-gray-500 text-[10px]">% of losing bets</div></div>
+        </div>
+        <div class="flex items-center gap-3 bg-white/[0.04] rounded-lg px-4 py-3 border border-white/5">
+          <div class="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-400 text-xs font-bold">P</div>
+          <div><div class="text-white text-xs font-semibold">Poker</div><div class="text-gray-500 text-[10px]">Rake-based return</div></div>
+        </div>
+        <div class="flex items-center gap-3 bg-white/[0.04] rounded-lg px-4 py-3 border border-white/5">
+          <div class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 text-xs font-bold">$</div>
+          <div><div class="text-white text-xs font-semibold">Payment</div><div class="text-gray-500 text-[10px]">Flat rate per deposit</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

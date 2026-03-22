@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { brand: { DEFAULT: '#1968AA' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>body { margin: 0; width: 1200px; height: 630px; overflow: hidden; font-family: Inter, system-ui, sans-serif; }</style>
+</head>
+<body style="background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%);">
+  <div class="flex h-[630px] items-center px-16">
+    <div class="flex-1">
+      <div class="flex gap-2 mb-5">
+        <span class="bg-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full">Tournaments</span>
+        <span class="bg-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full">Engagement</span>
+      </div>
+      <h1 class="text-white text-5xl font-extrabold leading-tight mb-5 max-w-2xl">Multi-Product Tournaments</h1>
+      <p class="text-blue-200 text-xl leading-relaxed max-w-xl mb-8">Leaderboards that span casino, sportsbook, and bingo -- unifying scoring across verticals.</p>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center"><span class="text-[#1968AA] font-extrabold text-lg">W</span></div>
+        <div>
+          <div class="text-white text-sm font-bold">WebPrefer Engineering</div>
+          <div class="text-blue-300 text-xs">webprefer.com</div>
+        </div>
+      </div>
+    </div>
+    <div class="w-[380px] flex-shrink-0">
+      <div class="bg-[#0c1222] rounded-xl border border-white/5 p-6">
+        <div class="text-white/40 text-[10px] font-bold uppercase tracking-wider mb-4">Live Leaderboard</div>
+        <!-- Header -->
+        <div class="flex items-center px-3 py-2 mb-2 text-white/30 text-[9px] font-bold">
+          <div class="w-6">#</div>
+          <div class="flex-1">Player</div>
+          <div class="w-16 text-center">Source</div>
+          <div class="w-16 text-right">Points</div>
+        </div>
+        <!-- Row 1 - Gold -->
+        <div class="flex items-center bg-amber-500/10 border border-amber-500/20 rounded-lg px-3 py-3 mb-2">
+          <div class="w-6 text-amber-400 text-xs font-bold">1</div>
+          <div class="flex-1">
+            <div class="text-white/80 text-xs font-bold">alex_spins</div>
+            <div class="text-white/30 text-[9px]">Joined 2h ago</div>
+          </div>
+          <div class="w-16 text-center">
+            <span class="bg-purple-500/20 text-purple-400 text-[8px] font-bold px-2 py-0.5 rounded">Casino</span>
+          </div>
+          <div class="w-16 text-right text-amber-400 text-sm font-bold">12,450</div>
+        </div>
+        <!-- Row 2 - Silver -->
+        <div class="flex items-center bg-white/5 border border-white/10 rounded-lg px-3 py-3 mb-2">
+          <div class="w-6 text-white/50 text-xs font-bold">2</div>
+          <div class="flex-1">
+            <div class="text-white/80 text-xs font-bold">betking99</div>
+            <div class="text-white/30 text-[9px]">Joined 45m ago</div>
+          </div>
+          <div class="w-16 text-center">
+            <span class="bg-emerald-500/20 text-emerald-400 text-[8px] font-bold px-2 py-0.5 rounded">Sports</span>
+          </div>
+          <div class="w-16 text-right text-white/70 text-sm font-bold">11,820</div>
+        </div>
+        <!-- Row 3 - Bronze -->
+        <div class="flex items-center bg-white/5 border border-white/10 rounded-lg px-3 py-3">
+          <div class="w-6 text-white/50 text-xs font-bold">3</div>
+          <div class="flex-1">
+            <div class="text-white/80 text-xs font-bold">lucky_ace</div>
+            <div class="text-white/30 text-[9px]">Joined 1h ago</div>
+          </div>
+          <div class="w-16 text-center">
+            <span class="bg-sky-500/20 text-sky-400 text-[8px] font-bold px-2 py-0.5 rounded">Bingo</span>
+          </div>
+          <div class="w-16 text-right text-white/70 text-sm font-bold">10,335</div>
+        </div>
+        <div class="mt-4 text-center">
+          <div class="text-white/20 text-[9px]">Real-time scoring across all verticals</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

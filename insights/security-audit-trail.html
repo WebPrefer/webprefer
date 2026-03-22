@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Security in a gaming platform isn't a feature you ship — it's a constraint you design around. Authentication, authorization, rate limiting, audit trails, and data isolation in PAM.">
+  <title>Security in a Gaming Platform Isn't a Feature — It's a Constraint — WebPrefer Engineering</title>
+  <meta property="og:title" content="Security in a Gaming Platform Isn't a Feature — It's a Constraint — WebPrefer Engineering">
+  <meta property="og:description" content="Authentication, authorization, rate limiting, audit trails, and data isolation — enforced at the architecture level, not bolted on after launch.">
+  <meta property="og:image" content="https://webprefer.com/images/og-images/security-audit-trail.png">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://webprefer.com/insights/security-audit-trail.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Security in a Gaming Platform Isn't a Feature — It's a Constraint — WebPrefer Engineering">
+  <meta name="twitter:description" content="Authentication, authorization, rate limiting, audit trails, and data isolation — enforced at the architecture level, not bolted on after launch.">
+  <meta name="twitter:image" content="https://webprefer.com/images/og-images/security-audit-trail.png">
+  <meta name="theme-color" content="#1968AA">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="canonical" href="https://webprefer.com/insights/security-audit-trail.html">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HC29B7MQF3"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HC29B7MQF3');</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { brand: { DEFAULT: '#1968AA', dark: '#134f82', darker: '#0d3459', light: '#2a7ec4' } },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    img { max-width: 100%; height: auto; }
+    body { overflow-x: hidden; }
+    .gradient-hero { background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%); }
+    .nav-link { transition: color 0.15s ease; }
+    .prose-article h2 { font-size: 1.35rem; font-weight: 700; color: #111827; margin: 2.5rem 0 0.75rem; }
+    .prose-article { overflow-wrap: break-word; word-break: break-word; }
+    .prose-article p { color: #374151; line-height: 1.8; margin-bottom: 1.25rem; }
+    .prose-article ul { margin: 0 0 1.25rem 1.5rem; }
+    .prose-article li { color: #374151; line-height: 1.8; margin-bottom: 0.35rem; }
+    .prose-article strong { color: #111827; }
+    .callout-incident { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout-solution { background: #eff6ff; border-left: 4px solid #1968AA; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout-today { background: #f0fdf4; border-left: 4px solid #16a34a; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .linkedin-box { background: #0f172a; border-radius: 12px; padding: 2rem; margin: 3rem 0; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Security in a Gaming Platform Isn't a Feature — It's a Constraint — WebPrefer Engineering","description":"Authentication, authorization, rate limiting, audit trails, and data isolation — enforced at the architecture level, not bolted on after launch.","image":"https://webprefer.com/images/og-images/security-audit-trail.png","datePublished":"2026-03-15","author":{"@type":"Organization","name":"WebPrefer AB","url":"https://webprefer.com"},"publisher":{"@type":"Organization","name":"WebPrefer AB","logo":{"@type":"ImageObject","url":"https://webprefer.com/images/logo.svg"}}}</script>
+</head>
+<body class="font-sans bg-white text-gray-900 antialiased">
+
+  <!-- NAV -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="../index.html" class="flex items-center gap-2">
+        <img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto">
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="../index.html#platform" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Platform</a>
+        <a href="../index.html#products" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Products</a>
+        <a href="../index.html#proof" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Customers</a>
+        <a href="../index.html#partners" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Partners</a>
+        <a href="../index.html#contact" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Contact</a>
+        <a href="index.html" class="nav-link text-sm font-medium text-brand font-semibold">Insights</a>
+      </div>
+      <a href="../index.html#contact" class="bg-brand hover:bg-[#134f82] text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors hidden md:inline-flex">
+        Book a Demo
+      </a>
+      <button id="mobile-menu-btn" aria-label="Toggle navigation menu" class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+        <svg id="icon-open" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-1">
+      <a href="../index.html" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Home</a>
+      <a href="../index.html#platform" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Platform</a>
+      <a href="../index.html#products" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Products</a>
+      <a href="../index.html#proof" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Customers</a>
+      <a href="../index.html#partners" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Partners</a>
+      <a href="#contact" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Contact</a>
+      <a href="index.html" class="block py-2.5 text-sm font-medium text-brand font-semibold mobile-nav-link">Insights</a>
+      <a href="#contact" class="block mt-2 bg-brand text-white text-sm font-semibold px-5 py-2.5 rounded-lg text-center mobile-nav-link">Book a Demo</a>
+    </div>
+  </header>
+  <script>
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('icon-open');
+    const iconClose = document.getElementById('icon-close');
+    btn.addEventListener('click', () => { menu.classList.toggle('hidden'); iconOpen.classList.toggle('hidden'); iconClose.classList.toggle('hidden'); });
+    document.querySelectorAll('.mobile-nav-link').forEach(l => { l.addEventListener('click', () => { menu.classList.add('hidden'); iconOpen.classList.remove('hidden'); iconClose.classList.add('hidden'); }); });
+  </script>
+
+  <!-- ARTICLE HERO -->
+  <section class="gradient-hero pt-32 pb-16 px-6 lg:px-8 text-white">
+    <div class="max-w-3xl mx-auto">
+      <a href="index.html" class="inline-flex items-center gap-2 text-blue-300 text-sm mb-6 hover:text-white transition-colors">
+        &larr; All insights
+      </a>
+      <div class="flex flex-wrap gap-2 mb-4">
+        <span class="bg-red-400/30 text-red-200 text-xs font-semibold px-3 py-1 rounded-full">Security</span>
+        <span class="bg-slate-400/30 text-slate-200 text-xs font-semibold px-3 py-1 rounded-full">Architecture</span>
+        <span class="text-blue-300 text-xs">7 min read</span>
+      </div>
+      <h1 class="text-4xl lg:text-5xl font-extrabold leading-tight mb-5">Security in a Gaming Platform Isn't a Feature — It's a Constraint</h1>
+      <p class="text-xl text-blue-100 leading-relaxed">Authentication, authorization, rate limiting, audit trails, and data isolation aren't features you add to a gaming platform. They're constraints you design around from day one — because retrofitting security into a live, regulated system is how breaches happen.</p>
+      <div class="mt-8 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center"><span class="text-brand font-extrabold text-sm">W</span></div>
+        <div>
+          <div class="text-sm font-semibold">WebPrefer Engineering</div>
+          <div class="text-blue-300 text-xs">March 2026</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTICLE BODY -->
+  <article class="py-16 px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto prose-article">
+
+      <p>In most software systems, security is a layer. You build the application, then you add authentication. You ship the API, then you add rate limiting. You launch, then you add audit logging when a compliance officer asks for it. This works in many industries — but gaming is not one of them.</p>
+
+      <p>A gaming platform handles real money, real personal data, and real regulatory obligations across multiple jurisdictions simultaneously. It operates 24/7 under load patterns that are unpredictable and frequently adversarial. Players probe for weaknesses. Bad actors automate. Regulators audit without warning. In this environment, security that was added after the architecture was set will always have gaps — because the architecture wasn't shaped around it.</p>
+
+      <p>PAM treats security as a structural constraint. Authentication, authorization, IP enforcement, rate limiting, audit logging, and data isolation are not features sitting on top of the platform. They are baked into the request pipeline, the data model, and the query layer. Every design decision accounts for them, because every design decision has to.</p>
+
+      <h2>Authentication model: two surfaces, two strategies</h2>
+
+      <p>A gaming platform has two fundamentally different user populations: operators (back-office staff managing the platform) and players (end users depositing, playing, and withdrawing). These populations have different threat models, different session characteristics, and different trust boundaries. Treating them the same is a security mistake.</p>
+
+      <p>PAM uses a dual authentication strategy. The back-office portal uses cookie-based session authentication. Operators log in, receive an HttpOnly secure cookie, and maintain a server-side session. This is the right model for an internal tool: sessions can be invalidated instantly, session state is controlled server-side, and there are no cross-origin concerns because operators access the back office from a known domain.</p>
+
+      <p>The player-facing API uses a different approach: dual authentication combining cross-domain cookies and JWT Bearer tokens. The cross-domain cookies are HttpOnly, Secure, and set with SameSite=None — because player-facing frontends are often served from different domains than the API. The JWT tokens use HS256 with a symmetric key derived from the platform's centralized configuration. Every token has a defined lifetime. Every session has rotation logic. The API supports both mechanisms simultaneously because different operator frontends have different integration requirements — some work better with cookies, some need stateless JWT for mobile apps or single-page applications.</p>
+
+      <p>This isn't complexity for its own sake. It's complexity that matches the actual deployment topology. A back-office session and a player session have different lifetimes, different revocation requirements, and different attack surfaces. A single authentication model would compromise on all of them.</p>
+
+      <h2>Authorization: RBAC down to the action level</h2>
+
+      <p>Authentication tells you who someone is. Authorization tells you what they're allowed to do. In a multi-tenant gaming platform, the authorization model has to be precise — not just "admin" and "user," but granular permissions that control exactly which screens an operator can see, which actions they can perform, and which data they can access.</p>
+
+      <p>PAM implements role-based access control with permissions defined at the controller and action level. Every back-office controller action, every API endpoint, and every CMS operation is gated by a permission check. The same permission model applies uniformly across all three surfaces. If an operator's role doesn't include the "edit player details" permission, they can't edit player details — not through the back-office UI, not through the API, and not through the CMS. There is no backdoor through an alternative interface.</p>
+
+      <p>This is enforced through authorization filters — specifically, a <strong>PermissionFilter</strong> that runs before any controller action executes. The filter checks the current user's role against the required permission for the requested action. If the permission isn't present, the request is rejected before business logic runs. There is no scenario where business logic executes and then checks permissions after the fact.</p>
+
+      <p>The practical benefit is that operators see exactly what their role permits — nothing more. A customer support agent sees player details and communication tools. A compliance officer sees KYC documents and responsible gaming reports. A finance operator sees transaction reports and withdrawal approvals. The permission model isn't advisory; it's structural. The UI itself adapts to show only what the operator is authorized to access.</p>
+
+      <h2>IP enforcement: blocked before business logic</h2>
+
+      <p>IP blacklisting sounds simple. Maintain a list of blocked IPs, check incoming requests against it, reject matches. The implementation detail that matters is <em>where</em> in the pipeline the check runs.</p>
+
+      <p>In PAM, IP blacklist enforcement runs at the authorization filter level — through an <strong>IpBlacklistAuthorizationFilter</strong> — before any business logic executes. This is a deliberate architectural choice. A blocked IP address doesn't get to invoke a controller action, hit the database, or consume application resources. The request is rejected at the filter level, which means the platform's business logic layer never knows the request existed.</p>
+
+      <p>This matters for two reasons. First, it reduces the attack surface: a blacklisted IP cannot trigger any application behavior, including error paths that might leak information. Second, it protects system resources: under a volumetric attack from known bad IPs, the business logic layer remains unaffected because the requests never reach it.</p>
+
+      <h2>Rate limiting: leaky bucket on player endpoints</h2>
+
+      <p>Player-facing APIs are exposed to the internet. They will be abused. The question is not whether someone will try to brute-force a login endpoint or spam a deposit endpoint — the question is what happens when they do.</p>
+
+      <p>PAM implements rate limiting using a leaky bucket algorithm on player-facing endpoints. The leaky bucket is the right algorithm for this use case because it smooths burst traffic rather than hard-cutting it. A legitimate player making several rapid requests (loading a page, checking balance, fetching promotions) isn't penalized. An attacker making hundreds of requests per second is throttled progressively, receiving 429 (Too Many Requests) responses before their traffic reaches the database or any downstream service.</p>
+
+      <p>The rate limiting runs at the API layer, before business logic. This means abuse patterns are identified and throttled based on request patterns alone — the platform doesn't need to execute a login attempt to decide whether the request rate is acceptable. The database never sees the abusive traffic. The business logic layer never processes it. The attacker gets nothing useful from the response.</p>
+
+      <div class="callout-incident">
+        <div class="font-bold text-amber-800 mb-2">What happens when security is bolted on</div>
+        <p style="margin:0;color:#92400e;">A common pattern in platforms that add security after launch: the rate limiter runs in a middleware layer, but a new API endpoint is added six months later without the middleware being applied to it. Or the IP blacklist is checked in the application layer, but a webhook callback endpoint bypasses the check because it was built by a different team. Or the audit log captures UI actions but misses API calls because the logging was added to the controller base class that the API controllers don't inherit from. These aren't hypothetical failures — they're the predictable result of security that isn't structural. When security is a layer you apply, every new surface area is a surface you might forget to cover.</p>
+      </div>
+
+      <h2>Audit trail: nothing happens without a record</h2>
+
+      <p>In a regulated gaming platform, the question is never "did something happen?" The question is always "who did it, when, and what changed?" Every regulator in every jurisdiction asks some version of this question, and the answer has to be immediate, complete, and verifiable.</p>
+
+      <p>PAM logs every back-office action with full context: the operator's identity, a precise timestamp, and the before-and-after state of whatever was changed. When a support agent edits a player's email address, the audit trail records who made the change, when they made it, what the old email was, and what the new email is. When a compliance officer makes a manual KYC decision, the trail records the decision, the reasoning, the officer's identity, and the player's state before and after. When a finance operator approves a withdrawal, every detail is captured — amount, method, player state, approval chain.</p>
+
+      <p>This isn't optional logging that can be turned off or configured away. It's embedded in the operation layer. The audit record is written as part of the same transaction as the action itself. If the audit write fails, the action fails. There is no state where an action succeeded but the audit trail doesn't reflect it.</p>
+
+      <p>The practical effect is that compliance audits are straightforward. When a regulator asks "show me every manual adjustment made to player accounts in the last 90 days," the answer is a query — not a forensic investigation across multiple log files. When an operator disputes an action attributed to them, the audit trail is authoritative. When a player raises a complaint about an account change, the support team can see exactly what happened, who did it, and when — without escalating to the engineering team.</p>
+
+      <h2>Data isolation: multi-tenant boundaries at the query level</h2>
+
+      <p>PAM is a multi-tenant platform. Multiple operators, multiple brands, multiple jurisdictions — all running on shared infrastructure. The security requirement is absolute: Operator A must never see Operator B's data. Brand X's players must never appear in Brand Y's reports. A support agent for one brand must not be able to access players from another brand, even accidentally.</p>
+
+      <p>Many multi-tenant platforms enforce this at the application level — a service layer that filters results based on the current operator context. This works until someone writes a query that forgets the filter. Or a report that joins across tenants. Or an admin tool that bypasses the service layer for performance reasons.</p>
+
+      <p>PAM enforces tenant isolation at the query level. Every database query includes tenant context as a structural part of the query, not as a filter applied after the fact. The repository pattern enforces this: you cannot construct a query without specifying the tenant scope. This means a developer cannot accidentally write a cross-tenant query, because the data access layer won't allow it. The isolation isn't a convention that developers follow — it's a constraint that the architecture enforces.</p>
+
+      <p>This extends to every layer of the platform. The back-office UI scopes all views to the operator's tenant. The API scopes all responses to the authenticated player's brand. The reporting layer scopes all aggregations to the requesting operator's data boundary. There is no "god mode" query that returns all tenants' data, because the query infrastructure doesn't support constructing one.</p>
+
+      <div class="callout-today">
+        <div class="font-bold text-green-800 mb-2">Today</div>
+        <p style="margin:0;color:#14532d;">PAM's security model is not a feature list — it's the shape of the architecture. Dual authentication strategies matched to actual threat models. RBAC enforced at the filter level across every surface. IP blacklisting that runs before business logic. Rate limiting that protects downstream systems from abuse. Audit trails that are transactionally coupled to the actions they record. Tenant isolation that is structurally impossible to bypass. Every one of these was designed into the system from the beginning — because in a regulated, multi-tenant, real-money platform, security that was added later is security that has gaps.</p>
+      </div>
+
+      <h2>The principle</h2>
+
+      <p>Security in a gaming platform is not a feature you ship alongside other features. It's a constraint that shapes every other feature. When you design authentication, you're constraining how sessions work. When you design authorization, you're constraining what code can execute. When you design audit logging, you're constraining how state changes propagate. When you design tenant isolation, you're constraining how data is accessed.</p>
+
+      <p>These constraints make development harder. Every new endpoint needs rate limiting. Every new action needs an audit record. Every new query needs tenant scoping. Every new surface needs permission checks. But the alternative — adding these concerns after the architecture is set — is how platforms end up with the security incidents that make the news. In a regulated industry handling real money, the constraints aren't optional. They're the architecture.</p>
+
+      <!-- SHARE -->
+      <div class="linkedin-box">
+        <div class="flex items-center justify-between mb-4">
+          <div class="text-blue-400 text-xs font-bold uppercase tracking-widest">Share this insight</div>
+          <div class="flex gap-2">
+            <button onclick="navigator.clipboard.writeText(this.closest('.linkedin-box').querySelector('.share-text').textContent.trim());this.textContent='Copied!';setTimeout(()=>this.textContent='Copy text',2000)" class="bg-white/10 hover:bg-white/20 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors">Copy text</button>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://webprefer.com/insights/security-audit-trail.html" target="_blank" rel="noopener" class="bg-[#0A66C2] hover:bg-[#004182] text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors inline-flex items-center gap-2"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>Share on LinkedIn</a>
+          </div>
+        </div>
+        <details class="group">
+          <summary class="text-gray-500 text-xs cursor-pointer hover:text-gray-300 transition-colors">Preview post text</summary>
+          <div class="share-text text-gray-200 text-sm leading-relaxed whitespace-pre-line mt-3">Security in a gaming platform isn't a feature. It's a constraint.
+
+Every design decision in PAM is shaped by it. Authentication isn't one model — it's two, matched to actual threat surfaces. Authorization runs at the filter level, before business logic. Rate limiting uses a leaky bucket that throttles abuse before it hits the database.
+
+The audit trail isn't optional logging. It's transactionally coupled to every back-office action — operator identity, timestamp, before-and-after state. If the audit write fails, the action fails.
+
+Tenant isolation isn't a filter you apply. It's a query-level constraint that makes cross-tenant access structurally impossible.
+
+You can bolt security on after launch. But in a regulated, real-money, multi-tenant platform — that's how gaps appear.
+
+We designed around the constraints from day one.
+
+#iGaming #Security #PAM #GamingPlatform #Architecture</div>
+        </details>
+      </div>
+
+    </div>
+  </article>
+
+  <!-- MORE ARTICLES -->
+  <section class="py-12 px-6 lg:px-8 bg-gray-50 border-t border-gray-100">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">More insights</div>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <a href="ai-regulated-industry.html" class="group bg-white rounded-xl border border-gray-100 p-5 hover:border-brand/30 hover:shadow-md transition-all">
+          <div class="text-xs font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full inline-block mb-2">AI</div>
+          <div class="font-semibold text-gray-900 group-hover:text-brand transition-colors text-sm">AI in a Regulated Industry</div>
+          <div class="text-gray-500 text-xs mt-1">How PAM integrates AI within compliance boundaries</div>
+        </a>
+        <a href="compliance-declarative.html" class="group bg-white rounded-xl border border-gray-100 p-5 hover:border-brand/30 hover:shadow-md transition-all">
+          <div class="text-xs font-semibold text-green-700 bg-green-50 px-2 py-0.5 rounded-full inline-block mb-2">Compliance</div>
+          <div class="font-semibold text-gray-900 group-hover:text-brand transition-colors text-sm">Making Compliance Declarative</div>
+          <div class="text-gray-500 text-xs mt-1">From deployment-per-market to configuration</div>
+        </a>
+      </div>
+      <div class="mt-6">
+        <a href="index.html" class="text-brand text-sm font-semibold hover:underline">&larr; View all insights</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-24 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-16">
+        <div>
+          <div class="text-xs font-bold uppercase tracking-widest text-brand mb-4" style="letter-spacing:0.12em;">Get in Touch</div>
+          <h2 class="text-4xl font-bold mb-6">Ready to see it?</h2>
+          <p class="text-lg text-gray-600 leading-relaxed mb-10">We offer live demos scoped to your specific operation type — whether you're launching a new brand, migrating from an existing platform, or evaluating options for a white-label deployment.</p>
+          <div class="space-y-5">
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div><div><div class="font-semibold text-gray-900">Address</div><div class="text-gray-600 text-sm mt-1">S:t Larsgatan 7, 582 24 Linköping, Sweden</div></div></div>
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div><div><div class="font-semibold text-gray-900">Email</div><a href="mailto:sales@webprefer.com" class="text-brand text-sm mt-1 block hover:underline">sales@webprefer.com</a></div></div>
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></div><div><div class="font-semibold text-gray-900">Mikael Lindberg Castell</div><a href="mailto:mikael@webprefer.com" class="text-brand text-sm mt-1 block hover:underline">mikael@webprefer.com</a><div class="text-gray-500 text-xs mt-0.5">CEO &amp; Founder, WebPrefer AB</div></div></div>
+          </div>
+        </div>
+        <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
+          <form id="contact-form" class="space-y-5">
+            <div class="grid sm:grid-cols-2 gap-5"><div><label class="block text-sm font-medium text-gray-700 mb-1.5">Full name</label><input type="text" name="name" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="Your name"></div><div><label class="block text-sm font-medium text-gray-700 mb-1.5">Company</label><input type="text" name="company" class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="Your company"></div></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">Email</label><input type="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="you@company.com"></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">I am a...</label><select name="role" class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent bg-white"><option value="">Select your role</option><option>Operator</option><option>Investor</option><option>Affiliate</option><option>Other</option></select></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">Message</label><textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent resize-none" placeholder="Tell us about your operation and what you're looking for..."></textarea></div>
+            <button type="submit" id="submit-btn" class="w-full bg-brand hover:bg-brand-dark text-white font-semibold py-3.5 rounded-lg transition-colors text-sm">Send message</button>
+            <div id="form-success" class="hidden text-center text-green-600 font-medium text-sm py-2">Thank you! We'll be in touch shortly.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-white py-12 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-4"><img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto brightness-0 invert"><span class="text-gray-400 text-sm">WebPrefer AB (556748-3523)</span></div>
+        <div class="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm text-gray-400">
+          <a href="../index.html#platform" class="hover:text-white transition-colors">Platform</a>
+          <a href="../index.html#products" class="hover:text-white transition-colors">Products</a>
+          <a href="../index.html#proof" class="hover:text-white transition-colors">Customers</a>
+          <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+          <a href="index.html" class="hover:text-white transition-colors">Insights</a>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="https://www.linkedin.com/company/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+          <a href="https://www.facebook.com/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="Facebook"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+          <a href="https://www.instagram.com/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="Instagram"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+        </div>
+        <div class="text-gray-500 text-xs">&copy; <span id="footer-year">2026</span> WebPrefer AB. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function(){emailjs.init({publicKey:'J-Ouq1kFXZl7x5bEZ'})})();
+    document.getElementById('contact-form').addEventListener('submit',function(e){
+      e.preventDefault();var b=document.getElementById('submit-btn');b.disabled=true;b.textContent='Sending...';
+      emailjs.sendForm('service_aefyiw9','template_q5n6qyl',this).then(()=>{document.getElementById('form-success').classList.remove('hidden');this.reset();b.textContent='Send message';b.disabled=false;},()=>{b.textContent='Send message';b.disabled=false;});
+    });
+  </script>
+  <script>document.querySelectorAll("#footer-year").forEach(e=>e.textContent=new Date().getFullYear())</script>
+</body>
+</html>

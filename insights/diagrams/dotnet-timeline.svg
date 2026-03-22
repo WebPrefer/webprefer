@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0d3459"/>
+      <stop offset="100%" stop-color="#1968AA"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="900" height="480" rx="16" fill="url(#bgGrad)"/>
+
+  <!-- Title -->
+  <text x="450" y="40" text-anchor="middle" fill="#93c5fd" font-size="11" font-weight="700" letter-spacing="2">PLATFORM EVOLUTION</text>
+  <text x="450" y="66" text-anchor="middle" fill="white" font-size="18" font-weight="700">Ten Years on .NET — 2013 to 2026</text>
+
+  <!-- Timeline base line -->
+  <line x1="80" y1="250" x2="820" y2="250" stroke="white" stroke-width="2" opacity="0.3"/>
+
+  <!-- Year markers -->
+  <line x1="120" y1="240" x2="120" y2="260" stroke="white" stroke-width="2" opacity="0.5"/>
+  <text x="120" y="278" text-anchor="middle" fill="white" font-size="10" font-weight="600">2013</text>
+
+  <line x1="265" y1="240" x2="265" y2="260" stroke="white" stroke-width="2" opacity="0.3"/>
+  <text x="265" y="278" text-anchor="middle" fill="white" font-size="10" opacity="0.5">2016</text>
+
+  <line x1="410" y1="240" x2="410" y2="260" stroke="white" stroke-width="2" opacity="0.3"/>
+  <text x="410" y="278" text-anchor="middle" fill="white" font-size="10" opacity="0.5">2019</text>
+
+  <line x1="555" y1="240" x2="555" y2="260" stroke="white" stroke-width="2" opacity="0.3"/>
+  <text x="555" y="278" text-anchor="middle" fill="white" font-size="10" opacity="0.5">2022</text>
+
+  <line x1="650" y1="240" x2="650" y2="260" stroke="white" stroke-width="2" opacity="0.5"/>
+  <text x="650" y="278" text-anchor="middle" fill="white" font-size="10" font-weight="600">2023</text>
+
+  <line x1="780" y1="240" x2="780" y2="260" stroke="white" stroke-width="2" opacity="0.5"/>
+  <text x="780" y="278" text-anchor="middle" fill="white" font-size="10" font-weight="600">2026</text>
+
+  <!-- ERA 1: .NET Framework (2013-2023) -->
+  <rect x="120" y="232" width="530" height="36" rx="4" fill="#fbbf24" opacity="0.1"/>
+  <text x="385" y="220" text-anchor="middle" fill="#fbbf24" font-size="9" font-weight="600" opacity="0.7">17,000+ commits</text>
+
+  <!-- Framework milestones above line -->
+  <circle cx="120" cy="250" r="8" fill="#fbbf24" opacity="0.8"/>
+  <rect x="70" y="135" width="100" height="75" rx="8" fill="white" opacity="0.08"/>
+  <text x="120" y="155" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="700">.NET 4.5</text>
+  <text x="120" y="170" text-anchor="middle" fill="white" font-size="8" opacity="0.6">MVC + EF</text>
+  <text x="120" y="183" text-anchor="middle" fill="white" font-size="8" opacity="0.6">IIS + Win Services</text>
+  <text x="120" y="196" text-anchor="middle" fill="white" font-size="8" opacity="0.6">SQL Server</text>
+  <line x1="120" y1="210" x2="120" y2="242" stroke="#fbbf24" stroke-width="1" opacity="0.3"/>
+
+  <circle cx="265" cy="250" r="5" fill="white" opacity="0.3"/>
+  <rect x="215" y="295" width="100" height="50" rx="8" fill="white" opacity="0.06"/>
+  <text x="265" y="313" text-anchor="middle" fill="white" font-size="9" font-weight="600" opacity="0.7">Multi-tenant</text>
+  <text x="265" y="328" text-anchor="middle" fill="white" font-size="8" opacity="0.5">First jurisdictions</text>
+  <text x="265" y="341" text-anchor="middle" fill="white" font-size="8" opacity="0.5">Redis + RabbitMQ</text>
+  <line x1="265" y1="260" x2="265" y2="295" stroke="white" stroke-width="1" opacity="0.15"/>
+
+  <circle cx="410" cy="250" r="5" fill="white" opacity="0.3"/>
+  <rect x="355" y="140" width="110" height="55" rx="8" fill="white" opacity="0.06"/>
+  <text x="410" y="158" text-anchor="middle" fill="white" font-size="9" font-weight="600" opacity="0.7">SignalR</text>
+  <text x="410" y="173" text-anchor="middle" fill="white" font-size="8" opacity="0.5">Real-time balance push</text>
+  <text x="410" y="186" text-anchor="middle" fill="white" font-size="8" opacity="0.5">37+ integrations</text>
+  <line x1="410" y1="195" x2="410" y2="245" stroke="white" stroke-width="1" opacity="0.15"/>
+
+  <circle cx="555" cy="250" r="5" fill="white" opacity="0.3"/>
+  <rect x="500" y="295" width="110" height="50" rx="8" fill="white" opacity="0.06"/>
+  <text x="555" y="313" text-anchor="middle" fill="white" font-size="9" font-weight="600" opacity="0.7">BeAware + CMS</text>
+  <text x="555" y="328" text-anchor="middle" fill="white" font-size="8" opacity="0.5">Graph editor</text>
+  <text x="555" y="341" text-anchor="middle" fill="white" font-size="8" opacity="0.5">Blazor back-office</text>
+  <line x1="555" y1="260" x2="555" y2="295" stroke="white" stroke-width="1" opacity="0.15"/>
+
+  <!-- ERA 2: .NET 10 (2023-present) -->
+  <rect x="650" y="232" width="130" height="36" rx="4" fill="#16a34a" opacity="0.15"/>
+  <text x="715" y="220" text-anchor="middle" fill="#86efac" font-size="9" font-weight="600" opacity="0.7">1,600+ commits</text>
+
+  <circle cx="650" cy="250" r="8" fill="#16a34a" opacity="0.8"/>
+  <rect x="600" y="130" width="110" height="80" rx="8" fill="#16a34a" fill-opacity="0.08" stroke="#16a34a" stroke-width="0.5" stroke-opacity="0.3"/>
+  <text x="655" y="150" text-anchor="middle" fill="#86efac" font-size="10" font-weight="700">New Era</text>
+  <text x="655" y="165" text-anchor="middle" fill="#86efac" font-size="8">Restructured arch</text>
+  <text x="655" y="178" text-anchor="middle" fill="#86efac" font-size="8">Module isolation</text>
+  <text x="655" y="191" text-anchor="middle" fill="#86efac" font-size="8">RBAC overhaul</text>
+  <text x="655" y="204" text-anchor="middle" fill="#86efac" font-size="8">16+ clean integrations</text>
+  <line x1="650" y1="210" x2="650" y2="242" stroke="#16a34a" stroke-width="1" opacity="0.3"/>
+
+  <circle cx="780" cy="250" r="8" fill="#86efac"/>
+  <rect x="725" y="295" width="110" height="80" rx="8" fill="#16a34a" fill-opacity="0.08" stroke="#16a34a" stroke-width="0.5" stroke-opacity="0.3"/>
+  <text x="780" y="313" text-anchor="middle" fill="#86efac" font-size="10" font-weight="700">.NET 10 LTS</text>
+  <text x="780" y="328" text-anchor="middle" fill="#86efac" font-size="8">EF Core 10</text>
+  <text x="780" y="341" text-anchor="middle" fill="#86efac" font-size="8">OpenTelemetry</text>
+  <text x="780" y="354" text-anchor="middle" fill="#86efac" font-size="8">.NET Aspire</text>
+  <text x="780" y="367" text-anchor="middle" fill="#86efac" font-size="8">AI (Gemini)</text>
+  <line x1="780" y1="260" x2="780" y2="295" stroke="#16a34a" stroke-width="1" opacity="0.3"/>
+
+  <!-- Bottom stats -->
+  <rect x="120" y="415" width="180" height="40" rx="8" fill="white" opacity="0.06"/>
+  <text x="210" y="435" text-anchor="middle" fill="white" font-size="14" font-weight="800">18,000+</text>
+  <text x="210" y="449" text-anchor="middle" fill="#93c5fd" font-size="9">total commits</text>
+
+  <rect x="360" y="415" width="180" height="40" rx="8" fill="white" opacity="0.06"/>
+  <text x="450" y="435" text-anchor="middle" fill="white" font-size="14" font-weight="800">5</text>
+  <text x="450" y="449" text-anchor="middle" fill="#93c5fd" font-size="9">regulated markets</text>
+
+  <rect x="600" y="415" width="180" height="40" rx="8" fill="white" opacity="0.06"/>
+  <text x="690" y="435" text-anchor="middle" fill="white" font-size="14" font-weight="800">40+</text>
+  <text x="690" y="449" text-anchor="middle" fill="#93c5fd" font-size="9">business modules</text>
+</svg>

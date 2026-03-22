@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
-Disallow: /v2/images/og/
+Disallow: /images/og/
+Disallow: /v1-backup/
+Disallow: /v2/
 
 Sitemap: https://webprefer.com/sitemap.xml
