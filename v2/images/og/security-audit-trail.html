@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { brand: { DEFAULT: '#1968AA' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>body { margin: 0; width: 1200px; height: 630px; overflow: hidden; font-family: Inter, system-ui, sans-serif; }</style>
+</head>
+<body style="background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%);">
+  <div class="flex h-[630px] items-center px-16">
+    <div class="flex-1">
+      <div class="flex gap-2 mb-5">
+        <span class="bg-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full">Security</span>
+        <span class="bg-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full">Architecture</span>
+      </div>
+      <h1 class="text-white text-5xl font-extrabold leading-tight mb-5 max-w-2xl">Security Isn't a Feature -- It's a Constraint</h1>
+      <p class="text-blue-200 text-xl leading-relaxed max-w-xl mb-8">Defense in depth: every request passes through multiple security layers before touching business logic.</p>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center"><span class="text-[#1968AA] font-extrabold text-lg">W</span></div>
+        <div>
+          <div class="text-white text-sm font-bold">WebPrefer Engineering</div>
+          <div class="text-blue-300 text-xs">webprefer.com</div>
+        </div>
+      </div>
+    </div>
+    <div class="w-[380px] flex-shrink-0">
+      <div class="bg-[#0c1222] rounded-xl border border-white/5 p-6">
+        <div class="text-white/40 text-[10px] font-bold uppercase tracking-wider mb-4">Security Stack (top-down)</div>
+        <!-- Layer 1 -->
+        <div class="bg-red-500/10 border border-red-500/30 rounded-lg p-3 text-center mb-2">
+          <div class="flex items-center justify-center gap-2">
+            <div class="text-red-400 text-xs font-bold">IP Blacklist</div>
+            <div class="text-white/20 text-[9px]">IpBlacklistAuthorizationFilter</div>
+          </div>
+        </div>
+        <div class="flex justify-center mb-2">
+          <svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 0 L8 12 M4 8 L8 12 L12 8" stroke="#ffffff30" stroke-width="1.5" fill="none"/></svg>
+        </div>
+        <!-- Layer 2 -->
+        <div class="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 text-center mb-2">
+          <div class="flex items-center justify-center gap-2">
+            <div class="text-amber-400 text-xs font-bold">Authentication</div>
+            <div class="text-white/20 text-[9px]">Cookie + JWT Bearer</div>
+          </div>
+        </div>
+        <div class="flex justify-center mb-2">
+          <svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 0 L8 12 M4 8 L8 12 L12 8" stroke="#ffffff30" stroke-width="1.5" fill="none"/></svg>
+        </div>
+        <!-- Layer 3 -->
+        <div class="bg-purple-500/10 border border-purple-500/30 rounded-lg p-3 text-center mb-2">
+          <div class="flex items-center justify-center gap-2">
+            <div class="text-purple-400 text-xs font-bold">RBAC</div>
+            <div class="text-white/20 text-[9px]">PermissionFilter</div>
+          </div>
+        </div>
+        <div class="flex justify-center mb-2">
+          <svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 0 L8 12 M4 8 L8 12 L12 8" stroke="#ffffff30" stroke-width="1.5" fill="none"/></svg>
+        </div>
+        <!-- Layer 4 -->
+        <div class="bg-sky-500/10 border border-sky-500/30 rounded-lg p-3 text-center mb-2">
+          <div class="flex items-center justify-center gap-2">
+            <div class="text-sky-400 text-xs font-bold">Rate Limiting</div>
+            <div class="text-white/20 text-[9px]">Leaky bucket (429)</div>
+          </div>
+        </div>
+        <div class="flex justify-center mb-2">
+          <svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 0 L8 12 M4 8 L8 12 L12 8" stroke="#ffffff30" stroke-width="1.5" fill="none"/></svg>
+        </div>
+        <!-- Layer 5 -->
+        <div class="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3 text-center">
+          <div class="flex items-center justify-center gap-2">
+            <div class="text-emerald-400 text-xs font-bold">Audit Trail</div>
+            <div class="text-white/20 text-[9px]">Correlation IDs + Log4Net</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

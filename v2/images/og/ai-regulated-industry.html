@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { brand: { DEFAULT: '#1968AA' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>body { margin: 0; width: 1200px; height: 630px; overflow: hidden; font-family: Inter, system-ui, sans-serif; }</style>
+</head>
+<body style="background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%);">
+  <div class="flex h-[630px] items-center px-16">
+    <div class="flex-1">
+      <div class="flex gap-2 mb-5">
+        <span class="bg-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full">AI</span>
+        <span class="bg-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full">Compliance</span>
+      </div>
+      <h1 class="text-white text-5xl font-extrabold leading-tight mb-5 max-w-2xl">AI in a Regulated Industry</h1>
+      <p class="text-blue-200 text-xl leading-relaxed max-w-xl mb-8">Integrating LLMs into a compliance-heavy platform without exposing sensitive player data.</p>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center"><span class="text-[#1968AA] font-extrabold text-lg">W</span></div>
+        <div>
+          <div class="text-white text-sm font-bold">WebPrefer Engineering</div>
+          <div class="text-blue-300 text-xs">webprefer.com</div>
+        </div>
+      </div>
+    </div>
+    <div class="w-[380px] flex-shrink-0">
+      <div class="bg-[#0c1222] rounded-xl border border-white/5 p-6">
+        <!-- Funnel visualization -->
+        <div class="bg-white/5 border border-white/10 rounded-lg p-4 text-center mb-2">
+          <div class="text-white/70 text-xs font-bold mb-1">Platform Data</div>
+          <div class="text-white/30 text-[10px]">Players, Transactions, KYC, Balances</div>
+          <div class="flex gap-1 justify-center mt-2">
+            <span class="bg-white/10 rounded px-2 py-0.5 text-[9px] text-white/40">PII</span>
+            <span class="bg-white/10 rounded px-2 py-0.5 text-[9px] text-white/40">Financial</span>
+            <span class="bg-white/10 rounded px-2 py-0.5 text-[9px] text-white/40">Behavioral</span>
+          </div>
+        </div>
+        <div class="flex justify-center my-2">
+          <svg width="60" height="24" viewBox="0 0 60 24"><path d="M10 0 L30 0 L50 0 L40 18 L20 18 Z" fill="#f59e0b20" stroke="#f59e0b50" stroke-width="1"/><path d="M30 8 L30 20 M26 16 L30 20 L34 16" stroke="#f59e0b" stroke-width="1.5" fill="none"/></svg>
+        </div>
+        <div class="bg-amber-500/15 border border-amber-500/30 rounded-lg p-4 text-center mb-2">
+          <div class="text-amber-400 text-xs font-bold mb-1">RBAC Filter</div>
+          <div class="text-white/30 text-[10px]">Strip PII, enforce role permissions</div>
+          <div class="text-amber-400/60 text-[9px] mt-1">Redact SSN, DOB, payment details</div>
+        </div>
+        <div class="flex justify-center my-2">
+          <svg width="40" height="24" viewBox="0 0 40 24"><path d="M20 0 L20 18 M14 12 L20 18 L26 12" stroke="#10b981" stroke-width="1.5" fill="none"/></svg>
+        </div>
+        <div class="bg-emerald-500/15 border border-emerald-500/30 rounded-lg p-4 text-center">
+          <div class="text-emerald-400 text-xs font-bold mb-1">AI Context</div>
+          <div class="text-white/30 text-[10px]">Safe, scoped, auditable prompts</div>
+          <div class="text-emerald-400/60 text-[9px] mt-1">Gemini + operator-scoped data only</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

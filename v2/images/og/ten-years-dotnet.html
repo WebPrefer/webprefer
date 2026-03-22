@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { brand: { DEFAULT: '#1968AA' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>body { margin: 0; width: 1200px; height: 630px; overflow: hidden; font-family: Inter, system-ui, sans-serif; }</style>
+</head>
+<body style="background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%);">
+  <div class="flex h-[630px] items-center px-16">
+    <div class="flex-1">
+      <div class="flex gap-2 mb-5">
+        <span class="bg-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full">.NET</span>
+        <span class="bg-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full">Platform Evolution</span>
+      </div>
+      <h1 class="text-white text-5xl font-extrabold leading-tight mb-5 max-w-2xl">Ten Years on .NET</h1>
+      <p class="text-blue-200 text-xl leading-relaxed max-w-xl mb-8">From .NET Framework 4.5 to .NET 9 -- a decade of migrations, rewrites, and hard lessons.</p>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center"><span class="text-[#1968AA] font-extrabold text-lg">W</span></div>
+        <div>
+          <div class="text-white text-sm font-bold">WebPrefer Engineering</div>
+          <div class="text-blue-300 text-xs">webprefer.com</div>
+        </div>
+      </div>
+    </div>
+    <div class="w-[380px] flex-shrink-0">
+      <div class="bg-[#0c1222] rounded-xl border border-white/5 p-6">
+        <!-- Timeline -->
+        <div class="relative pl-6">
+          <!-- Vertical line -->
+          <div class="absolute left-[11px] top-2 bottom-2 w-[2px] bg-gradient-to-b from-white/20 via-brand to-emerald-500"></div>
+          <!-- 2013 -->
+          <div class="relative mb-5">
+            <div class="absolute -left-6 top-1 w-4 h-4 rounded-full bg-white/20 border-2 border-white/40"></div>
+            <div class="text-white/40 text-[10px] font-bold">2013</div>
+            <div class="text-white/60 text-xs">.NET Framework 4.5</div>
+            <div class="text-white/30 text-[9px]">MVC 4, Entity Framework 5</div>
+          </div>
+          <!-- 2016 -->
+          <div class="relative mb-5">
+            <div class="absolute -left-6 top-1 w-4 h-4 rounded-full bg-white/20 border-2 border-white/40"></div>
+            <div class="text-white/40 text-[10px] font-bold">2016</div>
+            <div class="text-white/60 text-xs">.NET Framework 4.6</div>
+            <div class="text-white/30 text-[9px]">Async/await adoption</div>
+          </div>
+          <!-- 2020 -->
+          <div class="relative mb-5">
+            <div class="absolute -left-6 top-1 w-4 h-4 rounded-full bg-brand/40 border-2 border-brand"></div>
+            <div class="text-brand text-[10px] font-bold">2020</div>
+            <div class="text-white/60 text-xs">.NET Core 3.1</div>
+            <div class="text-white/30 text-[9px]">Cross-platform migration</div>
+          </div>
+          <!-- 2023 -->
+          <div class="relative mb-5">
+            <div class="absolute -left-6 top-1 w-4 h-4 rounded-full bg-brand/40 border-2 border-brand"></div>
+            <div class="text-brand text-[10px] font-bold">2023</div>
+            <div class="text-white/60 text-xs">.NET 8</div>
+            <div class="text-white/30 text-[9px]">Aspire, minimal APIs</div>
+          </div>
+          <!-- 2026 -->
+          <div class="relative">
+            <div class="absolute -left-6 top-1 w-4 h-4 rounded-full bg-emerald-500/40 border-2 border-emerald-500"></div>
+            <div class="text-emerald-400 text-[10px] font-bold">2026</div>
+            <div class="text-white/60 text-xs">.NET 9</div>
+            <div class="text-white/30 text-[9px]">AI integration, OpenTelemetry</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

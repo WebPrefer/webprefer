@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { brand: { DEFAULT: '#1968AA' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>body { margin: 0; width: 1200px; height: 630px; overflow: hidden; font-family: Inter, system-ui, sans-serif; }</style>
+</head>
+<body style="background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%);">
+  <div class="flex h-[630px] items-center px-16">
+    <div class="flex-1">
+      <div class="flex gap-2 mb-5">
+        <span class="bg-cyan-400/30 text-cyan-200 text-sm font-semibold px-4 py-1.5 rounded-full">Analytics</span>
+        <span class="bg-blue-400/30 text-blue-200 text-sm font-semibold px-4 py-1.5 rounded-full">Player Experience</span>
+      </div>
+      <h1 class="text-white text-5xl font-extrabold leading-tight mb-5 max-w-2xl">Every Player Has a Timeline</h1>
+      <p class="text-blue-200 text-xl leading-relaxed max-w-xl mb-8">Every action on one queryable feed with configurable retention policies.</p>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center"><span class="text-[#1968AA] font-extrabold text-lg">W</span></div>
+        <div><div class="text-white text-sm font-bold">WebPrefer Engineering</div><div class="text-blue-300 text-xs">webprefer.com</div></div>
+      </div>
+    </div>
+    <div class="w-[380px] flex-shrink-0">
+      <div class="bg-[#0c1222] rounded-xl border border-white/10 p-5">
+        <div class="text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-4">Player #4821 — Event Feed</div>
+        <div class="space-y-2.5">
+          <div class="flex items-center gap-3 bg-white/[0.04] rounded-lg px-3 py-2.5 border border-white/5">
+            <div class="w-7 h-7 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-[10px] font-bold">$</div>
+            <div class="flex-1"><div class="text-white text-[11px] font-medium">Deposit</div><div class="text-gray-500 text-[9px]">500 SEK via Visa</div></div>
+            <div class="text-gray-600 text-[9px]">14:32</div>
+          </div>
+          <div class="flex items-center gap-3 bg-white/[0.04] rounded-lg px-3 py-2.5 border border-white/5">
+            <div class="w-7 h-7 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 text-[10px] font-bold">G</div>
+            <div class="flex-1"><div class="text-white text-[11px] font-medium">Game Round</div><div class="text-gray-500 text-[9px]">Book of Dead — 28 spins</div></div>
+            <div class="text-gray-600 text-[9px]">14:35</div>
+          </div>
+          <div class="flex items-center gap-3 bg-white/[0.04] rounded-lg px-3 py-2.5 border border-white/5">
+            <div class="w-7 h-7 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-400 text-[10px] font-bold">B</div>
+            <div class="flex-1"><div class="text-white text-[11px] font-medium">Bonus Credited</div><div class="text-gray-500 text-[9px]">Welcome 100% — 500 SEK</div></div>
+            <div class="text-gray-600 text-[9px]">14:36</div>
+          </div>
+          <div class="flex items-center gap-3 bg-white/[0.04] rounded-lg px-3 py-2.5 border border-white/5">
+            <div class="w-7 h-7 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 text-[10px] font-bold">K</div>
+            <div class="flex-1"><div class="text-white text-[11px] font-medium">KYC Verified</div><div class="text-gray-500 text-[9px]">Identity confirmed</div></div>
+            <div class="text-gray-600 text-[9px]">14:41</div>
+          </div>
+          <div class="flex items-center gap-3 bg-white/[0.04] rounded-lg px-3 py-2.5 border border-white/5">
+            <div class="w-7 h-7 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-400 text-[10px] font-bold">E</div>
+            <div class="flex-1"><div class="text-white text-[11px] font-medium">Email Sent</div><div class="text-gray-500 text-[9px]">Welcome message</div></div>
+            <div class="text-gray-600 text-[9px]">14:42</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

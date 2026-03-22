@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { brand: { DEFAULT: '#1968AA' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>body { margin: 0; width: 1200px; height: 630px; overflow: hidden; font-family: Inter, system-ui, sans-serif; }</style>
+</head>
+<body style="background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%);">
+  <div class="flex h-[630px] items-center px-16">
+    <div class="flex-1">
+      <div class="flex gap-2 mb-5">
+        <span class="bg-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full">Compliance</span>
+        <span class="bg-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full">Architecture</span>
+      </div>
+      <h1 class="text-white text-5xl font-extrabold leading-tight mb-5 max-w-2xl">Making Compliance Declarative</h1>
+      <p class="text-blue-200 text-xl leading-relaxed max-w-xl mb-8">Moving regulatory rules from hardcoded logic to configuration -- across 10+ jurisdictions.</p>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center"><span class="text-[#1968AA] font-extrabold text-lg">W</span></div>
+        <div>
+          <div class="text-white text-sm font-bold">WebPrefer Engineering</div>
+          <div class="text-blue-300 text-xs">webprefer.com</div>
+        </div>
+      </div>
+    </div>
+    <div class="w-[380px] flex-shrink-0">
+      <div class="bg-[#0c1222] rounded-xl border border-white/5 p-6">
+        <div class="flex gap-4 mb-5">
+          <div class="flex-1 bg-red-500/10 border border-red-500/30 rounded-lg p-4 text-center">
+            <div class="text-red-400 text-2xl mb-2">&#x2717;</div>
+            <div class="text-red-400 text-xs font-bold mb-2">Hardcoded</div>
+            <div class="text-white/30 text-[10px] leading-relaxed font-mono">if (jurisdiction == "MGA")<br>&nbsp;&nbsp;maxDeposit = 5000;<br>if (jurisdiction == "UKGC")<br>&nbsp;&nbsp;maxDeposit = 2500;</div>
+          </div>
+          <div class="flex-1 bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4 text-center">
+            <div class="text-emerald-400 text-2xl mb-2">&#x2713;</div>
+            <div class="text-emerald-400 text-xs font-bold mb-2">Config-Driven</div>
+            <div class="text-white/30 text-[10px] leading-relaxed font-mono">{ "maxDeposit": 5000,<br>&nbsp;&nbsp;"cooldown": true,<br>&nbsp;&nbsp;"kycLevel": 2 }</div>
+          </div>
+        </div>
+        <div class="flex gap-2 justify-center">
+          <span class="bg-white/10 text-white/50 text-[10px] font-semibold px-3 py-1 rounded-full">MGA</span>
+          <span class="bg-white/10 text-white/50 text-[10px] font-semibold px-3 py-1 rounded-full">UKGC</span>
+          <span class="bg-white/10 text-white/50 text-[10px] font-semibold px-3 py-1 rounded-full">SGA</span>
+          <span class="bg-white/10 text-white/50 text-[10px] font-semibold px-3 py-1 rounded-full">DGA</span>
+          <span class="bg-white/10 text-white/50 text-[10px] font-semibold px-3 py-1 rounded-full">ONJN</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

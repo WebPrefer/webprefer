@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { brand: { DEFAULT: '#1968AA' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>body { margin: 0; width: 1200px; height: 630px; overflow: hidden; font-family: Inter, system-ui, sans-serif; }</style>
+</head>
+<body style="background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%);">
+  <div class="flex h-[630px] items-center px-16">
+    <div class="flex-1">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center"><span class="text-[#1968AA] font-extrabold text-xl">W</span></div>
+        <div class="text-white text-2xl font-extrabold tracking-tight">WEBPREFER</div>
+      </div>
+      <h1 class="text-white text-5xl font-extrabold leading-tight mb-5 max-w-2xl">Built for operators who can't afford to guess.</h1>
+      <p class="text-blue-200 text-xl leading-relaxed max-w-xl mb-8">Enterprise PAM platform. 10+ years. 18,000+ commits. 5 regulated markets.</p>
+      <div class="flex gap-6 mt-6">
+        <div class="text-center"><div class="text-white text-3xl font-extrabold">10+</div><div class="text-blue-300 text-xs">Years</div></div>
+        <div class="text-center"><div class="text-white text-3xl font-extrabold">18K+</div><div class="text-blue-300 text-xs">Commits</div></div>
+        <div class="text-center"><div class="text-white text-3xl font-extrabold">50+</div><div class="text-blue-300 text-xs">Providers</div></div>
+        <div class="text-center"><div class="text-white text-3xl font-extrabold">40+</div><div class="text-blue-300 text-xs">Modules</div></div>
+      </div>
+    </div>
+    <div class="w-[380px] flex-shrink-0">
+      <div class="bg-[#0c1222] rounded-xl border border-white/10 p-5">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="text-white text-xs font-bold">PAM Dashboard</div>
+          <div class="flex items-center gap-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-2 py-0.5 ml-auto"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-emerald-400 text-[9px] font-semibold">LIVE</span></div>
+        </div>
+        <div class="grid grid-cols-2 gap-2 mb-3">
+          <div class="bg-white/[0.04] rounded-lg p-2.5 border border-white/5">
+            <div class="text-gray-500 text-[9px]">Active Players</div>
+            <div class="text-white text-sm font-bold">2,847</div>
+            <div class="text-emerald-400 text-[9px]">+12.4%</div>
+          </div>
+          <div class="bg-white/[0.04] rounded-lg p-2.5 border border-white/5">
+            <div class="text-gray-500 text-[9px]">Deposits Today</div>
+            <div class="text-white text-sm font-bold">46,389</div>
+            <div class="text-emerald-400 text-[9px]">+8.2%</div>
+          </div>
+          <div class="bg-white/[0.04] rounded-lg p-2.5 border border-white/5">
+            <div class="text-gray-500 text-[9px]">Game Rounds</div>
+            <div class="text-white text-sm font-bold">18,420</div>
+            <div class="text-emerald-400 text-[9px]">+23.1%</div>
+          </div>
+          <div class="bg-white/[0.04] rounded-lg p-2.5 border border-white/5">
+            <div class="text-gray-500 text-[9px]">BeAware Rules</div>
+            <div class="text-white text-sm font-bold">342</div>
+            <div class="text-gray-500 text-[9px]">all firing</div>
+          </div>
+        </div>
+        <div class="bg-white/[0.04] rounded-lg p-2.5 border border-white/5">
+          <div class="text-gray-500 text-[9px] mb-1">Products</div>
+          <div class="flex gap-1.5">
+            <span class="bg-brand/20 text-brand text-[9px] font-semibold px-2 py-0.5 rounded">PAM</span>
+            <span class="bg-amber-500/20 text-amber-400 text-[9px] font-semibold px-2 py-0.5 rounded">BeAware</span>
+            <span class="bg-purple-500/20 text-purple-400 text-[9px] font-semibold px-2 py-0.5 rounded">CMS</span>
+            <span class="bg-cyan-500/20 text-cyan-400 text-[9px] font-semibold px-2 py-0.5 rounded">Streaming</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
