@@ -64,7 +64,7 @@
         <a href="../index.html#proof" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Customers</a>
         <a href="../index.html#partners" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Partners</a>
         <a href="../index.html#contact" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Contact</a>
-        <a href="index.html" class="nav-link text-sm font-medium text-brand font-semibold">Articles</a>
+        <a href="index.html" class="nav-link text-sm font-medium text-brand font-semibold">Insights</a>
       </div>
       <a href="../index.html#contact" class="bg-brand hover:bg-[#134f82] text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors hidden md:inline-flex">
         Book a Demo
@@ -81,7 +81,7 @@
       <a href="../index.html#proof" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Customers</a>
       <a href="../index.html#partners" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Partners</a>
       <a href="#contact" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Contact</a>
-      <a href="index.html" class="block py-2.5 text-sm font-medium text-brand font-semibold mobile-nav-link">Articles</a>
+      <a href="index.html" class="block py-2.5 text-sm font-medium text-brand font-semibold mobile-nav-link">Insights</a>
       <a href="#contact" class="block mt-2 bg-brand text-white text-sm font-semibold px-5 py-2.5 rounded-lg text-center mobile-nav-link">Book a Demo</a>
     </div>
   </header>
@@ -120,7 +120,29 @@
   <!-- DIAGRAM -->
   <section class="bg-gray-50 py-10 px-6 lg:px-8">
     <div class="max-w-4xl mx-auto">
-      <img src="diagrams/streaming-flow.svg" alt="Re-streaming architecture — one encoder to Twitch, YouTube, Facebook, and operator site simultaneously" class="w-full rounded-xl shadow-lg">
+      <div class="bg-[#0c1222] rounded-2xl p-6 lg:p-8">
+        <div class="text-center mb-6">
+          <div class="text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-2">Re-Streaming Architecture</div>
+          <div class="text-white text-sm font-bold">One Stream &#8594; Five Destinations</div>
+        </div>
+        <!-- Source -->
+        <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3 text-center mb-3">
+          <div class="text-white text-[11px] font-semibold">&#127909; Operator Encoder (OBS / vMix)</div>
+          <div class="text-gray-600 text-[9px]">Single RTMP stream</div>
+        </div>
+        <div class="text-center text-gray-600 text-[10px] mb-3">&#8595; nginx-rtmp simultaneously pushes to</div>
+        <!-- Destinations -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
+          <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3 text-center"><div class="text-emerald-400 text-[10px] font-semibold">&#9729;&#65039; Operator Site</div><div class="text-gray-600 text-[8px] mt-0.5">HLS adaptive</div></div>
+          <div class="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3 text-center"><div class="text-purple-400 text-[10px] font-semibold">&#127918; Twitch</div><div class="text-gray-600 text-[8px] mt-0.5">Gaming audience</div></div>
+          <div class="bg-red-500/10 border border-red-500/20 rounded-lg p-3 text-center"><div class="text-red-400 text-[10px] font-semibold">&#9654;&#65039; YouTube</div><div class="text-gray-600 text-[8px] mt-0.5">Auto VOD</div></div>
+          <div class="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 text-center"><div class="text-blue-400 text-[10px] font-semibold">&#128211; Facebook</div><div class="text-gray-600 text-[8px] mt-0.5">TLS tunnel</div></div>
+        </div>
+        <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3 flex items-center justify-between">
+          <span class="text-gray-400 text-[10px]">Auto-VOD: record &#8594; FFmpeg encode &#8594; publish to CMS</span>
+          <span class="text-emerald-400 text-[9px] font-semibold">Active</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -352,7 +374,7 @@ Trustplay is already using it. Link in bio.
           <a href="../index.html#products" class="hover:text-white transition-colors">Products</a>
           <a href="../index.html#proof" class="hover:text-white transition-colors">Customers</a>
           <a href="#contact" class="hover:text-white transition-colors">Contact</a>
-          <a href="index.html" class="hover:text-white transition-colors">Articles</a>
+          <a href="index.html" class="hover:text-white transition-colors">Insights</a>
         </div>
         <div class="flex items-center gap-4">
           <a href="https://www.linkedin.com/company/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>

@@ -57,7 +57,7 @@
         <a href="../index.html#proof" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Customers</a>
         <a href="../index.html#partners" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Partners</a>
         <a href="../index.html#contact" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Contact</a>
-        <a href="index.html" class="nav-link text-sm font-medium text-brand font-semibold">Articles</a>
+        <a href="index.html" class="nav-link text-sm font-medium text-brand font-semibold">Insights</a>
       </div>
       <a href="../index.html#contact" class="bg-brand hover:bg-[#134f82] text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors hidden md:inline-flex">
         Book a Demo
@@ -74,7 +74,7 @@
       <a href="../index.html#proof" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Customers</a>
       <a href="../index.html#partners" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Partners</a>
       <a href="#contact" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Contact</a>
-      <a href="index.html" class="block py-2.5 text-sm font-medium text-brand font-semibold mobile-nav-link">Articles</a>
+      <a href="index.html" class="block py-2.5 text-sm font-medium text-brand font-semibold mobile-nav-link">Insights</a>
       <a href="#contact" class="block mt-2 bg-brand text-white text-sm font-semibold px-5 py-2.5 rounded-lg text-center mobile-nav-link">Book a Demo</a>
     </div>
   </header>
@@ -113,7 +113,35 @@
   <!-- DIAGRAM -->
   <section class="bg-gray-50 py-10 px-6 lg:px-8">
     <div class="max-w-4xl mx-auto">
-      <img src="diagrams/integration-architecture.svg" alt="Hub-and-spoke integration architecture with isolated provider modules" class="w-full rounded-xl shadow-lg">
+      <div class="bg-[#0c1222] rounded-2xl p-6 lg:p-8">
+        <div class="text-center mb-6">
+          <div class="text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-2">Integration Architecture</div>
+          <div class="text-white text-sm font-bold">50+ Providers, Zero Coupling</div>
+        </div>
+        <!-- Core -->
+        <div class="bg-brand/20 border border-brand/30 rounded-xl p-4 text-center mb-4">
+          <div class="text-brand text-sm font-bold">PAM Core</div>
+          <div class="text-gray-500 text-[10px]">Contracts only — doesn't know what providers exist</div>
+        </div>
+        <div class="text-center text-gray-600 text-[10px] mb-4">↕ typed interfaces</div>
+        <!-- Providers grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+          <div class="bg-amber-500/10 border border-amber-500/15 rounded-lg p-2.5 text-center"><div class="text-amber-400 text-[10px] font-semibold">PaymentIQ</div><div class="text-gray-600 text-[8px]">Payment</div></div>
+          <div class="bg-amber-500/10 border border-amber-500/15 rounded-lg p-2.5 text-center"><div class="text-amber-400 text-[10px] font-semibold">Hexopay</div><div class="text-gray-600 text-[8px]">Payment</div></div>
+          <div class="bg-amber-500/10 border border-amber-500/15 rounded-lg p-2.5 text-center"><div class="text-amber-400 text-[10px] font-semibold">WorldLine</div><div class="text-gray-600 text-[8px]">Payment</div></div>
+          <div class="bg-emerald-500/10 border border-emerald-500/15 rounded-lg p-2.5 text-center"><div class="text-emerald-400 text-[10px] font-semibold">SportTech</div><div class="text-gray-600 text-[8px]">Games</div></div>
+          <div class="bg-emerald-500/10 border border-emerald-500/15 rounded-lg p-2.5 text-center"><div class="text-emerald-400 text-[10px] font-semibold">PlayStar</div><div class="text-gray-600 text-[8px]">Games</div></div>
+          <div class="bg-emerald-500/10 border border-emerald-500/15 rounded-lg p-2.5 text-center"><div class="text-emerald-400 text-[10px] font-semibold">AleaPlay</div><div class="text-gray-600 text-[8px]">Games</div></div>
+          <div class="bg-purple-500/10 border border-purple-500/15 rounded-lg p-2.5 text-center"><div class="text-purple-400 text-[10px] font-semibold">Twilio</div><div class="text-gray-600 text-[8px]">SMS</div></div>
+          <div class="bg-purple-500/10 border border-purple-500/15 rounded-lg p-2.5 text-center"><div class="text-purple-400 text-[10px] font-semibold">SendGrid</div><div class="text-gray-600 text-[8px]">Email</div></div>
+          <div class="bg-cyan-500/10 border border-cyan-500/15 rounded-lg p-2.5 text-center"><div class="text-cyan-400 text-[10px] font-semibold">FastTrack</div><div class="text-gray-600 text-[8px]">CRM</div></div>
+          <div class="bg-cyan-500/10 border border-cyan-500/15 rounded-lg p-2.5 text-center"><div class="text-cyan-400 text-[10px] font-semibold">DevCode ID</div><div class="text-gray-600 text-[8px]">SSO</div></div>
+          <div class="bg-white/[0.04] border border-white/5 rounded-lg p-2.5 text-center col-span-2"><div class="text-gray-500 text-[10px]">+ 40 more providers over the platform's lifetime</div></div>
+        </div>
+        <div class="mt-4 bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3 text-center">
+          <div class="text-emerald-400 text-[10px] font-bold">Each module isolated — a provider API change touches only its own module</div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -293,7 +321,7 @@ Want to see how the integration layer is structured? Link in bio.
           <a href="../index.html#products" class="hover:text-white transition-colors">Products</a>
           <a href="../index.html#proof" class="hover:text-white transition-colors">Customers</a>
           <a href="#contact" class="hover:text-white transition-colors">Contact</a>
-          <a href="index.html" class="hover:text-white transition-colors">Articles</a>
+          <a href="index.html" class="hover:text-white transition-colors">Insights</a>
         </div>
         <div class="flex items-center gap-4">
           <a href="https://www.linkedin.com/company/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>

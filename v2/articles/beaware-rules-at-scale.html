@@ -59,7 +59,7 @@
         <a href="../index.html#proof" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Customers</a>
         <a href="../index.html#partners" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Partners</a>
         <a href="../index.html#contact" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Contact</a>
-        <a href="index.html" class="nav-link text-sm font-medium text-brand font-semibold">Articles</a>
+        <a href="index.html" class="nav-link text-sm font-medium text-brand font-semibold">Insights</a>
       </div>
       <a href="../index.html#contact" class="bg-brand hover:bg-[#134f82] text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors hidden md:inline-flex">
         Book a Demo
@@ -76,7 +76,7 @@
       <a href="../index.html#proof" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Customers</a>
       <a href="../index.html#partners" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Partners</a>
       <a href="#contact" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Contact</a>
-      <a href="index.html" class="block py-2.5 text-sm font-medium text-brand font-semibold mobile-nav-link">Articles</a>
+      <a href="index.html" class="block py-2.5 text-sm font-medium text-brand font-semibold mobile-nav-link">Insights</a>
       <a href="#contact" class="block mt-2 bg-brand text-white text-sm font-semibold px-5 py-2.5 rounded-lg text-center mobile-nav-link">Book a Demo</a>
     </div>
   </header>
@@ -116,7 +116,37 @@
   <!-- DIAGRAM -->
   <section class="bg-gray-50 py-10 px-6 lg:px-8">
     <div class="max-w-4xl mx-auto">
-      <img src="diagrams/beaware-rules.svg" alt="BeAware behavior engine rule tree — event triggers, conditions, and action nodes" class="w-full rounded-xl shadow-lg">
+      <div class="bg-[#0c1222] rounded-2xl p-6 lg:p-8">
+        <div class="text-center mb-6">
+          <div class="text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-2">BeAware Behavior Engine</div>
+          <div class="text-white text-sm font-bold">Configurable Rule Tree</div>
+        </div>
+        <!-- Event trigger -->
+        <div class="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3 flex items-center gap-2 mb-3">
+          <svg class="w-4 h-4 text-amber-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <div><div class="text-amber-400 text-[11px] font-bold">EVENT: Deposit Completed</div><div class="text-gray-500 text-[9px]">Any brand · Any amount</div></div>
+        </div>
+        <div class="text-center text-gray-600 text-[10px] mb-3">↓ evaluate conditions</div>
+        <!-- Conditions -->
+        <div class="grid sm:grid-cols-2 gap-2 mb-3">
+          <div class="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3"><div class="text-purple-400 text-[11px] font-bold">IF amount > 5,000</div><div class="text-gray-500 text-[9px]">Sweden jurisdiction</div></div>
+          <div class="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3"><div class="text-purple-400 text-[11px] font-bold">IF first deposit</div><div class="text-gray-500 text-[9px]">Bonus opted in</div></div>
+        </div>
+        <div class="text-center text-gray-600 text-[10px] mb-3">↓ execute actions</div>
+        <!-- Actions -->
+        <div class="space-y-1.5 mb-4">
+          <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-3 py-2 flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-emerald-400 text-[11px]">Flag SOW review</span><span class="text-gray-600 text-[9px] ml-auto">Priority: 1</span></div>
+          <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-3 py-2 flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-emerald-400 text-[11px]">Credit welcome bonus 100%</span></div>
+          <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-3 py-2 flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-emerald-400 text-[11px]">Send confirmation email</span><span class="text-gray-600 text-[9px] ml-auto">via SendGrid</span></div>
+          <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-3 py-2 flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-emerald-400 text-[11px]">Update CRM segment</span><span class="text-gray-600 text-[9px] ml-auto">via FastTrack</span></div>
+        </div>
+        <!-- Legend -->
+        <div class="flex flex-wrap gap-4 text-[9px]">
+          <div class="flex items-center gap-1.5"><div class="w-2.5 h-2.5 rounded bg-amber-500/20"></div><span class="text-gray-500">Event Trigger</span></div>
+          <div class="flex items-center gap-1.5"><div class="w-2.5 h-2.5 rounded bg-purple-500/20"></div><span class="text-gray-500">Condition Filter</span></div>
+          <div class="flex items-center gap-1.5"><div class="w-2.5 h-2.5 rounded bg-emerald-500/20"></div><span class="text-gray-500">Action</span></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -323,7 +353,7 @@ What's the most complex behavioral rule your platform has to handle?
           <a href="../index.html#products" class="hover:text-white transition-colors">Products</a>
           <a href="../index.html#proof" class="hover:text-white transition-colors">Customers</a>
           <a href="#contact" class="hover:text-white transition-colors">Contact</a>
-          <a href="index.html" class="hover:text-white transition-colors">Articles</a>
+          <a href="index.html" class="hover:text-white transition-colors">Insights</a>
         </div>
         <div class="flex items-center gap-4">
           <a href="https://www.linkedin.com/company/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
