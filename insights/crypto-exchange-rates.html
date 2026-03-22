@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How PAM manages multi-currency operations with exchange rates from CoinMarketCap, ECB, Fixer, and XE — including rate locking per game session for crypto wallets.">
+  <title>When EUR/BTC Changes While a Player Is Mid-Spin — WebPrefer Engineering</title>
+  <meta property="og:title" content="When EUR/BTC Changes While a Player Is Mid-Spin — WebPrefer Engineering">
+  <meta property="og:description" content="Real-time exchange rates from 4 providers, rate locking per game session, and multi-currency wallets — how PAM handles money that moves.">
+  <meta property="og:image" content="https://webprefer.com/images/og-images/crypto-exchange-rates.png">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://webprefer.com/insights/crypto-exchange-rates.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="When EUR/BTC Changes While a Player Is Mid-Spin — WebPrefer Engineering">
+  <meta name="twitter:description" content="Real-time exchange rates from 4 providers, rate locking per game session, and multi-currency wallets — how PAM handles money that moves.">
+  <meta name="twitter:image" content="https://webprefer.com/images/og-images/crypto-exchange-rates.png">
+  <meta name="theme-color" content="#1968AA">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="canonical" href="https://webprefer.com/insights/crypto-exchange-rates.html">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HC29B7MQF3"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HC29B7MQF3');</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { brand: { DEFAULT: '#1968AA', dark: '#134f82', darker: '#0d3459', light: '#2a7ec4' } },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { overflow-x: hidden; }
+    .gradient-hero { background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%); }
+    .nav-link { transition: color 0.15s ease; }
+    .prose-article h2 { font-size: 1.35rem; font-weight: 700; color: #111827; margin: 2.5rem 0 0.75rem; }
+    .prose-article p { color: #374151; line-height: 1.8; margin-bottom: 1.25rem; }
+    .prose-article ul { margin: 0 0 1.25rem 1.5rem; }
+    .prose-article li { color: #374151; line-height: 1.8; margin-bottom: 0.35rem; }
+    .prose-article strong { color: #111827; }
+    .callout-incident { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout-solution { background: #eff6ff; border-left: 4px solid #1968AA; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout-today { background: #f0fdf4; border-left: 4px solid #16a34a; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .linkedin-box { background: #0f172a; border-radius: 12px; padding: 2rem; margin: 3rem 0; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"When EUR&BTC Changes While a Player Is Mid-Spin — WebPrefer Engineering","description":"Real-time exchange rates from 4 providers, rate locking per game session, and multi-currency wallets — how PAM handles money that moves.","image":"https://webprefer.com/images/og-images/crypto-exchange-rates.png","datePublished":"2026-03-15","author":{"@type":"Organization","name":"WebPrefer AB","url":"https://webprefer.com"},"publisher":{"@type":"Organization","name":"WebPrefer AB","logo":{"@type":"ImageObject","url":"https://webprefer.com/images/logo.svg"}}}</script>
+</head>
+<body class="font-sans bg-white text-gray-900 antialiased">
+
+  <!-- NAV -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="../index.html" class="flex items-center gap-2">
+        <img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto">
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="../index.html#platform" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Platform</a>
+        <a href="../index.html#products" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Products</a>
+        <a href="../index.html#proof" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Customers</a>
+        <a href="../index.html#partners" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Partners</a>
+        <a href="../index.html#contact" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Contact</a>
+        <a href="index.html" class="nav-link text-sm font-medium text-brand font-semibold">Insights</a>
+      </div>
+      <a href="../index.html#contact" class="bg-brand hover:bg-[#134f82] text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors hidden md:inline-flex">
+        Book a Demo
+      </a>
+      <button id="mobile-menu-btn" aria-label="Toggle navigation menu" class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+        <svg id="icon-open" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-1">
+      <a href="../index.html" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Home</a>
+      <a href="../index.html#platform" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Platform</a>
+      <a href="../index.html#products" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Products</a>
+      <a href="../index.html#proof" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Customers</a>
+      <a href="../index.html#partners" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Partners</a>
+      <a href="#contact" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Contact</a>
+      <a href="index.html" class="block py-2.5 text-sm font-medium text-brand font-semibold mobile-nav-link">Insights</a>
+      <a href="#contact" class="block mt-2 bg-brand text-white text-sm font-semibold px-5 py-2.5 rounded-lg text-center mobile-nav-link">Book a Demo</a>
+    </div>
+  </header>
+  <script>
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('icon-open');
+    const iconClose = document.getElementById('icon-close');
+    btn.addEventListener('click', () => { menu.classList.toggle('hidden'); iconOpen.classList.toggle('hidden'); iconClose.classList.toggle('hidden'); });
+    document.querySelectorAll('.mobile-nav-link').forEach(l => { l.addEventListener('click', () => { menu.classList.add('hidden'); iconOpen.classList.remove('hidden'); iconClose.classList.add('hidden'); }); });
+  </script>
+
+  <!-- ARTICLE HERO -->
+  <section class="gradient-hero pt-32 pb-16 px-6 lg:px-8 text-white">
+    <div class="max-w-3xl mx-auto">
+      <a href="index.html" class="inline-flex items-center gap-2 text-blue-300 text-sm mb-6 hover:text-white transition-colors">
+        &larr; All insights
+      </a>
+      <div class="flex flex-wrap gap-2 mb-4">
+        <span class="bg-amber-400/30 text-amber-200 text-xs font-semibold px-3 py-1 rounded-full">Crypto</span>
+        <span class="bg-blue-400/30 text-blue-200 text-xs font-semibold px-3 py-1 rounded-full">Multi-Currency</span>
+        <span class="text-blue-300 text-xs">7 min read</span>
+      </div>
+      <h1 class="text-4xl lg:text-5xl font-extrabold leading-tight mb-5">When EUR/BTC Changes While a Player Is Mid-Spin</h1>
+      <p class="text-xl text-blue-100 leading-relaxed">Real-time exchange rates from 4 providers, rate locking per game session, and multi-currency wallets — how PAM handles money that moves.</p>
+      <div class="mt-8 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center"><span class="text-brand font-extrabold text-sm">W</span></div>
+        <div>
+          <div class="text-sm font-semibold">WebPrefer Engineering</div>
+          <div class="text-blue-300 text-xs">March 2026</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTICLE BODY -->
+  <article class="py-16 px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto prose-article">
+
+      <h2>The problem</h2>
+
+      <p>A player in Stockholm opens a slot game. Their display currency is SEK. Their wallet holds BTC. Somewhere in between, a conversion has to happen — and it has to happen correctly, consistently, and in a way that both the player and the regulator can verify after the fact.</p>
+
+      <p>This is not a formatting problem. It's not about showing the right symbol next to the right number. It's a financial integrity problem. When a player places a 50 SEK bet, the platform has to debit the equivalent amount of BTC from their wallet. When they win 200 SEK, the platform has to credit the equivalent BTC back. If the EUR/BTC rate moved between the bet and the payout — which it does, constantly, because crypto markets never close — someone absorbs the difference.</p>
+
+      <p>In a naive implementation, the player absorbs it. They bet at one rate and get paid at another. A 200 SEK win might be worth 0.00031 BTC at bet time and 0.00029 BTC at payout time. The player sees "You won 200 SEK" but receives less purchasing power than they expected. In the opposite direction, the operator absorbs the loss. Neither outcome is acceptable at scale, and neither is auditable without knowing exactly which rate was applied at which moment.</p>
+
+      <p>This is the problem PAM's multi-currency engine was built to solve. Not currency display — currency correctness.</p>
+
+      <h2>Multi-provider rate fetching</h2>
+
+      <p>Exchange rates are only as good as their source. A single provider going stale, returning an error, or lagging behind the market by thirty seconds can mean thousands of transactions priced incorrectly. PAM doesn't rely on one source. It fetches rates from four independent providers, each serving a different role in the rate hierarchy.</p>
+
+      <ul>
+        <li><strong>CoinMarketCap</strong> — the primary source for crypto-to-fiat and crypto-to-crypto pairs. BTC/EUR, ETH/USD, LTC/SEK — all sourced from CoinMarketCap's aggregated market data.</li>
+        <li><strong>European Central Bank (ECB)</strong> — the reference source for EUR-based fiat pairs. EUR/SEK, EUR/NOK, EUR/GBP. Updated daily, used as the baseline for fiat conversions in European-regulated markets.</li>
+        <li><strong>Fixer</strong> — a secondary fiat rate provider covering 170+ currencies. Serves as both a supplement for pairs the ECB doesn't cover and a fallback when the ECB feed is unavailable.</li>
+        <li><strong>XE</strong> — the tertiary fiat provider. Covers exotic pairs and serves as the final fallback in the provider chain.</li>
+      </ul>
+
+      <p>Each provider has a configured polling interval and a TTL for its cached rates. CoinMarketCap rates are refreshed frequently because crypto markets move fast. ECB rates are refreshed daily because that's how often the ECB publishes. Fixer and XE sit in between. The TTLs are configurable per operator — a crypto-first casino might want tighter refresh intervals than a fiat-only sportsbook.</p>
+
+      <p>When a rate is requested, PAM walks the provider chain in priority order. If the primary provider for that pair has a fresh cached rate, it's returned immediately. If the cache has expired or the provider returned an error on the last fetch, the next provider in the chain is tried. If all providers fail for a specific pair, the system uses the last known good rate and flags the staleness for operator review. At no point does a transaction fail because of a rate provider outage — but at every point, the operator knows exactly how fresh the rate is.</p>
+
+      <h2>Rate locking per session</h2>
+
+      <p>Fetching accurate rates is necessary but not sufficient. The harder problem is <em>when</em> the rate is applied. If a player bets at the rate from 14:00:01 and gets paid at the rate from 14:00:03, the game's economics are broken. A 2x win might not actually be 2x in the player's wallet currency. This violates the fundamental contract between the game and the player.</p>
+
+      <div class="callout-solution">
+        <div class="font-bold mb-2" style="color:#134f82;">Rate locking: one session, one rate</div>
+        <p style="margin:0;color:#1e3a5f;">PAM's CryptoCasinoService locks the exchange rate at the moment a game session starts. From that point forward, every wager, every payout, every bonus credit within that session uses the same locked rate. The player bets at 1 BTC = 542,000 SEK, they get paid at 1 BTC = 542,000 SEK. The rate might have moved to 543,000 or 540,000 in the real market — but inside that session, the rate is fixed. No mid-spin surprises.</p>
+      </div>
+
+      <p>The locked rate is stored as part of the session record. When the game provider sends a bet request, PAM converts using the session's locked rate. When the provider sends a win result, PAM converts using the same rate. The conversion is deterministic and reproducible — given the session ID, anyone can look up exactly what rate was used and verify every transaction's math.</p>
+
+      <p>Rate locking also simplifies the game provider integration. The provider operates in the display currency (SEK, EUR, USD — whatever the player sees). It doesn't need to know that the wallet is denominated in BTC. It sends "bet 50 SEK" and "win 200 SEK," and PAM handles the conversion transparently. The provider never sees the crypto side of the transaction, which means existing game integrations work with crypto wallets without modification.</p>
+
+      <p>When the session ends, the lock expires. The next session gets a fresh rate from the provider chain. This means the operator's exposure to rate movement is bounded by session duration — typically minutes, not hours. The risk is real but contained and predictable.</p>
+
+      <h2>Fixed rate overrides</h2>
+
+      <p>Market rates are the default, but they're not always what operators want. There are legitimate business reasons to override the market rate for specific currency pairs, and PAM supports this through fixed rate configuration.</p>
+
+      <p>An operator running a promotional campaign might offer a favorable BTC/EUR rate to attract crypto depositors. A platform operating in a market with a pegged currency might want to lock the rate permanently rather than fetching it repeatedly. An operator with a negotiated OTC rate for large-volume crypto settlements might want to use that rate instead of the spot market price.</p>
+
+      <ul>
+        <li><strong>Promotional pricing</strong> — "Deposit in BTC this weekend and get a 2% better rate." The override is configured with a start and end time, and the system reverts to market rates automatically when the promotion expires.</li>
+        <li><strong>Stable pairs</strong> — for currencies pegged to the USD or EUR, operators can set a fixed rate and eliminate the noise of minor fluctuations around the peg.</li>
+        <li><strong>Negotiated rates</strong> — operators who settle crypto through OTC desks at pre-agreed rates can mirror those rates in the platform, ensuring the player-facing conversion matches the back-end settlement.</li>
+      </ul>
+
+      <p>Fixed rate overrides take priority over the provider chain. When a rate is requested for a pair that has an active override, the override is returned without consulting any external provider. The override is logged with the same audit trail as market rates — who set it, when, what the market rate was at the time, and when it expires. This is not a backdoor. It's a controlled, auditable mechanism for operators to manage their currency economics.</p>
+
+      <h2>Historical rate audit trail</h2>
+
+      <p>In a regulated gaming environment, "we used the market rate" is not a sufficient answer. Regulators want to know which market rate, from which provider, at what time, applied to which transaction, and whether it matched the rate available to other players at the same moment.</p>
+
+      <p>PAM stores the complete rate history for every provider, every pair, and every fetch. When a rate is used in a transaction — whether from the live provider chain, a session lock, or a fixed override — the transaction record includes the rate value, the source provider, the fetch timestamp, and the session or override ID that determined the rate selection.</p>
+
+      <p>This means a regulator can reconstruct the entire rate decision chain for any transaction. They can see that on March 15 at 14:32:07, a player started a session with a locked BTC/SEK rate of 541,823.45, sourced from CoinMarketCap at 14:32:06. They can see that the player placed 47 bets and received 12 payouts over the next 23 minutes, all at that locked rate. They can see that the market rate at session end was 542,190.12 — a 0.07% movement that the rate lock absorbed. Every number is traceable. Every conversion is reproducible.</p>
+
+      <p>The audit trail also serves the operator's finance team. Monthly reconciliation between the rates used in player transactions and the rates at which the operator actually converted crypto to fiat (or vice versa) reveals the operator's net exposure to rate movement. This is the data that informs decisions about TTL configuration, session duration limits, and whether to use fixed overrides for high-volume pairs.</p>
+
+      <div class="callout-today">
+        <div class="font-bold text-green-800 mb-2">Today</div>
+        <p style="margin:0;color:#14532d;">PAM's multi-currency engine handles both fiat and crypto wallets across all supported markets. Rates flow from four providers with automatic failover, session-level rate locking eliminates mid-game conversion variance, and every rate applied to every transaction is stored with full provider attribution. Operators configure TTLs, override rates for specific pairs, and reconcile exposure through the back office — without involving the development team.</p>
+      </div>
+
+      <h2>The principle</h2>
+
+      <p>Currency is not a display concern. Showing "50 SEK" instead of "0.000092 BTC" is the easy part — any template engine can do that. The hard part is making sure that 50 SEK actually equals 0.000092 BTC at the moment the transaction executes, that it still equals 0.000092 BTC when the payout settles, and that a regulator can verify both of those facts six months later.</p>
+
+      <p>This requires treating currency conversion as a financial operation with the same guarantees as any other wallet transaction: atomicity, auditability, and determinism. The rate has to come from a trusted source. It has to be locked at a well-defined moment. It has to be stored alongside the transaction. And it has to be reproducible.</p>
+
+      <p>That's what PAM's multi-currency engine does. Not currency formatting — currency integrity, at every point in the transaction lifecycle.</p>
+
+      <!-- SHARE -->
+      <div class="linkedin-box">
+        <div class="flex items-center justify-between mb-4">
+          <div class="text-blue-400 text-xs font-bold uppercase tracking-widest">Share this insight</div>
+          <div class="flex gap-2">
+            <button onclick="navigator.clipboard.writeText(this.closest('.linkedin-box').querySelector('.share-text').textContent.trim());this.textContent='Copied!';setTimeout(()=>this.textContent='Copy text',2000)" class="bg-white/10 hover:bg-white/20 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors">Copy text</button>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://webprefer.com/insights/crypto-exchange-rates.html" target="_blank" rel="noopener" class="bg-[#0A66C2] hover:bg-[#004182] text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors inline-flex items-center gap-2"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>Share on LinkedIn</a>
+          </div>
+        </div>
+        <details class="group">
+          <summary class="text-gray-500 text-xs cursor-pointer hover:text-gray-300 transition-colors">Preview post text</summary>
+          <div class="share-text text-gray-200 text-sm leading-relaxed whitespace-pre-line mt-3">A player plays in SEK. Their wallet holds BTC. The exchange rate changes every second. What happens when the rate moves between the bet and the payout?
+
+In most platforms: undefined behavior. In PAM: a solved problem.
+
+We fetch rates from 4 providers (CoinMarketCap, ECB, Fixer, XE) with automatic failover. We lock the exchange rate at session start so every wager and payout uses the same rate. No mid-spin surprises.
+
+Operators can override rates for promotions or stable pairs. Every rate applied to every transaction is stored with full provider attribution. Regulators can audit exactly what rate was used, when, and from which source.
+
+Currency isn't a display concern. It's a financial layer that has to be correct at every point in the transaction lifecycle.
+
+https://webprefer.com/insights/crypto-exchange-rates.html
+
+#iGaming #Crypto #MultiCurrency #PAM #FinTech</div>
+        </details>
+      </div>
+
+    </div>
+  </article>
+
+  <!-- MORE ARTICLES -->
+  <section class="py-12 px-6 lg:px-8 bg-gray-50 border-t border-gray-100">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">More insights</div>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <a href="wallet-concurrency.html" class="group bg-white rounded-xl border border-gray-100 p-5 hover:border-brand/30 hover:shadow-md transition-all">
+          <div class="text-xs font-semibold text-white bg-gray-500 px-2 py-0.5 rounded-full inline-block mb-2">Concurrency</div>
+          <div class="font-semibold text-gray-900 group-hover:text-brand transition-colors text-sm">The Wallet Problem</div>
+          <div class="text-gray-500 text-xs mt-1">Optimistic concurrency for financial integrity</div>
+        </a>
+        <a href="integration-architecture.html" class="group bg-white rounded-xl border border-gray-100 p-5 hover:border-brand/30 hover:shadow-md transition-all">
+          <div class="text-xs font-semibold text-orange-700 bg-orange-50 px-2 py-0.5 rounded-full inline-block mb-2">Integrations</div>
+          <div class="font-semibold text-gray-900 group-hover:text-brand transition-colors text-sm">50+ Providers, Zero Coupling</div>
+          <div class="text-gray-500 text-xs mt-1">Module isolation for provider integrations</div>
+        </a>
+      </div>
+      <div class="mt-6">
+        <a href="index.html" class="text-brand text-sm font-semibold hover:underline">&larr; View all insights</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-24 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-16">
+        <div>
+          <div class="text-xs font-bold uppercase tracking-widest text-brand mb-4" style="letter-spacing:0.12em;">Get in Touch</div>
+          <h2 class="text-4xl font-bold mb-6">Ready to see it?</h2>
+          <p class="text-lg text-gray-600 leading-relaxed mb-10">We offer live demos scoped to your specific operation type — whether you're launching a new brand, migrating from an existing platform, or evaluating options for a white-label deployment.</p>
+          <div class="space-y-5">
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div><div><div class="font-semibold text-gray-900">Address</div><div class="text-gray-600 text-sm mt-1">S:t Larsgatan 7, 582 24 Linköping, Sweden</div></div></div>
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div><div><div class="font-semibold text-gray-900">Email</div><a href="mailto:sales@webprefer.com" class="text-brand text-sm mt-1 block hover:underline">sales@webprefer.com</a></div></div>
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></div><div><div class="font-semibold text-gray-900">Mikael Lindberg Castell</div><a href="mailto:mikael@webprefer.com" class="text-brand text-sm mt-1 block hover:underline">mikael@webprefer.com</a><div class="text-gray-500 text-xs mt-0.5">CEO &amp; Founder, WebPrefer AB</div></div></div>
+          </div>
+        </div>
+        <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
+          <form id="contact-form" class="space-y-5">
+            <div class="grid sm:grid-cols-2 gap-5"><div><label class="block text-sm font-medium text-gray-700 mb-1.5">Full name</label><input type="text" name="name" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="Your name"></div><div><label class="block text-sm font-medium text-gray-700 mb-1.5">Company</label><input type="text" name="company" class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="Your company"></div></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">Email</label><input type="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="you@company.com"></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">I am a...</label><select name="role" class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent bg-white"><option value="">Select your role</option><option>Operator</option><option>Investor</option><option>Affiliate</option><option>Other</option></select></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">Message</label><textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent resize-none" placeholder="Tell us about your operation and what you're looking for..."></textarea></div>
+            <button type="submit" id="submit-btn" class="w-full bg-brand hover:bg-brand-dark text-white font-semibold py-3.5 rounded-lg transition-colors text-sm">Send message</button>
+            <div id="form-success" class="hidden text-center text-green-600 font-medium text-sm py-2">Thank you! We'll be in touch shortly.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-white py-12 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-4"><img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto brightness-0 invert"><span class="text-gray-400 text-sm">WebPrefer AB (556748-3523)</span></div>
+        <div class="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm text-gray-400">
+          <a href="../index.html#platform" class="hover:text-white transition-colors">Platform</a>
+          <a href="../index.html#products" class="hover:text-white transition-colors">Products</a>
+          <a href="../index.html#proof" class="hover:text-white transition-colors">Customers</a>
+          <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+          <a href="index.html" class="hover:text-white transition-colors">Insights</a>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="https://www.linkedin.com/company/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+          <a href="https://www.facebook.com/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="Facebook"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+          <a href="https://www.instagram.com/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="Instagram"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+        </div>
+        <div class="text-gray-500 text-xs">&copy; <span id="footer-year">2026</span> WebPrefer AB. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function(){emailjs.init({publicKey:'J-Ouq1kFXZl7x5bEZ'})})();
+    document.getElementById('contact-form').addEventListener('submit',function(e){
+      e.preventDefault();var b=document.getElementById('submit-btn');b.disabled=true;b.textContent='Sending...';
+      emailjs.sendForm('service_aefyiw9','template_q5n6qyl',this).then(()=>{document.getElementById('form-success').classList.remove('hidden');this.reset();b.textContent='Send message';b.disabled=false;},()=>{b.textContent='Send message';b.disabled=false;});
+    });
+  </script>
+  <script>document.querySelectorAll("#footer-year").forEach(e=>e.textContent=new Date().getFullYear())</script>
+</body>
+</html>

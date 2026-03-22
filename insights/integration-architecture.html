@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How a payment provider callback format change almost broke our bonus engine — and the module isolation pattern that made sure it never could again.">
+  <title>50+ Providers, Zero Coupling — WebPrefer Engineering</title>
+  <meta property="og:title" content="50+ Providers, Zero Coupling — WebPrefer Engineering">
+  <meta property="og:description" content="When your integrations all know too much about each other, one provider change ripples everywhere. Here's how we fixed that.">
+  <meta property="og:image" content="https://webprefer.com/images/og-images/integration-architecture.png">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://webprefer.com/insights/integration-architecture.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="50+ Providers, Zero Coupling — WebPrefer Engineering">
+  <meta name="twitter:description" content="When your integrations all know too much about each other, one provider change ripples everywhere. Here's how we fixed that.">
+  <meta name="twitter:image" content="https://webprefer.com/images/og-images/integration-architecture.png">
+  <meta name="theme-color" content="#1968AA">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="canonical" href="https://webprefer.com/insights/integration-architecture.html">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HC29B7MQF3"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HC29B7MQF3');</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { brand: { DEFAULT: '#1968AA', dark: '#134f82', darker: '#0d3459', light: '#2a7ec4' } },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { overflow-x: hidden; }
+    .gradient-hero { background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%); }
+    .nav-link { transition: color 0.15s ease; }
+    .prose-article h2 { font-size: 1.35rem; font-weight: 700; color: #111827; margin: 2.5rem 0 0.75rem; }
+    .prose-article h3 { font-size: 1.1rem; font-weight: 600; color: #374151; margin: 2rem 0 0.5rem; }
+    .prose-article p { color: #374151; line-height: 1.8; margin-bottom: 1.25rem; }
+    .prose-article ul { margin: 0 0 1.25rem 1.5rem; }
+    .prose-article li { color: #374151; line-height: 1.8; margin-bottom: 0.35rem; }
+    .prose-article strong { color: #111827; }
+    .callout-incident { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout-solution { background: #eff6ff; border-left: 4px solid #1968AA; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout-today { background: #f0fdf4; border-left: 4px solid #16a34a; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .code-block { background: #0f172a; color: #e2e8f0; padding: 1.25rem 1.5rem; border-radius: 8px; font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace; font-size: 0.85rem; line-height: 1.7; overflow-x: auto; margin: 1.5rem 0; }
+    .code-comment { color: #94a3b8; }
+    .linkedin-box { background: #0f172a; border-radius: 12px; padding: 2rem; margin: 3rem 0; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"50+ Providers, Zero Coupling — WebPrefer Engineering","description":"When your integrations all know too much about each other, one provider change ripples everywhere. Here's how we fixed that.","image":"https://webprefer.com/images/og-images/integration-architecture.png","datePublished":"2025-11-15","author":{"@type":"Organization","name":"WebPrefer AB","url":"https://webprefer.com"},"publisher":{"@type":"Organization","name":"WebPrefer AB","logo":{"@type":"ImageObject","url":"https://webprefer.com/images/logo.svg"}}}</script>
+</head>
+<body class="font-sans bg-white text-gray-900 antialiased">
+
+  <!-- NAV -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="../index.html" class="flex items-center gap-2">
+        <img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto">
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="../index.html#platform" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Platform</a>
+        <a href="../index.html#products" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Products</a>
+        <a href="../index.html#proof" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Customers</a>
+        <a href="../index.html#partners" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Partners</a>
+        <a href="../index.html#contact" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Contact</a>
+        <a href="index.html" class="nav-link text-sm font-medium text-brand font-semibold">Insights</a>
+      </div>
+      <a href="../index.html#contact" class="bg-brand hover:bg-[#134f82] text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors hidden md:inline-flex">
+        Book a Demo
+      </a>
+      <button id="mobile-menu-btn" aria-label="Toggle navigation menu" class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+        <svg id="icon-open" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-1">
+      <a href="../index.html" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Home</a>
+      <a href="../index.html#platform" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Platform</a>
+      <a href="../index.html#products" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Products</a>
+      <a href="../index.html#proof" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Customers</a>
+      <a href="../index.html#partners" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Partners</a>
+      <a href="#contact" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Contact</a>
+      <a href="index.html" class="block py-2.5 text-sm font-medium text-brand font-semibold mobile-nav-link">Insights</a>
+      <a href="#contact" class="block mt-2 bg-brand text-white text-sm font-semibold px-5 py-2.5 rounded-lg text-center mobile-nav-link">Book a Demo</a>
+    </div>
+  </header>
+  <script>
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('icon-open');
+    const iconClose = document.getElementById('icon-close');
+    btn.addEventListener('click', () => { menu.classList.toggle('hidden'); iconOpen.classList.toggle('hidden'); iconClose.classList.toggle('hidden'); });
+    document.querySelectorAll('.mobile-nav-link').forEach(l => { l.addEventListener('click', () => { menu.classList.add('hidden'); iconOpen.classList.remove('hidden'); iconClose.classList.add('hidden'); }); });
+  </script>
+
+  <!-- ARTICLE HERO -->
+  <section class="gradient-hero pt-32 pb-16 px-6 lg:px-8 text-white">
+    <div class="max-w-3xl mx-auto">
+      <a href="index.html" class="inline-flex items-center gap-2 text-blue-300 text-sm mb-6 hover:text-white transition-colors">
+        &larr; All insights
+      </a>
+      <div class="flex flex-wrap gap-2 mb-4">
+        <span class="bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full">Architecture</span>
+        <span class="bg-orange-400/30 text-orange-200 text-xs font-semibold px-3 py-1 rounded-full">Integrations</span>
+        <span class="text-blue-300 text-xs">7 min read</span>
+      </div>
+      <h1 class="text-4xl lg:text-5xl font-extrabold leading-tight mb-5">50+ Providers, Zero Coupling</h1>
+      <p class="text-xl text-blue-100 leading-relaxed">How a payment provider callback format change almost broke our bonus engine — and the module isolation pattern that made sure it never could again.</p>
+      <div class="mt-8 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center"><span class="text-brand font-extrabold text-sm">W</span></div>
+        <div>
+          <div class="text-sm font-semibold">WebPrefer Engineering</div>
+          <div class="text-blue-300 text-xs">November 2025</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIAGRAM -->
+  <section class="bg-gray-50 py-10 px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <div class="bg-[#0c1222] rounded-2xl p-6 lg:p-8">
+        <div class="text-center mb-6">
+          <div class="text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-2">Integration Architecture</div>
+          <div class="text-white text-sm font-bold">50+ Providers, Zero Coupling</div>
+        </div>
+        <!-- Core -->
+        <div class="bg-brand/20 border border-brand/30 rounded-xl p-4 text-center mb-4">
+          <div class="text-brand text-sm font-bold">PAM Core</div>
+          <div class="text-gray-500 text-[10px]">Contracts only — doesn't know what providers exist</div>
+        </div>
+        <div class="text-center text-gray-600 text-[10px] mb-4">↕ typed interfaces</div>
+        <!-- Providers grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+          <div class="bg-amber-500/10 border border-amber-500/15 rounded-lg p-2.5 text-center"><div class="text-amber-400 text-[10px] font-semibold">PaymentIQ</div><div class="text-gray-600 text-[8px]">Payment</div></div>
+          <div class="bg-amber-500/10 border border-amber-500/15 rounded-lg p-2.5 text-center"><div class="text-amber-400 text-[10px] font-semibold">Hexopay</div><div class="text-gray-600 text-[8px]">Payment</div></div>
+          <div class="bg-amber-500/10 border border-amber-500/15 rounded-lg p-2.5 text-center"><div class="text-amber-400 text-[10px] font-semibold">WorldLine</div><div class="text-gray-600 text-[8px]">Payment</div></div>
+          <div class="bg-emerald-500/10 border border-emerald-500/15 rounded-lg p-2.5 text-center"><div class="text-emerald-400 text-[10px] font-semibold">SportTech</div><div class="text-gray-600 text-[8px]">Games</div></div>
+          <div class="bg-emerald-500/10 border border-emerald-500/15 rounded-lg p-2.5 text-center"><div class="text-emerald-400 text-[10px] font-semibold">PlayStar</div><div class="text-gray-600 text-[8px]">Games</div></div>
+          <div class="bg-emerald-500/10 border border-emerald-500/15 rounded-lg p-2.5 text-center"><div class="text-emerald-400 text-[10px] font-semibold">AleaPlay</div><div class="text-gray-600 text-[8px]">Games</div></div>
+          <div class="bg-purple-500/10 border border-purple-500/15 rounded-lg p-2.5 text-center"><div class="text-purple-400 text-[10px] font-semibold">Twilio</div><div class="text-gray-600 text-[8px]">SMS</div></div>
+          <div class="bg-purple-500/10 border border-purple-500/15 rounded-lg p-2.5 text-center"><div class="text-purple-400 text-[10px] font-semibold">SendGrid</div><div class="text-gray-600 text-[8px]">Email</div></div>
+          <div class="bg-cyan-500/10 border border-cyan-500/15 rounded-lg p-2.5 text-center"><div class="text-cyan-400 text-[10px] font-semibold">FastTrack</div><div class="text-gray-600 text-[8px]">CRM</div></div>
+          <div class="bg-cyan-500/10 border border-cyan-500/15 rounded-lg p-2.5 text-center"><div class="text-cyan-400 text-[10px] font-semibold">DevCode ID</div><div class="text-gray-600 text-[8px]">SSO</div></div>
+          <div class="bg-white/[0.04] border border-white/5 rounded-lg p-2.5 text-center col-span-2"><div class="text-gray-500 text-[10px]">+ 40 more providers over the platform's lifetime</div></div>
+        </div>
+        <div class="mt-4 bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3 text-center">
+          <div class="text-emerald-400 text-[10px] font-bold">Each module isolated — a provider API change touches only its own module</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTICLE BODY -->
+  <article class="py-16 px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto prose-article">
+
+      <p>Over PAM's lifetime, we've integrated more than fifty third-party providers: payment processors, game providers, KYC vendors, CRM tools, communication services, lotteries, and sports data feeds. Each one has its own API format, its own callback conventions, its own failure modes, and its own upgrade schedule that has nothing to do with yours.</p>
+
+      <p>The challenge isn't adding a new integration. It's making sure that every integration you've already built stays working while you add the next one — and that when a provider changes something on their end, the blast radius is exactly one module.</p>
+
+      <p>We didn't start there. We learned our way there.</p>
+
+      <h2>How integrations start</h2>
+
+      <p>The first payment provider was PaymentIQ. The integration was built directly into the core platform. The callback handler knew about the deposit flow. The deposit flow knew about PaymentIQ's response format. When a deposit completed successfully, the same code path that parsed the PaymentIQ response also triggered the bonus evaluation and sent the confirmation email.</p>
+
+      <p>This worked. For one provider.</p>
+
+      <p>Adding the second payment provider required branching the callback handler. Adding game providers required adding new callback endpoints that touched the casino module directly. Communication providers were called inline from the business logic that needed them. The integration layer, such as it was, grew by accretion — each new provider wired into the nearest thing that needed it.</p>
+
+      <div class="callout-incident">
+        <div class="font-bold text-amber-800 mb-2">When it broke</div>
+        <p style="margin:0;color:#92400e;">A payment provider updated their callback format. A field was renamed. Our callback parser failed to read it, and since the callback parser was tightly coupled to the deposit completion logic, deposits appeared to complete but bonus evaluations never fired. Players who deposited during a promotion received no bonus. The failure mode was silent — no exception, just a missing trigger. It took hours to trace because the callback format change and the bonus failure looked like separate issues.</p>
+      </div>
+
+      <h2>The coupling problem</h2>
+
+      <p>The root cause wasn't that the provider changed their format. Providers change their format. That's normal. The root cause was that our handling of the provider's format was entangled with business logic that had nothing to do with the provider.</p>
+
+      <p>A payment callback parser's only job is to parse a payment callback. It should not know that a successful parse triggers a bonus evaluation. The bonus evaluation should not know where the deposit signal came from. The communication service should not be called by whichever module happened to need a confirmation email sent.</p>
+
+      <p>These are <strong>separate concerns</strong>. Treating them as one concern is how a renamed field in a provider's JSON breaks your bonus engine.</p>
+
+      <h2>The module isolation pattern</h2>
+
+      <p>The integration layer in the current generation of PAM is structured around a clear principle: every provider integration is a self-contained, independently deployable module. The module boundary enforces what the module is allowed to know about.</p>
+
+      <p>Each integration module exposes a set of inbound endpoints (for provider callbacks) and implements a typed contract interface that the platform core can call. The module is the only code that knows what the provider's API looks like. The platform core doesn't know — and can't know — what format PaymentIQ uses for callbacks. It only knows what a completed deposit looks like from the platform's perspective.</p>
+
+      <div class="code-block"><span class="code-comment">// What the platform core sees — provider-agnostic</span>
+interface IPaymentProvider {
+    Task&lt;DepositResult&gt; ProcessDepositAsync(DepositRequest request);
+    Task&lt;WithdrawalResult&gt; ProcessWithdrawalAsync(WithdrawalRequest request);
+}
+
+<span class="code-comment">// What PaymentIQ module implements — all provider detail stays here</span>
+class PaymentIqProvider : IPaymentProvider {
+    <span class="code-comment">// Knows PaymentIQ's format. Nothing else in the platform does.</span>
+}</div>
+
+      <p>When a provider changes their callback format, the fix is entirely inside the module. Nothing else needs to know it happened. The platform core continues calling <code>ProcessDepositAsync</code> and receives a <code>DepositResult</code>. The DepositResult is generated by the module after parsing whatever format the provider sent. The rest of the platform doesn't care what that format was.</p>
+
+      <h2>Independent deployment</h2>
+
+      <p>The module isolation goes further than just code separation. In the current architecture, each integration module is an independently deployable unit. Adding a new provider doesn't require a platform-wide deployment. Updating an existing provider's module doesn't require coordinating with other modules or restarting services that don't need to change.</p>
+
+      <p>This matters operationally. A game provider integration update that doesn't touch the payment layer or the bonus engine should not require testing those layers. It should not require a platform-wide deployment window. The deployment surface should match the change surface.</p>
+
+      <h2>What fifty-plus integrations looks like in practice</h2>
+
+      <p>Over PAM's lifetime, the integration surface has covered:</p>
+
+      <ul>
+        <li><strong>Payment processors:</strong> PaymentIQ, Hexopay, WorldLine, SafeCharge — each with distinct callback formats, retry conventions, and reconciliation requirements</li>
+        <li><strong>Game providers:</strong> SportTech, PlayStar, AleaPlay, NetEnt, PragmaticPlay, Yggdrasil, Evolution, NoLimitCity, and more — each with their own game launch URL format, round callback structure, and session management model</li>
+        <li><strong>Communications:</strong> Twilio (SMS), SendGrid (Email), AWS SES (Email), Nexmo, Jojka, FortyTwo — each with different rate limits, template formats, and delivery confirmation models</li>
+        <li><strong>KYC and identity:</strong> DevCodeIdentity (SSO), jurisdiction-specific verification services</li>
+        <li><strong>CRM:</strong> FastTrack — player event streaming, segmentation callbacks</li>
+        <li><strong>Lotteries:</strong> LottoWarehouse, Lottoland, BitVille — with their own ticket formats and draw result structures</li>
+      </ul>
+
+      <p>Each of these integrations has had at least one breaking change in its lifetime. Format updates, authentication model changes, endpoint deprecations, new required fields. In every case, the fix has been inside the module. Nothing else moved.</p>
+
+      <h2>Provider failure isolation</h2>
+
+      <p>The isolation model also affects failure behavior. When a game provider goes down, the module that handles that provider returns an appropriate error to the platform core. The platform core handles it. Other game providers keep working. Payment flows keep working. The bonus engine keeps working.</p>
+
+      <p>In the old tightly-coupled architecture, a provider failure could propagate in unexpected ways — because the provider's code was mixed into flows that shouldn't depend on it. With module isolation, the failure boundary is the module boundary.</p>
+
+      <div class="callout-today">
+        <div class="font-bold text-green-800 mb-2">Today</div>
+        <p style="margin:0;color:#14532d;">When a provider changes their API, we update one module. We write tests for that module. We deploy that module. Nothing else is tested, touched, or at risk. The platform core doesn't know the change happened. That's the right outcome — a provider API update should have exactly as much impact as it deserves, which is as little as possible.</p>
+      </div>
+
+      <h2>This isn't a microservices pitch</h2>
+
+      <p>Module isolation doesn't require microservices. PAM's integration modules are deployed as part of the same host process for many providers. The isolation is at the code and dependency level — not necessarily at the network level. The key is that the module boundary is respected: code inside the module is the only code that knows about the provider's details.</p>
+
+      <p>The test for whether you have real isolation is simple: can you update a provider's integration without running tests for anything else? If the answer is no — if your test suite has cross-provider dependencies, or if the deployment pipeline requires platform-wide smoke tests for a single provider update — you have coupling you haven't named yet.</p>
+
+      <!-- SHARE -->
+      <div class="linkedin-box">
+        <div class="flex items-center justify-between mb-4">
+          <div class="text-blue-400 text-xs font-bold uppercase tracking-widest">Share this insight</div>
+          <div class="flex gap-2">
+            <button onclick="navigator.clipboard.writeText(this.closest('.linkedin-box').querySelector('.share-text').textContent.trim());this.textContent='Copied!';setTimeout(()=>this.textContent='Copy text',2000)" class="bg-white/10 hover:bg-white/20 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors">Copy text</button>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://webprefer.com/insights/integration-architecture.html" target="_blank" rel="noopener" class="bg-[#0A66C2] hover:bg-[#004182] text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors inline-flex items-center gap-2"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>Share on LinkedIn</a>
+          </div>
+        </div>
+        <details class="group">
+          <summary class="text-gray-500 text-xs cursor-pointer hover:text-gray-300 transition-colors">Preview post text</summary>
+          <div class="share-text text-gray-200 text-sm leading-relaxed whitespace-pre-line mt-3">When a payment provider changes their API, how much of your platform has to change with it?
+
+In a tightly coupled system — more than it should.
+
+We've integrated 50+ providers over PAM's lifetime: PaymentIQ, WorldLine, FastTrack, Twilio, SendGrid, PlayStar, SportTech, and more. Early on, each integration was wired directly into the core. One provider changing their callback format could ripple into the bonus engine. One gateway going down could affect unrelated flows.
+
+The fix was making each integration a true module — isolated, independently deployable, with no shared state.
+
+The core platform doesn't know what providers exist. It only knows how to talk to a contract.
+
+Now when a provider changes their API, we update one module. Nothing else moves.
+
+That's not a microservices pitch. It's just good boundaries.
+
+Want to see how the integration layer is structured? Link in bio.
+
+#iGaming #PAM #SoftwareArchitecture #GamingTech</div>
+        </details>
+      </div>
+
+    </div>
+  </article>
+
+  <!-- MORE ARTICLES -->
+  <section class="py-12 px-6 lg:px-8 bg-gray-50 border-t border-gray-100">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">More insights</div>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <a href="real-time-or-nothing.html" class="group bg-white rounded-xl border border-gray-100 p-5 hover:border-brand/30 hover:shadow-md transition-all">
+          <div class="text-xs font-semibold text-yellow-700 bg-yellow-50 px-2 py-0.5 rounded-full inline-block mb-2">Real-Time</div>
+          <div class="font-semibold text-gray-900 group-hover:text-brand transition-colors text-sm">Real-Time or Nothing</div>
+          <div class="text-gray-500 text-xs mt-1">Why polling fails in iGaming</div>
+        </a>
+        <a href="beaware-rules-at-scale.html" class="group bg-white rounded-xl border border-gray-100 p-5 hover:border-brand/30 hover:shadow-md transition-all">
+          <div class="text-xs font-semibold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-full inline-block mb-2">BeAware</div>
+          <div class="font-semibold text-gray-900 group-hover:text-brand transition-colors text-sm">BeAware: Rules at Scale</div>
+          <div class="text-gray-500 text-xs mt-1">The behavior engine and visual rule editor</div>
+        </a>
+      </div>
+      <div class="mt-6">
+        <a href="index.html" class="text-brand text-sm font-semibold hover:underline">&larr; View all insights</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-24 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-16">
+        <div>
+          <div class="text-xs font-bold uppercase tracking-widest text-brand mb-4" style="letter-spacing:0.12em;">Get in Touch</div>
+          <h2 class="text-4xl font-bold mb-6">Ready to see it?</h2>
+          <p class="text-lg text-gray-600 leading-relaxed mb-10">We offer live demos scoped to your specific operation type — whether you're launching a new brand, migrating from an existing platform, or evaluating options for a white-label deployment.</p>
+          <div class="space-y-5">
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div><div><div class="font-semibold text-gray-900">Address</div><div class="text-gray-600 text-sm mt-1">S:t Larsgatan 7, 582 24 Linköping, Sweden</div></div></div>
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div><div><div class="font-semibold text-gray-900">Email</div><a href="mailto:sales@webprefer.com" class="text-brand text-sm mt-1 block hover:underline">sales@webprefer.com</a></div></div>
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></div><div><div class="font-semibold text-gray-900">Mikael Lindberg Castell</div><a href="mailto:mikael@webprefer.com" class="text-brand text-sm mt-1 block hover:underline">mikael@webprefer.com</a><div class="text-gray-500 text-xs mt-0.5">CEO &amp; Founder, WebPrefer AB</div></div></div>
+          </div>
+        </div>
+        <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
+          <form id="contact-form" class="space-y-5">
+            <div class="grid sm:grid-cols-2 gap-5"><div><label class="block text-sm font-medium text-gray-700 mb-1.5">Full name</label><input type="text" name="name" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="Your name"></div><div><label class="block text-sm font-medium text-gray-700 mb-1.5">Company</label><input type="text" name="company" class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="Your company"></div></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">Email</label><input type="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="you@company.com"></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">I am a...</label><select name="role" class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent bg-white"><option value="">Select your role</option><option>Operator</option><option>Investor</option><option>Affiliate</option><option>Other</option></select></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">Message</label><textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent resize-none" placeholder="Tell us about your operation and what you're looking for..."></textarea></div>
+            <button type="submit" id="submit-btn" class="w-full bg-brand hover:bg-brand-dark text-white font-semibold py-3.5 rounded-lg transition-colors text-sm">Send message</button>
+            <div id="form-success" class="hidden text-center text-green-600 font-medium text-sm py-2">Thank you! We'll be in touch shortly.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-white py-12 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+          <img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto brightness-0 invert">
+          <span class="text-gray-400 text-sm">WebPrefer AB (556748-3523)</span>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm text-gray-400">
+          <a href="../index.html#platform" class="hover:text-white transition-colors">Platform</a>
+          <a href="../index.html#products" class="hover:text-white transition-colors">Products</a>
+          <a href="../index.html#proof" class="hover:text-white transition-colors">Customers</a>
+          <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+          <a href="index.html" class="hover:text-white transition-colors">Insights</a>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="https://www.linkedin.com/company/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+          <a href="https://www.facebook.com/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="Facebook"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+          <a href="https://www.instagram.com/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="Instagram"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+        </div>
+        <div class="text-gray-500 text-xs">&copy; <span id="footer-year">2026</span> WebPrefer AB. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function(){emailjs.init({publicKey:'J-Ouq1kFXZl7x5bEZ'})})();
+    document.getElementById('contact-form').addEventListener('submit',function(e){
+      e.preventDefault();var b=document.getElementById('submit-btn');b.disabled=true;b.textContent='Sending...';
+      emailjs.sendForm('service_aefyiw9','template_q5n6qyl',this).then(()=>{document.getElementById('form-success').classList.remove('hidden');this.reset();b.textContent='Send message';b.disabled=false;},()=>{b.textContent='Send message';b.disabled=false;});
+    });
+  </script>
+  <script>document.querySelectorAll("#footer-year").forEach(e=>e.textContent=new Date().getFullYear())</script>
+</body>
+</html>

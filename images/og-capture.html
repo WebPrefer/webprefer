@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1200">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { brand: { DEFAULT: '#1968AA', dark: '#134f82', darker: '#0d3459' } },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+    .pulse { animation: pulse 2s ease-in-out infinite; }
+  </style>
+</head>
+<body class="font-sans antialiased" style="background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%);">
+
+  <div class="flex h-[630px]">
+    <!-- Left: Branding -->
+    <div class="w-[420px] flex flex-col justify-center px-14">
+      <img src="logo.svg" alt="WebPrefer" class="h-10 w-auto mb-8 brightness-0 invert">
+      <h1 class="text-white text-4xl font-extrabold leading-tight mb-4">Built for operators who can't afford to guess.</h1>
+      <p class="text-blue-200 text-base leading-relaxed mb-6">10+ years. 18,000+ commits. 5 regulated markets. Every feature has a production scar behind it.</p>
+      <div class="flex gap-6 text-blue-300 text-sm font-semibold">
+        <span>PAM</span>
+        <span>BeAware</span>
+        <span>CMS</span>
+        <span>Streaming</span>
+      </div>
+    </div>
+
+    <!-- Right: Dashboard mockup -->
+    <div class="flex-1 flex items-center pr-10">
+      <div class="bg-[#0c1222] rounded-2xl border border-white/10 shadow-2xl w-full overflow-hidden">
+        <!-- Browser chrome -->
+        <div class="flex items-center gap-2 px-4 py-2.5 bg-[#0a0f1c] border-b border-white/5">
+          <div class="flex gap-1.5">
+            <div class="w-2.5 h-2.5 rounded-full bg-[#ff5f57]"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-[#28c840]"></div>
+          </div>
+          <div class="flex-1 text-center">
+            <span class="bg-white/5 rounded px-3 py-0.5 text-[10px] text-gray-500">pam.webprefer.com</span>
+          </div>
+        </div>
+
+        <div class="p-5">
+          <!-- Top bar -->
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="text-white text-xs font-bold">Dashboard</span>
+              <div class="flex items-center gap-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-2 py-0.5">
+                <div class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse"></div>
+                <span class="text-emerald-400 text-[9px] font-semibold">LIVE</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stat cards -->
+          <div class="grid grid-cols-4 gap-3 mb-4">
+            <div class="bg-white/[0.03] border border-white/5 rounded-xl p-3">
+              <div class="text-gray-500 text-[9px] mb-1">Active Players</div>
+              <div class="text-white text-lg font-bold">2,847</div>
+              <div class="flex items-center gap-1 mt-1">
+                <span class="text-emerald-400 text-[9px] font-semibold">↑ 12.4%</span>
+              </div>
+              <svg class="w-full h-6 mt-1.5" viewBox="0 0 100 20" preserveAspectRatio="none">
+                <polyline points="0,18 15,15 30,12 45,14 60,9 75,7 90,4 100,2" fill="none" stroke="#34d399" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <div class="bg-white/[0.03] border border-white/5 rounded-xl p-3">
+              <div class="text-gray-500 text-[9px] mb-1">Deposits Today</div>
+              <div class="text-white text-lg font-bold">€46,389</div>
+              <div class="flex items-center gap-1 mt-1">
+                <span class="text-emerald-400 text-[9px] font-semibold">↑ 8.2%</span>
+              </div>
+              <svg class="w-full h-6 mt-1.5" viewBox="0 0 100 20" preserveAspectRatio="none">
+                <polyline points="0,14 15,16 30,13 45,8 60,10 75,5 90,3 100,6" fill="none" stroke="#60a5fa" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <div class="bg-white/[0.03] border border-white/5 rounded-xl p-3">
+              <div class="text-gray-500 text-[9px] mb-1">Game Rounds</div>
+              <div class="text-white text-lg font-bold">18,420</div>
+              <div class="flex items-center gap-1 mt-1">
+                <span class="text-emerald-400 text-[9px] font-semibold">↑ 23.1%</span>
+              </div>
+              <svg class="w-full h-6 mt-1.5" viewBox="0 0 100 20" preserveAspectRatio="none">
+                <polyline points="0,16 15,12 30,14 45,9 60,11 75,6 90,4 100,2" fill="none" stroke="#a78bfa" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <div class="bg-white/[0.03] border border-white/5 rounded-xl p-3">
+              <div class="text-gray-500 text-[9px] mb-1">BeAware Rules</div>
+              <div class="text-white text-lg font-bold">342</div>
+              <div class="flex items-center gap-1 mt-1">
+                <div class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse"></div>
+                <span class="text-gray-500 text-[9px]">all firing</span>
+              </div>
+              <svg class="w-full h-6 mt-1.5" viewBox="0 0 100 20" preserveAspectRatio="none">
+                <polyline points="0,10 15,9 30,10 45,9 60,10 75,8 90,9 100,9" fill="none" stroke="#fbbf24" stroke-width="1.5"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Activity + Integrations -->
+          <div class="grid grid-cols-3 gap-3">
+            <div class="col-span-2 bg-white/[0.03] border border-white/5 rounded-xl p-3">
+              <div class="text-gray-500 text-[8px] font-semibold uppercase tracking-wider mb-2">Live Activity</div>
+              <div class="space-y-1.5">
+                <div class="flex items-center gap-2 text-[10px]"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-gray-400">Deposit</span><span class="text-white font-medium">500 SEK</span><span class="text-gray-600">Player #8412</span><span class="text-gray-700 ml-auto">2s</span></div>
+                <div class="flex items-center gap-2 text-[10px]"><div class="w-1.5 h-1.5 rounded-full bg-blue-400"></div><span class="text-gray-400">Game Round</span><span class="text-white font-medium">Win 1,240 EUR</span><span class="text-gray-600">PlayStar</span><span class="text-gray-700 ml-auto">5s</span></div>
+                <div class="flex items-center gap-2 text-[10px]"><div class="w-1.5 h-1.5 rounded-full bg-amber-400"></div><span class="text-gray-400">BeAware</span><span class="text-white font-medium">SOW flag</span><span class="text-gray-600">SE jurisdiction</span><span class="text-gray-700 ml-auto">8s</span></div>
+                <div class="flex items-center gap-2 text-[10px]"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><span class="text-gray-400">KYC</span><span class="text-white font-medium">Verified</span><span class="text-gray-600">Player #2091</span><span class="text-gray-700 ml-auto">12s</span></div>
+                <div class="flex items-center gap-2 text-[10px]"><div class="w-1.5 h-1.5 rounded-full bg-purple-400"></div><span class="text-gray-400">Bonus</span><span class="text-white font-medium">Welcome 100%</span><span class="text-gray-600">Player #9337</span><span class="text-gray-700 ml-auto">15s</span></div>
+              </div>
+            </div>
+            <div class="bg-white/[0.03] border border-white/5 rounded-xl p-3">
+              <div class="text-gray-500 text-[8px] font-semibold uppercase tracking-wider mb-2">Integrations</div>
+              <div class="grid grid-cols-2 gap-1.5">
+                <div class="flex items-center gap-1"><div class="w-1 h-1 rounded-full bg-emerald-400"></div><span class="text-gray-400 text-[9px]">PaymentIQ</span></div>
+                <div class="flex items-center gap-1"><div class="w-1 h-1 rounded-full bg-emerald-400"></div><span class="text-gray-400 text-[9px]">SportTech</span></div>
+                <div class="flex items-center gap-1"><div class="w-1 h-1 rounded-full bg-emerald-400"></div><span class="text-gray-400 text-[9px]">PlayStar</span></div>
+                <div class="flex items-center gap-1"><div class="w-1 h-1 rounded-full bg-emerald-400"></div><span class="text-gray-400 text-[9px]">FastTrack</span></div>
+                <div class="flex items-center gap-1"><div class="w-1 h-1 rounded-full bg-emerald-400"></div><span class="text-gray-400 text-[9px]">SendGrid</span></div>
+                <div class="flex items-center gap-1"><div class="w-1 h-1 rounded-full bg-emerald-400"></div><span class="text-gray-400 text-[9px]">Twilio</span></div>
+                <div class="flex items-center gap-1"><div class="w-1 h-1 rounded-full bg-emerald-400"></div><span class="text-gray-400 text-[9px]">AleaPlay</span></div>
+                <div class="flex items-center gap-1"><div class="w-1 h-1 rounded-full bg-gray-600"></div><span class="text-gray-600 text-[9px]">+41 more</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

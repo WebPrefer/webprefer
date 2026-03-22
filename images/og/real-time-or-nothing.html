@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { brand: { DEFAULT: '#1968AA' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>body { margin: 0; width: 1200px; height: 630px; overflow: hidden; font-family: Inter, system-ui, sans-serif; }</style>
+</head>
+<body style="background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%);">
+  <div class="flex h-[630px] items-center px-16">
+    <div class="flex-1">
+      <div class="flex gap-2 mb-5">
+        <span class="bg-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full">Real-Time</span>
+        <span class="bg-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full">Architecture</span>
+      </div>
+      <h1 class="text-white text-5xl font-extrabold leading-tight mb-5 max-w-2xl">Real-Time or Nothing</h1>
+      <p class="text-blue-200 text-xl leading-relaxed max-w-xl mb-8">Why SignalR push notifications replaced polling -- and the difference 29.95 seconds makes.</p>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center"><span class="text-[#1968AA] font-extrabold text-lg">W</span></div>
+        <div>
+          <div class="text-white text-sm font-bold">WebPrefer Engineering</div>
+          <div class="text-blue-300 text-xs">webprefer.com</div>
+        </div>
+      </div>
+    </div>
+    <div class="w-[380px] flex-shrink-0">
+      <div class="bg-[#0c1222] rounded-xl border border-white/5 p-6">
+        <!-- Polling - bad -->
+        <div class="bg-red-500/10 border border-red-500/30 rounded-lg p-5 mb-4">
+          <div class="flex items-center justify-between mb-3">
+            <div class="text-red-400 text-xs font-bold">HTTP Polling</div>
+            <div class="text-red-400/60 text-[10px]">&#x2717; Legacy</div>
+          </div>
+          <div class="flex items-center gap-2 mb-2">
+            <div class="text-white/40 text-[10px]">Latency:</div>
+            <div class="flex-1 bg-red-500/20 rounded-full h-3 relative">
+              <div class="bg-red-500 rounded-full h-3" style="width: 95%"></div>
+            </div>
+            <div class="text-red-400 text-xs font-bold">30s</div>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="text-white/40 text-[10px]">Server load:</div>
+            <div class="text-red-400/60 text-[10px]">~2,000 req/min per client</div>
+          </div>
+        </div>
+        <!-- Push - good -->
+        <div class="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div class="text-emerald-400 text-xs font-bold">SignalR Push</div>
+            <div class="text-emerald-400/60 text-[10px]">&#x2713; Current</div>
+          </div>
+          <div class="flex items-center gap-2 mb-2">
+            <div class="text-white/40 text-[10px]">Latency:</div>
+            <div class="flex-1 bg-emerald-500/20 rounded-full h-3 relative">
+              <div class="bg-emerald-500 rounded-full h-3" style="width: 5%"></div>
+            </div>
+            <div class="text-emerald-400 text-xs font-bold">50ms</div>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="text-white/40 text-[10px]">Server load:</div>
+            <div class="text-emerald-400/60 text-[10px]">Events only (on-change)</div>
+          </div>
+        </div>
+        <div class="mt-4 text-center">
+          <div class="text-white/30 text-[10px]">BalanceChange event via /playerHub</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

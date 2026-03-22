@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { brand: { DEFAULT: '#1968AA' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>body { margin: 0; width: 1200px; height: 630px; overflow: hidden; font-family: Inter, system-ui, sans-serif; }</style>
+</head>
+<body style="background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%);">
+  <div class="flex h-[630px] items-center px-16">
+    <div class="flex-1">
+      <div class="flex gap-2 mb-5">
+        <span class="bg-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full">Architecture</span>
+        <span class="bg-white/20 text-white text-sm font-semibold px-4 py-1.5 rounded-full">Multi-Tenant</span>
+      </div>
+      <h1 class="text-white text-5xl font-extrabold leading-tight mb-5 max-w-2xl">One Deployment, Many Operators</h1>
+      <p class="text-blue-200 text-xl leading-relaxed max-w-xl mb-8">How a single codebase serves multiple gaming operators with complete data and config isolation.</p>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center"><span class="text-[#1968AA] font-extrabold text-lg">W</span></div>
+        <div>
+          <div class="text-white text-sm font-bold">WebPrefer Engineering</div>
+          <div class="text-blue-300 text-xs">webprefer.com</div>
+        </div>
+      </div>
+    </div>
+    <div class="w-[380px] flex-shrink-0">
+      <div class="bg-[#0c1222] rounded-xl border border-white/5 p-6">
+        <!-- Single deployment box -->
+        <div class="border-2 border-brand/40 rounded-xl p-4">
+          <div class="text-center mb-3">
+            <div class="text-brand text-[10px] font-bold uppercase tracking-wider">PAM Platform (Single Deploy)</div>
+          </div>
+          <!-- Tenant sections -->
+          <div class="space-y-2">
+            <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
+              <div class="flex items-center justify-between">
+                <div class="text-emerald-400 text-xs font-bold">Operator A</div>
+                <div class="flex gap-1">
+                  <span class="bg-emerald-500/20 rounded px-1.5 py-0.5 text-[8px] text-emerald-400/70">MGA</span>
+                  <span class="bg-emerald-500/20 rounded px-1.5 py-0.5 text-[8px] text-emerald-400/70">EUR</span>
+                </div>
+              </div>
+              <div class="text-white/20 text-[9px] mt-1">Config, Branding, Player Data</div>
+            </div>
+            <div class="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
+              <div class="flex items-center justify-between">
+                <div class="text-amber-400 text-xs font-bold">Operator B</div>
+                <div class="flex gap-1">
+                  <span class="bg-amber-500/20 rounded px-1.5 py-0.5 text-[8px] text-amber-400/70">UKGC</span>
+                  <span class="bg-amber-500/20 rounded px-1.5 py-0.5 text-[8px] text-amber-400/70">GBP</span>
+                </div>
+              </div>
+              <div class="text-white/20 text-[9px] mt-1">Config, Branding, Player Data</div>
+            </div>
+            <div class="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3">
+              <div class="flex items-center justify-between">
+                <div class="text-purple-400 text-xs font-bold">Operator C</div>
+                <div class="flex gap-1">
+                  <span class="bg-purple-500/20 rounded px-1.5 py-0.5 text-[8px] text-purple-400/70">SGA</span>
+                  <span class="bg-purple-500/20 rounded px-1.5 py-0.5 text-[8px] text-purple-400/70">SEK</span>
+                </div>
+              </div>
+              <div class="text-white/20 text-[9px] mt-1">Config, Branding, Player Data</div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-3 text-center">
+          <div class="text-white/20 text-[9px]">Complete isolation via GlobalConfiguration</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

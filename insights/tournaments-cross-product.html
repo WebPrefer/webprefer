@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How PAM runs tournaments spanning casino, sportsbook, bingo, and fantasy sports on unified leaderboards with weighted scoring and automated prize distribution.">
+  <title>Multi-Product Tournaments: Same Leaderboard, Different Rules — WebPrefer Engineering</title>
+  <meta property="og:title" content="Multi-Product Tournaments: Same Leaderboard, Different Rules — WebPrefer Engineering">
+  <meta property="og:description" content="Casino, sportsbook, bingo, and fantasy sports — competing on one leaderboard with weighted scoring, scheduled settlement, and automatic prize distribution.">
+  <meta property="og:image" content="https://webprefer.com/images/og-images/tournaments-cross-product.png">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://webprefer.com/insights/tournaments-cross-product.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Multi-Product Tournaments: Same Leaderboard, Different Rules — WebPrefer Engineering">
+  <meta name="twitter:description" content="Casino, sportsbook, bingo, and fantasy sports — competing on one leaderboard with weighted scoring, scheduled settlement, and automatic prize distribution.">
+  <meta name="twitter:image" content="https://webprefer.com/images/og-images/tournaments-cross-product.png">
+  <meta name="theme-color" content="#1968AA">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="canonical" href="https://webprefer.com/insights/tournaments-cross-product.html">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HC29B7MQF3"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HC29B7MQF3');</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { brand: { DEFAULT: '#1968AA', dark: '#134f82', darker: '#0d3459', light: '#2a7ec4' } },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { overflow-x: hidden; }
+    .gradient-hero { background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%); }
+    .nav-link { transition: color 0.15s ease; }
+    .prose-article h2 { font-size: 1.35rem; font-weight: 700; color: #111827; margin: 2.5rem 0 0.75rem; }
+    .prose-article p { color: #374151; line-height: 1.8; margin-bottom: 1.25rem; }
+    .prose-article ul { margin: 0 0 1.25rem 1.5rem; }
+    .prose-article li { color: #374151; line-height: 1.8; margin-bottom: 0.35rem; }
+    .prose-article strong { color: #111827; }
+    .callout-incident { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout-solution { background: #eff6ff; border-left: 4px solid #1968AA; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout-today { background: #f0fdf4; border-left: 4px solid #16a34a; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .linkedin-box { background: #0f172a; border-radius: 12px; padding: 2rem; margin: 3rem 0; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Multi-Product Tournaments: Same Leaderboard, Different Rules — WebPrefer Engineering","description":"Casino, sportsbook, bingo, and fantasy sports — competing on one leaderboard with weighted scoring, scheduled settlement, and automatic prize distribution.","image":"https://webprefer.com/images/og-images/tournaments-cross-product.png","datePublished":"2026-02-15","author":{"@type":"Organization","name":"WebPrefer AB","url":"https://webprefer.com"},"publisher":{"@type":"Organization","name":"WebPrefer AB","logo":{"@type":"ImageObject","url":"https://webprefer.com/images/logo.svg"}}}</script>
+</head>
+<body class="font-sans bg-white text-gray-900 antialiased">
+
+  <!-- NAV -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="../index.html" class="flex items-center gap-2">
+        <img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto">
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="../index.html#platform" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Platform</a>
+        <a href="../index.html#products" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Products</a>
+        <a href="../index.html#proof" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Customers</a>
+        <a href="../index.html#partners" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Partners</a>
+        <a href="../index.html#contact" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Contact</a>
+        <a href="index.html" class="nav-link text-sm font-medium text-brand font-semibold">Insights</a>
+      </div>
+      <a href="../index.html#contact" class="bg-brand hover:bg-[#134f82] text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors hidden md:inline-flex">
+        Book a Demo
+      </a>
+      <button id="mobile-menu-btn" aria-label="Toggle navigation menu" class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+        <svg id="icon-open" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-1">
+      <a href="../index.html" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Home</a>
+      <a href="../index.html#platform" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Platform</a>
+      <a href="../index.html#products" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Products</a>
+      <a href="../index.html#proof" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Customers</a>
+      <a href="../index.html#partners" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Partners</a>
+      <a href="#contact" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Contact</a>
+      <a href="index.html" class="block py-2.5 text-sm font-medium text-brand font-semibold mobile-nav-link">Insights</a>
+      <a href="#contact" class="block mt-2 bg-brand text-white text-sm font-semibold px-5 py-2.5 rounded-lg text-center mobile-nav-link">Book a Demo</a>
+    </div>
+  </header>
+  <script>
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('icon-open');
+    const iconClose = document.getElementById('icon-close');
+    btn.addEventListener('click', () => { menu.classList.toggle('hidden'); iconOpen.classList.toggle('hidden'); iconClose.classList.toggle('hidden'); });
+    document.querySelectorAll('.mobile-nav-link').forEach(l => { l.addEventListener('click', () => { menu.classList.add('hidden'); iconOpen.classList.remove('hidden'); iconClose.classList.add('hidden'); }); });
+  </script>
+
+  <!-- ARTICLE HERO -->
+  <section class="gradient-hero pt-32 pb-16 px-6 lg:px-8 text-white">
+    <div class="max-w-3xl mx-auto">
+      <a href="index.html" class="inline-flex items-center gap-2 text-blue-300 text-sm mb-6 hover:text-white transition-colors">
+        &larr; All insights
+      </a>
+      <div class="flex flex-wrap gap-2 mb-4">
+        <span class="bg-indigo-400/30 text-indigo-200 text-xs font-semibold px-3 py-1 rounded-full">Tournaments</span>
+        <span class="bg-amber-400/30 text-amber-200 text-xs font-semibold px-3 py-1 rounded-full">Engagement</span>
+        <span class="text-blue-300 text-xs">7 min read</span>
+      </div>
+      <h1 class="text-4xl lg:text-5xl font-extrabold leading-tight mb-5">Multi-Product Tournaments: Same Leaderboard, Different Rules</h1>
+      <p class="text-xl text-blue-100 leading-relaxed">Casino, sportsbook, bingo, and fantasy sports — competing on one leaderboard with weighted scoring, scheduled settlement, and automatic prize distribution.</p>
+      <div class="mt-8 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center"><span class="text-brand font-extrabold text-sm">W</span></div>
+        <div>
+          <div class="text-sm font-semibold">WebPrefer Engineering</div>
+          <div class="text-blue-300 text-xs">February 2026</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTICLE BODY -->
+  <article class="py-16 px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto prose-article">
+
+      <h2>Why tournaments matter</h2>
+
+      <p>Tournaments are one of the most effective engagement tools in iGaming. They give players a reason to play more, a reason to compete, and a reason to come back. A well-run tournament creates urgency — a leaderboard that updates in real time, a prize pool that grows, a deadline that forces action. The psychological mechanics are well understood: competition drives session length, and session length drives revenue.</p>
+
+      <p>But most tournament systems are built for a single product vertical. A casino tournament tracks slot wagers. A sportsbook tournament tracks bet volume. A bingo tournament tracks ticket purchases. Each vertical has its own leaderboard, its own scoring logic, its own prize distribution workflow. This means the operator runs three separate engagement systems instead of one, and the player who plays across products never sees a unified competitive experience.</p>
+
+      <p>The harder problem is architectural. Running a tournament across different game types means normalizing fundamentally different event structures into a single scoring model. A casino spin, a sportsbook accumulator, and a bingo ticket are not the same thing. They have different stake structures, different outcome timings, and different margin profiles. Treating them as equivalent without a weighting system produces leaderboards that don't reflect actual engagement — and players notice.</p>
+
+      <p>PAM's tournament system was designed from the start to work across the entire product catalog. Not as an afterthought, not as a separate module per vertical, but as a single engine that consumes events from every product and normalizes them into a unified leaderboard with configurable scoring rules.</p>
+
+      <h2>Cross-product leaderboards</h2>
+
+      <p>A single tournament in PAM can span Casino, Sportsbook, Bingo, and Fantasy Sports simultaneously. Each product contributes to the same leaderboard, but the contribution is governed by configurable weight multipliers that the operator defines per tournament.</p>
+
+      <p>Weight multipliers exist because a 10 EUR casino spin and a 10 EUR sportsbook bet are not equivalent engagement signals. The casino spin resolves instantly and the margin is known. The sportsbook bet might not settle for days, and the margin varies by market. Without weighting, a player who places one large accumulator could dominate a leaderboard over a player who has been actively spinning for hours. That's not the competitive dynamic most operators want.</p>
+
+      <p>The weighting configuration is per-tournament, not global. An operator might run a "Weekend Warrior" tournament where sportsbook bets carry a 1.5x multiplier because the goal is to drive weekend sports engagement. The next week, they might run a "Slots Showdown" where casino wagers carry a 2x multiplier. The scoring engine doesn't change — only the configuration does.</p>
+
+      <div class="callout-solution">
+        <div class="font-bold mb-2" style="color:#134f82;">How cross-product scoring works</div>
+        <p style="margin:0;color:#1e3a5f;">Every qualifying event — regardless of product — is captured by a product-specific listener, normalized into a standard scoring payload (player ID, timestamp, stake, product type, event metadata), and passed to the tournament scoring engine. The engine applies the tournament's weight multiplier for that product type, calculates the score contribution, and updates the leaderboard. A 10 EUR casino wager with a 1.0x weight and a 10 EUR sportsbook bet with a 1.5x weight produce scores of 10 and 15 respectively. The leaderboard reflects weighted engagement, not raw spend.</p>
+      </div>
+
+      <p>Leaderboard updates happen in near real time. When a qualifying event is processed, the player's tournament score is recalculated and the leaderboard position is updated. Players see their rank change as they play — that immediacy is what makes tournaments feel competitive rather than administrative. The leaderboard state is cached in Redis and pushed to connected clients via SignalR, so there's no polling lag between the event and the UI update.</p>
+
+      <h2>Event listeners per product</h2>
+
+      <p>The foundation of cross-product tournaments is the event listener layer. Each product vertical has a dedicated listener that captures relevant events and normalizes them for the scoring engine. This separation is deliberate — the listener understands the semantics of its product, and the scoring engine doesn't have to.</p>
+
+      <ul>
+        <li><strong>CasinoWagerListener</strong> — captures every completed game round from every integrated game provider. It extracts the stake amount, game category, and round result. It knows that a bonus-funded spin and a cash-funded spin might score differently depending on tournament configuration.</li>
+        <li><strong>SportsbookWagerListener</strong> — captures bet placement events from the sportsbook integration. It handles singles, accumulators, and system bets. For tournaments scored on placement (not settlement), it fires at bet acceptance. For settlement-scored tournaments, it fires when the bet result is confirmed.</li>
+        <li><strong>BingoWagerListener</strong> — captures ticket purchases and, optionally, side-game activity within bingo rooms. Bingo has unique scoring considerations because a single ticket purchase might represent participation in multiple games within a session.</li>
+      </ul>
+
+      <p>Each listener produces a normalized event payload that the scoring engine consumes. The engine doesn't know or care whether the event came from a slot spin, a football accumulator, or a bingo ticket. It receives a player ID, a stake amount, a product type, and metadata — and it applies the tournament's scoring rules. This normalization boundary is what makes the system extensible. When a new product vertical is added to the platform, adding tournament support means writing a new listener, not modifying the scoring engine.</p>
+
+      <p>The listeners run on the same event infrastructure as the rest of the platform — the RabbitMQ-based message bus that BeAware and other consumers use. Tournament event processing doesn't require a separate message pipeline. It subscribes to the same streams, which means it benefits from the same delivery guarantees and the same operational monitoring.</p>
+
+      <h2>Tournament lifecycle</h2>
+
+      <p>Every tournament in PAM follows a defined lifecycle: creation, registration, active, settlement, and prize distribution. Each stage has its own validation rules and state transitions, and the system enforces them strictly — you cannot settle a tournament that hasn't ended, and you cannot distribute prizes for a tournament that hasn't been settled.</p>
+
+      <p><strong>Creation</strong> — An operator configures the tournament in the back office: name, start and end times, eligible products, weight multipliers, minimum qualifying stake, prize pool structure, and registration rules. The tournament is validated at creation time — if the prize pool references a bonus template that doesn't exist, or if the weight multipliers produce a configuration that would make a product effectively invisible, the system rejects it.</p>
+
+      <p><strong>Registration</strong> — Tournaments can be open (all eligible players are automatically enrolled) or opt-in (players must register before the start time). Opt-in tournaments can have a registration fee, which is processed through the standard wallet transaction layer. Registration caps are supported — when the tournament is full, additional registration attempts are rejected.</p>
+
+      <p><strong>Active</strong> — Once the start time is reached, the tournament transitions to active and the listeners begin scoring qualifying events. The leaderboard updates in real time. Players can see their position, the scores of nearby competitors, and the prize they would receive at their current rank. Mid-tournament, the operator can view engagement metrics — how many registered players are actually participating, the score distribution, and the projected prize allocation.</p>
+
+      <p><strong>Settlement</strong> — When the end time is reached, the tournament transitions to a settlement state. No further events are scored. The <strong>EndTournamentCron</strong> handles scheduled settlement automatically — it runs on the PAM.Service.Cron infrastructure and checks for tournaments that have passed their end time. Settlement calculates final rankings, resolves ties according to the tournament's tiebreaker rules (earliest to reach the score, or total number of qualifying events, configurable per tournament), and locks the final leaderboard.</p>
+
+      <p><strong>Prize distribution</strong> — After settlement, prizes are distributed automatically based on the tournament's prize tier configuration. This is not a manual step. The settlement process triggers the prize allocation, and each winner receives their prize through the standard platform mechanisms. The entire lifecycle from end time to prizes-in-wallet is automated and auditable.</p>
+
+      <h2>Prize allocation</h2>
+
+      <p>Prize pools in PAM tournaments are configurable with tier-based distribution. The operator defines the total prize pool and the allocation per rank — first place gets 40%, second gets 20%, third through fifth get 10% each, and so on. The tier structure can have as many levels as needed, and it can include both percentage-based and fixed-amount allocations.</p>
+
+      <p>The key design decision is that prizes are not a separate system. They flow through the same bonus engine that the rest of the platform uses. This means tournament prizes can be:</p>
+
+      <ul>
+        <li><strong>Cash</strong> — credited directly to the player's withdrawable balance. No wagering requirements, no restrictions. The prize shows up in the player's transaction history as a tournament win.</li>
+        <li><strong>Bonus credits</strong> — credited as bonus funds with configurable wagering requirements, game restrictions, and expiry dates. The bonus is created from a template defined in the bonus engine, so all the standard bonus rules apply — including responsible gaming limits and jurisdiction-specific restrictions.</li>
+        <li><strong>Freespins</strong> — awarded on specific games or game categories. The freespin package is configured in the bonus engine and linked to the tournament prize tier. When the player opens an eligible game, the freespins are waiting.</li>
+      </ul>
+
+      <p>Because prize distribution uses the existing bonus engine, there's no separate reconciliation process for tournament prizes. They appear in the same reports, follow the same audit trail, and respect the same compliance rules as every other bonus on the platform. A tournament prize that would violate a player's responsible gaming limits is handled the same way any other bonus would be — blocked, with the reason logged.</p>
+
+      <p>For operators, this means tournament prizes don't create operational exceptions. The finance team doesn't need a separate workflow to reconcile tournament payouts. The compliance team doesn't need to audit a separate prize distribution system. It's all the same infrastructure.</p>
+
+      <div class="callout-today">
+        <div class="font-bold text-green-800 mb-2">Today</div>
+        <p style="margin:0;color:#14532d;">PAM's tournament system runs cross-product tournaments across Casino, Sportsbook, and Bingo with weighted scoring, automated settlement via EndTournamentCron, and prize distribution through the platform's bonus engine. Leaderboards update in near real time via Redis and SignalR. Adding a new product vertical to the tournament system requires only a new event listener — no changes to the scoring engine, settlement logic, or prize distribution workflow.</p>
+      </div>
+
+      <h2>The principle</h2>
+
+      <p>Engagement features have to work across your entire product catalog, not just one game type. A tournament system that only supports slots misses the sportsbook player. A sportsbook leaderboard that ignores casino activity misses the cross-product player. And the cross-product player is almost always the highest-value player — they play more, deposit more, and stay longer.</p>
+
+      <p>If your tournament system is siloed by product, you're building engagement walls between your own verticals. You're telling the player who bets on football and plays blackjack that those are two separate relationships with your brand. They're not. The player doesn't think in product verticals. They think in "things I do on this site."</p>
+
+      <p>The architecture follows from this. One scoring engine, multiple listeners, configurable weights, unified leaderboard. The tournament doesn't care where the engagement comes from — it measures all of it, normalizes it, and ranks it. That's the system that drives retention across a multi-product operation, not a collection of product-specific leaderboards that nobody looks at after the first week.</p>
+
+      <p>If your tournament system only supports slots, you're leaving engagement on the table.</p>
+
+      <!-- SHARE -->
+      <div class="linkedin-box">
+        <div class="flex items-center justify-between mb-4">
+          <div class="text-blue-400 text-xs font-bold uppercase tracking-widest">Share this insight</div>
+          <div class="flex gap-2">
+            <button onclick="navigator.clipboard.writeText(this.closest('.linkedin-box').querySelector('.share-text').textContent.trim());this.textContent='Copied!';setTimeout(()=>this.textContent='Copy text',2000)" class="bg-white/10 hover:bg-white/20 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors">Copy text</button>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://webprefer.com/insights/tournaments-cross-product.html" target="_blank" rel="noopener" class="bg-[#0A66C2] hover:bg-[#004182] text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors inline-flex items-center gap-2"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>Share on LinkedIn</a>
+          </div>
+        </div>
+        <details class="group">
+          <summary class="text-gray-500 text-xs cursor-pointer hover:text-gray-300 transition-colors">Preview post text</summary>
+          <div class="share-text text-gray-200 text-sm leading-relaxed whitespace-pre-line mt-3">Most tournament systems only work for one product. Slots leaderboard here, sportsbook leaderboard there. Separate scoring, separate prizes, separate engagement silos.
+
+PAM runs tournaments across Casino, Sportsbook, Bingo, and Fantasy Sports — on a single leaderboard with weighted scoring.
+
+Each product has a dedicated event listener that normalizes wager events into a standard scoring payload. The scoring engine applies configurable weight multipliers per product, so operators control how different game types contribute to rankings.
+
+Settlement is automatic. EndTournamentCron handles it on schedule. Prizes — cash, bonus credits, or freespins — are distributed through the same bonus engine the rest of the platform uses.
+
+No separate reconciliation. No manual prize distribution. No engagement walls between your own verticals.
+
+Your highest-value players play across products. Your tournament system should too.
+
+#iGaming #Tournaments #PlayerEngagement #PAM #Gamification</div>
+        </details>
+      </div>
+
+    </div>
+  </article>
+
+  <!-- MORE ARTICLES -->
+  <section class="py-12 px-6 lg:px-8 bg-gray-50 border-t border-gray-100">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">More insights</div>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <a href="beaware-rules-at-scale.html" class="group bg-white rounded-xl border border-gray-100 p-5 hover:border-brand/30 hover:shadow-md transition-all">
+          <div class="text-xs font-semibold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-full inline-block mb-2">BeAware</div>
+          <div class="font-semibold text-gray-900 group-hover:text-brand transition-colors text-sm">BeAware: Rules at Scale</div>
+          <div class="text-gray-500 text-xs mt-1">The behavior engine and visual rule editor</div>
+        </a>
+        <a href="restreaming-retention.html" class="group bg-white rounded-xl border border-gray-100 p-5 hover:border-brand/30 hover:shadow-md transition-all">
+          <div class="text-xs font-semibold text-white bg-gray-500 px-2 py-0.5 rounded-full inline-block mb-2">Streaming</div>
+          <div class="font-semibold text-gray-900 group-hover:text-brand transition-colors text-sm">Re-streaming as a Retention Tool</div>
+          <div class="text-gray-500 text-xs mt-1">Branded overlays across Twitch, YouTube, and Facebook</div>
+        </a>
+      </div>
+      <div class="mt-6">
+        <a href="index.html" class="text-brand text-sm font-semibold hover:underline">&larr; View all insights</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-24 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-16">
+        <div>
+          <div class="text-xs font-bold uppercase tracking-widest text-brand mb-4" style="letter-spacing:0.12em;">Get in Touch</div>
+          <h2 class="text-4xl font-bold mb-6">Ready to see it?</h2>
+          <p class="text-lg text-gray-600 leading-relaxed mb-10">We offer live demos scoped to your specific operation type — whether you're launching a new brand, migrating from an existing platform, or evaluating options for a white-label deployment.</p>
+          <div class="space-y-5">
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div><div><div class="font-semibold text-gray-900">Address</div><div class="text-gray-600 text-sm mt-1">S:t Larsgatan 7, 582 24 Linköping, Sweden</div></div></div>
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div><div><div class="font-semibold text-gray-900">Email</div><a href="mailto:sales@webprefer.com" class="text-brand text-sm mt-1 block hover:underline">sales@webprefer.com</a></div></div>
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></div><div><div class="font-semibold text-gray-900">Mikael Lindberg Castell</div><a href="mailto:mikael@webprefer.com" class="text-brand text-sm mt-1 block hover:underline">mikael@webprefer.com</a><div class="text-gray-500 text-xs mt-0.5">CEO &amp; Founder, WebPrefer AB</div></div></div>
+          </div>
+        </div>
+        <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
+          <form id="contact-form" class="space-y-5">
+            <div class="grid sm:grid-cols-2 gap-5"><div><label class="block text-sm font-medium text-gray-700 mb-1.5">Full name</label><input type="text" name="name" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="Your name"></div><div><label class="block text-sm font-medium text-gray-700 mb-1.5">Company</label><input type="text" name="company" class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="Your company"></div></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">Email</label><input type="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="you@company.com"></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">I am a...</label><select name="role" class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent bg-white"><option value="">Select your role</option><option>Operator</option><option>Investor</option><option>Affiliate</option><option>Other</option></select></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">Message</label><textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent resize-none" placeholder="Tell us about your operation and what you're looking for..."></textarea></div>
+            <button type="submit" id="submit-btn" class="w-full bg-brand hover:bg-brand-dark text-white font-semibold py-3.5 rounded-lg transition-colors text-sm">Send message</button>
+            <div id="form-success" class="hidden text-center text-green-600 font-medium text-sm py-2">Thank you! We'll be in touch shortly.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-white py-12 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-4"><img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto brightness-0 invert"><span class="text-gray-400 text-sm">WebPrefer AB (556748-3523)</span></div>
+        <div class="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm text-gray-400">
+          <a href="../index.html#platform" class="hover:text-white transition-colors">Platform</a>
+          <a href="../index.html#products" class="hover:text-white transition-colors">Products</a>
+          <a href="../index.html#proof" class="hover:text-white transition-colors">Customers</a>
+          <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+          <a href="index.html" class="hover:text-white transition-colors">Insights</a>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="https://www.linkedin.com/company/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+          <a href="https://www.facebook.com/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="Facebook"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+          <a href="https://www.instagram.com/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="Instagram"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+        </div>
+        <div class="text-gray-500 text-xs">&copy; <span id="footer-year">2026</span> WebPrefer AB. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function(){emailjs.init({publicKey:'J-Ouq1kFXZl7x5bEZ'})})();
+    document.getElementById('contact-form').addEventListener('submit',function(e){
+      e.preventDefault();var b=document.getElementById('submit-btn');b.disabled=true;b.textContent='Sending...';
+      emailjs.sendForm('service_aefyiw9','template_q5n6qyl',this).then(()=>{document.getElementById('form-success').classList.remove('hidden');this.reset();b.textContent='Send message';b.disabled=false;},()=>{b.textContent='Send message';b.disabled=false;});
+    });
+  </script>
+  <script>document.querySelectorAll("#footer-year").forEach(e=>e.textContent=new Date().getFullYear())</script>
+</body>
+</html>
