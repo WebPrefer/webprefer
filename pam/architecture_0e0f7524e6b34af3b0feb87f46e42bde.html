@@ -2512,6 +2512,12 @@
                     <tr><td><strong>NightRush</strong></td><td>HTTP Basic Auth</td><td>GET /transactions, /registrations (CSV)</td><td>Affiliate reporting, CSV streaming export</td></tr>
                     <tr><td><strong>NYX / NextGen</strong></td><td>LoginName + Password</td><td>Query-string dispatch: getaccount, getbalance, wager, result, rollback, ping</td><td>OGS platform, reality check integration</td></tr>
                     <tr><td><strong>QuickFire</strong></td><td>Token (POST body)</td><td>Single POST with method dispatch</td><td>Microgaming aggregation, 10-min token expiry, free spin bonus mapping</td></tr>
+                    <tr>
+                        <td><strong>SportTech</strong></td>
+                        <td>MD5 signature (SystemCode + Password)</td>
+                        <td>UserBalance, CreditTransfer, StatusOfMoneyTransfer, UsernameCheck</td>
+                        <td>Unified seamless endpoint, MD5-signed requests</td>
+                    </tr>
                 </table>
 
                 <h3>Sportsbook Providers</h3>
@@ -2528,12 +2534,6 @@
                         <td>x-operator-token header</td>
                         <td>BetPlacement, BetSettlement, BetCancellation, BetFullCashout, Authentication</td>
                         <td>Real money vs bonus stake tracking, full cashout operations</td>
-                    </tr>
-                    <tr>
-                        <td><strong>SportTech</strong></td>
-                        <td>MD5 signature (SystemCode + Password)</td>
-                        <td>UserBalance, CreditTransfer, StatusOfMoneyTransfer, UsernameCheck</td>
-                        <td>Unified seamless endpoint, MD5-signed requests</td>
                     </tr>
                     <tr>
                         <td><strong>XJGames</strong></td>
