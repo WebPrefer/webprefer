@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How PAM's AI Studio decomposes operator requests into auditable, tool-by-tool execution plans — and why a planner is the line between a chatbot and a coworker.">
+  <title>From Copilot to Coworker — WebPrefer Engineering</title>
+  <meta property="og:title" content="From Copilot to Coworker — WebPrefer Engineering">
+  <meta property="og:description" content="A chatbot answers questions. A coworker plans. Inside PAM's AI Studio planner — how multi-step agentic work happens without losing the audit trail.">
+  <meta property="og:image" content="https://webprefer.com/images/og-images/agentic-pam-planner.png">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://webprefer.com/insights/agentic-pam-planner">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="From Copilot to Coworker — WebPrefer Engineering">
+  <meta name="twitter:description" content="A chatbot answers questions. A coworker plans. Inside PAM's AI Studio planner — how multi-step agentic work happens without losing the audit trail.">
+  <meta name="twitter:image" content="https://webprefer.com/images/og-images/agentic-pam-planner.png">
+  <meta name="theme-color" content="#1968AA">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="canonical" href="https://webprefer.com/insights/agentic-pam-planner">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HC29B7MQF3"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HC29B7MQF3');</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { brand: { DEFAULT: '#1968AA', dark: '#134f82', darker: '#0d3459', light: '#2a7ec4' } },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    img { max-width: 100%; height: auto; }
+    body { overflow-x: hidden; }
+    .gradient-hero { background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%); }
+    .nav-link { transition: color 0.15s ease; }
+    .prose-article h2 { font-size: 1.35rem; font-weight: 700; color: #111827; margin: 2.5rem 0 0.75rem; }
+    .prose-article h3 { font-size: 1.1rem; font-weight: 600; color: #374151; margin: 2rem 0 0.5rem; }
+    .prose-article { overflow-wrap: break-word; word-break: break-word; }
+    .prose-article p { color: #374151; line-height: 1.8; margin-bottom: 1.25rem; }
+    .prose-article ul { margin: 0 0 1.25rem 1.5rem; }
+    .prose-article li { color: #374151; line-height: 1.8; margin-bottom: 0.35rem; }
+    .prose-article strong { color: #111827; }
+    .callout-incident { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout-solution { background: #eff6ff; border-left: 4px solid #1968AA; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout-today { background: #f0fdf4; border-left: 4px solid #16a34a; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout-warning { background: #fef2f2; border-left: 4px solid #dc2626; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .linkedin-box { background: #0f172a; border-radius: 12px; padding: 2rem; margin: 3rem 0; }
+    .step-row { display: flex; align-items: flex-start; gap: 0.75rem; }
+    .step-num { flex-shrink: 0; width: 1.5rem; height: 1.5rem; border-radius: 9999px; background: rgba(25,104,170,0.18); color: #2a7ec4; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 0.15rem; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"From Copilot to Coworker — WebPrefer Engineering","description":"How PAM's AI Studio decomposes operator requests into auditable, tool-by-tool execution plans — and why a planner is the line between a chatbot and a coworker.","image":"https://webprefer.com/images/og-images/agentic-pam-planner.png","datePublished":"2026-04-30","author":{"@type":"Organization","name":"WebPrefer AB","url":"https://webprefer.com"},"publisher":{"@type":"Organization","name":"WebPrefer AB","logo":{"@type":"ImageObject","url":"https://webprefer.com/images/logo.svg"}}}</script>
+</head>
+<body class="font-sans bg-white text-gray-900 antialiased">
+
+  <!-- NAV -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="../" class="flex items-center gap-2">
+        <img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto">
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="../#platform" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Platform</a>
+        <a href="../#products" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Products</a>
+        <a href="../#proof" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Customers</a>
+        <a href="../#partners" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Partners</a>
+        <a href="../#contact" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Contact</a>
+        <a href="./" class="nav-link text-sm font-medium text-brand font-semibold">Insights</a>
+      </div>
+      <a href="../#contact" class="bg-brand hover:bg-[#134f82] text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors hidden md:inline-flex">
+        Book a Demo
+      </a>
+      <button id="mobile-menu-btn" aria-label="Toggle navigation menu" class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+        <svg id="icon-open" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-1">
+      <a href="../" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Home</a>
+      <a href="../#platform" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Platform</a>
+      <a href="../#products" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Products</a>
+      <a href="../#proof" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Customers</a>
+      <a href="../#partners" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Partners</a>
+      <a href="#contact" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Contact</a>
+      <a href="./" class="block py-2.5 text-sm font-medium text-brand font-semibold mobile-nav-link">Insights</a>
+      <a href="#contact" class="block mt-2 bg-brand text-white text-sm font-semibold px-5 py-2.5 rounded-lg text-center mobile-nav-link">Book a Demo</a>
+    </div>
+  </header>
+  <script>
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('icon-open');
+    const iconClose = document.getElementById('icon-close');
+    btn.addEventListener('click', () => { menu.classList.toggle('hidden'); iconOpen.classList.toggle('hidden'); iconClose.classList.toggle('hidden'); });
+    document.querySelectorAll('.mobile-nav-link').forEach(l => { l.addEventListener('click', () => { menu.classList.add('hidden'); iconOpen.classList.remove('hidden'); iconClose.classList.add('hidden'); }); });
+  </script>
+
+  <!-- ARTICLE HERO -->
+  <section class="gradient-hero pt-32 pb-16 px-6 lg:px-8 text-white">
+    <div class="max-w-3xl mx-auto">
+      <a href="./" class="inline-flex items-center gap-2 text-blue-300 text-sm mb-6 hover:text-white transition-colors">
+        &larr; All insights
+      </a>
+      <div class="flex flex-wrap gap-2 mb-4">
+        <span class="bg-rose-400/30 text-rose-200 text-xs font-semibold px-3 py-1 rounded-full">AI</span>
+        <span class="bg-blue-400/30 text-blue-200 text-xs font-semibold px-3 py-1 rounded-full">Agentic</span>
+        <span class="text-blue-300 text-xs">9 min read</span>
+      </div>
+      <h1 class="text-4xl lg:text-5xl font-extrabold leading-tight mb-5">From Copilot to Coworker</h1>
+      <p class="text-xl text-blue-100 leading-relaxed">A chatbot answers questions. A coworker plans. How PAM's AI Studio decomposes operator requests into auditable, tool-by-tool execution plans — and why the planner, not the model, is the part that matters.</p>
+      <div class="mt-8 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center"><span class="text-brand font-extrabold text-sm">W</span></div>
+        <div>
+          <div class="text-sm font-semibold">WebPrefer Engineering</div>
+          <div class="text-blue-300 text-xs">April 2026</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIAGRAM -->
+  <section class="bg-gray-50 py-10 px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <div class="bg-[#0c1222] rounded-2xl p-6 lg:p-8">
+        <div class="text-center mb-6">
+          <div class="text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-2">AI Studio Plan</div>
+          <div class="text-white text-sm font-bold">"Find players who churned this month and draft a retention bonus"</div>
+        </div>
+        <div class="grid lg:grid-cols-3 gap-4 items-start">
+          <!-- Step 1: Query -->
+          <div class="bg-white/[0.04] border border-white/5 rounded-xl p-4">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="bg-cyan-500/20 text-cyan-300 text-[9px] font-bold px-2 py-0.5 rounded">QUERY</span>
+              <span class="text-gray-500 text-[9px]">Step 1</span>
+            </div>
+            <div class="text-white text-xs font-semibold mb-2">Find churn candidates</div>
+            <div class="text-gray-400 text-[10px] mb-3">Tool: <code class="text-cyan-300">SearchPlayersTool</code></div>
+            <div class="space-y-1.5">
+              <div class="bg-white/[0.03] rounded px-2.5 py-1 text-gray-400 text-[9px]">lastDeposit &lt; 30d ago</div>
+              <div class="bg-white/[0.03] rounded px-2.5 py-1 text-gray-400 text-[9px]">lifetimeValue &gt; 5,000</div>
+              <div class="bg-emerald-500/10 rounded px-2.5 py-1 text-emerald-400 text-[9px]">&#10003; 47 players returned</div>
+            </div>
+          </div>
+          <!-- Step 2: Analyze -->
+          <div class="bg-white/[0.04] border border-white/5 rounded-xl p-4">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="bg-purple-500/20 text-purple-300 text-[9px] font-bold px-2 py-0.5 rounded">ANALYZE</span>
+              <span class="text-gray-500 text-[9px]">Step 2</span>
+            </div>
+            <div class="text-white text-xs font-semibold mb-2">Segment by play pattern</div>
+            <div class="text-gray-400 text-[10px] mb-3">Tool: <code class="text-purple-300">PlayerSegmentationTool</code></div>
+            <div class="space-y-1.5">
+              <div class="bg-white/[0.03] rounded px-2.5 py-1 text-gray-400 text-[9px]">Cluster on game vertical</div>
+              <div class="bg-white/[0.03] rounded px-2.5 py-1 text-gray-400 text-[9px]">Filter: RG-flagged excluded</div>
+              <div class="bg-emerald-500/10 rounded px-2.5 py-1 text-emerald-400 text-[9px]">&#10003; 31 eligible (slots-heavy)</div>
+            </div>
+          </div>
+          <!-- Step 3: Write (gated) -->
+          <div class="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="bg-amber-500/20 text-amber-300 text-[9px] font-bold px-2 py-0.5 rounded">WRITE</span>
+              <span class="text-gray-500 text-[9px]">Step 3</span>
+              <span class="bg-red-500/20 text-red-300 text-[8px] font-bold px-1.5 py-0.5 rounded ml-auto">APPROVAL</span>
+            </div>
+            <div class="text-white text-xs font-semibold mb-2">Draft retention bonus</div>
+            <div class="text-gray-400 text-[10px] mb-3">Tool: <code class="text-amber-300">CreateBonusDraftTool</code></div>
+            <div class="space-y-1.5">
+              <div class="bg-white/[0.03] rounded px-2.5 py-1 text-gray-400 text-[9px]">Type: 50% match deposit</div>
+              <div class="bg-white/[0.03] rounded px-2.5 py-1 text-gray-400 text-[9px]">Wager: 25x · Cap: €100</div>
+              <div class="bg-amber-500/10 rounded px-2.5 py-1 text-amber-400 text-[9px]">&#9203; Awaiting operator approval</div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 bg-white/[0.04] border border-white/5 rounded-lg p-3 text-center">
+          <div class="text-white text-[11px] font-semibold">Three steps, three tool calls, one auditable plan</div>
+          <div class="text-gray-500 text-[9px] mt-1">Each step has a status, a result, and a permission gate. Nothing happens that the operator didn't authorize.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTICLE BODY -->
+  <article class="py-16 px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto prose-article">
+
+      <p>The first version of PAM's AI assistant was a chat. You asked a question, it answered. It was useful — agents could surface a player's withdrawal history in a sentence instead of clicking through four screens — but it was bounded by what fit in a single turn. "Show me this player's recent activity" worked. "Find every player at risk of churning, segment them by behavior, and draft a retention campaign for each segment" did not.</p>
+
+      <p>That second request isn't a question. It's a piece of work. It has steps, dependencies, and decision points. The right answer to it isn't a paragraph — it's a series of tool calls that an operator can audit, intervene in, and approve.</p>
+
+      <p>Building that turned out to require a different kind of architecture. Not a smarter model. A planner.</p>
+
+      <h2>Why a planner exists</h2>
+
+      <p>The natural instinct, given a capable language model, is to let it do everything in one prompt. Stuff the conversation history, the tool list, and the user's request into a single call and let the model decide what to do. For a question with a one-shot answer, this works. For multi-step work, it breaks for three reasons.</p>
+
+      <ul>
+        <li><strong>The audit trail collapses.</strong> The model produced an answer; you can't see the steps it took to get there. In a regulated environment, "the AI did it" is not an acceptable log entry.</li>
+        <li><strong>Approval gates have nowhere to live.</strong> Some actions require a human in the loop — drafting a bonus, sending a message, modifying a player limit. If the work is one indivisible call, there's no point at which an operator can say "stop, I want to review."</li>
+        <li><strong>Errors compound silently.</strong> If step two of an implicit five-step process fails, the model often invents a plausible answer instead of surfacing the failure. By the time anyone notices, the wrong action has been taken on the basis of fabricated data.</li>
+      </ul>
+
+      <p>A planner solves all three by making the steps first-class. The model still does the thinking — but what it produces is a structured plan, not a free-form response.</p>
+
+      <h2>The plan as a data structure</h2>
+
+      <p>An AI Studio session, when given a non-trivial request, produces a plan: an ordered list of typed steps. Each step is one of three types:</p>
+
+      <ul>
+        <li><strong>Query</strong> — read data from PAM. Tools in this category fetch player records, transactions, bonuses, KYC status, segmentation results. They never modify state.</li>
+        <li><strong>Analyze</strong> — operate on the results of previous steps to produce a derived answer. Aggregations, segmentations, comparisons, summaries.</li>
+        <li><strong>Write</strong> — propose a change to PAM. Drafting a bonus, sending a message, scheduling an action, updating a player limit. Every write step carries an explicit approval flag.</li>
+      </ul>
+
+      <p>Each step has a status that progresses through a defined lifecycle: <code>Pending</code> &rarr; <code>Running</code> &rarr; <code>AwaitingApproval</code> (for write steps) &rarr; <code>Approved</code> &rarr; <code>Completed</code>. Steps can also be <code>Skipped</code> by the operator or <code>Failed</code> with a captured error message. The plan itself is an auditable object — persisted, queryable, replayable.</p>
+
+      <div class="callout-solution">
+        <div class="font-bold mb-2" style="color:#134f82;">Why this matters</div>
+        <p style="margin:0;color:#1e3a5f;">When something goes wrong — and in any non-trivial system, eventually something will — the question is never "what did the AI do." The question is always "which step did it fail at, with what input, and what did the operator approve before it ran." A typed plan with persisted step status answers all three. A free-form chat does not.</p>
+      </div>
+
+      <h2>How the plan gets built</h2>
+
+      <p>The model is given the user's request, the agent's permission context, and the tool catalog — every <code>IAITool</code> implementation that this agent's role is allowed to invoke. Its job is not to produce the answer. Its job is to produce a plan that, if executed, would produce the answer.</p>
+
+      <p>This shifts the model's role in a way that turns out to matter. Instead of "answer this question," the prompt becomes "decompose this request into the smallest sequence of tool calls that would satisfy it, and explain why each step is necessary." The model is good at this — better, in our experience, than at giving a complete answer in one shot. Decomposition is a more constrained task than synthesis, and the constraints help.</p>
+
+      <p>Once the plan is generated, it isn't executed automatically. It's shown to the operator first. The operator sees the steps, the tool each one will call, the arguments, and any approval gates. They can edit the plan, skip steps, or run it as-is. Only then does execution begin.</p>
+
+      <h2>Replanning when reality disagrees</h2>
+
+      <p>A plan is a hypothesis about how to satisfy a request. Sometimes the hypothesis is wrong. The query that was supposed to return at-risk players returns zero rows. The segmentation that was supposed to produce three groups produces one. A write step's preconditions no longer hold by the time it runs.</p>
+
+      <p>When this happens, the planner has a choice: fail the plan and surface the error, or replan. Replanning means feeding the partial results back into the model and asking it to produce a revised plan that takes the new information into account. The revised steps are flagged with <code>IsReplanned = true</code> so the operator can see what changed and why.</p>
+
+      <p>This is a deliberate design choice. Replanning is not the same as retrying. Retrying assumes the original plan was correct and the failure was transient. Replanning assumes the original plan was based on incorrect assumptions about the data, and that a different plan is now appropriate. In a system with as many moving parts as PAM, the second case is far more common than the first.</p>
+
+      <div class="callout-warning">
+        <div class="font-bold text-red-800 mb-2">What replanning does not mean</div>
+        <p style="margin:0;color:#7f1d1d;">Replanning never means "the AI decides on its own to do something different than what was approved." If the operator approved a three-step plan, the agent executes that plan. Replanning happens before approval, or after a step has materially changed the available context. A replanned step that involves a write operation goes back to the operator for fresh approval — never piggybacking on an earlier authorization.</p>
+      </div>
+
+      <h2>The boring part that makes it work</h2>
+
+      <p>Most of the engineering effort in AI Studio is not in the model interaction. It's in the tools. PAM exposes around forty tool implementations across Banking, Bonus, Casino, KYC, Sportsbook, Players, Reporting, Responsible Gaming, Messaging, and a few others. Each one is a strongly-typed C# class with a JSON schema, a permission check, a sanitization layer for personal data, and a deterministic execution path.</p>
+
+      <p>The model never writes SQL, never sees the database schema, never gets a free-form data interface. It picks tools from a catalog, fills in typed arguments, and waits for typed results. The tools enforce skin scoping, role permissions, and PII handling — exactly the same way the back-office UI does, because they go through the same service layer.</p>
+
+      <p>This is the unglamorous piece, and it's the piece that determines whether the whole approach is deployable. A planner that orchestrates well-defined tools is auditable, scopeable, and safe. A planner that orchestrates ad-hoc database access is none of those things, no matter how good the model is.</p>
+
+      <h2>What it feels like in use</h2>
+
+      <p>An operator opens AI Studio and types: <em>"Pull the last 30 days of failed withdrawals over €1,000, group by reason code, and draft a brief for the payments team."</em></p>
+
+      <p>The planner produces three steps:</p>
+
+      <ul>
+        <li>Query: <code>SearchPaymentsTool</code> with type=withdrawal, status=failed, amount&ge;1000, days=30</li>
+        <li>Analyze: group results by failure reason, count and sum each bucket</li>
+        <li>Write: <code>DraftMessageTool</code> targeting the payments team channel, with the analyzed summary as the body</li>
+      </ul>
+
+      <p>The operator sees the plan before anything runs. They notice the analyze step doesn't break out by payment provider, and ask for that to be added. The model regenerates the plan with the additional grouping. The operator approves. The first two steps execute and complete in seconds. The third step pauses, shows the draft message, and waits. The operator reads it, makes a small edit to the tone, and approves. The message is sent.</p>
+
+      <p>Total elapsed time: under a minute. Total decisions delegated to the AI: zero. The agent did the work; the operator made every choice that mattered.</p>
+
+      <div class="callout-today">
+        <div class="font-bold text-green-800 mb-2">Today</div>
+        <p style="margin:0;color:#14532d;">AI Studio is in production for early-access PAM operators. The planner handles requests that span up to a dozen tool calls across multiple modules. Every plan is persisted with its steps, approvals, results, and any replans — searchable for audit and replayable for debugging. The most common feedback from operators is not about the model. It's about the plan view: knowing exactly what's about to happen before it happens is the part that turns "AI assistant" into "AI coworker."</p>
+      </div>
+
+      <h2>The principle</h2>
+
+      <p>The interesting question in agentic AI for regulated operations is not "how capable is the model." Capable models are widely available. The interesting question is "what shape does the work take when the model is involved." If the answer is "an opaque blob of model output," the system is not deployable. If the answer is "a structured plan of typed steps, each with a status, an approval gate where appropriate, and a persisted record," the system is deployable.</p>
+
+      <p>The planner is the difference. It's the layer that converts "the model decided to do something" into "the operator approved a step that the model proposed." Those two sentences describe very different products — and only one of them belongs in a back office that has to answer to a regulator.</p>
+
+      <!-- SHARE -->
+      <div class="linkedin-box">
+        <div class="flex items-center justify-between mb-4">
+          <div class="text-blue-400 text-xs font-bold uppercase tracking-widest">Share this insight</div>
+          <div class="flex gap-2">
+            <button onclick="navigator.clipboard.writeText(this.closest('.linkedin-box').querySelector('.share-text').textContent.trim());this.textContent='Copied!';setTimeout(()=>this.textContent='Copy text',2000)" class="bg-white/10 hover:bg-white/20 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors">Copy text</button>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://webprefer.com/insights/agentic-pam-planner" target="_blank" rel="noopener" class="bg-[#0A66C2] hover:bg-[#004182] text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors inline-flex items-center gap-2"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>Share on LinkedIn</a>
+          </div>
+        </div>
+        <details class="group">
+          <summary class="text-gray-500 text-xs cursor-pointer hover:text-gray-300 transition-colors">Preview post text</summary>
+          <div class="share-text text-gray-200 text-sm leading-relaxed whitespace-pre-line mt-3">A chatbot answers questions. A coworker plans.
+
+The first version of PAM's AI assistant was a chat. Useful — but bounded by what fits in one turn. "Find every churning player, segment by behavior, and draft a retention campaign" wasn't a question. It was a piece of work.
+
+So we built a planner.
+
+PAM's AI Studio decomposes a request into typed steps: Query, Analyze, Write. Each step calls a specific tool with typed arguments. Each step has a status. Write steps require explicit operator approval before anything mutates.
+
+The model never writes SQL. Never sees the schema. It picks tools from a catalog of 40+ implementations and fills in arguments. Skin scoping, role permissions, and PII handling go through the same service layer as the back-office UI.
+
+The interesting question in agentic AI for regulated operations isn't how capable the model is. It's: what shape does the work take when the model is involved?
+
+If the answer is "an opaque blob of model output," it's not deployable.
+
+If the answer is "a structured plan an operator can audit and approve, step by step," it is.
+
+#iGaming #PAM #AgenticAI #ResponsibleAI</div>
+        </details>
+      </div>
+
+    </div>
+  </article>
+
+  <!-- MORE ARTICLES -->
+  <section class="py-12 px-6 lg:px-8 bg-gray-50 border-t border-gray-100">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">More insights</div>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <a href="ai-regulated-industry" class="group bg-white rounded-xl border border-gray-100 p-5 hover:border-brand/30 hover:shadow-md transition-all">
+          <div class="text-xs font-semibold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-full inline-block mb-2">AI</div>
+          <div class="font-semibold text-gray-900 group-hover:text-brand transition-colors text-sm">AI in a Regulated Industry</div>
+          <div class="text-gray-500 text-xs mt-1">Permission-scoping the AI context</div>
+        </a>
+        <a href="beaware-rules-at-scale" class="group bg-white rounded-xl border border-gray-100 p-5 hover:border-brand/30 hover:shadow-md transition-all">
+          <div class="text-xs font-semibold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-full inline-block mb-2">BeAware</div>
+          <div class="font-semibold text-gray-900 group-hover:text-brand transition-colors text-sm">BeAware: Rules at Scale</div>
+          <div class="text-gray-500 text-xs mt-1">The behavior engine and visual rule editor</div>
+        </a>
+      </div>
+      <div class="mt-6">
+        <a href="./" class="text-brand text-sm font-semibold hover:underline">&larr; View all insights</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-24 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-16">
+        <div>
+          <div class="text-xs font-bold uppercase tracking-widest text-brand mb-4" style="letter-spacing:0.12em;">Get in Touch</div>
+          <h2 class="text-4xl font-bold mb-6">Ready to see it?</h2>
+          <p class="text-lg text-gray-600 leading-relaxed mb-10">We offer live demos scoped to your specific operation type — whether you're launching a new brand, migrating from an existing platform, or evaluating options for a white-label deployment.</p>
+          <div class="space-y-5">
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div><div><div class="font-semibold text-gray-900">Address</div><div class="text-gray-600 text-sm mt-1">Wahlbecksgatan 8, 582 13 Linköping, Sweden</div></div></div>
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div><div><div class="font-semibold text-gray-900">Email</div><a href="mailto:sales@webprefer.com" class="text-brand text-sm mt-1 block hover:underline">sales@webprefer.com</a></div></div>
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></div><div><div class="font-semibold text-gray-900">Mikael Lindberg Castell</div><a href="mailto:mikael@webprefer.com" class="text-brand text-sm mt-1 block hover:underline">mikael@webprefer.com</a><div class="text-gray-500 text-xs mt-0.5">CEO &amp; Founder, WebPrefer AB</div></div></div>
+          </div>
+        </div>
+        <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
+          <form id="contact-form" class="space-y-5">
+            <div class="grid sm:grid-cols-2 gap-5"><div><label class="block text-sm font-medium text-gray-700 mb-1.5">Full name</label><input type="text" name="full-name" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="Your name"></div><div><label class="block text-sm font-medium text-gray-700 mb-1.5">Company</label><input type="text" name="company" class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="Your company"></div></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">Email</label><input type="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="you@company.com"></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">I am a...</label><select name="position" class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent bg-white"><option value="">Select your role</option><option>Operator</option><option>Investor</option><option>Affiliate</option><option>Other</option></select></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">Message</label><textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent resize-none" placeholder="Tell us about your operation and what you're looking for..."></textarea></div>
+            <button type="submit" id="submit-btn" class="w-full bg-brand hover:bg-[#134f82] text-white font-semibold py-3.5 rounded-lg transition-colors text-sm">Send message</button>
+            <div id="form-success" class="hidden text-center text-green-600 font-medium text-sm py-2">Thank you! We'll be in touch shortly.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-white py-12 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+          <img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto brightness-0 invert">
+          <span class="text-gray-400 text-sm">WebPrefer AB (556748-3523)</span>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm text-gray-400">
+          <a href="../#platform" class="hover:text-white transition-colors">Platform</a>
+          <a href="../#products" class="hover:text-white transition-colors">Products</a>
+          <a href="../#proof" class="hover:text-white transition-colors">Customers</a>
+          <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+          <a href="./" class="hover:text-white transition-colors">Insights</a>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="https://www.linkedin.com/company/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+          <a href="https://www.facebook.com/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="Facebook"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+          <a href="https://www.instagram.com/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="Instagram"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+        </div>
+        <div class="text-gray-500 text-xs">&copy; <span id="footer-year">2026</span> WebPrefer AB. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function(){emailjs.init({publicKey:'J-Ouq1kFXZl7x5bEZ'})})();
+    document.getElementById('contact-form').addEventListener('submit',function(e){
+      e.preventDefault();var b=document.getElementById('submit-btn');b.disabled=true;b.textContent='Sending...';
+      emailjs.sendForm('service_aefyiw9','template_q5n6qyl',this).then(()=>{document.getElementById('form-success').classList.remove('hidden');this.reset();b.textContent='Send message';b.disabled=false;},()=>{b.textContent='Send message';b.disabled=false;});
+    });
+  </script>
+  <script>document.querySelectorAll("#footer-year").forEach(e=>e.textContent=new Date().getFullYear())</script>
+</body>
+</html>
