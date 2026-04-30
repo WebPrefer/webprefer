@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Why every AI write operation in PAM produces a preview before it produces a side effect — and what an action label, an impact summary, and a reversibility flag actually buy you.">
+  <title>Write Tools with Human-in-the-Loop — WebPrefer Engineering</title>
+  <meta property="og:title" content="Write Tools with Human-in-the-Loop — WebPrefer Engineering">
+  <meta property="og:description" content="Would you let an LLM hit prod? Only if it shows you the diff first. Inside PAM's write-tool preview model — the layer between intent and side effect.">
+  <meta property="og:image" content="https://webprefer.com/images/og-images/write-tools-preview-approval.png">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://webprefer.com/insights/write-tools-preview-approval">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Write Tools with Human-in-the-Loop — WebPrefer Engineering">
+  <meta name="twitter:description" content="Would you let an LLM hit prod? Only if it shows you the diff first.">
+  <meta name="twitter:image" content="https://webprefer.com/images/og-images/write-tools-preview-approval.png">
+  <meta name="theme-color" content="#1968AA">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="canonical" href="https://webprefer.com/insights/write-tools-preview-approval">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HC29B7MQF3"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HC29B7MQF3');</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { brand: { DEFAULT: '#1968AA', dark: '#134f82', darker: '#0d3459', light: '#2a7ec4' } }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } } }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    img { max-width: 100%; height: auto; }
+    body { overflow-x: hidden; }
+    .gradient-hero { background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%); }
+    .nav-link { transition: color 0.15s ease; }
+    .prose-article h2 { font-size: 1.35rem; font-weight: 700; color: #111827; margin: 2.5rem 0 0.75rem; }
+    .prose-article h3 { font-size: 1.1rem; font-weight: 600; color: #374151; margin: 2rem 0 0.5rem; }
+    .prose-article { overflow-wrap: break-word; word-break: break-word; }
+    .prose-article p { color: #374151; line-height: 1.8; margin-bottom: 1.25rem; }
+    .prose-article ul { margin: 0 0 1.25rem 1.5rem; }
+    .prose-article li { color: #374151; line-height: 1.8; margin-bottom: 0.35rem; }
+    .prose-article strong { color: #111827; }
+    .prose-article code { background: #f3f4f6; padding: 0.1rem 0.35rem; border-radius: 4px; font-size: 0.9em; }
+    .callout-incident { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout-solution { background: #eff6ff; border-left: 4px solid #1968AA; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout-today { background: #f0fdf4; border-left: 4px solid #16a34a; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout-warning { background: #fef2f2; border-left: 4px solid #dc2626; padding: 1.25rem 1.5rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .linkedin-box { background: #0f172a; border-radius: 12px; padding: 2rem; margin: 3rem 0; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Write Tools with Human-in-the-Loop — WebPrefer Engineering","description":"Why every AI write operation in PAM produces a preview before it produces a side effect.","image":"https://webprefer.com/images/og-images/write-tools-preview-approval.png","datePublished":"2026-04-30","author":{"@type":"Organization","name":"WebPrefer AB","url":"https://webprefer.com"},"publisher":{"@type":"Organization","name":"WebPrefer AB","logo":{"@type":"ImageObject","url":"https://webprefer.com/images/logo.svg"}}}</script>
+</head>
+<body class="font-sans bg-white text-gray-900 antialiased">
+
+  <!-- NAV -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="../" class="flex items-center gap-2"><img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto"></a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="../#platform" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Platform</a>
+        <a href="../#products" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Products</a>
+        <a href="../#proof" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Customers</a>
+        <a href="../#partners" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Partners</a>
+        <a href="../#contact" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Contact</a>
+        <a href="./" class="nav-link text-sm font-medium text-brand font-semibold">Insights</a>
+      </div>
+      <a href="../#contact" class="bg-brand hover:bg-[#134f82] text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors hidden md:inline-flex">Book a Demo</a>
+      <button id="mobile-menu-btn" aria-label="Toggle navigation menu" class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
+        <svg id="icon-open" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-1">
+      <a href="../" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Home</a>
+      <a href="../#platform" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Platform</a>
+      <a href="../#products" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Products</a>
+      <a href="../#proof" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Customers</a>
+      <a href="../#partners" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Partners</a>
+      <a href="#contact" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand mobile-nav-link">Contact</a>
+      <a href="./" class="block py-2.5 text-sm font-medium text-brand font-semibold mobile-nav-link">Insights</a>
+      <a href="#contact" class="block mt-2 bg-brand text-white text-sm font-semibold px-5 py-2.5 rounded-lg text-center mobile-nav-link">Book a Demo</a>
+    </div>
+  </header>
+  <script>
+    const btn = document.getElementById('mobile-menu-btn'); const menu = document.getElementById('mobile-menu'); const iconOpen = document.getElementById('icon-open'); const iconClose = document.getElementById('icon-close');
+    btn.addEventListener('click', () => { menu.classList.toggle('hidden'); iconOpen.classList.toggle('hidden'); iconClose.classList.toggle('hidden'); });
+    document.querySelectorAll('.mobile-nav-link').forEach(l => { l.addEventListener('click', () => { menu.classList.add('hidden'); iconOpen.classList.remove('hidden'); iconClose.classList.add('hidden'); }); });
+  </script>
+
+  <!-- ARTICLE HERO -->
+  <section class="gradient-hero pt-32 pb-16 px-6 lg:px-8 text-white">
+    <div class="max-w-3xl mx-auto">
+      <a href="./" class="inline-flex items-center gap-2 text-blue-300 text-sm mb-6 hover:text-white transition-colors">&larr; All insights</a>
+      <div class="flex flex-wrap gap-2 mb-4">
+        <span class="bg-rose-400/30 text-rose-200 text-xs font-semibold px-3 py-1 rounded-full">AI</span>
+        <span class="bg-amber-400/30 text-amber-200 text-xs font-semibold px-3 py-1 rounded-full">Human-in-the-Loop</span>
+        <span class="text-blue-300 text-xs">8 min read</span>
+      </div>
+      <h1 class="text-4xl lg:text-5xl font-extrabold leading-tight mb-5">Write Tools with Human-in-the-Loop</h1>
+      <p class="text-xl text-blue-100 leading-relaxed">Would you let an LLM hit prod? Only if it shows you the diff first. Inside PAM's write-tool preview model — the layer between an AI's intent and a real side effect.</p>
+      <div class="mt-8 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center"><span class="text-brand font-extrabold text-sm">W</span></div>
+        <div><div class="text-sm font-semibold">WebPrefer Engineering</div><div class="text-blue-300 text-xs">April 2026</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIAGRAM -->
+  <section class="bg-gray-50 py-10 px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <div class="bg-[#0c1222] rounded-2xl p-6 lg:p-8">
+        <div class="text-center mb-6">
+          <div class="text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-2">Write Tool Lifecycle</div>
+          <div class="text-white text-sm font-bold">Draft &rarr; Preview &rarr; Approve &rarr; Execute</div>
+        </div>
+        <div class="grid lg:grid-cols-4 gap-4 items-start">
+          <div class="bg-white/[0.04] border border-white/5 rounded-xl p-4">
+            <div class="text-cyan-400 text-[10px] font-bold uppercase tracking-wider mb-2">1. Draft</div>
+            <div class="text-white text-xs font-semibold mb-2">Model proposes args</div>
+            <div class="space-y-1.5">
+              <div class="bg-white/[0.03] rounded px-2.5 py-1 text-gray-400 text-[9px]">tool: GrantBonusTool</div>
+              <div class="bg-white/[0.03] rounded px-2.5 py-1 text-gray-400 text-[9px]">playerId: 4821</div>
+              <div class="bg-white/[0.03] rounded px-2.5 py-1 text-gray-400 text-[9px]">amount: 50 EUR</div>
+            </div>
+          </div>
+          <div class="bg-purple-500/10 border border-purple-500/20 rounded-xl p-4">
+            <div class="text-purple-400 text-[10px] font-bold uppercase tracking-wider mb-2">2. Preview</div>
+            <div class="text-white text-xs font-semibold mb-2">WriteToolPreview</div>
+            <div class="space-y-1.5">
+              <div class="bg-white/[0.04] rounded px-2.5 py-1 text-purple-300 text-[9px]">label: "Grant 50 EUR bonus"</div>
+              <div class="bg-white/[0.04] rounded px-2.5 py-1 text-purple-300 text-[9px]">affects: [Player 4821]</div>
+              <div class="bg-white/[0.04] rounded px-2.5 py-1 text-purple-300 text-[9px]">reversible: true</div>
+            </div>
+          </div>
+          <div class="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
+            <div class="text-amber-400 text-[10px] font-bold uppercase tracking-wider mb-2">3. Approve</div>
+            <div class="text-white text-xs font-semibold mb-2">Operator decides</div>
+            <div class="space-y-1.5">
+              <div class="bg-emerald-500/10 rounded px-2.5 py-1 text-emerald-400 text-[9px]">&#10003; Approve as-is</div>
+              <div class="bg-cyan-500/10 rounded px-2.5 py-1 text-cyan-400 text-[9px]">&#9998; Edit args</div>
+              <div class="bg-red-500/10 rounded px-2.5 py-1 text-red-400 text-[9px]">&#10005; Reject</div>
+            </div>
+          </div>
+          <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4">
+            <div class="text-emerald-400 text-[10px] font-bold uppercase tracking-wider mb-2">4. Execute</div>
+            <div class="text-white text-xs font-semibold mb-2">Side effect, audited</div>
+            <div class="space-y-1.5">
+              <div class="bg-white/[0.04] rounded px-2.5 py-1 text-emerald-400 text-[9px]">Bonus granted</div>
+              <div class="bg-white/[0.04] rounded px-2.5 py-1 text-emerald-400 text-[9px]">Logged with approver</div>
+              <div class="bg-white/[0.04] rounded px-2.5 py-1 text-emerald-400 text-[9px]">Reversal token issued</div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 bg-white/[0.04] border border-white/5 rounded-lg p-3 text-center">
+          <div class="text-white text-[11px] font-semibold">Steps 1–3 produce no side effects. Only step 4 mutates state.</div>
+          <div class="text-gray-500 text-[9px] mt-1">An approval recorded against a specific preview — not a vague "yes, do whatever you planned."</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTICLE BODY -->
+  <article class="py-16 px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto prose-article">
+
+      <p>Letting an AI assistant tell an operator something is one product. Letting an AI assistant <em>do</em> something on behalf of an operator is a different product. The model is the same. The risk profile is not.</p>
+
+      <p>A read-only assistant that hallucinates is annoying. A write-capable assistant that hallucinates moves money, grants bonuses, sends messages to real customers, or mutates limits on accounts that shouldn't have been touched. The model's confidence is exactly the same in both cases. The blast radius is not.</p>
+
+      <p>So the design question for the write side of PAM's AI was not "how do we make the model more accurate." It was "how do we make sure no side effect happens until a human has seen, in concrete terms, exactly what is about to happen and authorized it."</p>
+
+      <h2>Two interfaces, not one</h2>
+
+      <p>PAM's tool catalog is split. There is <code>IAITool</code>, the base interface every tool implements — a name, a description, a JSON schema, a permission check, and an execute method. Read-only tools (querying players, fetching transactions, summarizing bonuses, segmenting audiences) implement only this.</p>
+
+      <p>Write tools implement an additional interface, <code>IAIWriteTool</code>. The contract adds one method: <code>BuildPreview(args, context)</code>. Before a write tool can be executed, this method must be called. It returns a <code>WriteToolPreview</code> — a small record with four fields:</p>
+
+      <ul>
+        <li><strong>ActionLabel</strong> — a one-line human-readable description of what's about to happen. "Grant 50 EUR welcome bonus." "Set deposit limit to 1,000 SEK / week." "Send retention email to 31 players."</li>
+        <li><strong>ImpactSummary</strong> — a multi-line description of the specific change: which fields, which records, which values, before and after where applicable.</li>
+        <li><strong>AffectedIds</strong> — the list of entities (player IDs, bonus IDs, message recipient IDs) that this action will touch. Numeric, not paraphrased.</li>
+        <li><strong>IsReversible</strong> — whether the change can be undone after the fact. Granting a bonus that hasn't been wagered: yes. Sending an email that's already left the SMTP server: no.</li>
+      </ul>
+
+      <p>The preview is generated deterministically from the same arguments the execute method would consume. There is no separate "describe what you would do" code path that the model could use to lie about its intent. The preview is a function of the args, computed by the same tool that will execute them.</p>
+
+      <h2>Why a record, and why those four fields</h2>
+
+      <p>The shape of <code>WriteToolPreview</code> looks small. It is — deliberately. Anyone designing this for the first time wants to put more in: a structured diff, a validation report, a probability score, a recommendation. We tried versions of all of those. Each one made the operator's decision harder, not easier.</p>
+
+      <p>The operator does not need a full diff to decide whether to approve. They need to know <strong>what kind of action this is</strong>, <strong>what it will touch</strong>, and <strong>whether they can take it back</strong>. That is exactly what the four fields encode.</p>
+
+      <div class="callout-solution">
+        <div class="font-bold mb-2" style="color:#134f82;">The reversibility flag is not cosmetic</div>
+        <p style="margin:0;color:#1e3a5f;">Operators read previews differently when <code>IsReversible</code> is false. The UI surfaces this with a distinct colour and a confirmation step. We've watched operators approve a hundred reversible actions and pause for thirty seconds on the first irreversible one. That pause is the entire point. A preview without a reversibility flag would let those two cases blur into each other — which is the failure mode we built the preview to prevent.</p>
+      </div>
+
+      <h2>What this prevents</h2>
+
+      <p>Three failure modes that are common in LLM-driven write systems are eliminated by this pattern.</p>
+
+      <p><strong>The off-by-one player.</strong> The model picks <code>playerId: 4821</code> when it meant <code>4812</code>. With direct execution, the wrong player gets credited and someone notices a week later in a reconciliation report. With preview-and-approve, the operator sees "Grant 50 EUR bonus to Player 4821 (J. Doe)" and either confirms or catches the error before the bonus is granted. Same model, same mistake — different outcome.</p>
+
+      <p><strong>The plausible but wrong rate.</strong> The model picks <code>weeklyDepositLimit: 5,000 SEK</code> when the operator said "five thousand" and meant their default unit, EUR. With direct execution, the limit is wrong by an exchange rate factor. With preview-and-approve, the impact summary shows "5,000 SEK" in unambiguous terms. The operator either confirms or fixes it.</p>
+
+      <p><strong>The implicit bulk action.</strong> The operator says "send a follow-up to everyone who churned" expecting a draft for review. The model interprets this as authorization to send. With direct execution, three hundred customers get an email no human read. With preview-and-approve, the operator sees "Send retention email to 312 players" and decides whether that's the right scope.</p>
+
+      <p>None of these scenarios require the model to be malicious or unusually wrong. They require the model to behave normally. That's the case the preview is designed for — not the worst case, but the average case.</p>
+
+      <h2>Approval is bound to a specific preview</h2>
+
+      <p>An approval in PAM is not "yes, the operator agrees this is fine." It is "the operator approved <em>this preview</em>, with this label, this impact summary, this set of affected IDs, and this reversibility flag, at this timestamp." The approval record references the preview. The execution record references the approval. Every link is preserved.</p>
+
+      <p>This matters when something has to be reconstructed later. If a regulator or an internal audit asks why a particular bonus was granted to a particular player at a particular time, the answer is not "the AI did it." The answer is: the operator approved <em>this preview</em>, generated by <em>this tool</em>, from <em>these arguments</em>, proposed by the model in response to <em>this request</em>, in <em>this session</em>. Every step is replayable.</p>
+
+      <div class="callout-warning">
+        <div class="font-bold text-red-800 mb-2">What we don't allow</div>
+        <p style="margin:0;color:#7f1d1d;">There is no "approve all future actions like this one" toggle. There is no implicit batching of approvals across steps. There is no "approve plan" that authorizes write tools without their previews being shown individually. Each write produces its own preview and requires its own approval. An operator who wants to grant ten bonuses approves ten previews. That's slower. It's also the only design where the audit trail means anything.</p>
+      </div>
+
+      <h2>The exception: trusted actions in scheduled sessions</h2>
+
+      <p>There is one place where the human-in-the-loop pattern is relaxed, and it is deliberately narrow. Scheduled AI sessions — recurring jobs that run without an operator present — can be configured with a list of <em>trusted actions</em>: specific write-tool names that the operator has pre-authorized for that schedule.</p>
+
+      <p>A scheduled session can execute a trusted action without a per-step approval, but it cannot execute any write tool that isn't on its trust list. A schedule that's allowed to send a "weekly retention email" cannot, on its own initiative, decide to grant a bonus. That action is structurally not available to it, regardless of what the model proposes. The trust list is not advice to the model; it's an enforceable filter on the tool catalog the model sees.</p>
+
+      <p>Even within trusted actions, the preview is still generated and recorded. The audit trail of a scheduled session contains every preview, every execution, and the schedule's trust list at the time of execution — so a regulator can see not only what happened, but what was permitted to happen.</p>
+
+      <h2>The cost</h2>
+
+      <p>The preview pattern is not free. Every write tool has to implement a deterministic preview generator that mirrors the execute path. This is real engineering work, and it has to be kept in sync — when the execute method changes, the preview has to change with it. We've found this cost to be smaller than it looks, because the preview generator is usually a thin formatting layer over the same validation that execute already performs.</p>
+
+      <p>The cost the pattern does impose is on operator time. An operator who wants to take ten actions has to approve ten previews. There's no shortcut. We've considered building one and decided against it: every shortcut we sketched ended up looking like "approve a category of action without seeing the specific instance," which is exactly the failure mode the preview was built to prevent. The friction is the feature.</p>
+
+      <div class="callout-today">
+        <div class="font-bold text-green-800 mb-2">Today</div>
+        <p style="margin:0;color:#14532d;">Every write tool in PAM's AI catalog implements <code>IAIWriteTool</code> with a deterministic preview generator. Operators see a draft of every change before it happens, with affected entity IDs and a reversibility flag. Approval records are linked to specific previews and persisted with the session. No write tool can execute without going through the preview path — including, for scheduled sessions, where the relaxation is bounded by an explicit trust list. No exceptions, no overrides, no "this one is fine."</p>
+      </div>
+
+      <h2>The principle</h2>
+
+      <p>An AI that writes is different from an AI that reads, and the difference is not on the model side. It's on the side effect side. The right question is never "do you trust the model" — the model is what it is — but "what runs between the model's intent and the real change."</p>
+
+      <p>If nothing runs between, the model is the system. If a deterministic preview runs between, and the preview is shown to an operator, and the operator's approval is recorded against that exact preview, then the operator is the system and the model is a proposal generator. The first design ships AI features. The second one ships them into a regulated back office.</p>
+
+      <!-- SHARE -->
+      <div class="linkedin-box">
+        <div class="flex items-center justify-between mb-4">
+          <div class="text-blue-400 text-xs font-bold uppercase tracking-widest">Share this insight</div>
+          <div class="flex gap-2">
+            <button onclick="navigator.clipboard.writeText(this.closest('.linkedin-box').querySelector('.share-text').textContent.trim());this.textContent='Copied!';setTimeout(()=>this.textContent='Copy text',2000)" class="bg-white/10 hover:bg-white/20 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors">Copy text</button>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://webprefer.com/insights/write-tools-preview-approval" target="_blank" rel="noopener" class="bg-[#0A66C2] hover:bg-[#004182] text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors inline-flex items-center gap-2"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>Share on LinkedIn</a>
+          </div>
+        </div>
+        <details class="group">
+          <summary class="text-gray-500 text-xs cursor-pointer hover:text-gray-300 transition-colors">Preview post text</summary>
+          <div class="share-text text-gray-200 text-sm leading-relaxed whitespace-pre-line mt-3">A read-only AI that hallucinates is annoying. A write-capable AI that hallucinates moves money.
+
+The model's confidence is the same. The blast radius is not.
+
+So in PAM, every AI write tool produces a preview before it produces a side effect. Four fields:
+
+— ActionLabel: what's about to happen
+— ImpactSummary: which fields, which records, before and after
+— AffectedIds: the specific entities, numeric, not paraphrased
+— IsReversible: whether you can take it back
+
+The preview is deterministic. Same args, same preview. The model can't lie about its intent because the preview is computed by the same tool that will execute.
+
+Operators approve a specific preview, not "AI's plan in general." The audit trail links execution → approval → preview → arguments → session → request. Every step replayable.
+
+The friction is the feature. Three hundred customers don't get an email no human read.
+
+#iGaming #PAM #AgenticAI #ResponsibleAI</div>
+        </details>
+      </div>
+
+    </div>
+  </article>
+
+  <!-- MORE ARTICLES -->
+  <section class="py-12 px-6 lg:px-8 bg-gray-50 border-t border-gray-100">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">More insights</div>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <a href="agentic-pam-planner" class="group bg-white rounded-xl border border-gray-100 p-5 hover:border-brand/30 hover:shadow-md transition-all">
+          <div class="text-xs font-semibold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-full inline-block mb-2">AI</div>
+          <div class="font-semibold text-gray-900 group-hover:text-brand transition-colors text-sm">From Copilot to Coworker</div>
+          <div class="text-gray-500 text-xs mt-1">The planner that turns a chat into a coworker</div>
+        </a>
+        <a href="scheduled-ai-autonomy" class="group bg-white rounded-xl border border-gray-100 p-5 hover:border-brand/30 hover:shadow-md transition-all">
+          <div class="text-xs font-semibold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-full inline-block mb-2">AI</div>
+          <div class="font-semibold text-gray-900 group-hover:text-brand transition-colors text-sm">Scheduled Autonomy</div>
+          <div class="text-gray-500 text-xs mt-1">When the AI wakes up without you</div>
+        </a>
+      </div>
+      <div class="mt-6"><a href="./" class="text-brand text-sm font-semibold hover:underline">&larr; View all insights</a></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-24 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-16">
+        <div>
+          <div class="text-xs font-bold uppercase tracking-widest text-brand mb-4" style="letter-spacing:0.12em;">Get in Touch</div>
+          <h2 class="text-4xl font-bold mb-6">Ready to see it?</h2>
+          <p class="text-lg text-gray-600 leading-relaxed mb-10">We offer live demos scoped to your specific operation type — whether you're launching a new brand, migrating from an existing platform, or evaluating options for a white-label deployment.</p>
+          <div class="space-y-5">
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div><div><div class="font-semibold text-gray-900">Address</div><div class="text-gray-600 text-sm mt-1">Wahlbecksgatan 8, 582 13 Linköping, Sweden</div></div></div>
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div><div><div class="font-semibold text-gray-900">Email</div><a href="mailto:sales@webprefer.com" class="text-brand text-sm mt-1 block hover:underline">sales@webprefer.com</a></div></div>
+            <div class="flex items-start gap-4"><div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></div><div><div class="font-semibold text-gray-900">Mikael Lindberg Castell</div><a href="mailto:mikael@webprefer.com" class="text-brand text-sm mt-1 block hover:underline">mikael@webprefer.com</a><div class="text-gray-500 text-xs mt-0.5">CEO &amp; Founder, WebPrefer AB</div></div></div>
+          </div>
+        </div>
+        <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
+          <form id="contact-form" class="space-y-5">
+            <div class="grid sm:grid-cols-2 gap-5"><div><label class="block text-sm font-medium text-gray-700 mb-1.5">Full name</label><input type="text" name="full-name" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="Your name"></div><div><label class="block text-sm font-medium text-gray-700 mb-1.5">Company</label><input type="text" name="company" class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="Your company"></div></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">Email</label><input type="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" placeholder="you@company.com"></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">I am a...</label><select name="position" class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent bg-white"><option value="">Select your role</option><option>Operator</option><option>Investor</option><option>Affiliate</option><option>Other</option></select></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1.5">Message</label><textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent resize-none" placeholder="Tell us about your operation and what you're looking for..."></textarea></div>
+            <button type="submit" id="submit-btn" class="w-full bg-brand hover:bg-[#134f82] text-white font-semibold py-3.5 rounded-lg transition-colors text-sm">Send message</button>
+            <div id="form-success" class="hidden text-center text-green-600 font-medium text-sm py-2">Thank you! We'll be in touch shortly.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-white py-12 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-4"><img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto brightness-0 invert"><span class="text-gray-400 text-sm">WebPrefer AB (556748-3523)</span></div>
+        <div class="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm text-gray-400">
+          <a href="../#platform" class="hover:text-white transition-colors">Platform</a>
+          <a href="../#products" class="hover:text-white transition-colors">Products</a>
+          <a href="../#proof" class="hover:text-white transition-colors">Customers</a>
+          <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+          <a href="./" class="hover:text-white transition-colors">Insights</a>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="https://www.linkedin.com/company/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+          <a href="https://www.facebook.com/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="Facebook"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+          <a href="https://www.instagram.com/webprefer" target="_blank" rel="noopener" class="text-gray-400 hover:text-white transition-colors" aria-label="Instagram"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+        </div>
+        <div class="text-gray-500 text-xs">&copy; <span id="footer-year">2026</span> WebPrefer AB. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function(){emailjs.init({publicKey:'J-Ouq1kFXZl7x5bEZ'})})();
+    document.getElementById('contact-form').addEventListener('submit',function(e){
+      e.preventDefault();var b=document.getElementById('submit-btn');b.disabled=true;b.textContent='Sending...';
+      emailjs.sendForm('service_aefyiw9','template_q5n6qyl',this).then(()=>{document.getElementById('form-success').classList.remove('hidden');this.reset();b.textContent='Send message';b.disabled=false;},()=>{b.textContent='Send message';b.disabled=false;});
+    });
+  </script>
+  <script>document.querySelectorAll("#footer-year").forEach(e=>e.textContent=new Date().getFullYear())</script>
+</body>
+</html>

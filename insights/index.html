@@ -6,13 +6,13 @@
   <meta name="description" content="Technical insights from the WebPrefer engineering team — 10+ years building PAM for regulated iGaming markets.">
   <title>Engineering Insights — WebPrefer</title>
   <meta property="og:title" content="Engineering Insights — WebPrefer">
-  <meta property="og:description" content="Eighteen deep-dive insights on the real technical challenges of building a live iGaming platform.">
+  <meta property="og:description" content="Twenty-two deep-dive insights on the real technical challenges of building a live iGaming platform — including a new four-part series on agentic and autonomous AI in PAM.">
   <meta property="og:image" content="https://webprefer.com/images/og-images/home.png">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://webprefer.com/insights/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Engineering Insights — WebPrefer">
-  <meta name="twitter:description" content="Eighteen deep-dive insights on the real technical challenges of building a live iGaming platform.">
+  <meta name="twitter:description" content="Twenty-two deep-dive insights on the real technical challenges of building a live iGaming platform — including a new four-part series on agentic and autonomous AI in PAM.">
   <meta name="twitter:image" content="https://webprefer.com/images/og-images/home.png">
   <meta name="theme-color" content="#1968AA">
   <link rel="icon" type="image/png" href="../images/favicon.png">
@@ -100,13 +100,76 @@
     <div class="max-w-4xl mx-auto">
       <div class="text-blue-300 text-xs font-bold uppercase tracking-widest mb-4">Engineering Journal</div>
       <h1 class="text-4xl lg:text-5xl font-extrabold leading-tight mb-4">The production stories behind PAM</h1>
-      <p class="text-xl text-blue-100 max-w-2xl">Eighteen deep-dive insights on the real technical challenges of building a live iGaming platform — concurrency, compliance, AI, real-time, and more.</p>
+      <p class="text-xl text-blue-100 max-w-2xl">Twenty-two deep-dive insights on the real technical challenges of building a live iGaming platform — concurrency, compliance, AI, real-time, and more.</p>
+      <div class="mt-6 inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-4 py-1.5">
+        <span class="bg-rose-400/30 text-rose-200 text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full">New</span>
+        <span class="text-blue-100 text-sm">Four-part series on agentic &amp; autonomous AI in PAM</span>
+      </div>
     </div>
   </section>
 
   <!-- ARTICLES GRID -->
   <section class="py-20 px-6 lg:px-8 bg-gray-50">
     <div class="max-w-4xl mx-auto space-y-6">
+
+      <div class="flex items-center gap-3 pt-2">
+        <span class="text-xs font-bold uppercase tracking-widest text-rose-600">New series</span>
+        <span class="text-xs text-gray-500">Agentic &amp; autonomous AI · April 2026</span>
+        <span class="flex-1 h-px bg-gradient-to-r from-rose-200 to-transparent"></span>
+      </div>
+
+      <a href="agentic-pam-planner" class="group block bg-white rounded-2xl border-2 border-rose-100 p-8 hover:border-brand/30 hover:shadow-lg transition-all duration-200">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class="bg-rose-50 text-rose-700 text-xs font-semibold px-3 py-1 rounded-full">AI</span>
+          <span class="bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">Agentic</span>
+          <span class="bg-rose-100 text-rose-700 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full">Part 1 of 4</span>
+          <span class="text-gray-400 text-xs">9 min read</span>
+        </div>
+        <h2 class="text-xl font-bold text-gray-900 group-hover:text-brand transition-colors mb-2">From Copilot to Coworker</h2>
+        <p class="text-gray-500 text-sm leading-relaxed">A chatbot answers questions. A coworker plans. Inside PAM's AI Studio planner — how multi-step agentic work happens without losing the audit trail.</p>
+        <div class="mt-4 text-brand text-sm font-semibold">Read more &rarr;</div>
+      </a>
+
+      <a href="write-tools-preview-approval" class="group block bg-white rounded-2xl border-2 border-rose-100 p-8 hover:border-brand/30 hover:shadow-lg transition-all duration-200">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class="bg-rose-50 text-rose-700 text-xs font-semibold px-3 py-1 rounded-full">AI</span>
+          <span class="bg-amber-50 text-amber-700 text-xs font-semibold px-3 py-1 rounded-full">Human-in-the-Loop</span>
+          <span class="bg-rose-100 text-rose-700 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full">Part 2 of 4</span>
+          <span class="text-gray-400 text-xs">8 min read</span>
+        </div>
+        <h2 class="text-xl font-bold text-gray-900 group-hover:text-brand transition-colors mb-2">Write Tools with Human-in-the-Loop</h2>
+        <p class="text-gray-500 text-sm leading-relaxed">Would you let an LLM hit prod? Only if it shows you the diff first. The preview-and-approve pattern that sits between an AI's intent and a real side effect.</p>
+        <div class="mt-4 text-brand text-sm font-semibold">Read more &rarr;</div>
+      </a>
+
+      <a href="scheduled-ai-autonomy" class="group block bg-white rounded-2xl border-2 border-rose-100 p-8 hover:border-brand/30 hover:shadow-lg transition-all duration-200">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class="bg-rose-50 text-rose-700 text-xs font-semibold px-3 py-1 rounded-full">AI</span>
+          <span class="bg-cyan-50 text-cyan-700 text-xs font-semibold px-3 py-1 rounded-full">Autonomy</span>
+          <span class="bg-rose-100 text-rose-700 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full">Part 3 of 4</span>
+          <span class="text-gray-400 text-xs">8 min read</span>
+        </div>
+        <h2 class="text-xl font-bold text-gray-900 group-hover:text-brand transition-colors mb-2">Scheduled Autonomy</h2>
+        <p class="text-gray-500 text-sm leading-relaxed">When the AI wakes up without you, every assumption changes. The shift from chat-pull to cron-push — and the trust list that replaces an operator's eyes.</p>
+        <div class="mt-4 text-brand text-sm font-semibold">Read more &rarr;</div>
+      </a>
+
+      <a href="ai-tool-registry" class="group block bg-white rounded-2xl border-2 border-rose-100 p-8 hover:border-brand/30 hover:shadow-lg transition-all duration-200">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class="bg-rose-50 text-rose-700 text-xs font-semibold px-3 py-1 rounded-full">AI</span>
+          <span class="bg-slate-100 text-slate-700 text-xs font-semibold px-3 py-1 rounded-full">Architecture</span>
+          <span class="bg-rose-100 text-rose-700 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full">Part 4 of 4</span>
+          <span class="text-gray-400 text-xs">9 min read</span>
+        </div>
+        <h2 class="text-xl font-bold text-gray-900 group-hover:text-brand transition-colors mb-2">40 Tools, One Brain</h2>
+        <p class="text-gray-500 text-sm leading-relaxed">The model never sees the database. It picks from a catalog of forty typed tools — and the tools deliberately not in the catalog are the ones we thought hardest about.</p>
+        <div class="mt-4 text-brand text-sm font-semibold">Read more &rarr;</div>
+      </a>
+
+      <div class="flex items-center gap-3 pt-4">
+        <span class="text-xs font-bold uppercase tracking-widest text-gray-400">Earlier insights</span>
+        <span class="flex-1 h-px bg-gray-200"></span>
+      </div>
 
       <a href="wallet-concurrency" class="group block bg-white rounded-2xl border border-gray-100 p-8 hover:border-brand/30 hover:shadow-lg transition-all duration-200">
         <div class="flex flex-wrap items-center gap-3 mb-4">
