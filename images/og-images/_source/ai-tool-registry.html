@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><link rel="stylesheet" href="_template.css">
+<style>
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 6px; }
+.chip { background: rgba(255,255,255,0.04); border-radius: 6px; padding: 5px 8px; font-size: 10px; color: #6ee7b7; text-align: center; }
+.chip-no { color: #fca5a5; background: rgba(239,68,68,0.08); }
+</style>
+</head>
+<body>
+  <div class="left">
+    <div>
+      <div class="tags"><span class="tag tag-ai">AI</span><span class="tag tag-slate">Architecture</span></div>
+      <h1>40 Tools, One Brain</h1>
+      <p class="sub">The model never sees the database. It picks from a typed catalog — and the tools deliberately not in the catalog matter as much as the ones that are.</p>
+    </div>
+    <div class="author">
+      <div class="author-logo">W</div>
+      <div><div class="author-name">WebPrefer Engineering</div><div class="author-url">webprefer.com</div></div>
+    </div>
+  </div>
+  <div class="right">
+    <div class="card">
+      <div class="card-title">AI Tool Registry</div>
+      <div class="card-sub">In the catalog · 13 domains</div>
+      <div class="grid2">
+        <div class="chip">Players · 6</div>
+        <div class="chip">Banking · 5</div>
+        <div class="chip">Bonus · 4</div>
+        <div class="chip">Casino · 3</div>
+        <div class="chip">RG · 4</div>
+        <div class="chip">Reporting · 3</div>
+      </div>
+      <div style="margin-top:14px;" class="card-title" >Deliberately absent</div>
+      <div class="grid2" style="margin-top:6px;">
+        <div class="chip chip-no">✗ Raw SQL</div>
+        <div class="chip chip-no">✗ Wallet adjust</div>
+        <div class="chip chip-no">✗ KYC override</div>
+        <div class="chip chip-no">✗ Password reset</div>
+        <div class="chip chip-no">✗ Bulk send</div>
+        <div class="chip chip-no">✗ Cross-skin</div>
+      </div>
+    </div>
+  </div>
+</body></html>

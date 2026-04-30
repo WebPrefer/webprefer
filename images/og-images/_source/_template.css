@@ -1,0 +1,62 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1200px; height: 630px; overflow: hidden; font-family: 'Inter', -apple-system, 'Segoe UI', system-ui, sans-serif; }
+body {
+  background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%);
+  color: white;
+  display: flex;
+  position: relative;
+}
+.left {
+  flex: 1;
+  padding: 70px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 680px;
+}
+.tags { display: flex; gap: 10px; margin-bottom: 28px; }
+.tag { font-size: 13px; font-weight: 700; padding: 6px 14px; border-radius: 999px; }
+.tag-ai { background: rgba(244,63,94,0.25); color: #fecdd3; }
+.tag-blue { background: rgba(59,130,246,0.25); color: #bfdbfe; }
+.tag-amber { background: rgba(245,158,11,0.25); color: #fde68a; }
+.tag-cyan { background: rgba(6,182,212,0.25); color: #a5f3fc; }
+.tag-slate { background: rgba(148,163,184,0.25); color: #e2e8f0; }
+h1 { font-size: 56px; font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 22px; }
+.sub { font-size: 21px; line-height: 1.45; color: #cbd5e1; max-width: 620px; }
+.author { display: flex; align-items: center; gap: 14px; }
+.author-logo { width: 44px; height: 44px; border-radius: 999px; background: white; color: #1968AA; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.author-name { font-size: 15px; font-weight: 600; }
+.author-url { font-size: 13px; color: #93c5fd; }
+
+.right {
+  width: 460px;
+  padding: 60px 50px 60px 0;
+  display: flex;
+  align-items: center;
+}
+.card {
+  background: #0c1222;
+  border-radius: 18px;
+  padding: 22px;
+  width: 100%;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.card-title { font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 6px; }
+.card-sub { font-size: 13px; font-weight: 700; color: white; margin-bottom: 16px; }
+.row {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+.row-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+.row-text { font-size: 11px; color: #cbd5e1; }
+.row-cyan { color: #67e8f9; }
+.row-purple { color: #c4b5fd; }
+.row-amber { color: #fcd34d; }
+.row-emerald { color: #6ee7b7; }
+.row-red { color: #fca5a5; }
+.pill { display: inline-block; background: rgba(255,255,255,0.04); border-radius: 6px; padding: 3px 8px; font-size: 9px; color: #94a3b8; margin-right: 4px; margin-top: 3px; }
+.pill-ok { color: #6ee7b7; background: rgba(16,185,129,0.10); }
+.pill-no { color: #fca5a5; background: rgba(239,68,68,0.10); }
