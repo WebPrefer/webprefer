@@ -601,7 +601,7 @@
     </div>
     <h1>Wepam Platform</h1>
     <div class="subtitle">Player Account Management &mdash; System Documentation</div>
-    <div class="meta">Last updated: March 2026 &nbsp;|&nbsp; .NET 10 &nbsp;|&nbsp; Blazor &nbsp;|&nbsp; EF Core &nbsp;|&nbsp; SQL Server &nbsp;|&nbsp; Redis &nbsp;|&nbsp; RabbitMQ &nbsp;|&nbsp; SignalR &nbsp;|&nbsp; Web3 &nbsp;|&nbsp; AI (Gemini 3 Pro) &nbsp;|&nbsp; AWS &nbsp;|&nbsp; Terraform &nbsp;|&nbsp; 50+ Integrations &nbsp;|&nbsp; 7 Jurisdictions</div>
+    <div class="meta">Last updated: April 2026 &nbsp;|&nbsp; .NET 10 &nbsp;|&nbsp; Blazor &nbsp;|&nbsp; EF Core &nbsp;|&nbsp; SQL Server &nbsp;|&nbsp; Redis &nbsp;|&nbsp; RabbitMQ &nbsp;|&nbsp; SignalR &nbsp;|&nbsp; Web3 &nbsp;|&nbsp; AI (Gemini 2.5 Flash) &nbsp;|&nbsp; AWS &nbsp;|&nbsp; Terraform &nbsp;|&nbsp; 50+ Integrations &nbsp;|&nbsp; 7 Jurisdictions</div>
 </div>
 
 <div class="shell">
@@ -657,7 +657,7 @@
                     <tr><td>Real-time</td><td>SignalR + Redis backplane</td><td>&mdash;</td></tr>
                     <tr><td>CSS</td><td>Tailwind CSS</td><td>4.x</td></tr>
                     <tr><td>Web3</td><td>Wagmi + Viem + Web3Modal</td><td>2.x / 5.x</td></tr>
-                    <tr><td>AI</td><td>Gemini 3 Pro (gemini-3-pro-preview)</td><td>3.0</td></tr>
+                    <tr><td>AI</td><td>Gemini 2.5 Flash (<code>gemini-2.5-flash</code>) via Google GenAI</td><td>2.5</td></tr>
                     <tr><td>Observability</td><td>Log4Net + OpenTelemetry</td><td>&mdash;</td></tr>
                     <tr><td>IaC</td><td>Terraform + Ansible</td><td>&mdash;</td></tr>
                     <tr><td>Cloud</td><td>AWS</td><td>&mdash;</td></tr>
@@ -1247,7 +1247,7 @@
                     <tr><td><code>PAM.Web.Api</code></td><td>Web API</td><td>Player-facing REST API: 32 controllers, Swagger/ReDoc, SignalR</td></tr>
                     <tr><td><code>PAM.Web.Cms</code></td><td>Web App</td><td>CMS system (Blazor-based)</td></tr>
                     <tr><td><code>PAM.Web.TestingFrontend</code></td><td>Web App</td><td>Testing/demo frontend with Web3Modal integration</td></tr>
-                    <tr><td><code>PAM.AI</code></td><td>Library</td><td>Gemini 3 Pro AI integration for support chat</td></tr>
+                    <tr><td><code>PAM.AI</code></td><td>Library</td><td>Gemini 2.5 Flash AI integration: AI Chat (function-calling, 60+ tools) + AI Studio (agentic plan/execute sessions, scheduling, Slack notifications)</td></tr>
                     <tr><td><code>PAM.Service.Behave</code></td><td>Service</td><td>Event listener / behavior engine (RabbitMQ consumer)</td></tr>
                     <tr><td><code>PAM.Service.Cron</code></td><td>Service</td><td>Scheduled background tasks</td></tr>
                     <tr><td><code>PAM.Service.EventQueue</code></td><td>Service</td><td>Message queue consumer</td></tr>
@@ -1616,54 +1616,127 @@
                     </div>
                 </div>
 
-                <h3>AI Support Agent</h3>
+                <h3>AI Module (PAM.AI)</h3>
                 <div class="callout callout-info">
-                    <strong>Built-in AI Assistant for Back-Office Staff</strong>
-                    Powered by Gemini 3 Pro (<code>gemini-3-pro-preview</code>), the AI Support Agent helps operators analyze and resolve player issues with compliance-first guidance.
+                    <strong>Two AI-powered surfaces for back-office operators</strong>
+                    Powered by <code>gemini-2.5-flash</code> via Google GenAI. <strong>AI Chat</strong> is an inline panel on player pages for conversational, function-calling queries about a specific player. <strong>AI Studio</strong> is a full-page agentic system that generates a multi-step plan, executes steps against live data, and supports scheduled runs with Slack reporting.
                 </div>
-                <div class="diagram-subtitle">How staff interact with the AI agent</div>
+
+                <h4>AI Chat — Inline Player Panel</h4>
+                <div class="diagram-subtitle">Function-calling flow with 60+ tools</div>
                 <div class="seq-diagram">
                     <div class="seq-step">
                         <div class="seq-line"><div class="seq-num">1</div></div>
                         <div class="seq-content">
                             <span class="seq-actor flow-blue">Staff User</span>
-                            <span class="seq-msg">Opens AI Support chat. System loads recent conversation or starts fresh session.</span>
+                            <span class="seq-msg">Types a question in the AI chat panel on a player page. <code>AIChatService</code> builds an <code>AIToolPermissionContext</code> from the current user's permissions and skin.</span>
                         </div>
                     </div>
                     <div class="seq-step">
                         <div class="seq-line"><div class="seq-num">2</div></div>
                         <div class="seq-content">
-                            <span class="seq-actor flow-green">Context Injection</span>
-                            <span class="seq-msg">AISupportController sends to Gemini: staff's permission set, full menu navigation tree, current skin/brand, conversation history</span>
+                            <span class="seq-actor flow-green">PII Sanitization</span>
+                            <span class="seq-msg">Player names, emails, phones, and addresses are replaced with <code>[TOKEN_N]</code> tokens before sending to Gemini. Tokens are restored in the final response.</span>
                         </div>
                     </div>
                     <div class="seq-step">
                         <div class="seq-line"><div class="seq-num">3</div></div>
                         <div class="seq-content">
-                            <span class="seq-actor flow-yellow">Gemini 3 Pro</span>
-                            <span class="seq-msg">Returns structured analysis: Issue Category, Quick Summary, Risk Flags (Responsible Gaming assessment), Recommended Actions, Suggested Player Message template, Escalation Guidance</span>
+                            <span class="seq-actor flow-yellow">Gemini 2.5 Flash</span>
+                            <span class="seq-msg"><code>GeminiService</code> sends message + FunctionDeclarations for all permitted tools (filtered by <code>AIToolRegistry</code>). Gemini returns FunctionCall(s) if data is needed. Up to 5 function-calling rounds per message.</span>
                         </div>
                     </div>
                     <div class="seq-step">
                         <div class="seq-line"><div class="seq-num">4</div></div>
                         <div class="seq-content">
-                            <span class="seq-actor flow-teal">Follow-up</span>
-                            <span class="seq-msg">Conversation persisted in database (<code>AIChatMessages</code>). Follow-up messages maintain full context. Refresh button clears for new cases.</span>
+                            <span class="seq-actor flow-teal">Tool Execution</span>
+                            <span class="seq-msg">Each tool re-validates permissions and skin scope before executing. Result is returned as FunctionResponse → Gemini returns final text.</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">5</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-blue">SignalR Push</span>
+                            <span class="seq-msg">Response pushed to UI via <code>IAIStudioNotifier</code> / SignalR. Conversation persisted in <code>AIChatMessages</code>.</span>
                         </div>
                     </div>
                 </div>
+
+                <h4>AI Studio — Agentic Sessions</h4>
+                <div class="diagram-subtitle">Event-driven plan → execute loop; survives browser disconnects</div>
+                <div class="seq-diagram">
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">1</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-blue">Staff User</span>
+                            <span class="seq-msg">Types a goal in AI Studio (<code>/AIStudio</code>). <code>AIStudioHub.StartSession(goal)</code> publishes <code>ai_studio.session.requested</code> to RabbitMQ and returns immediately.</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">2</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-yellow">PAM.Service.EventQueue</span>
+                            <span class="seq-msg"><code>AIStudioSessionListener</code> consumes the event. <code>AIStudioService.GeneratePlan(goal)</code> calls Gemini → returns a JSON plan of typed steps (Query / Analyze / Write).</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">3</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-teal">Plan Review</span>
+                            <span class="seq-msg">Plan pushed via SignalR Redis backplane (<code>PlanGenerated</code> event). Single-step plans with no approval auto-execute; otherwise operator reviews and clicks Run.</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">4</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-green">Step Execution</span>
+                            <span class="seq-msg">Each <code>ExecuteStep</code> call publishes <code>ai_studio.step.requested</code>. Listener calls <code>GeminiService.Chat()</code> with step prompt + tools → pushes <code>StepCompleted</code> with result HTML. <strong>Write steps</strong> always require operator approval before execution (<code>ApproveStep</code> publishes <code>ai_studio.approval.requested</code>).</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">5</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-yellow">Dynamic Replanning</span>
+                            <span class="seq-msg">After the last Analyze step, <code>TryReplan</code> asks Gemini if additional steps are warranted. New steps are appended and pushed via <code>StepsAppended</code>. Fires at most once per turn.</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">6</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-teal">Persistence</span>
+                            <span class="seq-msg">Session always persisted to DB regardless of connection state. <code>restoreLatest()</code> rehydrates session state when operator returns.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>Scheduled Sessions &amp; Slack Notifications</h4>
+                <table>
+                    <tr><th>Component</th><th>Role</th></tr>
+                    <tr><td><code>AIStudioScheduleCron</code></td><td>Runs every minute; queries due schedules and publishes <code>ai_studio.session.requested</code> with <code>ScheduleId</code></td></tr>
+                    <tr><td>Trusted Actions</td><td>Each <code>AIStudioSchedule</code> has a <code>TrustedActionsJson</code> list. Write steps matching a trusted action execute without human approval in scheduled mode.</td></tr>
+                    <tr><td><code>SlackNotifier</code></td><td>Posts a Block Kit summary to a Slack webhook after each scheduled run. Enabled via <code>GlobalConfiguration.AI.Slack.Enabled</code>. Errors are swallowed — never blocks the run.</td></tr>
+                </table>
+
+                <h4>Tool System (60+ tools)</h4>
+                <table>
+                    <tr><th>Step Type</th><th>Behavior</th><th>Approval</th></tr>
+                    <tr><td><code>Query</code></td><td>Runs tools, returns structured data</td><td>Never</td></tr>
+                    <tr><td><code>Analyze</code></td><td>Synthesises and interprets tool results</td><td>Never</td></tr>
+                    <tr><td><code>Write</code></td><td>Mutates data (bonus, segment, block, etc.)</td><td><strong>Always required</strong></td></tr>
+                </table>
+                <p>Write tools follow a <strong>Draft → Preview → Confirm</strong> pattern. The AI creates a draft stored in-memory (<code>AIDraftStore</code>), the operator reviews a preview, then confirmation saves via BL service.</p>
                 <div class="swim">
                     <div class="swim-lane">Safety</div>
                     <div class="swim-content">
-                        <span style="font-size:0.82rem;">Never encourages gambling &bull; Never bypasses KYC/AML/self-exclusion &bull; Never reveals player PII &bull; Never creates fake documents &bull; Content filtered for harassment, hate speech, dangerous content</span>
+                        <span style="font-size:0.82rem;">PII tokenized before LLM &bull; Permissions re-checked before every tool execution &bull; All queries skin-scoped &bull; Write tools always require human approval &bull; Result cap: 500 rows (execute_query), 50 rows per tool</span>
                     </div>
-                    <div class="swim-lane">Compliance</div>
+                    <div class="swim-lane">Context Caching</div>
                     <div class="swim-content">
-                        <span style="font-size:0.82rem;">Jurisdiction-aware responses &bull; References responsible gaming controls &bull; Suggests escalation paths &bull; Drafts player messages with compliance tone</span>
+                        <span style="font-size:0.82rem;"><code>AIContextSummaryService</code> caches context summaries in Redis with 60-min TTL (key: <code>ai-ctx:{context}:{skinId}:{SHA256(data)}</code>) — prevents redundant Gemini calls across app servers</span>
                     </div>
-                    <div class="swim-lane">Context</div>
+                    <div class="swim-lane">Domains covered</div>
                     <div class="swim-content">
-                        <span style="font-size:0.82rem;">Permission-aware (tailors advice to staff role) &bull; Navigation-aware (references relevant back-office sections) &bull; Brand-aware (uses correct skin context)</span>
+                        <span style="font-size:0.82rem;">Players &bull; Bonus &bull; Banking &bull; KYC &bull; Responsible Gaming &bull; Casino &bull; Sportsbook &bull; Bingo &bull; Messaging &bull; Behave Rules &bull; Player Segmentation &bull; Reporting &bull; Audit &bull; Admin &bull; Data Query Pipeline</span>
                     </div>
                 </div>
 
