@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="WebPrefer — Enterprise iGaming platform. PAM, CMS, BeAware and streaming solutions built for operators who can't afford to guess.">
-  <title>WebPrefer — PAM Platform for iGaming Operators</title>
-  <meta property="og:title" content="WebPrefer — PAM Platform for iGaming Operators">
-  <meta property="og:description" content="10+ years. 18,000+ commits. 5 regulated markets. Every feature has a production scar behind it.">
+  <meta name="description" content="WebPrefer — Enterprise iGaming platform plus WePredict, our AI-native prediction market exchange. PAM, BeAware, CMS, streaming, and prediction markets — all built by the same team.">
+  <title>WebPrefer — iGaming Platform & Prediction Market Exchange</title>
+  <meta property="og:title" content="WebPrefer — iGaming Platform & Prediction Market Exchange">
+  <meta property="og:description" content="PAM, BeAware, CMS, Streaming, and WePredict. 10+ years building iGaming infrastructure and AI-native prediction markets.">
   <meta property="og:image" content="https://webprefer.com/images/og-images/home.png">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://webprefer.com">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="WebPrefer — PAM Platform for iGaming Operators">
-  <meta name="twitter:description" content="10+ years. 18,000+ commits. 5 regulated markets. Every feature has a production scar behind it.">
+  <meta name="twitter:title" content="WebPrefer — iGaming Platform & Prediction Market Exchange">
+  <meta name="twitter:description" content="PAM, BeAware, CMS, Streaming, and WePredict. 10+ years building iGaming infrastructure and AI-native prediction markets.">
   <meta name="twitter:image" content="https://webprefer.com/images/og-images/home.png">
   <meta name="theme-color" content="#1968AA">
   <link rel="icon" type="image/png" href="images/favicon.png">
@@ -576,10 +576,11 @@
     <div class="max-w-7xl mx-auto">
       <div class="max-w-2xl mb-16">
         <div class="section-label text-brand mb-3">Products</div>
-        <h2 class="text-4xl font-bold mb-5">Three products. One coherent platform.</h2>
+        <h2 class="text-4xl font-bold mb-5">Five products. One coherent platform.</h2>
         <p class="text-lg text-gray-600 leading-relaxed">
           A PAM alone doesn't retain players. WebPrefer's full suite covers
-          operations, content, and engagement — all from the same team.
+          operations, content, and engagement — and now extends into AI-native
+          prediction markets with WePredict.
         </p>
       </div>
 
@@ -746,7 +747,7 @@
       </div>
 
       <!-- Streaming -->
-      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-8">
         <div class="grid lg:grid-cols-2">
           <!-- Streaming flow mini -->
           <div class="bg-[#0c1222] flex items-center p-6 lg:p-8 order-2 lg:order-1">
@@ -801,6 +802,87 @@
               <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Retention and reactivation focused</li>
               <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Live with Trustplay in production</li>
             </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- WePredict -->
+      <div id="wepredict" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="grid lg:grid-cols-2">
+          <div class="p-10 lg:p-14 flex flex-col justify-center">
+            <div class="flex items-center gap-2 mb-4">
+              <div class="section-label text-brand">WePredict</div>
+              <span class="bg-rose-100 text-rose-700 text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full">New</span>
+            </div>
+            <h3 class="text-3xl font-bold mb-5">AI-native Prediction Market Exchange</h3>
+            <p class="text-gray-600 leading-relaxed mb-8">
+              A standalone trading platform where players buy YES/NO shares on real-world
+              events peer-to-peer through an internal Central Limit Order Book. External
+              feeds like Polymarket and Kalshi are demoted to backstop. A full suite of
+              autonomous AI agents drives market analysis, fraud detection, settlement
+              verification, and natural-language trading.
+            </p>
+            <ul class="space-y-3 text-sm text-gray-600">
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Internal CLOB matches YES/NO peer-to-peer — external feeds are backstop only</li>
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> 15+ autonomous AI agents — market analyst, market maker, fraud, settlement verification</li>
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Multi-provider AI — Gemini, Claude, OpenAI, Azure, Ollama (runtime-switchable)</li>
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Operator Integration API — embed as a vertical via SSO + webhooks</li>
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Dual wallet track — custodial USD and Web3 USDC, hidden from mainstream users</li>
+              <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span> Built on .NET 10, Blazor SSR + Server, EF Core, RabbitMQ, Redis, SignalR</li>
+            </ul>
+          </div>
+          <!-- WePredict mini market detail -->
+          <div class="bg-[#0c1222] flex items-center p-6 lg:p-8">
+            <div class="w-full space-y-3">
+              <div class="flex items-center gap-2 mb-4">
+                <div class="text-white text-xs font-bold">Market Detail</div>
+                <div class="flex items-center gap-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-2 py-0.5 ml-auto"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400 hero-pulse"></div><span class="text-emerald-400 text-[9px] font-semibold">LIVE</span></div>
+              </div>
+              <!-- Market title + YES/NO prices -->
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+                <div class="text-gray-300 text-[11px] font-medium mb-2">Will BTC exceed $120K before July 2026?</div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div class="bg-emerald-500/10 border border-emerald-500/20 rounded p-2 text-center">
+                    <div class="text-emerald-400 text-[9px] font-bold uppercase tracking-wider">Yes</div>
+                    <div class="text-emerald-300 text-base font-bold">57¢</div>
+                  </div>
+                  <div class="bg-red-500/10 border border-red-500/20 rounded p-2 text-center">
+                    <div class="text-red-400 text-[9px] font-bold uppercase tracking-wider">No</div>
+                    <div class="text-red-300 text-base font-bold">43¢</div>
+                  </div>
+                </div>
+              </div>
+              <!-- Order book depth -->
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+                <div class="text-gray-500 text-[9px] font-semibold uppercase tracking-wider mb-2">Order Book — top of book</div>
+                <div class="space-y-1">
+                  <div class="flex justify-between text-[10px]"><span class="text-emerald-400">Yes 0.57 × 1,200</span><span class="text-red-400">No 0.43 × 980</span></div>
+                  <div class="flex justify-between text-[10px]"><span class="text-emerald-400">Yes 0.56 × 850</span><span class="text-red-400">No 0.44 × 720</span></div>
+                  <div class="flex justify-between text-[10px]"><span class="text-emerald-400">Yes 0.55 × 600</span><span class="text-red-400">No 0.45 × 540</span></div>
+                </div>
+              </div>
+              <!-- AI agents active -->
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+                <div class="text-gray-500 text-[9px] font-semibold uppercase tracking-wider mb-2">AI Agents · active</div>
+                <div class="flex flex-wrap gap-1.5">
+                  <span class="bg-purple-500/10 text-purple-400 text-[9px] px-2 py-0.5 rounded border border-purple-500/15">Market Analyst</span>
+                  <span class="bg-blue-500/10 text-blue-400 text-[9px] px-2 py-0.5 rounded border border-blue-500/15">Market Maker</span>
+                  <span class="bg-amber-500/10 text-amber-400 text-[9px] px-2 py-0.5 rounded border border-amber-500/15">Fraud Detect</span>
+                  <span class="bg-emerald-500/10 text-emerald-400 text-[9px] px-2 py-0.5 rounded border border-emerald-500/15">Settlement</span>
+                </div>
+              </div>
+              <!-- Stats -->
+              <div class="grid grid-cols-2 gap-2">
+                <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+                  <div class="text-gray-500 text-[9px]">Internal fill rate</div>
+                  <div class="text-emerald-400 text-base font-bold">63%</div>
+                </div>
+                <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+                  <div class="text-gray-500 text-[9px]">Aggressor fee</div>
+                  <div class="text-white text-base font-bold">2.0%</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
