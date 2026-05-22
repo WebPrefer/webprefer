@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CMS — WebPrefer's iGaming-specific content management system. Game menus, promotion pages, skin-specific layouts, jurisdiction-aware content rules. Built on Blazor with the same auth as PAM.">
+  <title>CMS — iGaming Content Management | WebPrefer</title>
+  <meta property="og:title" content="CMS — iGaming Content Management">
+  <meta property="og:description" content="Built specifically for iGaming operators — not adapted from a generic CMS. Game menus, promotion pages, skin-specific layouts. Operators control it, developers stay focused.">
+  <meta property="og:image" content="https://webprefer.com/images/og-images/cms.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://webprefer.com/cms/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CMS — iGaming Content Management">
+  <meta name="twitter:description" content="Built specifically for iGaming operators — not adapted from a generic CMS.">
+  <meta name="twitter:image" content="https://webprefer.com/images/og-images/cms.png">
+  <meta name="theme-color" content="#1968AA">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="canonical" href="https://webprefer.com/cms/">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"WebPrefer CMS — iGaming Content Management","applicationCategory":"BusinessApplication","applicationSubCategory":"iGaming Content Management System","operatingSystem":"Web, Windows Server","description":"iGaming-specific content management system. Game menus, promotion pages, skin-specific layouts, jurisdiction-aware content rules. Built on Blazor with the same auth, RBAC, and audit trail as PAM.","url":"https://webprefer.com/cms/","image":"https://webprefer.com/images/og-images/cms.png","brand":{"@type":"Brand","name":"WebPrefer"},"publisher":{"@type":"Organization","name":"WebPrefer AB","url":"https://webprefer.com","logo":{"@type":"ImageObject","url":"https://webprefer.com/images/logo.svg"}}}</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HC29B7MQF3"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HC29B7MQF3');</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{brand:{DEFAULT:'#1968AA',dark:'#134f82',darker:'#0d3459',light:'#2a7ec4'}},fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    img { max-width: 100%; height: auto; }
+    body { overflow-x: hidden; }
+    .gradient-hero { background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%); }
+    .nav-link { transition: color 0.15s ease; }
+    .hero-pulse { animation: hero-pulse 2s cubic-bezier(0,0,.2,1) infinite; }
+    @keyframes hero-pulse { 0%,100% { opacity:1 } 50% { opacity:.55 } }
+    .section-label { font-size:.75rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; }
+  </style>
+</head>
+<body class="font-sans bg-white text-gray-900 antialiased">
+
+  <!-- NAV -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="../" class="flex items-center gap-2"><img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto"></a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="../#platform" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Platform</a>
+        <a href="../#products" class="nav-link text-sm font-medium text-brand font-semibold">Products</a>
+        <a href="../#proof" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Customers</a>
+        <a href="../#partners" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Partners</a>
+        <a href="../#contact" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Contact</a>
+        <a href="../insights/" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Insights</a>
+      </div>
+      <a href="../#contact" class="bg-brand hover:bg-[#134f82] text-white text-sm font-semibold px-5 py-2.5 rounded-lg hidden md:inline-flex">Book a Demo</a>
+      <button id="mobile-menu-btn" aria-label="Toggle navigation menu" class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100">
+        <svg id="icon-open" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-1">
+      <a href="../" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand">Home</a>
+      <a href="../#products" class="block py-2.5 text-sm font-medium text-brand font-semibold">Products</a>
+      <a href="../insights/" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand">Insights</a>
+      <a href="../#contact" class="block mt-2 bg-brand text-white text-sm font-semibold px-5 py-2.5 rounded-lg text-center">Book a Demo</a>
+    </div>
+  </header>
+  <script>const btn=document.getElementById('mobile-menu-btn'),menu=document.getElementById('mobile-menu'),iconOpen=document.getElementById('icon-open'),iconClose=document.getElementById('icon-close');btn.addEventListener('click',()=>{menu.classList.toggle('hidden');iconOpen.classList.toggle('hidden');iconClose.classList.toggle('hidden');});</script>
+
+  <!-- HERO -->
+  <section class="gradient-hero pt-32 pb-20 px-6 lg:px-8 text-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-7">
+          <div class="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-3 py-1 mb-6">
+            <span class="bg-emerald-400/30 text-emerald-100 text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full">Live</span>
+            <span class="text-blue-100 text-sm">Built for iGaming — not adapted from a generic CMS</span>
+          </div>
+          <h1 class="text-4xl lg:text-5xl font-extrabold leading-tight mb-5">
+            A content system that understands iGaming.
+          </h1>
+          <p class="text-xl text-blue-100 leading-relaxed mb-8 max-w-2xl">
+            Game menus, promotion pages, skin-specific layouts, jurisdiction-specific content rules. Operators control
+            it. Developers stay focused on what actually needs them. Built on Blazor — fast, reactive, no page reloads.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="../#contact" class="bg-white text-brand font-semibold px-6 py-3 rounded-lg hover:bg-blue-50 text-sm">Book a demo</a>
+            <a href="#features" class="bg-white/10 border border-white/20 text-white font-semibold px-6 py-3 rounded-lg hover:bg-white/15 text-sm">See what's inside &rarr;</a>
+          </div>
+        </div>
+        <div class="lg:col-span-5">
+          <!-- Hero mock: content manager -->
+          <div class="bg-[#0c1222] border border-white/10 rounded-2xl p-5 shadow-2xl">
+            <div class="space-y-3">
+              <div class="flex items-center gap-2">
+                <div class="text-white text-xs font-bold">Content Manager</div>
+                <div class="flex items-center gap-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-2 py-0.5 ml-auto"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400 hero-pulse"></div><span class="text-emerald-400 text-[9px] font-semibold">LIVE</span></div>
+              </div>
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+                <div class="text-gray-500 text-[9px] font-semibold uppercase tracking-wider mb-2">Pages</div>
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-between bg-white/[0.03] rounded px-2.5 py-1.5"><span class="text-white text-[10px]">🏠 Homepage</span><span class="bg-emerald-500/15 text-emerald-400 text-[8px] px-1.5 py-0.5 rounded">Published</span></div>
+                  <div class="flex items-center justify-between bg-white/[0.03] rounded px-2.5 py-1.5"><span class="text-white text-[10px]">🎰 Casino Lobby</span><span class="bg-emerald-500/15 text-emerald-400 text-[8px] px-1.5 py-0.5 rounded">Published</span></div>
+                  <div class="flex items-center justify-between bg-white/[0.03] rounded px-2.5 py-1.5"><span class="text-white text-[10px]">🎁 Spring Promotion</span><span class="bg-amber-500/15 text-amber-400 text-[8px] px-1.5 py-0.5 rounded">Draft</span></div>
+                  <div class="flex items-center justify-between bg-white/[0.03] rounded px-2.5 py-1.5"><span class="text-white text-[10px]">📋 Terms &amp; Conditions</span><span class="bg-emerald-500/15 text-emerald-400 text-[8px] px-1.5 py-0.5 rounded">Published</span></div>
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3"><div class="text-gray-500 text-[9px] mb-1">Game Menus</div><div class="text-white text-sm font-bold">24</div><div class="text-gray-600 text-[9px]">across 3 brands</div></div>
+                <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3"><div class="text-gray-500 text-[9px] mb-1">Active Skins</div><div class="text-white text-sm font-bold">6</div><div class="text-gray-600 text-[9px]">per jurisdiction</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY STATS -->
+  <section class="py-16 px-6 lg:px-8 border-b border-gray-100">
+    <div class="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-8">
+      <div><div class="text-3xl font-extrabold text-brand mb-1">Multi-brand</div><div class="text-sm text-gray-600">One editor manages content across every brand and skin in your portfolio</div></div>
+      <div><div class="text-3xl font-extrabold text-brand mb-1">Blazor</div><div class="text-sm text-gray-600">Reactive editor with no page reloads — same .NET stack as PAM</div></div>
+      <div><div class="text-3xl font-extrabold text-brand mb-1">&lt;100ms</div><div class="text-sm text-gray-600">Publish lag — Redis-cached delivery propagates instantly</div></div>
+      <div><div class="text-3xl font-extrabold text-brand mb-1">Native</div><div class="text-sm text-gray-600">Shares PAM's auth, RBAC, and audit trail — no parallel user system</div></div>
+    </div>
+  </section>
+
+  <!-- WHAT IT DOES -->
+  <section id="features" class="py-24 px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <div class="max-w-3xl mb-14">
+        <div class="section-label text-brand mb-3">What it does</div>
+        <h2 class="text-3xl lg:text-4xl font-bold mb-5">Content workflows shaped by iGaming, not by a generic agency CMS.</h2>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          Adapting WordPress to manage a casino lobby ends with custom plugins, brittle deployments, and a permissions
+          model that doesn't match how operators actually work. WebPrefer's CMS is built from the start around game
+          providers, brands, skins, jurisdictions, and the back-office permission model.
+        </p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6"><h3 class="font-bold text-gray-900 mb-2">Game menu management</h3><p class="text-sm text-gray-600 leading-relaxed">Drag-and-drop sections, featured games, category ordering — across all brands from one editor. Changes propagate live.</p></div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6"><h3 class="font-bold text-gray-900 mb-2">Promotion + bonus pages</h3><p class="text-sm text-gray-600 leading-relaxed">Build promo pages with bonus code wiring built in. Page schedules, regional visibility, and CTA tracking all native.</p></div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6"><h3 class="font-bold text-gray-900 mb-2">Skin-specific layouts</h3><p class="text-sm text-gray-600 leading-relaxed">Each brand has its own skin without forking templates. Marketing changes one brand's hero without touching another.</p></div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6"><h3 class="font-bold text-gray-900 mb-2">Jurisdiction-aware content</h3><p class="text-sm text-gray-600 leading-relaxed">Sweden players see Sweden-compliant terms. Ontario players see Ontario CTAs. Rules enforced at render time, not by guesswork.</p></div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6"><h3 class="font-bold text-gray-900 mb-2">Blazor-native</h3><p class="text-sm text-gray-600 leading-relaxed">Fast, reactive editor with no page reloads. Same .NET stack as the rest of the platform — one toolchain, one deploy.</p></div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6"><h3 class="font-bold text-gray-900 mb-2">PAM permission model</h3><p class="text-sm text-gray-600 leading-relaxed">Same RBAC as PAM. Content editors get exactly the access they need — no separate user system to maintain.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTEGRATED WITH PAM -->
+  <section class="py-24 px-6 lg:px-8 bg-gray-50">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <div class="section-label text-brand mb-3">Integrated with PAM</div>
+          <h2 class="text-3xl lg:text-4xl font-bold mb-5">One toolchain. One deploy. One audit trail.</h2>
+          <p class="text-lg text-gray-600 leading-relaxed mb-6">
+            CMS lives inside the WebPrefer platform — same auth, same RBAC, same back-office shell. Operators don't
+            switch tools to publish content or to manage players. Developers don't maintain a parallel content stack.
+          </p>
+          <ul class="space-y-3 text-gray-700 text-sm">
+            <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span><span>Shared cookie auth — log in once, manage everything</span></li>
+            <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span><span>Same permission filters as the rest of the back-office</span></li>
+            <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span><span>Skin selector built into every content surface</span></li>
+            <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span><span>Audit log entries flow into the same event stream as PAM</span></li>
+            <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span><span>Redis-cached delivery — published changes live in milliseconds</span></li>
+          </ul>
+        </div>
+        <div class="bg-[#0c1222] border border-white/10 rounded-2xl p-5 shadow-2xl">
+          <div class="space-y-3">
+            <div class="flex items-center gap-2">
+              <div class="text-white text-xs font-bold">Content Workflow</div>
+              <div class="flex items-center gap-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-2 py-0.5 ml-auto"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400 hero-pulse"></div><span class="text-emerald-400 text-[9px] font-semibold">SYNCED</span></div>
+            </div>
+            <!-- Audit trail -->
+            <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+              <div class="text-gray-500 text-[9px] font-semibold uppercase tracking-wider mb-2">Recent activity · shared audit log</div>
+              <div class="space-y-1.5">
+                <div class="flex items-center gap-2 text-[10px]">
+                  <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
+                  <span class="text-gray-300"><span class="text-emerald-400">Published</span> Spring Promotion → Brand A</span>
+                  <span class="text-gray-600 ml-auto">2m</span>
+                </div>
+                <div class="flex items-center gap-2 text-[10px]">
+                  <div class="w-1.5 h-1.5 rounded-full bg-blue-400"></div>
+                  <span class="text-gray-300"><span class="text-blue-400">Updated</span> Casino Lobby ordering</span>
+                  <span class="text-gray-600 ml-auto">8m</span>
+                </div>
+                <div class="flex items-center gap-2 text-[10px]">
+                  <div class="w-1.5 h-1.5 rounded-full bg-amber-400"></div>
+                  <span class="text-gray-300"><span class="text-amber-400">Draft</span> Terms update (Ontario)</span>
+                  <span class="text-gray-600 ml-auto">23m</span>
+                </div>
+                <div class="flex items-center gap-2 text-[10px]">
+                  <div class="w-1.5 h-1.5 rounded-full bg-purple-400"></div>
+                  <span class="text-gray-300"><span class="text-purple-400">Bonus code</span> WELCOME200 linked to promo</span>
+                  <span class="text-gray-600 ml-auto">1h</span>
+                </div>
+              </div>
+            </div>
+            <!-- Permissions -->
+            <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+              <div class="text-gray-500 text-[9px] font-semibold uppercase tracking-wider mb-2">Editor permissions · shared with PAM</div>
+              <div class="space-y-1.5">
+                <div class="flex items-center justify-between text-[10px]">
+                  <span class="text-gray-300">Content editor · Sweden</span>
+                  <span class="bg-emerald-500/15 text-emerald-400 text-[9px] px-1.5 py-0.5 rounded">cms:publish</span>
+                </div>
+                <div class="flex items-center justify-between text-[10px]">
+                  <span class="text-gray-300">Marketing · Brand A only</span>
+                  <span class="bg-blue-500/15 text-blue-400 text-[9px] px-1.5 py-0.5 rounded">cms:draft</span>
+                </div>
+                <div class="flex items-center justify-between text-[10px]">
+                  <span class="text-gray-300">Legal reviewer</span>
+                  <span class="bg-amber-500/15 text-amber-400 text-[9px] px-1.5 py-0.5 rounded">cms:review</span>
+                </div>
+              </div>
+            </div>
+            <!-- Cache + delivery -->
+            <div class="grid grid-cols-3 gap-2">
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-2.5 text-center">
+                <div class="text-gray-500 text-[9px]">Cache hit</div>
+                <div class="text-emerald-400 text-sm font-bold">99.4%</div>
+              </div>
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-2.5 text-center">
+                <div class="text-gray-500 text-[9px]">Brands</div>
+                <div class="text-white text-sm font-bold">3</div>
+              </div>
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-2.5 text-center">
+                <div class="text-gray-500 text-[9px]">Publish lag</div>
+                <div class="text-white text-sm font-bold">&lt;100ms</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKFLOW -->
+  <section class="py-24 px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <div class="max-w-3xl mb-12">
+        <div class="section-label text-brand mb-3">Content workflow</div>
+        <h2 class="text-3xl lg:text-4xl font-bold mb-5">Draft. Review. Publish. Cache. All in one place.</h2>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          Most CMS workflows assume one site, one audience, one editor. iGaming reality is multiple brands, multiple
+          jurisdictions, regulated copy reviews, and a marketing team that wants to publish a promo at midnight without
+          paging an engineer. The workflow is shaped accordingly.
+        </p>
+      </div>
+
+      <div class="space-y-5">
+        <div class="grid lg:grid-cols-12 gap-5 items-stretch">
+          <div class="lg:col-span-2 bg-brand text-white rounded-xl p-5 flex flex-col items-center justify-center text-center">
+            <div class="text-xs font-bold uppercase tracking-widest mb-1">Step 1</div>
+            <div class="text-2xl font-extrabold">Draft</div>
+          </div>
+          <div class="lg:col-span-10 bg-white border border-gray-100 rounded-xl p-6">
+            <h3 class="font-bold text-gray-900 mb-2">Edit per brand, per skin, per jurisdiction</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">Marketing creates or edits a page targeting a specific brand and jurisdiction. Drafts stay private. Linked bonus codes, game menus, and promotion windows wire in without leaving the editor.</p>
+          </div>
+        </div>
+        <div class="grid lg:grid-cols-12 gap-5 items-stretch">
+          <div class="lg:col-span-2 bg-brand text-white rounded-xl p-5 flex flex-col items-center justify-center text-center">
+            <div class="text-xs font-bold uppercase tracking-widest mb-1">Step 2</div>
+            <div class="text-2xl font-extrabold">Review</div>
+          </div>
+          <div class="lg:col-span-10 bg-white border border-gray-100 rounded-xl p-6">
+            <h3 class="font-bold text-gray-900 mb-2">Permission-scoped approval gates</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">Regulated markets need a legal review before terms or bonus T&amp;Cs go live. The CMS supports approval gates by permission — drafts can require a reviewer with a specific role before publish is enabled.</p>
+          </div>
+        </div>
+        <div class="grid lg:grid-cols-12 gap-5 items-stretch">
+          <div class="lg:col-span-2 bg-brand text-white rounded-xl p-5 flex flex-col items-center justify-center text-center">
+            <div class="text-xs font-bold uppercase tracking-widest mb-1">Step 3</div>
+            <div class="text-2xl font-extrabold">Publish</div>
+          </div>
+          <div class="lg:col-span-10 bg-white border border-gray-100 rounded-xl p-6">
+            <h3 class="font-bold text-gray-900 mb-2">Atomic publish + Redis cache invalidation</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">Publish writes the new version to the database and invalidates the matching Redis cache keys. The next player request hits a cold cache once, then everyone after gets fresh content from cache — usually within 100ms of publish.</p>
+          </div>
+        </div>
+        <div class="grid lg:grid-cols-12 gap-5 items-stretch">
+          <div class="lg:col-span-2 bg-brand text-white rounded-xl p-5 flex flex-col items-center justify-center text-center">
+            <div class="text-xs font-bold uppercase tracking-widest mb-1">Step 4</div>
+            <div class="text-2xl font-extrabold">Audit</div>
+          </div>
+          <div class="lg:col-span-10 bg-white border border-gray-100 rounded-xl p-6">
+            <h3 class="font-bold text-gray-900 mb-2">Every change versioned and traceable</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">Every save and publish is a new version with editor, timestamp, brand, and diff. Roll back to any version with one click. Audit entries flow into the same event log as the rest of the platform.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH FOUNDATION -->
+  <section class="py-24 px-6 lg:px-8 bg-gray-50">
+    <div class="max-w-6xl mx-auto">
+      <div class="max-w-3xl mb-12">
+        <div class="section-label text-brand mb-3">Built on the same foundation</div>
+        <h2 class="text-3xl lg:text-4xl font-bold mb-5">A CMS module, not a separate stack.</h2>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          CMS is a module inside the WebPrefer platform. No separate deployment, no second user system, no parallel
+          permission model. Operators install PAM and get CMS in the box.
+        </p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="bg-white border border-gray-100 rounded-xl p-6"><h3 class="font-bold text-gray-900 mb-1.5">Blazor-native editor</h3><p class="text-sm text-gray-600 leading-relaxed">Fast, reactive editor with no page reloads. Same toolchain and deploy pipeline as the rest of PAM.</p></div>
+        <div class="bg-white border border-gray-100 rounded-xl p-6"><h3 class="font-bold text-gray-900 mb-1.5">Versioned content</h3><p class="text-sm text-gray-600 leading-relaxed">Every save creates a new version. Compare any two versions, roll back instantly, never lose a draft.</p></div>
+        <div class="bg-white border border-gray-100 rounded-xl p-6"><h3 class="font-bold text-gray-900 mb-1.5">Brand + jurisdiction scoping</h3><p class="text-sm text-gray-600 leading-relaxed">Editor scoping enforced at query time. A marketing manager for Brand A literally cannot see Brand B drafts.</p></div>
+        <div class="bg-white border border-gray-100 rounded-xl p-6"><h3 class="font-bold text-gray-900 mb-1.5">Redis-cached delivery</h3><p class="text-sm text-gray-600 leading-relaxed">Published content hits Redis cache. Player site reads are sub-millisecond — DB hit only on first request after publish.</p></div>
+        <div class="bg-white border border-gray-100 rounded-xl p-6"><h3 class="font-bold text-gray-900 mb-1.5">Skin-aware rendering</h3><p class="text-sm text-gray-600 leading-relaxed">A single page definition renders differently per skin via the skin selector — no template forks, no copy-paste across brands.</p></div>
+        <div class="bg-white border border-gray-100 rounded-xl p-6"><h3 class="font-bold text-gray-900 mb-1.5">Audit trail in the platform log</h3><p class="text-sm text-gray-600 leading-relaxed">Every publish and draft change writes to the same audit pipeline as wallet operations and KYC reviews.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl lg:text-4xl font-bold mb-5">See content managed live across multiple brands.</h2>
+      <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+        We'll show how operators run game lobbies, promotion pages, and skin-specific content for several brands from
+        a single editor — and how it plugs into the rest of the platform.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="../#contact" class="bg-brand hover:bg-[#134f82] text-white font-semibold px-7 py-3.5 rounded-lg text-sm">Book a demo</a>
+        <a href="../#products" class="bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold px-7 py-3.5 rounded-lg text-sm">See all five products &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-white py-12 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+          <img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto brightness-0 invert">
+          <span class="text-gray-400 text-sm">WebPrefer AB (556748-3523)</span>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm text-gray-400">
+          <a href="../pam/" class="hover:text-white transition-colors">PAM</a>
+          <a href="../beaware/" class="hover:text-white transition-colors">BeAware</a>
+          <a href="./" class="hover:text-white transition-colors font-semibold">CMS</a>
+          <a href="../streaming/" class="hover:text-white transition-colors">Streaming</a>
+          <a href="../wepredict/" class="hover:text-white transition-colors">WePredict</a>
+          <a href="../insights/" class="hover:text-white transition-colors">Insights</a>
+          <a href="../#contact" class="hover:text-white transition-colors">Contact</a>
+        </div>
+        <div class="text-gray-500 text-xs">&copy; <span data-year>2026</span> WebPrefer AB</div>
+      </div>
+    </div>
+  </footer>
+  <script>document.querySelectorAll("[data-year]").forEach(e=>e.textContent=new Date().getFullYear())</script>
+</body>
+</html>

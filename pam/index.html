@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PAM — WebPrefer's Player Account Management platform. Multi-tenant, multi-jurisdiction, multi-brand iGaming core. 10+ years in production, 5 regulated markets, 40+ feature modules, 30+ provider integrations.">
+  <title>PAM — Player Account Management for iGaming Operators | WebPrefer</title>
+  <meta property="og:title" content="PAM — Player Account Management for iGaming Operators">
+  <meta property="og:description" content="The operational core. Multi-brand, multi-jurisdiction iGaming PAM running live in 5 regulated markets. 80+ controllers, 40+ modules, 30+ integrations.">
+  <meta property="og:image" content="https://webprefer.com/images/og-images/pam.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://webprefer.com/pam/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PAM — Player Account Management for iGaming Operators">
+  <meta name="twitter:description" content="The operational core. Multi-brand, multi-jurisdiction iGaming PAM running live in 5 regulated markets.">
+  <meta name="twitter:image" content="https://webprefer.com/images/og-images/pam.png">
+  <meta name="theme-color" content="#1968AA">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="canonical" href="https://webprefer.com/pam/">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"PAM — Player Account Management","applicationCategory":"BusinessApplication","applicationSubCategory":"iGaming Platform","operatingSystem":"Web, Windows Server","description":"WebPrefer's Player Account Management platform. Multi-tenant, multi-jurisdiction, multi-brand iGaming core handling player accounts, wallets, payments, bonuses, KYC, and back-office administration. 10+ years in production across 5 regulated markets.","url":"https://webprefer.com/pam/","image":"https://webprefer.com/images/og-images/pam.png","brand":{"@type":"Brand","name":"WebPrefer"},"publisher":{"@type":"Organization","name":"WebPrefer AB","url":"https://webprefer.com","logo":{"@type":"ImageObject","url":"https://webprefer.com/images/logo.svg"}},"aggregateRating":{"@type":"AggregateRating","ratingValue":"5","reviewCount":"1","bestRating":"5"}}</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HC29B7MQF3"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HC29B7MQF3');</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { brand: { DEFAULT: '#1968AA', dark: '#134f82', darker: '#0d3459', light: '#2a7ec4' } }, fontFamily: { sans: ['Inter','system-ui','sans-serif'] } } } }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    img { max-width: 100%; height: auto; }
+    body { overflow-x: hidden; }
+    .gradient-hero { background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%); }
+    .nav-link { transition: color 0.15s ease; }
+    .hero-pulse { animation: hero-pulse 2s cubic-bezier(0,0,.2,1) infinite; }
+    @keyframes hero-pulse { 0%,100% { opacity:1 } 50% { opacity:.55 } }
+    .section-label { font-size:.75rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; }
+  </style>
+</head>
+<body class="font-sans bg-white text-gray-900 antialiased">
+
+  <!-- NAV -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="../" class="flex items-center gap-2"><img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto"></a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="../#platform" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Platform</a>
+        <a href="../#products" class="nav-link text-sm font-medium text-brand font-semibold">Products</a>
+        <a href="../#proof" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Customers</a>
+        <a href="../#partners" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Partners</a>
+        <a href="../#contact" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Contact</a>
+        <a href="../insights/" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Insights</a>
+      </div>
+      <a href="../#contact" class="bg-brand hover:bg-[#134f82] text-white text-sm font-semibold px-5 py-2.5 rounded-lg hidden md:inline-flex">Book a Demo</a>
+      <button id="mobile-menu-btn" aria-label="Toggle navigation menu" class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100">
+        <svg id="icon-open" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-1">
+      <a href="../" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand">Home</a>
+      <a href="../#products" class="block py-2.5 text-sm font-medium text-brand font-semibold">Products</a>
+      <a href="../insights/" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand">Insights</a>
+      <a href="../#contact" class="block mt-2 bg-brand text-white text-sm font-semibold px-5 py-2.5 rounded-lg text-center">Book a Demo</a>
+    </div>
+  </header>
+  <script>const btn=document.getElementById('mobile-menu-btn'),menu=document.getElementById('mobile-menu'),iconOpen=document.getElementById('icon-open'),iconClose=document.getElementById('icon-close');btn.addEventListener('click',()=>{menu.classList.toggle('hidden');iconOpen.classList.toggle('hidden');iconClose.classList.toggle('hidden');});</script>
+
+  <!-- HERO -->
+  <section class="gradient-hero pt-32 pb-20 px-6 lg:px-8 text-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-7">
+          <div class="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-3 py-1 mb-6">
+            <span class="bg-emerald-400/30 text-emerald-100 text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full">Live</span>
+            <span class="text-blue-100 text-sm">In production since 2013 · 5 regulated markets</span>
+          </div>
+          <h1 class="text-4xl lg:text-5xl font-extrabold leading-tight mb-5">
+            The operational core for iGaming operators.
+          </h1>
+          <p class="text-xl text-blue-100 leading-relaxed mb-8 max-w-2xl">
+            PAM is multi-tenant, multi-jurisdiction, multi-brand. It handles player accounts, wallets, payments, bonuses,
+            KYC, and back-office administration across all your brands from a single deployment.
+            10+ years. 18,000+ commits. Every feature has a production scar behind it.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="../#contact" class="bg-white text-brand font-semibold px-6 py-3 rounded-lg hover:bg-blue-50 text-sm">Book a demo</a>
+            <a href="#capabilities" class="bg-white/10 border border-white/20 text-white font-semibold px-6 py-3 rounded-lg hover:bg-white/15 text-sm">See capabilities &rarr;</a>
+          </div>
+        </div>
+        <div class="lg:col-span-5">
+          <!-- Hero mock: player overview -->
+          <div class="bg-[#0c1222] border border-white/10 rounded-2xl p-5 shadow-2xl">
+            <div class="space-y-3">
+              <div class="flex items-center gap-2">
+                <div class="text-white text-xs font-bold">Player Overview</div>
+                <div class="flex items-center gap-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-2 py-0.5 ml-auto"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400 hero-pulse"></div><span class="text-emerald-400 text-[9px] font-semibold">LIVE</span></div>
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3"><div class="text-gray-500 text-[9px]">Active Sessions</div><div class="text-white text-base font-bold">1,247</div></div>
+                <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3"><div class="text-gray-500 text-[9px]">Today's Revenue</div><div class="text-white text-base font-bold">€34,829</div></div>
+                <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3"><div class="text-gray-500 text-[9px]">KYC Pending</div><div class="text-amber-400 text-base font-bold">12</div></div>
+                <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3"><div class="text-gray-500 text-[9px]">Brands Online</div><div class="text-emerald-400 text-base font-bold">3/3</div></div>
+              </div>
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+                <div class="text-gray-500 text-[9px] mb-2">Jurisdictions</div>
+                <div class="flex flex-wrap gap-1.5">
+                  <span class="bg-emerald-500/10 text-emerald-400 text-[9px] px-2 py-0.5 rounded border border-emerald-500/15">🇸🇪 Sweden</span>
+                  <span class="bg-emerald-500/10 text-emerald-400 text-[9px] px-2 py-0.5 rounded border border-emerald-500/15">🇨🇦 Ontario</span>
+                  <span class="bg-emerald-500/10 text-emerald-400 text-[9px] px-2 py-0.5 rounded border border-emerald-500/15">🇨🇼 Curacao</span>
+                  <span class="bg-emerald-500/10 text-emerald-400 text-[9px] px-2 py-0.5 rounded border border-emerald-500/15">🇲🇹 Malta</span>
+                  <span class="bg-blue-500/10 text-blue-400 text-[9px] px-2 py-0.5 rounded border border-blue-500/15">+ more</span>
+                </div>
+              </div>
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+                <div class="text-gray-500 text-[9px] mb-2">Tech stack</div>
+                <div class="flex flex-wrap gap-1.5">
+                  <span class="bg-blue-500/10 text-blue-400 text-[9px] px-2 py-0.5 rounded border border-blue-500/15">.NET 10</span>
+                  <span class="bg-blue-500/10 text-blue-400 text-[9px] px-2 py-0.5 rounded border border-blue-500/15">SQL Server</span>
+                  <span class="bg-blue-500/10 text-blue-400 text-[9px] px-2 py-0.5 rounded border border-blue-500/15">Redis</span>
+                  <span class="bg-blue-500/10 text-blue-400 text-[9px] px-2 py-0.5 rounded border border-blue-500/15">RabbitMQ</span>
+                  <span class="bg-blue-500/10 text-blue-400 text-[9px] px-2 py-0.5 rounded border border-blue-500/15">SignalR</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY STATS -->
+  <section class="py-16 px-6 lg:px-8 border-b border-gray-100">
+    <div class="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-8">
+      <div><div class="text-3xl font-extrabold text-brand mb-1">10+</div><div class="text-sm text-gray-600">Years in production — running real money since 2013</div></div>
+      <div><div class="text-3xl font-extrabold text-brand mb-1">5</div><div class="text-sm text-gray-600">Regulated markets — Sweden, Ontario, Malta, Curacao, and more</div></div>
+      <div><div class="text-3xl font-extrabold text-brand mb-1">40+</div><div class="text-sm text-gray-600">Business modules — banking, casino, sportsbook, bingo, KYC, CRM</div></div>
+      <div><div class="text-3xl font-extrabold text-brand mb-1">30+</div><div class="text-sm text-gray-600">Provider integrations — payments, game providers, communications, CRM</div></div>
+    </div>
+  </section>
+
+  <!-- CAPABILITIES -->
+  <section id="capabilities" class="py-24 px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <div class="max-w-3xl mb-14">
+        <div class="section-label text-brand mb-3">Capabilities</div>
+        <h2 class="text-3xl lg:text-4xl font-bold mb-5">One coherent system. Forty domains.</h2>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          PAM isn't a collection of tools stitched together. It's a single .NET solution where every module shares the
+          same auth, the same audit trail, the same real-time bus, and the same back-office.
+        </p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6">
+          <h3 class="font-bold text-gray-900 mb-2">Multi-brand, multi-jurisdiction</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">One deployment runs all your brands. Per-brand skins, currencies, languages, and jurisdiction rules — without forking the codebase.</p>
+        </div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6">
+          <h3 class="font-bold text-gray-900 mb-2">Real-time wallet</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Optimistic concurrency on every wallet operation. SignalR push for balance changes — no polling, no stale balances on the player UI.</p>
+        </div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6">
+          <h3 class="font-bold text-gray-900 mb-2">Banking + payments</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">PaymentIQ, Hexopay, SafeCharge. Deposit and withdrawal flows with bonus codes, fraud checks, manual approval queues, and idempotent callbacks.</p>
+        </div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6">
+          <h3 class="font-bold text-gray-900 mb-2">Bonus engine</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Welcome, deposit-match, free spins, cashback, tournament prize pools. Wagering requirements, expiry, and rollover all tracked.</p>
+        </div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6">
+          <h3 class="font-bold text-gray-900 mb-2">KYC + responsible gaming</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">TransUnion, Experian, Acuris for identity. Source-of-wealth checks. Self-exclusion, loss limits, reality checks — all jurisdiction-aware.</p>
+        </div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6">
+          <h3 class="font-bold text-gray-900 mb-2">Casino + sportsbook + bingo + lotto</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">25+ game providers integrated (NetEnt, Pragmatic, Evolution, NoLimitCity, …). Sports via SportTech / BetConstruct. Lotto via Lottoland.</p>
+        </div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6">
+          <h3 class="font-bold text-gray-900 mb-2">RBAC permissions</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Permission filters at controller and action level. Skin-scoped queries throughout. Audited writes everywhere.</p>
+        </div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6">
+          <h3 class="font-bold text-gray-900 mb-2">Back-office</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">80+ controllers, 44+ view areas. Player search, KYC review, manual wallet adjust, withdrawal approval, bonus assignment — all from one operator portal.</p>
+        </div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6">
+          <h3 class="font-bold text-gray-900 mb-2">AI module — built in</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">AI Chat and AI Studio with 60+ tools, provider-agnostic (Gemini / Claude / OpenAI). Operators get a coworker, not just a chatbot.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section class="py-24 px-6 lg:px-8 bg-gray-50">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-12 items-start">
+        <div>
+          <div class="section-label text-brand mb-3">Architecture</div>
+          <h2 class="text-3xl lg:text-4xl font-bold mb-5">Built for auditability and uptime.</h2>
+          <p class="text-lg text-gray-600 leading-relaxed mb-6">
+            PAM runs on familiar, auditable infrastructure for regulated markets. The event-driven design, caching,
+            and messaging layers are cloud-compatible — and a migration path exists for operators who need cloud
+            deployment.
+          </p>
+          <ul class="space-y-3 text-gray-700 text-sm">
+            <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span><span><strong>Player API</strong> — REST + real-time push for the player-facing site, with dual auth and full Swagger docs</span></li>
+            <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span><span><strong>Back-office</strong> — operator portal with role-based access down to the individual action</span></li>
+            <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span><span><strong>Business logic</strong> — 40+ feature modules, each behind a clear interface</span></li>
+            <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span><span><strong>Background workers</strong> — behavior engine, scheduled jobs, and async event queues</span></li>
+            <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span><span><strong>AI module</strong> — provider-agnostic, plugs in Gemini, Claude, or OpenAI without code changes</span></li>
+          </ul>
+        </div>
+        <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+          <div class="text-xs font-bold uppercase tracking-widest text-brand mb-4">Provider integrations</div>
+          <div class="space-y-4 text-sm">
+            <div>
+              <div class="font-semibold text-gray-900 mb-1.5">Payments</div>
+              <div class="text-gray-600">PaymentIQ · Hexopay · SafeCharge · PayAdmit</div>
+            </div>
+            <div>
+              <div class="font-semibold text-gray-900 mb-1.5">Casino / live</div>
+              <div class="text-gray-600">NetEnt · Pragmatic · Evolution · NoLimitCity · Yggdrasil · QuickSpin · PushGaming · Relax · RedTiger · ISoftBet · Endorphina · AuthenticGaming · Ganapati · MetricGaming · 100HPGaming · …</div>
+            </div>
+            <div>
+              <div class="font-semibold text-gray-900 mb-1.5">Sportsbook</div>
+              <div class="text-gray-600">SportTech · BetConstruct · Betby · First · JMJ · XJGames</div>
+            </div>
+            <div>
+              <div class="font-semibold text-gray-900 mb-1.5">Lotto + bingo + fantasy</div>
+              <div class="text-gray-600">Lottoland · LottoWarehouse · BitVille · End2End · ScoutFantasy</div>
+            </div>
+            <div>
+              <div class="font-semibold text-gray-900 mb-1.5">Communications</div>
+              <div class="text-gray-600">Twilio · SendGrid · AWS SES · Nexmo · Jojka · FortyTwo · Carma · Mandrill · SwiftMTA</div>
+            </div>
+            <div>
+              <div class="font-semibold text-gray-900 mb-1.5">CRM + identity</div>
+              <div class="text-gray-600">FastTrack · Optimove · DevCodeIdentity (SSO) · Affise (Affiliate)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO IT'S FOR -->
+  <section class="py-24 px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <div class="max-w-3xl mb-12">
+        <div class="section-label text-brand mb-3">Who PAM is for</div>
+        <h2 class="text-3xl lg:text-4xl font-bold mb-5">Operators who can't afford to guess.</h2>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          PAM is built for operators with real regulatory exposure, real player money, and real audit obligations.
+          It's not the right fit for greenfield prototypes or short-life pop-up brands.
+        </p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-6">
+          <div class="text-xs font-bold uppercase tracking-widest text-emerald-700 mb-2">Good fit</div>
+          <ul class="text-sm text-gray-700 space-y-2">
+            <li>Multi-brand operators</li>
+            <li>Multi-jurisdiction expansion</li>
+            <li>Real-money casino + sportsbook</li>
+            <li>Compliance-driven markets (SE, ON, MT)</li>
+            <li>Operators migrating off a legacy PAM</li>
+          </ul>
+        </div>
+        <div class="bg-amber-50 border border-amber-100 rounded-xl p-6">
+          <div class="text-xs font-bold uppercase tracking-widest text-amber-700 mb-2">Possible fit</div>
+          <ul class="text-sm text-gray-700 space-y-2">
+            <li>Single-brand operators planning to scale</li>
+            <li>White-label deployments</li>
+            <li>Crypto-first casinos (via integration)</li>
+            <li>Fantasy sports operators</li>
+          </ul>
+        </div>
+        <div class="bg-gray-100 border border-gray-200 rounded-xl p-6">
+          <div class="text-xs font-bold uppercase tracking-widest text-gray-600 mb-2">Not a fit</div>
+          <ul class="text-sm text-gray-700 space-y-2">
+            <li>Greenfield prototypes</li>
+            <li>Short-life promo brands</li>
+            <li>Operators who don't need a back-office</li>
+            <li>Pure social / play-money apps</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 px-6 lg:px-8 bg-gray-50">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl lg:text-4xl font-bold mb-5">See PAM running live.</h2>
+      <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+        We offer scoped demos based on your operation type — multi-brand, migration from a legacy PAM, or white-label
+        deployment. No generic walkthroughs.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="../#contact" class="bg-brand hover:bg-[#134f82] text-white font-semibold px-7 py-3.5 rounded-lg text-sm">Book a demo</a>
+        <a href="../#products" class="bg-white border border-gray-200 hover:bg-gray-100 text-gray-900 font-semibold px-7 py-3.5 rounded-lg text-sm">See all five products &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-white py-12 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+          <img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto brightness-0 invert">
+          <span class="text-gray-400 text-sm">WebPrefer AB (556748-3523)</span>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm text-gray-400">
+          <a href="./" class="hover:text-white transition-colors font-semibold">PAM</a>
+          <a href="../beaware/" class="hover:text-white transition-colors">BeAware</a>
+          <a href="../cms/" class="hover:text-white transition-colors">CMS</a>
+          <a href="../streaming/" class="hover:text-white transition-colors">Streaming</a>
+          <a href="../wepredict/" class="hover:text-white transition-colors">WePredict</a>
+          <a href="../insights/" class="hover:text-white transition-colors">Insights</a>
+          <a href="../#contact" class="hover:text-white transition-colors">Contact</a>
+        </div>
+        <div class="text-gray-500 text-xs">&copy; <span data-year>2026</span> WebPrefer AB</div>
+      </div>
+    </div>
+  </footer>
+  <script>document.querySelectorAll("[data-year]").forEach(e=>e.textContent=new Date().getFullYear())</script>
+</body>
+</html>

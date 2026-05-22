@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Streaming — WebPrefer's re-streaming and retention platform. Broadcast live operator content simultaneously to Twitch, YouTube, Facebook, and the operator site with branded overlays and auto-VOD.">
+  <title>Streaming — Re-streaming &amp; Retention for iGaming | WebPrefer</title>
+  <meta property="og:title" content="Streaming — Re-streaming &amp; Retention for iGaming">
+  <meta property="og:description" content="Your players are on Twitch, YouTube, and Facebook. This tool meets them there. Single RTMP source, simultaneous push to multiple platforms with HLS adaptive playback and auto-VOD.">
+  <meta property="og:image" content="https://webprefer.com/images/og-images/streaming.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://webprefer.com/streaming/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Streaming — Re-streaming &amp; Retention for iGaming">
+  <meta name="twitter:description" content="Single RTMP source, simultaneous push to multiple platforms with HLS adaptive playback and auto-VOD.">
+  <meta name="twitter:image" content="https://webprefer.com/images/og-images/streaming.png">
+  <meta name="theme-color" content="#1968AA">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="canonical" href="https://webprefer.com/streaming/">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"WebPrefer Streaming — Re-streaming &amp; Retention","applicationCategory":"MultimediaApplication","applicationSubCategory":"Live Streaming &amp; Re-streaming Platform","operatingSystem":"Web, AWS","description":"Live broadcast and re-streaming platform for iGaming operators. Single RTMP source pushes simultaneously to Twitch, YouTube, Facebook, and the operator site with HLS adaptive playback, branded overlays, and an automatic VOD pipeline.","url":"https://webprefer.com/streaming/","image":"https://webprefer.com/images/og-images/streaming.png","brand":{"@type":"Brand","name":"WebPrefer"},"publisher":{"@type":"Organization","name":"WebPrefer AB","url":"https://webprefer.com","logo":{"@type":"ImageObject","url":"https://webprefer.com/images/logo.svg"}}}</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HC29B7MQF3"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HC29B7MQF3');</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{brand:{DEFAULT:'#1968AA',dark:'#134f82',darker:'#0d3459',light:'#2a7ec4'}},fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    img { max-width: 100%; height: auto; }
+    body { overflow-x: hidden; }
+    .gradient-hero { background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%); }
+    .nav-link { transition: color 0.15s ease; }
+    .hero-pulse { animation: hero-pulse 2s cubic-bezier(0,0,.2,1) infinite; }
+    @keyframes hero-pulse { 0%,100% { opacity:1 } 50% { opacity:.55 } }
+    .section-label { font-size:.75rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; }
+  </style>
+</head>
+<body class="font-sans bg-white text-gray-900 antialiased">
+
+  <!-- NAV -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="../" class="flex items-center gap-2"><img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto"></a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="../#platform" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Platform</a>
+        <a href="../#products" class="nav-link text-sm font-medium text-brand font-semibold">Products</a>
+        <a href="../#proof" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Customers</a>
+        <a href="../#partners" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Partners</a>
+        <a href="../#contact" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Contact</a>
+        <a href="../insights/" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Insights</a>
+      </div>
+      <a href="../#contact" class="bg-brand hover:bg-[#134f82] text-white text-sm font-semibold px-5 py-2.5 rounded-lg hidden md:inline-flex">Book a Demo</a>
+      <button id="mobile-menu-btn" aria-label="Toggle navigation menu" class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100">
+        <svg id="icon-open" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-1">
+      <a href="../" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand">Home</a>
+      <a href="../#products" class="block py-2.5 text-sm font-medium text-brand font-semibold">Products</a>
+      <a href="../insights/" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand">Insights</a>
+      <a href="../#contact" class="block mt-2 bg-brand text-white text-sm font-semibold px-5 py-2.5 rounded-lg text-center">Book a Demo</a>
+    </div>
+  </header>
+  <script>const btn=document.getElementById('mobile-menu-btn'),menu=document.getElementById('mobile-menu'),iconOpen=document.getElementById('icon-open'),iconClose=document.getElementById('icon-close');btn.addEventListener('click',()=>{menu.classList.toggle('hidden');iconOpen.classList.toggle('hidden');iconClose.classList.toggle('hidden');});</script>
+
+  <!-- HERO -->
+  <section class="gradient-hero pt-32 pb-20 px-6 lg:px-8 text-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-7">
+          <div class="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-3 py-1 mb-6">
+            <span class="bg-emerald-400/30 text-emerald-100 text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full">Live</span>
+            <span class="text-blue-100 text-sm">In production with Trustplay · multi-platform broadcast</span>
+          </div>
+          <h1 class="text-4xl lg:text-5xl font-extrabold leading-tight mb-5">
+            Re-streaming &amp; retention.
+          </h1>
+          <p class="text-xl text-blue-100 leading-relaxed mb-8 max-w-2xl">
+            Your players are on Twitch, YouTube, and Facebook. This platform meets them there. A single RTMP source
+            from the operator's encoder is simultaneously broadcast across platforms with branded overlays, served to
+            the operator site via HLS adaptive bitrate, and archived automatically as VOD.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="../#contact" class="bg-white text-brand font-semibold px-6 py-3 rounded-lg hover:bg-blue-50 text-sm">Book a demo</a>
+            <a href="#flow" class="bg-white/10 border border-white/20 text-white font-semibold px-6 py-3 rounded-lg hover:bg-white/15 text-sm">See the stream flow &rarr;</a>
+          </div>
+        </div>
+        <div class="lg:col-span-5">
+          <!-- Hero mock: live stream flow -->
+          <div class="bg-[#0c1222] border border-white/10 rounded-2xl p-5 shadow-2xl">
+            <div class="space-y-3">
+              <div class="flex items-center gap-2">
+                <div class="text-white text-xs font-bold">Live Stream</div>
+                <div class="flex items-center gap-1 bg-red-500/10 border border-red-500/20 rounded-full px-2 py-0.5 ml-auto"><div class="w-1.5 h-1.5 rounded-full bg-red-400 hero-pulse"></div><span class="text-red-400 text-[9px] font-semibold">LIVE</span></div>
+              </div>
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3 text-center">
+                <div class="text-white text-[10px] font-semibold">🎥 Operator Encoder (OBS)</div>
+                <div class="text-gray-600 text-[9px]">Single RTMP stream · 1080p · 6 Mbps</div>
+              </div>
+              <div class="text-center text-gray-600 text-[10px]">↓ simultaneous push</div>
+              <div class="grid grid-cols-2 gap-2">
+                <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-2.5 flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div><div><div class="text-emerald-400 text-[10px] font-semibold">Operator Site</div><div class="text-gray-600 text-[8px]">HLS adaptive</div></div></div>
+                <div class="bg-purple-500/10 border border-purple-500/20 rounded-lg p-2.5 flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-purple-400"></div><div><div class="text-purple-400 text-[10px] font-semibold">Twitch</div><div class="text-gray-600 text-[8px]">Gaming audience</div></div></div>
+                <div class="bg-red-500/10 border border-red-500/20 rounded-lg p-2.5 flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-red-400"></div><div><div class="text-red-400 text-[10px] font-semibold">YouTube</div><div class="text-gray-600 text-[8px]">Auto VOD archive</div></div></div>
+                <div class="bg-blue-500/10 border border-blue-500/20 rounded-lg p-2.5 flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-blue-400"></div><div><div class="text-blue-400 text-[10px] font-semibold">Facebook</div><div class="text-gray-600 text-[8px]">via TLS tunnel</div></div></div>
+              </div>
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-2.5 flex items-center justify-between">
+                <div class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400 hero-pulse"></div><span class="text-gray-400 text-[9px]">Auto-VOD: record → encode → publish to CMS</span></div>
+                <span class="text-emerald-400 text-[9px] font-semibold">Active</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY STATS -->
+  <section class="py-16 px-6 lg:px-8 border-b border-gray-100">
+    <div class="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-8">
+      <div><div class="text-3xl font-extrabold text-brand mb-1">1</div><div class="text-sm text-gray-600">RTMP source from the operator's encoder — single push</div></div>
+      <div><div class="text-3xl font-extrabold text-brand mb-1">4+</div><div class="text-sm text-gray-600">Simultaneous platforms — site, Twitch, YouTube, Facebook</div></div>
+      <div><div class="text-3xl font-extrabold text-brand mb-1">HLS</div><div class="text-sm text-gray-600">Adaptive bitrate playback — every device, every connection</div></div>
+      <div><div class="text-3xl font-extrabold text-brand mb-1">Auto</div><div class="text-sm text-gray-600">VOD pipeline — record, encode, publish to CMS without operator intervention</div></div>
+    </div>
+  </section>
+
+  <!-- WHY IT EXISTS -->
+  <section class="py-24 px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <div class="max-w-3xl mb-14">
+        <div class="section-label text-brand mb-3">Why it exists</div>
+        <h2 class="text-3xl lg:text-4xl font-bold mb-5">Your audience isn't only on your site.</h2>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          Live game streams pull in viewers — but the audience is fragmented. Some sit on your operator site, some on
+          Twitch, some on YouTube. Pushing one stream four times manually wastes upload bandwidth and creates four
+          chances for something to go wrong. The streaming platform consolidates that into one source and one workflow.
+        </p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6">
+          <div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center mb-4"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg></div>
+          <h3 class="font-bold text-gray-900 mb-2">Single RTMP ingestion</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Operators push one stream from OBS or any RTMP encoder. The platform handles auth, key validation, and fan-out.</p>
+        </div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6">
+          <div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center mb-4"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></div>
+          <h3 class="font-bold text-gray-900 mb-2">HLS adaptive bitrate</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Multiple quality ladders generated automatically. Players watch smoothly on mobile, desktop, or constrained connections.</p>
+        </div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6">
+          <div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center mb-4"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg></div>
+          <h3 class="font-bold text-gray-900 mb-2">Multi-platform fan-out</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Same stream pushed to Twitch, YouTube Live, and Facebook Live concurrently. Facebook reached via a TLS tunnel that handles its RTMPS requirement.</p>
+        </div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6">
+          <div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center mb-4"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg></div>
+          <h3 class="font-bold text-gray-900 mb-2">Auto-VOD pipeline</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Every live session is recorded, encoded, and automatically published as a VOD post in the CMS — ready for replay and SEO indexing.</p>
+        </div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6">
+          <div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center mb-4"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/></svg></div>
+          <h3 class="font-bold text-gray-900 mb-2">Live chat layer</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Branded chat overlay integrated with the video player. Message moderation, banned-word filtering, and viewer presence built in.</p>
+        </div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6">
+          <div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center mb-4"><svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg></div>
+          <h3 class="font-bold text-gray-900 mb-2">Branded overlays</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Operator logo and channel info burned into every output stream. Different overlay variants per destination if needed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STREAM FLOW -->
+  <section id="flow" class="py-24 px-6 lg:px-8 bg-gray-50">
+    <div class="max-w-6xl mx-auto">
+      <div class="max-w-3xl mb-12">
+        <div class="section-label text-brand mb-3">Stream flow</div>
+        <h2 class="text-3xl lg:text-4xl font-bold mb-5">One source. Many destinations. Zero manual fan-out.</h2>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          The operator pushes once. The platform handles authentication, transcoding, HLS packaging, multi-platform
+          fan-out, recording, and VOD publishing. If any single destination fails, the others keep streaming.
+        </p>
+      </div>
+
+      <div class="space-y-5">
+        <div class="grid lg:grid-cols-12 gap-5 items-stretch">
+          <div class="lg:col-span-2 bg-brand text-white rounded-xl p-5 flex flex-col items-center justify-center text-center">
+            <div class="text-xs font-bold uppercase tracking-widest mb-1">Step 1</div>
+            <div class="text-2xl font-extrabold">Ingest</div>
+          </div>
+          <div class="lg:col-span-10 bg-white border border-gray-100 rounded-xl p-6">
+            <h3 class="font-bold text-gray-900 mb-2">RTMP push from operator encoder</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">Operator pushes a single RTMP stream from OBS (or any standard encoder) to the streaming server. Stream key authentication validates the source before any processing begins.</p>
+          </div>
+        </div>
+        <div class="grid lg:grid-cols-12 gap-5 items-stretch">
+          <div class="lg:col-span-2 bg-brand text-white rounded-xl p-5 flex flex-col items-center justify-center text-center">
+            <div class="text-xs font-bold uppercase tracking-widest mb-1">Step 2</div>
+            <div class="text-2xl font-extrabold">Transcode</div>
+          </div>
+          <div class="lg:col-span-10 bg-white border border-gray-100 rounded-xl p-6">
+            <h3 class="font-bold text-gray-900 mb-2">HLS adaptive bitrate output</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">The ingested stream is transcoded into multiple HLS quality ladders. The operator's site embeds the manifest URL; viewer devices pick the right quality automatically based on network conditions.</p>
+          </div>
+        </div>
+        <div class="grid lg:grid-cols-12 gap-5 items-stretch">
+          <div class="lg:col-span-2 bg-brand text-white rounded-xl p-5 flex flex-col items-center justify-center text-center">
+            <div class="text-xs font-bold uppercase tracking-widest mb-1">Step 3</div>
+            <div class="text-2xl font-extrabold">Fan-out</div>
+          </div>
+          <div class="lg:col-span-10 bg-white border border-gray-100 rounded-xl p-6">
+            <h3 class="font-bold text-gray-900 mb-2">Simultaneous multi-platform broadcast</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">The same stream is forwarded to Twitch, YouTube Live, and Facebook Live in parallel. Facebook's RTMPS requirement is handled via a TLS tunnel — operators don't have to manage per-platform quirks.</p>
+          </div>
+        </div>
+        <div class="grid lg:grid-cols-12 gap-5 items-stretch">
+          <div class="lg:col-span-2 bg-brand text-white rounded-xl p-5 flex flex-col items-center justify-center text-center">
+            <div class="text-xs font-bold uppercase tracking-widest mb-1">Step 4</div>
+            <div class="text-2xl font-extrabold">Record</div>
+          </div>
+          <div class="lg:col-span-10 bg-white border border-gray-100 rounded-xl p-6">
+            <h3 class="font-bold text-gray-900 mb-2">Auto-VOD pipeline</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">The full session is recorded, encoded, and stored. When the stream ends, the VOD pipeline triggers automatically: encode → upload → publish a CMS post → done. Players can replay missed sessions instantly.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RETENTION ANGLE -->
+  <section class="py-24 px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <div class="section-label text-brand mb-3">Retention focused</div>
+          <h2 class="text-3xl lg:text-4xl font-bold mb-5">Meet players where they already are.</h2>
+          <p class="text-lg text-gray-600 leading-relaxed mb-6">
+            Most operator marketing happens inside the operator site. Players who have lapsed don't see it.
+            Streaming flips that — your content shows up in the feeds and recommendations of the platforms your
+            audience already opens daily. The Twitch and YouTube channels become a reactivation funnel.
+          </p>
+          <ul class="space-y-3 text-gray-700 text-sm">
+            <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span><span><strong>Twitch</strong> — discovery from the gaming audience; chat overlay drives clicks back to the operator site</span></li>
+            <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span><span><strong>YouTube Live + VOD</strong> — auto-archived sessions get long-tail SEO and replay traffic</span></li>
+            <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span><span><strong>Facebook Live</strong> — direct reach into older / casual demographics that don't use Twitch</span></li>
+            <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span><span><strong>Operator site</strong> — high-quality HLS playback keeps engaged viewers on your property</span></li>
+          </ul>
+        </div>
+        <div class="bg-[#0c1222] border border-white/10 rounded-2xl p-6 shadow-2xl">
+          <div class="space-y-3">
+            <div class="flex items-center gap-2 mb-2">
+              <div class="text-white text-xs font-bold">Channel Reach</div>
+              <span class="text-gray-500 text-[10px] ml-auto">Last session · live + VOD</span>
+            </div>
+            <div class="space-y-2">
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-purple-400 text-[11px] font-semibold">🟣 Twitch</span>
+                  <span class="text-white text-xs font-bold">3,247</span>
+                </div>
+                <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-purple-400 rounded-full" style="width:72%"></div></div>
+              </div>
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-red-400 text-[11px] font-semibold">🔴 YouTube Live</span>
+                  <span class="text-white text-xs font-bold">2,108</span>
+                </div>
+                <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-red-400 rounded-full" style="width:47%"></div></div>
+              </div>
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-blue-400 text-[11px] font-semibold">🔵 Facebook Live</span>
+                  <span class="text-white text-xs font-bold">1,492</span>
+                </div>
+                <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-blue-400 rounded-full" style="width:33%"></div></div>
+              </div>
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-emerald-400 text-[11px] font-semibold">🟢 Operator Site</span>
+                  <span class="text-white text-xs font-bold">4,498</span>
+                </div>
+                <div class="h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-emerald-400 rounded-full" style="width:100%"></div></div>
+              </div>
+            </div>
+            <div class="grid grid-cols-3 gap-2 mt-3">
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-2.5 text-center">
+                <div class="text-gray-500 text-[9px]">Total viewers</div>
+                <div class="text-white text-sm font-bold">11.3K</div>
+              </div>
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-2.5 text-center">
+                <div class="text-gray-500 text-[9px]">VOD views (24h)</div>
+                <div class="text-white text-sm font-bold">4.7K</div>
+              </div>
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-2.5 text-center">
+                <div class="text-gray-500 text-[9px]">Site click-through</div>
+                <div class="text-emerald-400 text-sm font-bold">8.2%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INFRASTRUCTURE -->
+  <section class="py-24 px-6 lg:px-8 bg-gray-50">
+    <div class="max-w-6xl mx-auto">
+      <div class="max-w-3xl mb-12">
+        <div class="section-label text-brand mb-3">Built for live workloads</div>
+        <h2 class="text-3xl lg:text-4xl font-bold mb-5">Infrastructure that doesn't drop frames at peak.</h2>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          Hosted on AWS with container-based deployment. CDN-backed delivery keeps playback smooth no matter where your
+          audience watches from. The ingestion server is independent of the operator's main site — a marketing site
+          slowdown never affects a live stream.
+        </p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="bg-white border border-gray-100 rounded-xl p-6"><h3 class="font-bold text-gray-900 mb-1.5">AWS-hosted</h3><p class="text-sm text-gray-600 leading-relaxed">Container deployment with auto-scaling. CDN-fronted HLS delivery for global low-latency playback.</p></div>
+        <div class="bg-white border border-gray-100 rounded-xl p-6"><h3 class="font-bold text-gray-900 mb-1.5">Decoupled from the operator site</h3><p class="text-sm text-gray-600 leading-relaxed">Streaming runs as an independent service. A spike on the marketing site won't affect a live broadcast.</p></div>
+        <div class="bg-white border border-gray-100 rounded-xl p-6"><h3 class="font-bold text-gray-900 mb-1.5">CMS-integrated</h3><p class="text-sm text-gray-600 leading-relaxed">VODs publish as posts in WebPrefer's CMS automatically. No manual upload, no separate video archive to maintain.</p></div>
+        <div class="bg-white border border-gray-100 rounded-xl p-6"><h3 class="font-bold text-gray-900 mb-1.5">Multi-environment</h3><p class="text-sm text-gray-600 leading-relaxed">Stage and production environments with separate stream keys, so operators can test without polluting the live feed.</p></div>
+        <div class="bg-white border border-gray-100 rounded-xl p-6"><h3 class="font-bold text-gray-900 mb-1.5">Stream authentication</h3><p class="text-sm text-gray-600 leading-relaxed">Per-channel stream keys validated at ingestion. Rotate keys instantly from the back-office if leaked.</p></div>
+        <div class="bg-white border border-gray-100 rounded-xl p-6"><h3 class="font-bold text-gray-900 mb-1.5">Recording &amp; replay</h3><p class="text-sm text-gray-600 leading-relaxed">Sessions stored durably with public playback URLs. Players can replay missed shows; operators get long-tail traffic.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl lg:text-4xl font-bold mb-5">See the streaming platform live in production.</h2>
+      <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+        We're running it for Trustplay today — multi-platform broadcast with full VOD pipeline. We'll walk you through
+        the operator side, the player playback, and how it integrates with the CMS.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="../#contact" class="bg-brand hover:bg-[#134f82] text-white font-semibold px-7 py-3.5 rounded-lg text-sm">Book a demo</a>
+        <a href="../#products" class="bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold px-7 py-3.5 rounded-lg text-sm">See all five products &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-white py-12 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+          <img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto brightness-0 invert">
+          <span class="text-gray-400 text-sm">WebPrefer AB (556748-3523)</span>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm text-gray-400">
+          <a href="../pam/" class="hover:text-white transition-colors">PAM</a>
+          <a href="../beaware/" class="hover:text-white transition-colors">BeAware</a>
+          <a href="../cms/" class="hover:text-white transition-colors">CMS</a>
+          <a href="./" class="hover:text-white transition-colors font-semibold">Streaming</a>
+          <a href="../wepredict/" class="hover:text-white transition-colors">WePredict</a>
+          <a href="../insights/" class="hover:text-white transition-colors">Insights</a>
+          <a href="../#contact" class="hover:text-white transition-colors">Contact</a>
+        </div>
+        <div class="text-gray-500 text-xs">&copy; <span data-year>2026</span> WebPrefer AB</div>
+      </div>
+    </div>
+  </footer>
+  <script>document.querySelectorAll("[data-year]").forEach(e=>e.textContent=new Date().getFullYear())</script>
+</body>
+</html>

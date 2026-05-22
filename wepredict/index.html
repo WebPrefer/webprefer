@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="WePredict — AI-native prediction market exchange by WebPrefer. Internal CLOB matches YES/NO peer-to-peer, 15+ autonomous AI agents, multi-provider AI, Operator Integration API for embedding into PAM or any platform.">
+  <title>WePredict — AI-native Prediction Market Exchange | WebPrefer</title>
+  <meta property="og:title" content="WePredict — AI-native Prediction Market Exchange">
+  <meta property="og:description" content="A standalone trading platform where players buy YES/NO shares peer-to-peer through an internal CLOB. 15+ autonomous AI agents drive analysis, fraud detection, and settlement. Embed it into any operator platform.">
+  <meta property="og:image" content="https://webprefer.com/images/og-images/wepredict.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://webprefer.com/wepredict/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="WePredict — AI-native Prediction Market Exchange">
+  <meta name="twitter:description" content="A standalone trading platform where players buy YES/NO shares peer-to-peer through an internal CLOB. 15+ autonomous AI agents.">
+  <meta name="twitter:image" content="https://webprefer.com/images/og-images/wepredict.png">
+  <meta name="theme-color" content="#1968AA">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="canonical" href="https://webprefer.com/wepredict/">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"WePredict","applicationCategory":"BusinessApplication","applicationSubCategory":"Prediction Market Exchange","operatingSystem":"Web, Windows Server","description":"AI-native prediction market exchange by WebPrefer. Internal CLOB matches YES/NO peer-to-peer; 15+ autonomous AI agents drive market analysis, fraud detection, settlement verification, and natural-language trading. Operator Integration API for embedding into PAM or any platform.","url":"https://webprefer.com/wepredict/","image":"https://webprefer.com/images/og-images/wepredict.png","brand":{"@type":"Brand","name":"WebPrefer"},"publisher":{"@type":"Organization","name":"WebPrefer AB","url":"https://webprefer.com","logo":{"@type":"ImageObject","url":"https://webprefer.com/images/logo.svg"}},"offers":{"@type":"Offer","priceCurrency":"USD","price":"0","availability":"https://schema.org/PreOrder"}}</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HC29B7MQF3"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HC29B7MQF3');</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { brand: { DEFAULT: '#1968AA', dark: '#134f82', darker: '#0d3459', light: '#2a7ec4' } },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    img { max-width: 100%; height: auto; }
+    body { overflow-x: hidden; }
+    .gradient-hero { background: linear-gradient(135deg, #0d3459 0%, #1968AA 60%, #134f82 100%); }
+    .nav-link { transition: color 0.15s ease; }
+    .hero-pulse { animation: hero-pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite; }
+    @keyframes hero-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+    .section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+  </style>
+</head>
+<body class="font-sans bg-white text-gray-900 antialiased">
+
+  <!-- NAV -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="../" class="flex items-center gap-2">
+        <img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto">
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="../#platform" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Platform</a>
+        <a href="../#products" class="nav-link text-sm font-medium text-brand font-semibold">Products</a>
+        <a href="../#proof" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Customers</a>
+        <a href="../#partners" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Partners</a>
+        <a href="../#contact" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Contact</a>
+        <a href="../insights/" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Insights</a>
+      </div>
+      <a href="../#contact" class="bg-brand hover:bg-[#134f82] text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors hidden md:inline-flex">
+        Book a Demo
+      </a>
+      <button id="mobile-menu-btn" aria-label="Toggle navigation menu" class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100">
+        <svg id="icon-open" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg id="icon-close" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-1">
+      <a href="../" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand">Home</a>
+      <a href="../#platform" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand">Platform</a>
+      <a href="../#products" class="block py-2.5 text-sm font-medium text-brand font-semibold">Products</a>
+      <a href="../#proof" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand">Customers</a>
+      <a href="../#partners" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand">Partners</a>
+      <a href="../#contact" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand">Contact</a>
+      <a href="../insights/" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand">Insights</a>
+      <a href="../#contact" class="block mt-2 bg-brand text-white text-sm font-semibold px-5 py-2.5 rounded-lg text-center">Book a Demo</a>
+    </div>
+  </header>
+  <script>
+    const btn=document.getElementById('mobile-menu-btn'),menu=document.getElementById('mobile-menu'),iconOpen=document.getElementById('icon-open'),iconClose=document.getElementById('icon-close');
+    btn.addEventListener('click',()=>{menu.classList.toggle('hidden');iconOpen.classList.toggle('hidden');iconClose.classList.toggle('hidden');});
+  </script>
+
+  <!-- HERO -->
+  <section class="gradient-hero pt-32 pb-20 px-6 lg:px-8 text-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-7">
+          <div class="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-3 py-1 mb-6">
+            <span class="bg-rose-400/30 text-rose-100 text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full">New</span>
+            <span class="text-blue-100 text-sm">A new product from WebPrefer</span>
+          </div>
+          <h1 class="text-4xl lg:text-5xl font-extrabold leading-tight mb-5">
+            AI-native prediction market exchange.
+          </h1>
+          <p class="text-xl text-blue-100 leading-relaxed mb-8 max-w-2xl">
+            Players buy YES/NO shares on real-world events peer-to-peer through an internal Central Limit Order Book.
+            External feeds like Polymarket and Kalshi are demoted to backstop. A full suite of autonomous AI agents
+            drives market analysis, fraud detection, settlement, and natural-language trading.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="../#contact" class="bg-white text-brand font-semibold px-6 py-3 rounded-lg hover:bg-blue-50 transition-colors text-sm">Book a demo</a>
+            <a href="#agents" class="bg-white/10 border border-white/20 text-white font-semibold px-6 py-3 rounded-lg hover:bg-white/15 transition-colors text-sm">See the AI agents &rarr;</a>
+          </div>
+        </div>
+        <div class="lg:col-span-5">
+          <!-- Hero mock: live market detail -->
+          <div class="bg-[#0c1222] border border-white/10 rounded-2xl p-5 shadow-2xl">
+            <div class="space-y-3">
+              <div class="flex items-center gap-2">
+                <div class="text-white text-xs font-bold">Market Detail</div>
+                <div class="flex items-center gap-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-2 py-0.5 ml-auto">
+                  <div class="w-1.5 h-1.5 rounded-full bg-emerald-400 hero-pulse"></div>
+                  <span class="text-emerald-400 text-[9px] font-semibold">LIVE</span>
+                </div>
+              </div>
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+                <div class="text-gray-300 text-[11px] font-medium mb-2">Will BTC exceed $120K before July 2026?</div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div class="bg-emerald-500/10 border border-emerald-500/20 rounded p-2 text-center">
+                    <div class="text-emerald-400 text-[9px] font-bold uppercase tracking-wider">Yes</div>
+                    <div class="text-emerald-300 text-base font-bold">57¢</div>
+                  </div>
+                  <div class="bg-red-500/10 border border-red-500/20 rounded p-2 text-center">
+                    <div class="text-red-400 text-[9px] font-bold uppercase tracking-wider">No</div>
+                    <div class="text-red-300 text-base font-bold">43¢</div>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+                <div class="text-gray-500 text-[9px] font-semibold uppercase tracking-wider mb-2">Order Book — top of book</div>
+                <div class="space-y-1">
+                  <div class="flex justify-between text-[10px]"><span class="text-emerald-400">Yes 0.57 × 1,200</span><span class="text-red-400">No 0.43 × 980</span></div>
+                  <div class="flex justify-between text-[10px]"><span class="text-emerald-400">Yes 0.56 × 850</span><span class="text-red-400">No 0.44 × 720</span></div>
+                  <div class="flex justify-between text-[10px]"><span class="text-emerald-400">Yes 0.55 × 600</span><span class="text-red-400">No 0.45 × 540</span></div>
+                </div>
+              </div>
+              <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+                <div class="text-gray-500 text-[9px] font-semibold uppercase tracking-wider mb-2">AI Agents · active</div>
+                <div class="flex flex-wrap gap-1.5">
+                  <span class="bg-purple-500/10 text-purple-400 text-[9px] px-2 py-0.5 rounded border border-purple-500/15">Market Analyst</span>
+                  <span class="bg-blue-500/10 text-blue-400 text-[9px] px-2 py-0.5 rounded border border-blue-500/15">Market Maker</span>
+                  <span class="bg-amber-500/10 text-amber-400 text-[9px] px-2 py-0.5 rounded border border-amber-500/15">Fraud Detect</span>
+                  <span class="bg-emerald-500/10 text-emerald-400 text-[9px] px-2 py-0.5 rounded border border-emerald-500/15">Settlement</span>
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+                  <div class="text-gray-500 text-[9px]">Internal fill rate</div>
+                  <div class="text-emerald-400 text-base font-bold">63%</div>
+                </div>
+                <div class="bg-white/[0.04] border border-white/5 rounded-lg p-3">
+                  <div class="text-gray-500 text-[9px]">Aggressor fee</div>
+                  <div class="text-white text-base font-bold">2.0%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY STATS -->
+  <section class="py-16 px-6 lg:px-8 border-b border-gray-100">
+    <div class="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-8">
+      <div>
+        <div class="text-3xl font-extrabold text-brand mb-1">63%</div>
+        <div class="text-sm text-gray-600">Internal CLOB fill rate target — true exchange pricing, not aggregator markups</div>
+      </div>
+      <div>
+        <div class="text-3xl font-extrabold text-brand mb-1">15+</div>
+        <div class="text-sm text-gray-600">Autonomous AI agents driving analysis, routing, fraud, settlement, and chat</div>
+      </div>
+      <div>
+        <div class="text-3xl font-extrabold text-brand mb-1">2.0%</div>
+        <div class="text-sm text-gray-600">Single fee — taken from the aggressor at fill time. No directional risk to the platform.</div>
+      </div>
+      <div>
+        <div class="text-3xl font-extrabold text-brand mb-1">5</div>
+        <div class="text-sm text-gray-600">AI providers swappable at runtime — Gemini, Claude, OpenAI, Azure, Ollama</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT IT DOES -->
+  <section class="py-24 px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <div class="max-w-3xl mb-14">
+        <div class="section-label text-brand mb-3">What it does</div>
+        <h2 class="text-3xl lg:text-4xl font-bold mb-5">An exchange, not an aggregator.</h2>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          Most prediction-market platforms forward your order to Polymarket or Kalshi and mark it up. WePredict matches
+          your YES against another player's NO directly — and only falls back to external venues when no internal
+          counterparty exists.
+        </p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6">
+          <div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5"/></svg>
+          </div>
+          <h3 class="font-bold text-gray-900 mb-2">Internal CLOB</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Central Limit Order Book matches YES buyers against NO buyers peer-to-peer. WePredict is the marketplace, never the counterparty.</p>
+        </div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6">
+          <div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+          </div>
+          <h3 class="font-bold text-gray-900 mb-2">Spread-neutral Market Maker</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">An AI market-maker agent seeds depth on new markets with spread-neutral quotes around AI fair value. Designed to net to zero exposure.</p>
+        </div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6">
+          <div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <h3 class="font-bold text-gray-900 mb-2">Zero-sum economics</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Every share pair totals $1.00. Winners get $1.00 per share. WePredict earns only 2% of fill volume — never a directional position.</p>
+        </div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6">
+          <div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          </div>
+          <h3 class="font-bold text-gray-900 mb-2">15+ autonomous agents</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Market analyst, news, sentiment, fraud, order routing, settlement verification, recommendations, trading bots, and chat — all event-driven.</p>
+        </div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6">
+          <div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+          </div>
+          <h3 class="font-bold text-gray-900 mb-2">Natural-language trading</h3>
+          <p class="text-sm text-gray-600 leading-relaxed"><em>"Put $100 on Brazil winning the World Cup"</em> or <em>"Close half my Fed rate cut position"</em>. The trading assistant executes through the same fill engine.</p>
+        </div>
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6">
+          <div class="w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+          </div>
+          <h3 class="font-bold text-gray-900 mb-2">Operator Integration API</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Embed WePredict as a prediction-market vertical into PAM or any operator platform via SSO + webhooks. Same pattern as casino/sportsbook providers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THREE-LAYER FILL MODEL -->
+  <section class="py-24 px-6 lg:px-8 bg-gray-50">
+    <div class="max-w-6xl mx-auto">
+      <div class="max-w-3xl mb-12">
+        <div class="section-label text-brand mb-3">Three-layer fill model</div>
+        <h2 class="text-3xl lg:text-4xl font-bold mb-5">CLOB first. Market maker second. External feeds last.</h2>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          Every order is processed through three layers in strict priority order. The goal: keep at least 60% of fills
+          inside the internal book, where players get the best execution and WePredict takes no directional risk.
+        </p>
+      </div>
+
+      <div class="space-y-5">
+        <!-- Layer 1 -->
+        <div class="grid lg:grid-cols-12 gap-5 items-stretch">
+          <div class="lg:col-span-2 bg-brand text-white rounded-xl p-5 flex flex-col items-center justify-center text-center">
+            <div class="text-xs font-bold uppercase tracking-widest mb-1">Layer 1</div>
+            <div class="text-3xl font-extrabold">CLOB</div>
+            <div class="text-xs mt-2 opacity-80">≥ 60% target</div>
+          </div>
+          <div class="lg:col-span-10 bg-white border border-gray-100 rounded-xl p-6">
+            <h3 class="font-bold text-gray-900 mb-2">Internal peer-to-peer</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">
+              User A's YES order matches User B's resting NO order at a compatible price. Both wallets debited at
+              placement, positions credited on fill. WePredict is not a counterparty — it is the marketplace that
+              facilitated the match. <strong class="text-gray-900">WePredict collects 2% of fill volume, holds no position.</strong>
+            </p>
+          </div>
+        </div>
+        <!-- Layer 2 -->
+        <div class="grid lg:grid-cols-12 gap-5 items-stretch">
+          <div class="lg:col-span-2 bg-amber-500 text-white rounded-xl p-5 flex flex-col items-center justify-center text-center">
+            <div class="text-xs font-bold uppercase tracking-widest mb-1">Layer 2</div>
+            <div class="text-3xl font-extrabold">MM</div>
+            <div class="text-xs mt-2 opacity-80">fills the gap</div>
+          </div>
+          <div class="lg:col-span-10 bg-white border border-gray-100 rounded-xl p-6">
+            <h3 class="font-bold text-gray-900 mb-2">MarketMakerAgent — platform quotes</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">
+              When no resting counterparty exists, the MM places spread-neutral bid/ask around <code class="bg-gray-100 text-brand-dark px-1.5 py-0.5 rounded text-xs">MarketAnalystAgent</code> fair value
+              from a dedicated wallet. As organic flow arrives, the MM buys both sides and nets exposure to zero — it
+              earns the spread, not directional P&amp;L. <strong class="text-gray-900">Zero LLM calls — pure arithmetic.</strong>
+            </p>
+          </div>
+        </div>
+        <!-- Layer 3 -->
+        <div class="grid lg:grid-cols-12 gap-5 items-stretch">
+          <div class="lg:col-span-2 bg-slate-700 text-white rounded-xl p-5 flex flex-col items-center justify-center text-center">
+            <div class="text-xs font-bold uppercase tracking-widest mb-1">Layer 3</div>
+            <div class="text-3xl font-extrabold">Backstop</div>
+            <div class="text-xs mt-2 opacity-80">&lt; 20% ceiling</div>
+          </div>
+          <div class="lg:col-span-10 bg-white border border-gray-100 rounded-xl p-6">
+            <h3 class="font-bold text-gray-900 mb-2">LiquidityBackstop — external feeds</h3>
+            <p class="text-sm text-gray-600 leading-relaxed">
+              Last resort: large order or completely new market with no MM depth. Routes to the best external feed
+              (Polymarket, Kalshi). WePredict's pool wallet executes on the external venue and holds the position on
+              the player's behalf. <strong class="text-gray-900">External feed fees are absorbed by the platform — the player always pays exactly 2%.</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI AGENTS -->
+  <section id="agents" class="py-24 px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <div class="max-w-3xl mb-12">
+        <div class="section-label text-brand mb-3">AI agent suite</div>
+        <h2 class="text-3xl lg:text-4xl font-bold mb-5">AI runs the platform — not bolted on.</h2>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          Market analysis, order routing, fraud detection, settlement verification, and natural-language trading are
+          delivered by an event-driven agent suite. Providers are runtime-switchable: Gemini (default), Claude, OpenAI,
+          Azure OpenAI, or local Ollama for private deployments.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-6">
+        <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="text-xs font-bold uppercase tracking-widest text-brand">Continuous · fast tier</div>
+          </div>
+          <ul class="space-y-2.5 text-sm text-gray-700">
+            <li><strong>NewsWatcher</strong> — maps breaking news to open markets</li>
+            <li><strong>Sentiment</strong> — X, Reddit, Telegram signals per market</li>
+            <li><strong>FraudDetection</strong> — spoofing, layering, wash trading</li>
+            <li><strong>OrderFlow</strong> — YES vs NO volume imbalance (pure SQL)</li>
+            <li><strong>ExecutionQuality</strong> — per-fill slippage vs mid-price</li>
+          </ul>
+        </div>
+        <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="text-xs font-bold uppercase tracking-widest text-brand">Scheduled · standard tier</div>
+          </div>
+          <ul class="space-y-2.5 text-sm text-gray-700">
+            <li><strong>MarketAnalyst</strong> — fair value from news + sentiment + fills</li>
+            <li><strong>Recommendation</strong> — personalized market surface per user</li>
+            <li><strong>TradingBot</strong> — autonomous strategies within spend limits</li>
+            <li><strong>FeedHealth</strong> — self-healing degraded feed adapters</li>
+            <li><strong>FeedBuilder</strong> — generates new adapters from API docs</li>
+          </ul>
+        </div>
+        <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="text-xs font-bold uppercase tracking-widest text-brand">Critical · advanced tier</div>
+          </div>
+          <ul class="space-y-2.5 text-sm text-gray-700">
+            <li><strong>MarketMaker</strong> — spread-neutral CLOB depth seeder</li>
+            <li><strong>RiskMonitor</strong> — net exposure alerts and limits</li>
+            <li><strong>PortfolioRebalancer</strong> — correlated position analysis</li>
+            <li><strong>SettlementVerification</strong> — dual-source outcome confirmation</li>
+            <li><strong>OrderRouting</strong> — CLOB-first check; LLM only when book is empty</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-10 bg-blue-50 border border-blue-100 rounded-xl p-6">
+        <div class="flex items-start gap-4">
+          <svg class="w-6 h-6 text-brand flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1">Token governance — non-negotiable</h3>
+            <p class="text-sm text-gray-700 leading-relaxed">
+              Every LLM call costs money and burns quota. Agents react to domain events rather than polling on timers.
+              Each call is guarded by an early-exit check — skip the LLM when there is nothing actionable. Quota errors
+              are never retried. Every invocation is logged with token counts.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPERATOR INTEGRATION -->
+  <section class="py-24 px-6 lg:px-8 bg-gray-50">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <div class="section-label text-brand mb-3">Operator Integration API</div>
+          <h2 class="text-3xl lg:text-4xl font-bold mb-5">Embed WePredict as a vertical.</h2>
+          <p class="text-lg text-gray-600 leading-relaxed mb-6">
+            Any operator platform (PAM or otherwise) can integrate WePredict as a prediction market provider —
+            same pattern PAM uses for casino and sportsbook providers. One API key, SSO launch, wallet sync,
+            webhooks back on every significant event.
+          </p>
+          <ul class="space-y-3 text-gray-700 text-sm">
+            <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span><span><strong>SSO launch</strong> — short-lived token URL, auto-creates user on first call</span></li>
+            <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span><span><strong>Wallet sync</strong> — credit / debit with idempotent <code class="bg-gray-100 text-brand-dark px-1.5 py-0.5 rounded text-xs">transactionId</code></span></li>
+            <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span><span><strong>Webhooks</strong> — UserRegistered, TradeSettled, BigWin, WithdrawalRequested, AccountSuspended</span></li>
+            <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span><span><strong>Reports</strong> — GGR, volume, active users, trade history</span></li>
+            <li class="flex items-start gap-3"><span class="text-brand mt-0.5">✓</span><span><strong>Rate limits + retries</strong> — exponential backoff up to 24 h, replayable from Admin</span></li>
+          </ul>
+        </div>
+        <div class="bg-[#0c1222] border border-white/10 rounded-2xl p-6 shadow-2xl">
+          <div class="text-gray-500 text-[9px] font-semibold uppercase tracking-wider mb-3">Integration request</div>
+          <pre class="text-[11px] text-gray-300 leading-relaxed overflow-x-auto"><code><span class="text-blue-400">POST</span> /integration/sso
+<span class="text-gray-500">X-Api-Key:</span> {operatorKey}
+
+{
+  <span class="text-amber-300">"externalUserId"</span>: <span class="text-emerald-300">"pam-player-12345"</span>,
+  <span class="text-amber-300">"displayName"</span>:    <span class="text-emerald-300">"JohnD"</span>,
+  <span class="text-amber-300">"currency"</span>:       <span class="text-emerald-300">"USD"</span>,
+  <span class="text-amber-300">"returnUrl"</span>:      <span class="text-emerald-300">"https://operator.com/lobby"</span>
+}
+
+<span class="text-gray-500">// Response 200</span>
+{
+  <span class="text-amber-300">"sessionUrl"</span>: <span class="text-emerald-300">"https://wepredict.ai/launch?token=abc"</span>,
+  <span class="text-amber-300">"expiresIn"</span>:  <span class="text-purple-300">300</span>
+}</code></pre>
+          <div class="mt-5 pt-5 border-t border-white/10">
+            <div class="text-gray-500 text-[9px] font-semibold uppercase tracking-wider mb-2">Webhook back to operator</div>
+            <pre class="text-[11px] text-gray-300 leading-relaxed overflow-x-auto"><code>{
+  <span class="text-amber-300">"event"</span>:          <span class="text-emerald-300">"TradeSettled"</span>,
+  <span class="text-amber-300">"externalUserId"</span>: <span class="text-emerald-300">"pam-player-12345"</span>,
+  <span class="text-amber-300">"data"</span>: {
+    <span class="text-amber-300">"marketTitle"</span>: <span class="text-emerald-300">"Will BTC exceed $120K?"</span>,
+    <span class="text-amber-300">"side"</span>:        <span class="text-emerald-300">"YES"</span>,
+    <span class="text-amber-300">"payout"</span>:      <span class="text-purple-300">200.00</span>,
+    <span class="text-amber-300">"outcome"</span>:     <span class="text-emerald-300">"WON"</span>
+  }
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WALLET TRACKS -->
+  <section class="py-24 px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <div class="max-w-3xl mb-12">
+        <div class="section-label text-brand mb-3">Dual wallet track</div>
+        <h2 class="text-3xl lg:text-4xl font-bold mb-5">Custodial USD and Web3 USDC — same terminal.</h2>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          Mainstream players never see crypto. Crypto-native players connect MetaMask. Both wallets share the same
+          trading terminal and portfolio view, and a player can have both active at once.
+        </p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white border border-gray-100 rounded-xl p-8">
+          <div class="text-xs font-bold uppercase tracking-widest text-brand mb-2">Custodial USD</div>
+          <h3 class="text-xl font-bold mb-3">Mainstream — no crypto needed</h3>
+          <p class="text-sm text-gray-600 leading-relaxed mb-4">
+            MoonPay / Transak widget converts card to USDC; player sees a USD balance and withdraws via bank wire.
+            Polymarket runs on Polygon and Augur on Ethereum — WePredict runs server-side pool wallets so the
+            blockchain is fully hidden.
+          </p>
+          <ul class="text-sm text-gray-700 space-y-1.5">
+            <li>✓ Card on-ramp via MoonPay or Transak</li>
+            <li>✓ SEPA / SWIFT withdrawals</li>
+            <li>✓ KYC owned by the operator (or WePredict for native users)</li>
+            <li>✓ Daily wallet reconciliation</li>
+          </ul>
+        </div>
+        <div class="bg-white border border-gray-100 rounded-xl p-8">
+          <div class="text-xs font-bold uppercase tracking-widest text-brand mb-2">Web3 / MetaMask</div>
+          <h3 class="text-xl font-bold mb-3">Crypto-native — USDC on Polygon</h3>
+          <p class="text-sm text-gray-600 leading-relaxed mb-4">
+            Connect MetaMask, deposit USDC, hold on-chain positions. Sign-In-With-Ethereum issues the same
+            <code class="bg-gray-100 text-brand-dark px-1.5 py-0.5 rounded text-xs">_wp.auth</code> cookie as cookie auth — the rest of the platform doesn't know the difference.
+          </p>
+          <ul class="text-sm text-gray-700 space-y-1.5">
+            <li>✓ MetaMask + WalletConnect + Coinbase Wallet</li>
+            <li>✓ Zero on-ramp fees (vs ~4% MoonPay)</li>
+            <li>✓ On-chain transparency — provably fair settlement</li>
+            <li>✓ DeFi yield on idle pool USDC</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH STACK -->
+  <section class="py-24 px-6 lg:px-8 bg-gray-50">
+    <div class="max-w-6xl mx-auto">
+      <div class="max-w-3xl mb-12">
+        <div class="section-label text-brand mb-3">Built on the same foundation</div>
+        <h2 class="text-3xl lg:text-4xl font-bold mb-5">Familiar to operators. New where it matters.</h2>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          WePredict shares the same enterprise platform as PAM — so operators get familiar deployment, auditability,
+          and real-time architecture. The new pieces are the internal exchange and the autonomous AI agent suite.
+        </p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="bg-white border border-gray-100 rounded-xl p-6">
+          <h3 class="font-bold text-gray-900 mb-1.5">Enterprise .NET platform</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Modern .NET runtime, SQL Server, and the same toolchain as PAM. Deploys on-prem or cloud.</p>
+        </div>
+        <div class="bg-white border border-gray-100 rounded-xl p-6">
+          <h3 class="font-bold text-gray-900 mb-1.5">Real-time by default</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Live prices, depth, portfolio P&amp;L, and AI alerts push to the player instantly — no polling, no stale UI.</p>
+        </div>
+        <div class="bg-white border border-gray-100 rounded-xl p-6">
+          <h3 class="font-bold text-gray-900 mb-1.5">Multi-provider AI</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Gemini, Claude, OpenAI, Azure OpenAI, or local Ollama — swap providers without touching code.</p>
+        </div>
+        <div class="bg-white border border-gray-100 rounded-xl p-6">
+          <h3 class="font-bold text-gray-900 mb-1.5">Web3 ready</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">USDC on Polygon for crypto-native players. Pool wallets keep blockchain hidden from mainstream users.</p>
+        </div>
+        <div class="bg-white border border-gray-100 rounded-xl p-6">
+          <h3 class="font-bold text-gray-900 mb-1.5">Operator-grade auth</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Cookie auth for players, API keys for operator integrations, wallet signature for Web3 — all in one platform.</p>
+        </div>
+        <div class="bg-white border border-gray-100 rounded-xl p-6">
+          <h3 class="font-bold text-gray-900 mb-1.5">Audit-friendly architecture</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">Every event recorded. Every settlement traced. Every AI agent invocation logged with token counts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl lg:text-4xl font-bold mb-5">Want to embed WePredict — or see it in action?</h2>
+      <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+        Whether you're an operator looking to add a prediction-market vertical, or evaluating the platform as a
+        standalone product, we'll walk you through the architecture and current state.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="../#contact" class="bg-brand hover:bg-[#134f82] text-white font-semibold px-7 py-3.5 rounded-lg transition-colors text-sm">Book a demo</a>
+        <a href="../#products" class="bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold px-7 py-3.5 rounded-lg transition-colors text-sm">See all five products &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-900 text-white py-12 px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+          <img src="../images/logo.svg" alt="WebPrefer" class="h-8 w-auto brightness-0 invert">
+          <span class="text-gray-400 text-sm">WebPrefer AB (556748-3523)</span>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm text-gray-400">
+          <a href="../pam/" class="hover:text-white transition-colors">PAM</a>
+          <a href="../beaware/" class="hover:text-white transition-colors">BeAware</a>
+          <a href="../cms/" class="hover:text-white transition-colors">CMS</a>
+          <a href="../streaming/" class="hover:text-white transition-colors">Streaming</a>
+          <a href="./" class="hover:text-white transition-colors font-semibold">WePredict</a>
+          <a href="../insights/" class="hover:text-white transition-colors">Insights</a>
+          <a href="../#contact" class="hover:text-white transition-colors">Contact</a>
+        </div>
+        <div class="text-gray-500 text-xs">
+          &copy; <span data-year>2026</span> WebPrefer AB
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script>document.querySelectorAll("[data-year]").forEach(e=>e.textContent=new Date().getFullYear())</script>
+</body>
+</html>
