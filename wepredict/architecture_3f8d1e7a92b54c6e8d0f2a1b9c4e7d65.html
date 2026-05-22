@@ -1,0 +1,2508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta name="googlebot" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <title>WePredict &mdash; System Documentation</title>
+    <style>
+        :root {
+            --brand: #1968AA;
+            --brand-dark: #144d80;
+            --brand-darker: #0c2d4d;
+            --brand-light: #2a7ec4;
+            --brand-bg: #e6f0f8;
+            --brand-bg2: #c7dceb;
+            --secondary: #0f766e;
+            --secondary-bg: #f0fdfa;
+            --danger: #dc2626;
+            --danger-bg: #fef2f2;
+            --warning: #d97706;
+            --warning-bg: #fffbeb;
+            --success: #16a34a;
+            --success-bg: #f0fdf4;
+            --yes: #00c076;
+            --yes-bg: #e7faf2;
+            --no: #ef4444;
+            --no-bg: #fef2f2;
+            --spread: #f59e0b;
+            --spread-bg: #fffbeb;
+            --g50: #f9fafb;
+            --g100: #f3f4f6;
+            --g200: #e5e7eb;
+            --g300: #d1d5db;
+            --g500: #6b7280;
+            --g700: #374151;
+            --g800: #1f2937;
+            --g900: #111827;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--g800);
+            background: var(--g50);
+        }
+
+        /* Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--brand) 0%, var(--brand-darker) 100%);
+            color: white;
+            padding: 2.5rem 2rem 1.5rem;
+            text-align: center;
+        }
+
+        .page-header .logo-svg { margin-bottom: 0.75rem; }
+
+        .page-header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .page-header .subtitle {
+            font-size: 1rem;
+            opacity: 0.85;
+        }
+
+        .page-header .meta {
+            margin-top: 0.75rem;
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+
+        /* Layout */
+        .shell {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0;
+            min-height: calc(100vh - 200px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            min-width: 260px;
+            background: white;
+            border-right: 1px solid var(--g200);
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 1.25rem 0;
+            font-size: 0.88rem;
+        }
+
+        .sidebar .label {
+            padding: 0.5rem 1.25rem 0.25rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--g500);
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 0.4rem 1.25rem;
+            color: var(--g700);
+            text-decoration: none;
+            border-left: 3px solid transparent;
+            transition: all 0.15s;
+        }
+
+        .sidebar a:hover {
+            background: var(--brand-bg);
+            color: var(--brand);
+        }
+
+        .sidebar a.active {
+            border-left-color: var(--brand);
+            color: var(--brand);
+            background: var(--brand-bg);
+            font-weight: 600;
+        }
+
+        /* Main content */
+        .main {
+            flex: 1;
+            min-width: 0;
+            padding: 1.5rem 2rem 3rem;
+        }
+
+        /* Tab panels */
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        /* Section cards */
+        .card {
+            background: white;
+            border: 1px solid var(--g200);
+            border-radius: 10px;
+            padding: 1.75rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .card h2 {
+            font-size: 1.4rem;
+            color: var(--brand);
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--brand-bg);
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            color: var(--g800);
+            margin: 1.25rem 0 0.6rem;
+        }
+
+        .card h4 {
+            font-size: 0.95rem;
+            color: var(--g700);
+            margin: 1rem 0 0.4rem;
+        }
+
+        p { margin-bottom: 0.6rem; }
+
+        /* Code */
+        pre {
+            background: var(--g900);
+            color: #e5e7eb;
+            padding: 1rem 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.82rem;
+            margin: 0.6rem 0;
+            line-height: 1.5;
+        }
+
+        code { font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace; }
+
+        p code, li code, td code {
+            background: var(--brand-bg);
+            color: var(--brand-dark);
+            padding: 0.12rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.86em;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.6rem 0;
+            font-size: 0.88rem;
+        }
+
+        th, td {
+            border: 1px solid var(--g200);
+            padding: 0.5rem 0.7rem;
+            text-align: left;
+        }
+
+        th {
+            background: var(--brand-bg);
+            font-weight: 600;
+            color: var(--brand-dark);
+        }
+
+        tr:hover { background: var(--g50); }
+
+        /* Lists */
+        ul, ol { margin: 0.4rem 0 0.6rem 1.4rem; }
+        li { margin-bottom: 0.25rem; }
+
+        /* Callouts */
+        .callout {
+            padding: 0.9rem 1.1rem;
+            border-radius: 8px;
+            margin: 0.8rem 0;
+            border-left: 4px solid;
+            font-size: 0.92rem;
+        }
+
+        .callout-info { background: var(--brand-bg); border-color: var(--brand-light); }
+        .callout-success { background: var(--success-bg); border-color: var(--success); }
+        .callout-warning { background: var(--warning-bg); border-color: var(--warning); }
+        .callout-danger { background: var(--danger-bg); border-color: var(--danger); }
+
+        .callout strong { display: block; margin-bottom: 0.2rem; }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.12rem 0.45rem;
+            border-radius: 9999px;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+
+        .badge-blue { background: var(--brand-bg); color: var(--brand); }
+        .badge-green { background: var(--success-bg); color: var(--success); }
+        .badge-yellow { background: var(--warning-bg); color: var(--warning); }
+        .badge-teal { background: var(--secondary-bg); color: var(--secondary); }
+        .badge-yes { background: var(--yes-bg); color: var(--yes); }
+        .badge-no { background: var(--no-bg); color: var(--no); }
+        .badge-spread { background: var(--spread-bg); color: var(--spread); }
+
+        /* Architecture diagram */
+        .arch-layer {
+            border: 2px solid var(--brand-light);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 0.75rem 0;
+            position: relative;
+        }
+
+        .arch-layer-title {
+            position: absolute;
+            top: -0.7rem;
+            left: 1rem;
+            background: white;
+            padding: 0 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--brand);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .arch-boxes {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-top: 0.25rem;
+        }
+
+        .arch-box {
+            border: 1px solid var(--brand-bg2);
+            border-radius: 8px;
+            padding: 0.65rem 0.9rem;
+            background: white;
+            font-size: 0.82rem;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .arch-box strong {
+            display: block;
+            color: var(--brand);
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .arch-box ul {
+            margin: 0.2rem 0 0 1rem;
+            font-size: 0.78rem;
+            color: var(--g700);
+        }
+
+        .arch-box ul li { margin-bottom: 0.1rem; }
+
+        .arch-connector {
+            text-align: center;
+            color: var(--brand-light);
+            font-size: 1.2rem;
+            padding: 0.15rem 0;
+            letter-spacing: 0.5rem;
+        }
+
+        .arch-small-boxes {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .arch-small-box {
+            background: var(--brand-bg);
+            color: var(--brand-dark);
+            padding: 0.35rem 0.7rem;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 500;
+        }
+
+        /* Flow */
+        .flow-row {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            margin: 0.5rem 0;
+        }
+
+        .flow-box {
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .flow-arrow { font-size: 1.1rem; color: var(--g500); }
+        .flow-blue { background: var(--brand-bg); color: var(--brand); border: 1px solid var(--brand-bg2); }
+        .flow-green { background: var(--success-bg); color: var(--success); border: 1px solid #bbf7d0; }
+        .flow-teal { background: var(--secondary-bg); color: var(--secondary); border: 1px solid #99f6e4; }
+        .flow-yellow { background: var(--warning-bg); color: var(--warning); border: 1px solid #fde68a; }
+        .flow-red { background: var(--danger-bg); color: var(--danger); border: 1px solid #fecaca; }
+        .flow-yes { background: var(--yes-bg); color: var(--yes); border: 1px solid #bbf7d0; }
+        .flow-no { background: var(--no-bg); color: var(--no); border: 1px solid #fecaca; }
+
+        /* Sequence diagram */
+        .seq-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .seq-step {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+            min-height: 44px;
+        }
+
+        .seq-num {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: white;
+            background: var(--brand);
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            min-width: 26px;
+            margin-top: 0.5rem;
+        }
+
+        .seq-line {
+            width: 26px;
+            min-width: 26px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .seq-line::after {
+            content: '';
+            flex: 1;
+            width: 2px;
+            background: var(--brand-bg2);
+            margin-top: 4px;
+        }
+
+        .seq-step:last-child .seq-line::after { display: none; }
+
+        .seq-content {
+            flex: 1;
+            padding: 0.4rem 0 0.4rem 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .seq-actor {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            border-radius: 5px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .seq-msg {
+            font-size: 0.82rem;
+            color: var(--g700);
+            padding-top: 0.25rem;
+        }
+
+        .seq-msg code {
+            background: var(--g100);
+            color: var(--brand-dark);
+            padding: 0.1rem 0.35rem;
+            border-radius: 3px;
+            font-size: 0.78rem;
+        }
+
+        /* Vertical flow */
+        .vflow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            margin: 1rem 0;
+        }
+
+        .vflow-step {
+            padding: 0.55rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.84rem;
+            font-weight: 500;
+            text-align: center;
+            min-width: 220px;
+            max-width: 480px;
+        }
+
+        .vflow-arrow {
+            color: var(--g300);
+            font-size: 1.3rem;
+            line-height: 1;
+            padding: 0.1rem 0;
+        }
+
+        /* Swimlane */
+        .swim {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 0;
+            margin: 1rem 0;
+            border: 1px solid var(--g200);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .swim-lane {
+            background: var(--brand-bg);
+            color: var(--brand-dark);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.5rem 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-bottom: 1px solid var(--g200);
+            border-right: 1px solid var(--g200);
+        }
+
+        .swim-content {
+            padding: 0.5rem 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--g200);
+            font-size: 0.82rem;
+        }
+
+        .swim:last-child .swim-lane,
+        .swim:last-child .swim-content { border-bottom: none; }
+
+        /* Diagram label */
+        .diagram-title {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--g800);
+            margin: 1.25rem 0 0.25rem;
+            padding-left: 0.25rem;
+        }
+
+        .diagram-subtitle {
+            font-size: 0.78rem;
+            color: var(--g500);
+            margin-bottom: 0.5rem;
+            padding-left: 0.25rem;
+        }
+
+        /* Layer stack for fill model */
+        .layer-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .layer-row {
+            display: grid;
+            grid-template-columns: 90px 1fr 90px;
+            gap: 0.75rem;
+            align-items: stretch;
+        }
+
+        .layer-tag {
+            background: var(--brand);
+            color: white;
+            padding: 0.6rem 0.5rem;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-align: center;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .layer-tag.l2 { background: var(--spread); }
+        .layer-tag.l3 { background: var(--g700); }
+
+        .layer-body {
+            background: white;
+            border: 1px solid var(--brand-bg2);
+            border-left: 4px solid var(--brand);
+            border-radius: 6px;
+            padding: 0.7rem 0.9rem;
+            font-size: 0.85rem;
+        }
+
+        .layer-row.l2 .layer-body { border-left-color: var(--spread); }
+        .layer-row.l3 .layer-body { border-left-color: var(--g700); }
+
+        .layer-body strong { color: var(--brand-dark); }
+
+        .layer-share {
+            background: var(--brand-bg);
+            color: var(--brand-dark);
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-align: center;
+            border-radius: 6px;
+            padding: 0.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Status */
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-weight: 500;
+            font-size: 0.88rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .status-ready .status-dot { background: var(--success); }
+        .status-partial .status-dot { background: var(--warning); }
+        .status-planned .status-dot { background: var(--g300); }
+
+        /* Footer */
+        .page-footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--g500);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--g200);
+            background: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .shell { flex-direction: column; }
+            .sidebar {
+                width: 100%;
+                min-width: 100%;
+                position: relative;
+                height: auto;
+                display: flex;
+                flex-wrap: wrap;
+                padding: 0.75rem;
+                gap: 0;
+            }
+            .sidebar .label { width: 100%; padding: 0.5rem 0.5rem 0.2rem; }
+            .sidebar a { padding: 0.3rem 0.6rem; border-left: none; border-bottom: 2px solid transparent; font-size: 0.82rem; }
+            .sidebar a.active { border-left: none; border-bottom-color: var(--brand); }
+            .main { padding: 1rem; }
+            .page-header h1 { font-size: 1.7rem; }
+            .layer-row { grid-template-columns: 70px 1fr; }
+            .layer-share { display: none; }
+        }
+
+        @media print {
+            .sidebar { display: none; }
+            .shell { display: block; }
+            .tab-panel { display: block !important; }
+            .card { break-inside: avoid; border: 1px solid #ccc; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-header">
+    <div class="logo-svg">
+        <svg width="200" height="48" viewBox="0 0 366 87" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M70.9015 45.1078L96.2055 2.06495e-05H116.518C116.892 -0.00530086 117.261 0.0937043 117.584 0.28652C117.908 0.479335 118.175 0.758759 118.356 1.09511C118.547 1.42483 118.648 1.80146 118.648 2.18522C118.648 2.56899 118.547 2.94562 118.356 3.27534L71.6366 86.6118C71.5617 86.744 71.4543 86.8536 71.3254 86.9299C71.1964 87.0061 71.0502 87.0462 70.9015 87.0462C70.7528 87.0462 70.6066 87.0061 70.4777 86.9299C70.3487 86.8536 70.2414 86.744 70.1664 86.6118L51.1303 52.6341L32.4038 86.0144C32.3288 86.1466 32.2215 86.2563 32.0925 86.3325C31.9635 86.4088 31.8174 86.4489 31.6687 86.4489C31.5199 86.4489 31.3738 86.4088 31.2448 86.3325C31.1158 86.2563 31.0085 86.1466 30.9335 86.0144L19.6647 65.9444L56.6632 2.06495e-05H80.6517L63.1246 31.2499L70.8628 45.1078H70.9015ZM11.8975 52.0766L0.116021 31.0906C0.0393661 30.9582 -0.00109863 30.8068 -0.00109863 30.6526C-0.00109863 30.4984 0.0393661 30.3471 0.116021 30.2146L16.8113 0.457968C16.8817 0.32 16.9874 0.204436 17.1169 0.123735C17.2465 0.0430344 17.395 0.000258991 17.5464 2.06495e-05H41.0513L11.8685 52.0368L11.8975 52.0766Z" fill="white"/>
+            <path d="M185.743 65.6019H175.608L167.212 36.0364H167.032L158.636 65.6019H148.441L136.386 21.9018H147.421L154.138 50.9735H154.318L161.874 21.9018H172.549L180.165 50.9735H180.345L187.182 21.9018H197.857L185.743 65.6019Z" fill="white"/>
+            <path d="M202.258 65.6019V21.9018H230.805V30.8517H212.154V39.0609H229.785V47.517H212.154V56.5903H231.884V65.6019H202.258Z" fill="white"/>
+            <path d="M270.891 35.3575C270.891 37.9087 270.431 40.069 269.511 41.8384C268.592 43.5667 267.352 44.9657 265.793 46.0356C264.234 47.1055 262.435 47.8873 260.396 48.3811C258.357 48.8749 256.238 49.1218 254.039 49.1218H248.941V65.6019H238.686V21.9018H254.279C256.598 21.9018 258.757 22.1487 260.756 22.6425C262.795 23.0951 264.554 23.8564 266.033 24.9262C267.552 25.955 268.732 27.3334 269.571 29.0617C270.451 30.7488 270.891 32.8474 270.891 35.3575ZM260.636 35.4192C260.636 34.3905 260.436 33.5469 260.036 32.8885C259.636 32.2302 259.096 31.7158 258.417 31.3455C257.737 30.9751 256.957 30.7282 256.078 30.6048C255.238 30.4813 254.359 30.4196 253.439 30.4196H248.941V40.7274H253.259C254.219 40.7274 255.138 40.6451 256.018 40.4805C256.897 40.3159 257.677 40.0279 258.357 39.6164C259.076 39.2049 259.636 38.67 260.036 38.0116C260.436 37.312 260.636 36.4479 260.636 35.4192Z" fill="white"/>
+            <path d="M302.26 65.6019L298.962 57.0224H282.53L279.411 65.6019H268.257L286.068 21.9018H296.023L313.655 65.6019H302.26ZM290.866 33.5675L285.468 48.5663H296.143L290.866 33.5675Z" fill="white"/>
+            <path d="M355.666 65.6019L355.906 34.6785H355.726L344.691 65.6019H337.495L326.76 34.6785H326.58L326.82 65.6019H317.164V21.9018H331.737L341.393 49.9242H341.633L350.868 21.9018H365.681V65.6019H355.666Z" fill="white"/>
+        </svg>
+    </div>
+    <h1>WePredict</h1>
+    <div class="subtitle">AI-native Prediction Market Exchange &mdash; System Documentation</div>
+    <div class="meta">Last updated: May 2026 &nbsp;|&nbsp; .NET 10 &nbsp;|&nbsp; Blazor SSR + Server &nbsp;|&nbsp; EF Core &nbsp;|&nbsp; SQL Server &nbsp;|&nbsp; Redis &nbsp;|&nbsp; RabbitMQ &nbsp;|&nbsp; SignalR &nbsp;|&nbsp; .NET Aspire &nbsp;|&nbsp; AI (Multi-Provider) &nbsp;|&nbsp; Web3 / USDC &nbsp;|&nbsp; Internal CLOB &nbsp;|&nbsp; 15+ Autonomous Agents</div>
+</div>
+
+<div class="shell">
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="label">Overview</div>
+        <a href="#" data-tab="overview" class="active">Platform Overview</a>
+        <a href="#" data-tab="architecture">Architecture</a>
+        <a href="#" data-tab="exchange" style="font-weight:600;color:var(--brand);">&#9881; Exchange Mechanics</a>
+        <div class="label">Components</div>
+        <a href="#" data-tab="backend">Backend</a>
+        <a href="#" data-tab="web">Web (Player)</a>
+        <a href="#" data-tab="admin">Admin Back-Office</a>
+        <a href="#" data-tab="service">Background Service</a>
+        <a href="#" data-tab="ai" style="font-weight:600;color:var(--brand);">&#x2728; AI &amp; Agents</a>
+        <div class="label">Integrations</div>
+        <a href="#" data-tab="integration">Operator Integration API</a>
+        <a href="#" data-tab="feeds">Feed Adapters</a>
+        <div class="label">Money</div>
+        <a href="#" data-tab="wallet">Wallet &amp; Web3</a>
+        <a href="#" data-tab="settlement">Settlement</a>
+        <div class="label">Platform</div>
+        <a href="#" data-tab="data">Data &amp; Database</a>
+        <a href="#" data-tab="auth">Auth &amp; Security</a>
+        <a href="#" data-tab="realtime">Real-time &amp; Events</a>
+        <div class="label">Reference</div>
+        <a href="#" data-tab="appendix">Commands &amp; Reference</a>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main">
+
+        <!-- ==================== OVERVIEW ==================== -->
+        <div class="tab-panel active" id="tab-overview">
+            <div class="card">
+                <h2>Platform Overview</h2>
+                <p>
+                    <strong>WePredict</strong> is a fully independent, AI-native <strong>speculative prediction market exchange</strong> by WebPrefer. Players trade YES/NO shares on real-world events peer-to-peer through an internal Central Limit Order Book (CLOB). External feeds (Polymarket, Kalshi, Manifold, Augur) are demoted to price reference and liquidity backstop &mdash; used only when no internal counterparty exists.
+                </p>
+                <p>
+                    A full suite of autonomous AI agents drives market analysis, order routing, fraud detection, settlement verification, and personalised recommendations. WePredict has its own users, auth, wallet, and back-office, and exposes a standard <strong>Operator Integration API</strong> so external platforms (PAM or any other operator) can embed WePredict as a prediction market provider.
+                </p>
+
+                <div class="callout callout-info">
+                    <strong>What makes WePredict different</strong>
+                    63% of fills match peer-to-peer internally &mdash; players get true exchange pricing, not aggregator markups. WePredict earns only a 2% fill fee and never takes a directional position. The <code>MarketMakerAgent</code> seeds spread-neutral depth so every market has liquidity from day one.
+                </div>
+
+                <h3>Technology Stack</h3>
+                <table>
+                    <tr><th>Layer</th><th>Technology</th><th>Version</th></tr>
+                    <tr><td>Runtime</td><td>.NET</td><td>10</td></tr>
+                    <tr><td>Backend</td><td>ASP.NET Core (Web API + Blazor)</td><td>10</td></tr>
+                    <tr><td>Player frontend</td><td>Blazor SSR (public, SEO) + Blazor Server (terminal)</td><td>10</td></tr>
+                    <tr><td>Admin frontend</td><td>Blazor Server + FluentUI Blazor (accent <code>#1968AA</code>)</td><td>10</td></tr>
+                    <tr><td>CSS (player)</td><td>Tailwind CSS</td><td>4.x</td></tr>
+                    <tr><td>ORM</td><td>EF Core + SQL Server</td><td>10</td></tr>
+                    <tr><td>Cache</td><td>Redis</td><td>7.x</td></tr>
+                    <tr><td>Message queue</td><td>RabbitMQ</td><td>3.13</td></tr>
+                    <tr><td>Real-time</td><td>SignalR (Redis backplane)</td><td>&mdash;</td></tr>
+                    <tr><td>Orchestration</td><td>.NET Aspire (local, no Docker)</td><td>&mdash;</td></tr>
+                    <tr><td>AI abstraction</td><td><code>Microsoft.Extensions.AI</code> (<code>IChatClient</code>)</td><td>&mdash;</td></tr>
+                    <tr><td>AI default</td><td>Google Gemini (swappable via config)</td><td>2.5</td></tr>
+                    <tr><td>Auth (players)</td><td>ASP.NET Core cookie auth &mdash; HttpOnly <code>_wp.auth</code></td><td>&mdash;</td></tr>
+                    <tr><td>Auth (operators)</td><td>API key (<code>X-Api-Key</code> header)</td><td>&mdash;</td></tr>
+                    <tr><td>Auth (Web3)</td><td>MetaMask wallet signature</td><td>&mdash;</td></tr>
+                    <tr><td>Payments</td><td>MoonPay / Transak (card &rarr; USDC), bank wire withdrawals</td><td>&mdash;</td></tr>
+                    <tr><td>Blockchain</td><td>Nethereum &mdash; Polygon (Polymarket), Ethereum (Augur)</td><td>&mdash;</td></tr>
+                    <tr><td>Background</td><td>.NET Worker Services</td><td>&mdash;</td></tr>
+                    <tr><td>Observability</td><td>OpenTelemetry + Aspire dashboard</td><td>&mdash;</td></tr>
+                </table>
+
+                <h3>What the platform does</h3>
+                <ul>
+                    <li><strong>Exchange</strong> &mdash; Internal CLOB matches YES buyers against NO buyers peer-to-peer; external feeds are backstop only</li>
+                    <li><strong>Trade</strong> &mdash; Buy YES/NO on real-world events. Limit and market orders, GTC/IOC/FOK, live depth chart, partial fills, position close at any time</li>
+                    <li><strong>Provide liquidity</strong> &mdash; <code>MarketMakerAgent</code> quotes spread-neutral bid/ask around AI fair value so every market has depth from day one</li>
+                    <li><strong>Automate</strong> &mdash; AI trading bots execute strategies autonomously within user-set spend limits, with plain-English explanation for every trade</li>
+                    <li><strong>Analyse</strong> &mdash; AI agents compute fair value, aggregate news + social sentiment, flag mispriced markets and execution-quality anomalies in real time</li>
+                    <li><strong>Protect</strong> &mdash; Fraud detection (spoofing, layering, wash trading), risk monitoring, and dual-source settlement verification running continuously</li>
+                    <li><strong>Converse</strong> &mdash; Natural language trading assistant: <em>"Put $100 on Brazil winning the World Cup"</em> or <em>"Close half my Fed rate cut position"</em></li>
+                    <li><strong>Extend</strong> &mdash; <code>FeedBuilderAgent</code> reads any exchange's API docs and generates a new adapter automatically</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ==================== ARCHITECTURE ==================== -->
+        <div class="tab-panel" id="tab-architecture">
+            <div class="card">
+                <h2>System Architecture</h2>
+
+                <!-- CLIENT LAYER -->
+                <div class="arch-layer">
+                    <div class="arch-layer-title">Client Layer</div>
+                    <div class="arch-boxes">
+                        <div class="arch-box">
+                            <strong>Player Browser</strong>
+                            <ul>
+                                <li>Blazor SSR (public, SEO-indexed)</li>
+                                <li>Blazor Server (trading terminal)</li>
+                                <li>Tailwind CSS v4 &mdash; WebPrefer palette</li>
+                                <li>SignalR clients (prices, book, portfolio, alerts, chat)</li>
+                                <li>MetaMask / WalletConnect</li>
+                            </ul>
+                        </div>
+                        <div class="arch-box">
+                            <strong>Operator Browser</strong>
+                            <ul>
+                                <li>Blazor Server + FluentUI Blazor</li>
+                                <li>Operator back-office (feeds, users, risk, settlement)</li>
+                                <li>AI agent control panel + CMS</li>
+                                <li>Admin assistant chat panel</li>
+                            </ul>
+                        </div>
+                        <div class="arch-box">
+                            <strong>External Operator System</strong>
+                            <ul>
+                                <li>PAM or any third-party platform</li>
+                                <li>Calls <code>/integration/</code> with <code>X-Api-Key</code></li>
+                                <li>Receives webhooks (TradeSettled, BigWin, etc.)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-connector">&darr;&nbsp;&nbsp;&nbsp;HTTPS / Cookie / API Key&nbsp;&nbsp;&nbsp;&darr;</div>
+
+                <!-- HOST LAYER -->
+                <div class="arch-layer">
+                    <div class="arch-layer-title">Application Hosts</div>
+                    <div class="arch-boxes">
+                        <div class="arch-box">
+                            <strong>WePredict.Web</strong>
+                            <ul>
+                                <li>Blazor SSR public pages (home, market discovery, market detail)</li>
+                                <li>Blazor Server interactive (terminal, portfolio, bots, chat)</li>
+                                <li>REST API <code>/api/*</code> &mdash; markets, orders, portfolio, recommendations</li>
+                                <li>SignalR hubs <code>/hubs/*</code></li>
+                                <li>Operator Integration API <code>/integration/*</code></li>
+                                <li>Conversational <code>/api/chat/*</code></li>
+                                <li>Cookie auth <code>_wp.auth</code></li>
+                            </ul>
+                        </div>
+                        <div class="arch-box">
+                            <strong>WePredict.Admin</strong>
+                            <ul>
+                                <li>Blazor Server + FluentUI Blazor</li>
+                                <li>Feed management, user oversight, risk, settlement</li>
+                                <li>AI agent control + CLOB health + MM controls</li>
+                                <li>Operator integration management</li>
+                                <li>CMS module for public site copy</li>
+                                <li>Requires <code>Operator</code> role claim</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-connector">&darr;</div>
+
+                <!-- BUSINESS LOGIC -->
+                <div class="arch-layer">
+                    <div class="arch-layer-title">Business Logic (WePredict.BL)</div>
+                    <div class="arch-small-boxes">
+                        <span class="arch-small-box">OrderEngine</span>
+                        <span class="arch-small-box">OrderMatcher (CLOB)</span>
+                        <span class="arch-small-box">LiquidityBackstop</span>
+                        <span class="arch-small-box">PositionLedger</span>
+                        <span class="arch-small-box">SettlementEngine</span>
+                        <span class="arch-small-box">WalletService</span>
+                        <span class="arch-small-box">BotStrategyService</span>
+                        <span class="arch-small-box">OperatorBridge</span>
+                        <span class="arch-small-box">IWeb3Service</span>
+                        <span class="arch-small-box">CmsService</span>
+                        <span class="arch-small-box">NotificationService</span>
+                        <span class="arch-small-box">EmailService</span>
+                        <span class="arch-small-box">WithdrawalService</span>
+                    </div>
+                    <p style="margin-top:0.5rem;font-size:0.82rem;color:var(--g500);">All BL services live behind interfaces.</p>
+                </div>
+
+                <div class="arch-connector">&darr;</div>
+
+                <!-- AI -->
+                <div class="arch-layer">
+                    <div class="arch-layer-title">AI Layer (WePredict.AI)</div>
+                    <div class="arch-boxes">
+                        <div class="arch-box">
+                            <strong>Provider abstraction</strong>
+                            <ul>
+                                <li><code>Microsoft.Extensions.AI</code> &mdash; <code>IChatClient</code></li>
+                                <li><code>ILLMClientFactory</code> resolves by tier (Fast / Standard / Advanced)</li>
+                                <li>Gemini (default), Claude, OpenAI, Azure OpenAI, Ollama</li>
+                            </ul>
+                        </div>
+                        <div class="arch-box">
+                            <strong>Agent suite (15+)</strong>
+                            <ul>
+                                <li>Continuous: News, Sentiment, Fraud, OrderFlow, ExecutionQuality</li>
+                                <li>Scheduled: MarketAnalyst, Recommendation, TradingBot, FeedHealth, FeedBuilder</li>
+                                <li>Critical: MarketMaker, RiskMonitor, PortfolioRebalancer, SettlementVerification, OrderRouting</li>
+                                <li>Conversational: TradingAssistant, UserSupport, AdminAssistant</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-connector">&darr;</div>
+
+                <!-- DATA ACCESS -->
+                <div class="arch-layer">
+                    <div class="arch-layer-title">Data Access &amp; Shared Contracts</div>
+                    <div class="arch-boxes">
+                        <div class="arch-box">
+                            <strong>WePredict.DAL</strong>
+                            <ul>
+                                <li><code>WePredictDbContext</code> (EF Core 10)</li>
+                                <li>Entity models + migrations</li>
+                                <li>Repository pattern (PAM.DAL conventions)</li>
+                            </ul>
+                        </div>
+                        <div class="arch-box">
+                            <strong>WePredict.Core</strong>
+                            <ul>
+                                <li>Shared models (<code>MarketSnapshot</code>, <code>Order</code>, <code>Position</code>)</li>
+                                <li>Contracts (<code>IFeedAdapter</code>, <code>IEventBus</code>)</li>
+                                <li>No logic, no DB, no HTTP</li>
+                            </ul>
+                        </div>
+                        <div class="arch-box">
+                            <strong>WePredict.ServiceDefaults</strong>
+                            <ul>
+                                <li>OpenTelemetry, health checks</li>
+                                <li>Shared by all hosts</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-connector">&darr;</div>
+
+                <!-- INFRASTRUCTURE -->
+                <div class="arch-layer">
+                    <div class="arch-layer-title">Infrastructure</div>
+                    <div class="arch-small-boxes">
+                        <span class="arch-small-box">SQL Server (local)</span>
+                        <span class="arch-small-box">Redis</span>
+                        <span class="arch-small-box">RabbitMQ</span>
+                        <span class="arch-small-box">.NET Aspire (orchestration)</span>
+                        <span class="arch-small-box">.NET Worker</span>
+                        <span class="arch-small-box">Polygon / Ethereum RPC</span>
+                        <span class="arch-small-box">SendGrid / SMTP</span>
+                    </div>
+                </div>
+
+                <div class="arch-connector">&darr;</div>
+
+                <!-- BACKGROUND -->
+                <div class="arch-layer">
+                    <div class="arch-layer-title">Background Workers (WePredict.Service)</div>
+                    <div class="arch-boxes">
+                        <div class="arch-box">
+                            <strong>Feed workers</strong>
+                            <ul><li>ManifoldFeedWorker</li><li>PolymarketFeedWorker</li><li>KalshiFeedWorker</li><li>One <code>IHostedService</code> per adapter</li></ul>
+                        </div>
+                        <div class="arch-box">
+                            <strong>Event + Cron</strong>
+                            <ul><li><code>EventConsumerWorker</code> &mdash; RabbitMQ &rarr; SignalR + audit + wallet credits</li><li>Settlement, P&amp;L, Risk, Reconciliation, Webhook retry, Email, Snapshots</li></ul>
+                        </div>
+                        <div class="arch-box">
+                            <strong>AI agent workers</strong>
+                            <ul><li>13 hosted workers (News, Sentiment, Fraud, OrderFlow, ExecutionQuality, Analyst, Recommendation, Bot, FeedHealthAgent, MarketMaker, Risk, Rebalancer, Settlement)</li><li>Scoped agents registered in Web/Admin</li></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-connector">&darr;</div>
+
+                <!-- EXTERNAL -->
+                <div class="arch-layer">
+                    <div class="arch-layer-title">External Surface</div>
+                    <div style="font-size:0.85rem;">
+                        <p><strong>Prediction market feeds:</strong> Manifold &bull; Polymarket &bull; Kalshi &bull; Augur &bull; Sportradar (data only)</p>
+                        <p><strong>Payments / on-ramp:</strong> MoonPay &bull; Transak &bull; SEPA / SWIFT (withdrawals)</p>
+                        <p><strong>Blockchain:</strong> Polygon (USDC) &bull; Ethereum (Augur) &bull; Hardhat (local dev) &bull; Polygon Amoy (staging)</p>
+                        <p><strong>AI providers:</strong> Gemini &bull; Claude &bull; OpenAI &bull; Azure OpenAI &bull; Ollama (local/private)</p>
+                        <p><strong>Operator integrations:</strong> any third-party platform via <code>/integration/</code></p>
+                    </div>
+                </div>
+
+                <h3>Key Data Flows</h3>
+
+                <!-- Order Placement -->
+                <div class="diagram-title">Order Placement (CLOB-first)</div>
+                <div class="diagram-subtitle">Every order is processed through three layers in strict priority order</div>
+                <div class="seq-diagram">
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">1</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-blue">Player</span>
+                            <span class="seq-msg">&rarr; <code>POST /api/orders</code> with marketId, side (YES/NO), shares, limit price, TIF (GTC/IOC/FOK)</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">2</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-green">WePredict.Web</span>
+                            <span class="seq-msg">Auth validated via <code>_wp.auth</code> cookie. <code>OrderEngine.PlaceAsync(order)</code> invoked.</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">3</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-teal">WalletService</span>
+                            <span class="seq-msg"><code>Debit(playerId, shares &times; price + fee)</code> &mdash; escrow held in platform pool; insufficient balance returns <code>422</code></span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">4</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-teal">OrderMatcher (Layer 1)</span>
+                            <span class="seq-msg">Try to match against resting orders in internal CLOB. If matched, both wallets credited and positions updated.</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">5</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-yellow">MarketMakerAgent (Layer 2)</span>
+                            <span class="seq-msg">If no L1 fill: match against MM resting quotes from the dedicated MM wallet. MM nets to zero exposure over time.</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">6</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-red">LiquidityBackstop (Layer 3)</span>
+                            <span class="seq-msg">If no L1 / L2 fill: route to best external feed (Polymarket / Kalshi). Pool wallet executes. Fill records <code>FillSource</code>.</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">7</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-teal">PositionLedger</span>
+                            <span class="seq-msg">Updates positions with netting (same-side &rarr; weighted avg; opposite &rarr; close or flip). Never lets a player hold both YES and NO in the same market.</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">8</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-yellow">RabbitMQ</span>
+                            <span class="seq-msg">Publishes <code>OrderMatched</code>, <code>OrderFilled</code>, <code>OrderBookUpdated</code>, <code>MarketPriceUpdated</code></span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">9</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-blue">SignalR</span>
+                            <span class="seq-msg">Pushes price tick, depth update, portfolio change to all subscribed clients</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settlement -->
+                <div class="diagram-title">Market Resolution &amp; Payout</div>
+                <div class="seq-diagram">
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">1</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-teal">SettlementCheckWorker</span>
+                            <span class="seq-msg">Cron fires hourly. Identifies markets past <code>EndsAt</code> awaiting resolution.</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">2</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-yellow">SettlementVerificationAgent</span>
+                            <span class="seq-msg">Queries two or more independent sources (Polymarket + Kalshi + news APIs). Cross-verifies YES/NO outcome via LLM reasoning.</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">3</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-yellow">RabbitMQ</span>
+                            <span class="seq-msg">On dual-source agreement: publishes <code>SettlementVerified</code>. Disagreement: stays pending until resolved (manual Admin override possible).</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">4</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-teal">SettlementEngine</span>
+                            <span class="seq-msg">For winning side: <code>WalletService.Credit(playerId, shares &times; $1.00)</code>. Losing positions deleted (stake already in escrow).</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">5</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-green">EventConsumerWorker</span>
+                            <span class="seq-msg">Fires webhook <code>TradeSettled</code> to operators with linked players; also fires <code>BigWin</code> if payout exceeds threshold</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">6</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-blue">SignalR PortfolioHub</span>
+                            <span class="seq-msg">Pushes balance + portfolio update to player in real time</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feed Polling -->
+                <div class="diagram-title">Feed Polling &amp; Price Updates</div>
+                <div class="seq-diagram">
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">1</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-teal">FeedWorker (per adapter)</span>
+                            <span class="seq-msg">Polls feed on configured interval. <code>IFeedAdapter</code> returns normalized <code>MarketSnapshot</code> + <code>OrderBookSnapshot</code>.</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">2</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-yellow">RabbitMQ</span>
+                            <span class="seq-msg">Publishes <code>MarketPriceUpdated</code>, <code>OrderBookUpdated</code> &mdash; never touches SignalR directly</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">3</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-teal">EventConsumerWorker</span>
+                            <span class="seq-msg">Persists to <code>PriceSnapshots</code> + updates <code>Markets</code> table</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">4</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-blue">SignalR PriceTickHub</span>
+                            <span class="seq-msg">Broadcasts to all clients subscribed to the affected market(s)</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">5</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-yellow">MarketAnalystAgent</span>
+                            <span class="seq-msg">Every 15 min: re-evaluates fair value &mdash; if external price diverges &gt; threshold, publishes <code>MarketMispricingDetected</code></span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">6</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-yellow">MarketMakerAgent</span>
+                            <span class="seq-msg">Reacts to mispricing event: cancels stale quotes, places new spread-neutral bid/ask around fair value</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Operator SSO -->
+                <div class="diagram-title">Operator SSO &mdash; embedding WePredict</div>
+                <div class="seq-diagram">
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">1</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-blue">Operator backend</span>
+                            <span class="seq-msg">&rarr; <code>POST /integration/sso</code> with <code>X-Api-Key</code>; body has <code>externalUserId</code>, <code>displayName</code>, <code>currency</code>, <code>returnUrl</code></span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">2</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-green">OperatorBridge</span>
+                            <span class="seq-msg">Validates key against <code>Operator</code> table. Creates or finds <code>Player</code> linked to <code>(operatorId, externalUserId)</code>.</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">3</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-teal">SSO Token Service</span>
+                            <span class="seq-msg">Issues short-lived launch token (5 min). Returns <code>https://wepredict.ai/launch?token=...</code></span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">4</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-blue">Operator UI</span>
+                            <span class="seq-msg">Redirects player to launch URL (top-window or iframe)</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">5</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-green">WePredict.Web /launch</span>
+                            <span class="seq-msg">Validates token, signs player in, sets <code>_wp.auth</code> cookie, redirects to terminal</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">6</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-yellow">Webhook back</span>
+                            <span class="seq-msg">On first SSO ever: <code>UserRegistered</code> webhook pushed to operator with <code>X-Api-Key</code></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Withdrawal -->
+                <div class="diagram-title">Withdrawal</div>
+                <div class="seq-diagram">
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">1</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-blue">Player</span>
+                            <span class="seq-msg">&rarr; <code>POST /api/wallet/withdraw</code> with amount + bank details</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">2</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-teal">WithdrawalService</span>
+                            <span class="seq-msg">Validates balance, checks KYC status (linked operator may own this), creates <code>WithdrawalRequest</code> (Pending)</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">3</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-yellow">Webhook</span>
+                            <span class="seq-msg"><code>WithdrawalRequested</code> pushed to operator if player is operator-linked; operator approves/rejects via <code>/integration/withdrawals/{id}/approve</code></span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">4</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-green">Admin operator</span>
+                            <span class="seq-msg">For native WePredict players: reviewed in Admin portal. Approve / Reject by operator with audit trail.</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">5</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-teal">WalletService</span>
+                            <span class="seq-msg">On approve: debits wallet, dispatches bank wire / USDC transfer, records transaction</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== EXCHANGE MECHANICS ==================== -->
+        <div class="tab-panel" id="tab-exchange">
+            <div class="card">
+                <h2>&#9881; Exchange Mechanics <span class="badge badge-blue">Non-negotiable invariants</span></h2>
+                <div class="callout callout-danger">
+                    <strong>Read this before touching OrderEngine, OrderMatcher, PositionLedger, WalletService, MarketMakerAgent, or LiquidityBackstop</strong>
+                    These rules are not preferences &mdash; they are the financial integrity of the platform. Violations have caused real bugs.
+                </div>
+
+                <h3>The zero-sum invariant</h3>
+                <p>Every binary market has exactly two sides &mdash; YES and NO. Every share pair always totals exactly <strong>$1.00</strong>:</p>
+                <pre><code>YES buyer pays X&cent;  +  NO buyer pays (100 &minus; X)&cent;  =  100&cent;  =  $1.00 per share</code></pre>
+                <p>At resolution the winner receives <strong>$1.00 per share</strong>, the loser receives $0. WePredict holds the full $1.00 in escrow per share pair and pays it out. This is not a fee model or house-edge model &mdash; it is pure intermediation.</p>
+
+                <h3>WePredict's revenue model</h3>
+                <p>WePredict earns <strong>2% of fill volume</strong> at the time of each match. That is the only revenue source from trading.</p>
+                <pre><code>WePredict revenue per fill = filledShares &times; fillPrice &times; 0.02</code></pre>
+                <div class="callout callout-warning">
+                    <strong>WePredict never profits or loses from market outcomes</strong>
+                    It does not hold YES or NO positions on its own behalf. The only exception is the <code>MarketMakerAgent</code>, which holds temporary positions designed to net to zero. Any code path that results in the platform accumulating a directional position outside of MM is a bug.
+                </div>
+
+                <h3>The three-layer fill model &mdash; priority order is strict</h3>
+                <div class="layer-stack">
+                    <div class="layer-row">
+                        <div class="layer-tag">L1</div>
+                        <div class="layer-body">
+                            <strong>Internal CLOB (peer-to-peer)</strong> &mdash; User A's YES order matches User B's resting NO order at compatible price. WePredict is not a counterparty &mdash; it is the marketplace. Both wallets debited at placement, positions credited on fill. WePredict collects the 2% fee.
+                        </div>
+                        <div class="layer-share">&ge; 60%<br>target</div>
+                    </div>
+                    <div class="layer-row l2">
+                        <div class="layer-tag l2">L2</div>
+                        <div class="layer-body">
+                            <strong>MarketMakerAgent (platform quotes)</strong> &mdash; When no resting counterparty exists, the MM places limit orders using the platform pool wallet around <code>MarketAnalystAgent</code> fair value. Quotes are spread-neutral by design: the MM buys/sells both sides as flow arrives and nets exposure to zero. Earns the spread, not directional P&amp;L.
+                        </div>
+                        <div class="layer-share">fills the gap</div>
+                    </div>
+                    <div class="layer-row l3">
+                        <div class="layer-tag l3">L3</div>
+                        <div class="layer-body">
+                            <strong>LiquidityBackstop (external feeds)</strong> &mdash; Last resort: large order or completely new market with no MM depth. Routes to best external feed (Polymarket, Kalshi). WePredict pool wallet executes on the external venue and holds the position on the player's behalf. External feed fee absorbed by platform &mdash; player always pays 2%.
+                        </div>
+                        <div class="layer-share">&lt; 20%<br>alert ceiling</div>
+                    </div>
+                </div>
+
+                <h3>MarketMakerAgent design constraints</h3>
+                <table>
+                    <tr><th>Constraint</th><th>Rule</th></tr>
+                    <tr><td>Exposure target</td><td>Net zero across YES/NO per market over time</td></tr>
+                    <tr><td>Quote freshness</td><td>Cancel old quotes before placing new ones &mdash; stale quotes accumulate risk</td></tr>
+                    <tr><td>Volatility handling</td><td>Widen spread on volatile / illiquid markets (managed via <code>OrderFlowSignalReady</code> data)</td></tr>
+                    <tr><td>Settlement risk</td><td>Skip markets resolving in &lt; 48 h</td></tr>
+                    <tr><td>LLM usage</td><td>Zero LLM calls &mdash; pure arithmetic. Reacts to <code>MarketMispricingDetected</code> events from the analyst.</td></tr>
+                    <tr><td>Account identity</td><td>Uses <code>platformMarketMakerId</code> &mdash; reserved GUID, not a player account</td></tr>
+                </table>
+
+                <h3>Locked decisions</h3>
+                <table>
+                    <tr><th>Decision</th><th>Value</th></tr>
+                    <tr><td>Fee model</td><td>Aggressor pays <strong>2%</strong>, maker pays <strong>0%</strong> (maker-taker)</td></tr>
+                    <tr><td>Market maker wallet</td><td>Dedicated MM wallet (<code>Exchange:MarketMakerWalletId</code>) &mdash; separate from player escrow</td></tr>
+                    <tr><td>Backstop trigger</td><td>Internal depth <strong>&lt; 100 shares</strong> (<code>Exchange:BackstopMinDepthShares</code>)</td></tr>
+                    <tr><td>Price display</td><td>Bid + Ask + Mid + Spread all shown in market header</td></tr>
+                    <tr><td>GTC expiry</td><td>Auto-cancel <strong>48 h before resolution</strong> (<code>Exchange:GtcExpiryHoursBeforeResolution</code>)</td></tr>
+                    <tr><td>Backstop fee</td><td>Platform absorbs external feed fees &mdash; player always pays exactly 2%</td></tr>
+                </table>
+
+                <h3>Reserved accounts</h3>
+                <table>
+                    <tr><th>Account</th><th>Config key</th><th>Purpose</th><th>Restrictions</th></tr>
+                    <tr><td><code>platformMarketMakerId</code></td><td><code>Exchange:MarketMakerId</code></td><td>Holds MM resting quotes</td><td>Excluded from leaderboard, fraud alerts, player risk checks</td></tr>
+                    <tr><td><code>platformMarketMakerWalletId</code></td><td><code>Exchange:MarketMakerWalletId</code></td><td>MM wallet (separate from pool)</td><td>Risk tracked under MM budget, not player budget</td></tr>
+                    <tr><td><code>platformPoolWalletId</code></td><td><code>Exchange:PoolWalletId</code></td><td>Holds escrow + L3 external positions</td><td>Never appears in player-facing queries</td></tr>
+                </table>
+                <pre><code>{
+  "Exchange": {
+    "MarketMakerId":                   "&laquo;fixed GUID&raquo;",
+    "MarketMakerWalletId":             "&laquo;fixed GUID&raquo;",
+    "PoolWalletId":                    "&laquo;fixed GUID&raquo;",
+    "BackstopMinDepthShares":          100,
+    "GtcExpiryHoursBeforeResolution":  48
+  }
+}</code></pre>
+                <p style="font-size:0.85rem;color:var(--g500);">Generate <code>MarketMakerId</code>, <code>MarketMakerWalletId</code>, <code>PoolWalletId</code> with <code>Guid.NewGuid()</code> once and reuse them across all environments. These are permanent &mdash; existing orders and positions reference them.</p>
+
+                <h3>Position netting &mdash; selling = placing the opposite side</h3>
+                <p>WePredict does not have a "sell" order type. To exit a position, a player places an order on the opposite side:</p>
+                <pre><code>Player holds: YES 100 shares at 12&cent; entry
+Player wants to exit: places NO order for 100 shares (market order)
+
+If NO order fills at 17&cent; bid:
+  Player receives 100 &times; 17&cent; = $17.00
+  Position nets to zero (100 YES &minus; 100 NO = 0)
+  RealisedPnl = 100 &times; (17&cent; &minus; 12&cent;) = $5.00
+
+PositionLedger handles netting automatically:
+  - Same-side fill:     increase shares, update volume-weighted avg entry price
+  - Opposite-side fill: reduce shares (partial close) or delete position (full close)
+  - Overclose fill:     flip position side, update entry price to fill price</code></pre>
+                <div class="callout callout-danger">
+                    <strong>Never allow a player to hold simultaneous YES and NO positions in the same market</strong>
+                    <code>PositionLedger</code> must net them on every fill. If a player has 100 YES and 60 NO at the same time &mdash; that is a <code>PositionLedger</code> bug, not a valid state.
+                </div>
+
+                <h3>Health metrics</h3>
+                <table>
+                    <tr><th>Metric</th><th>Target</th><th>Surface</th></tr>
+                    <tr><td>Internal fill rate (% L1)</td><td>&ge; 60%</td><td><code>ExchangeStatsBar</code> on home + Admin dashboard</td></tr>
+                    <tr><td>L3 backstop usage</td><td>&lt; 20% (alert above)</td><td>Admin alerts &mdash; signals MM under-quoting or thin book</td></tr>
+                    <tr><td>MM net exposure / market</td><td>~ 0 over time</td><td>Admin MM control panel</td></tr>
+                    <tr><td>Settlement source agreement</td><td>100% (otherwise blocked)</td><td>Admin Settlement queue</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- ==================== BACKEND ==================== -->
+        <div class="tab-panel" id="tab-backend">
+            <div class="card">
+                <h2>Backend Solution</h2>
+
+                <h3>Monorepo structure</h3>
+                <table>
+                    <tr><th>Project</th><th>Type</th><th>Purpose</th></tr>
+                    <tr><td><code>WePredict.AppHost</code></td><td>Aspire host</td><td>.NET Aspire orchestrator &mdash; F5 starts everything (Web, Admin, Service, RabbitMQ, Redis)</td></tr>
+                    <tr><td><code>WePredict.ServiceDefaults</code></td><td>Library</td><td>Shared telemetry, health checks, OpenTelemetry &mdash; consumed by every host</td></tr>
+                    <tr><td><code>WePredict.Core</code></td><td>Library</td><td>Shared models (<code>MarketSnapshot</code>, <code>Order</code>, <code>Position</code>) + interfaces (<code>IFeedAdapter</code>, <code>IEventBus</code>). No logic, no DB, no HTTP.</td></tr>
+                    <tr><td><code>WePredict.Feeds</code></td><td>Library</td><td>Feed adapters &mdash; one per source (Manifold, Polymarket, Kalshi, Augur). All implement <code>IFeedAdapter</code>.</td></tr>
+                    <tr><td><code>WePredict.BL</code></td><td>Library</td><td>Business logic: <code>OrderEngine</code>, <code>OrderMatcher</code> (CLOB), <code>LiquidityBackstop</code>, <code>PositionLedger</code>, <code>SettlementEngine</code>, <code>WalletService</code>, <code>BotStrategyService</code>, <code>OperatorBridge</code></td></tr>
+                    <tr><td><code>WePredict.AI</code></td><td>Library</td><td>Multi-provider AI abstraction + 15+ agents</td></tr>
+                    <tr><td><code>WePredict.DAL</code></td><td>Library</td><td>EF Core 10 + SQL Server: <code>WePredictDbContext</code>, entity models, migrations</td></tr>
+                    <tr><td><code>WePredict.CommandLine.EF</code></td><td>Console</td><td>EF Core migration startup project &mdash; never deployed</td></tr>
+                    <tr><td><code>WePredict.Web</code></td><td>ASP.NET Core + Blazor</td><td>Player Blazor SSR/Server + REST API + SignalR + Integration API</td></tr>
+                    <tr><td><code>WePredict.Admin</code></td><td>Blazor Server</td><td>Operator back-office, FluentUI Blazor + CMS</td></tr>
+                    <tr><td><code>WePredict.Service</code></td><td>.NET Worker</td><td>Feed polling + RabbitMQ consumer + Cron + AI agents (combined)</td></tr>
+                    <tr><td><code>WePredict.SimulateService</code></td><td>Console</td><td>Simulated trading for dev / load testing</td></tr>
+                    <tr><td><code>WePredict.Tests</code></td><td>xUnit</td><td>Unit + integration test suites</td></tr>
+                </table>
+
+                <h3>Dependency direction (enforced, never reversed)</h3>
+                <pre><code>WePredict.Core          &larr; shared contracts only; no logic, no DB, no HTTP
+    &uarr;
+WePredict.DAL           &larr; EF entities + migrations only; no business rules
+    &uarr;
+WePredict.BL            &larr; all business logic; no HTTP, no Blazor, no SignalR
+    &uarr;
+WePredict.AI            &larr; agent logic only; depends on BL + DAL; no HTTP
+    &uarr;
+WePredict.Web           &larr; orchestration only (controllers, hubs, pages)
+WePredict.Admin         &larr; orchestration only (pages, admin API calls)
+WePredict.Service       &larr; hosted workers; orchestrates BL + AI; no HTTP concerns</code></pre>
+                <ul>
+                    <li>BL must never reference Web, Admin, or Service projects</li>
+                    <li>Controllers and Razor pages must never contain business logic &mdash; they call BL, format results, return responses</li>
+                    <li><code>WePredict.Core</code> must never reference any other project in this solution</li>
+                </ul>
+
+                <h3>Interface-first BL services</h3>
+                <p>Every BL service lives behind an interface, even if only one implementation exists today. The two-file cost buys testability, mockability, and an explicit contract.</p>
+                <pre><code>// &#10003; correct
+public interface IPlayerAdminService { Task&lt;PlayerListResult&gt; Search(...); }
+internal sealed class PlayerAdminService : IPlayerAdminService { ... }
+
+// &#10007; wrong &mdash; concrete class registered and injected directly
+internal sealed class PlayerAdminService { ... }</code></pre>
+
+                <h3>EF Core query discipline</h3>
+                <ul>
+                    <li><strong>Always use <code>AsNoTracking()</code></strong> for read-only queries</li>
+                    <li><strong>No N+1 queries</strong> &mdash; use <code>.Include()</code> or projection with <code>.Select()</code></li>
+                    <li><strong>No <code>.ToList()</code> without a preceding <code>.Where()</code></strong> &mdash; never load an entire table</li>
+                    <li>Use <code>CountAsync(predicate)</code> directly &mdash; not <code>.Where(...).Count()</code></li>
+                    <li><strong>Projection over hydration</strong> &mdash; <code>.Select(x =&gt; new Dto(...))</code> when only a few columns are needed</li>
+                </ul>
+
+                <div class="callout callout-danger">
+                    <strong>Memory discipline &mdash; non-negotiable</strong>
+                    The Markets, TradeOrders, PriceSnapshots, EventAuditLogs, Positions, and WalletTransactions tables can grow into the hundreds of thousands of rows. Every <code>ToListAsync()</code> on these tables MUST have <code>.Take(N)</code> in the same chain. Cached endpoints must cap <em>before</em> the cache is built &mdash; otherwise the first request that populates the cache still loads the unbounded result set. Aggregate in SQL, not in C# (<code>GroupBy</code> in SQL, not <code>.ToListAsync().GroupBy()</code>).
+                </div>
+
+                <h3>Result types over exceptions for expected failures</h3>
+                <p>Business failures that are part of normal operation (insufficient balance, user not found, duplicate transaction) use typed result objects, not exceptions. Exceptions are for unexpected failures only.</p>
+                <pre><code>// &#10003; caller can inspect and handle all outcomes
+public sealed record OrderResult(bool Success, string? Error = null, string? OrderId = null);
+
+// &#10007; exception for a normal business outcome
+throw new InsufficientBalanceException("Balance too low");</code></pre>
+
+                <h3>DTOs &amp; value objects: <code>sealed record</code></h3>
+                <p>All data transfer objects, API request/response shapes, and internal value objects are <code>sealed record</code> &mdash; not <code>class</code>. Free value equality, immutability, and clarity that the type is a data carrier, not a service.</p>
+
+                <h3>Cancellation token discipline</h3>
+                <p>Every async method that performs I/O accepts <code>CancellationToken ct = default</code> and passes it through &mdash; BL methods, controller actions, Razor <code>OnInitializedAsync</code>, agent methods. Ignoring cancellation holds threads during request teardown.</p>
+            </div>
+        </div>
+
+        <!-- ==================== WEB ==================== -->
+        <div class="tab-panel" id="tab-web">
+            <div class="card">
+                <h2>WePredict.Web &mdash; Player Frontend + API</h2>
+                <div class="callout callout-info">
+                    <strong>Single host, three render modes</strong>
+                    Public pages use Blazor SSR for SEO. Trading terminal, portfolio, bots, and chat use Blazor Server for stateful real-time interaction. REST API + SignalR hubs + Integration API all share the same cookie auth on the same host.
+                </div>
+
+                <h3>Render modes</h3>
+                <table>
+                    <tr><th>Page area</th><th>Mode</th><th>Why</th></tr>
+                    <tr><td>Home, market discovery, market detail (public)</td><td>Blazor SSR</td><td>SEO indexed; fast first paint; no WebSocket needed before login</td></tr>
+                    <tr><td>Trading terminal, portfolio, bots, chat panel</td><td>Blazor Server</td><td>Stateful real-time updates via SignalR; auth required</td></tr>
+                    <tr><td>Auth modals, footer, nav drawer</td><td>Blazor Server interactive islands</td><td>Embedded inside SSR pages where interactivity is needed</td></tr>
+                </table>
+
+                <h3>Routes</h3>
+                <table>
+                    <tr><th>Route</th><th>Page</th><th>Auth</th></tr>
+                    <tr><td><code>/</code></td><td>Home &mdash; hero + featured markets + ExchangeStatsBar</td><td>Public</td></tr>
+                    <tr><td><code>/markets</code></td><td>Market discovery (filter, search, categories)</td><td>Public</td></tr>
+                    <tr><td><code>/markets/{slug}</code></td><td>Market detail &mdash; price header, depth chart, order form, comments</td><td>Public</td></tr>
+                    <tr><td><code>/terminal</code></td><td>Full exchange terminal &mdash; multi-market view, order ladder</td><td>Player</td></tr>
+                    <tr><td><code>/portfolio</code></td><td>Open positions, P&amp;L, equity curve, risk tab</td><td>Player</td></tr>
+                    <tr><td><code>/bots</code></td><td>Trading bot management &mdash; create / pause / delete strategies</td><td>Player</td></tr>
+                    <tr><td><code>/wallet</code></td><td>Deposit, withdraw, transaction history</td><td>Player</td></tr>
+                    <tr><td><code>/leaderboard</code></td><td>Top players by realised P&amp;L (excludes MM account)</td><td>Public</td></tr>
+                    <tr><td><code>/notifications</code></td><td>Notifications centre &mdash; price alerts, trade fills, AI recommendations</td><td>Player</td></tr>
+                    <tr><td><code>/chat</code></td><td>Natural language trading assistant + support</td><td>Player</td></tr>
+                    <tr><td><code>/launch</code></td><td>SSO token redemption from operator integration</td><td>Token</td></tr>
+                </table>
+
+                <h3>REST API (<code>/api/*</code>)</h3>
+                <table>
+                    <tr><th>Endpoint</th><th>Purpose</th></tr>
+                    <tr><td><code>POST /api/auth/login</code> &middot; <code>/register</code> &middot; <code>/logout</code></td><td>Email + password auth; sets <code>_wp.auth</code> cookie</td></tr>
+                    <tr><td><code>GET /api/markets</code> &middot; <code>/markets/{id}</code></td><td>Market discovery + detail</td></tr>
+                    <tr><td><code>GET /api/markets/{id}/book</code></td><td>Order book snapshot (top N levels)</td></tr>
+                    <tr><td><code>POST /api/orders</code> &middot; <code>DELETE /api/orders/{id}</code></td><td>Place order, cancel order</td></tr>
+                    <tr><td><code>GET /api/portfolio</code> &middot; <code>/portfolio/equity</code></td><td>Positions + equity curve</td></tr>
+                    <tr><td><code>GET /api/bots</code> &middot; <code>POST /api/bots</code> &middot; <code>PATCH /api/bots/{id}</code></td><td>Bot strategy CRUD</td></tr>
+                    <tr><td><code>GET /api/wallet</code> &middot; <code>POST /api/wallet/deposit</code> &middot; <code>POST /api/wallet/withdraw</code></td><td>Wallet operations</td></tr>
+                    <tr><td><code>GET /api/recommendations</code></td><td>Personalized market suggestions</td></tr>
+                    <tr><td><code>POST /api/chat</code></td><td>Streaming chat with trading assistant</td></tr>
+                </table>
+
+                <h3>SignalR hubs (<code>/hubs/*</code>)</h3>
+                <table>
+                    <tr><th>Hub</th><th>Route</th><th>Pushes</th></tr>
+                    <tr><td><code>PriceTickHub</code></td><td><code>/hubs/prices</code></td><td>Live YES/NO price updates per market</td></tr>
+                    <tr><td><code>OrderBookHub</code></td><td><code>/hubs/orderbook</code></td><td>Bid/ask depth changes</td></tr>
+                    <tr><td><code>PortfolioHub</code></td><td><code>/hubs/portfolio</code></td><td>P&amp;L updates, position changes, balance changes</td></tr>
+                    <tr><td><code>AlertHub</code></td><td><code>/hubs/alerts</code></td><td>Risk alerts, fraud flags, AI notifications</td></tr>
+                    <tr><td><code>RecommendationHub</code></td><td><code>/hubs/recommendations</code></td><td>Personalized market suggestions</td></tr>
+                    <tr><td><code>ChatHub</code></td><td><code>/hubs/chat</code></td><td>Trading assistant + support response streaming</td></tr>
+                </table>
+
+                <h3>Design system &mdash; WebPrefer brand</h3>
+                <table>
+                    <tr><th>Token</th><th>Hex</th><th>Use</th></tr>
+                    <tr><td><code>--color-wp-brand</code></td><td>#1968AA</td><td>WebPrefer blue &mdash; buttons, links, active</td></tr>
+                    <tr><td><code>--color-wp-brand-light</code></td><td>#2a7ec4</td><td>Hover / gradient</td></tr>
+                    <tr><td><code>--color-wp-body</code></td><td>#0c1220</td><td>Page background (dark theme)</td></tr>
+                    <tr><td><code>--color-wp-card</code></td><td>#111d30</td><td>Cards, panels</td></tr>
+                    <tr><td><code>--color-wp-border</code></td><td>#1e3a5f</td><td>Borders</td></tr>
+                    <tr><td><code>--color-wp-yes</code></td><td>#00c076</td><td>YES / buy / positive P&amp;L <span class="badge badge-yes">YES</span></td></tr>
+                    <tr><td><code>--color-wp-no</code></td><td>#ef4444</td><td>NO / sell / negative P&amp;L <span class="badge badge-no">NO</span></td></tr>
+                    <tr><td><code>--color-wp-spread</code></td><td>#f59e0b</td><td>Spread / warning <span class="badge badge-spread">SPREAD</span></td></tr>
+                </table>
+
+                <h3>Component conventions</h3>
+                <ul>
+                    <li><strong>Logo &mdash; always file reference</strong>: every component shows the logo via <code>&lt;img src="/logo.svg"&gt;</code>. Never hardcode an inline SVG polygon approximation, even in modals / drawers / email templates</li>
+                    <li><strong>No emoji as icons</strong>: always use SVG via <code>Icon.razor</code> (or inline SVG on Admin pages). 50+ icons already defined; add new ones to <code>Icon.razor</code> first, then use</li>
+                    <li><strong>Shared components</strong> in <code>Components/Shared/</code> use CSS classes / Tailwind utilities &mdash; no inline <code>style="..."</code></li>
+                    <li><strong>Razor pages &gt; ~150 lines</strong> extract data loading into a BL service</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ==================== ADMIN ==================== -->
+        <div class="tab-panel" id="tab-admin">
+            <div class="card">
+                <h2>WePredict.Admin &mdash; Operator Back-Office</h2>
+                <div class="callout callout-info">
+                    <strong>Stack:</strong> Blazor Server + FluentUI Blazor (accent <code>#1968AA</code>) &mdash; runs at <code>admin.wepredict.ai</code>. Requires <code>Operator</code> role claim on the same cookie auth as Web.
+                </div>
+
+                <h3>Module map</h3>
+                <table>
+                    <tr><th>Module</th><th>Purpose</th></tr>
+                    <tr><td>Dashboard</td><td>Real-time platform health &mdash; volume, active users, fill rate, MM exposure, feed health, settlement queue</td></tr>
+                    <tr><td>Feeds</td><td>Add / pause / configure feed adapters; <code>FeedBuilderAgent</code> trigger; feed health timeline</td></tr>
+                    <tr><td>Markets</td><td>Search, filter, force-close, manual resolution override (with audit trail)</td></tr>
+                    <tr><td>Players</td><td>Search, KYC, risk profile, suspension, manual wallet adjust (audited)</td></tr>
+                    <tr><td>Orders &amp; Fills</td><td>Audit any order: source, routing layer, fees, fills, fraud flags</td></tr>
+                    <tr><td>CLOB Health</td><td>Per-market depth, MM exposure, internal fill rate, backstop usage</td></tr>
+                    <tr><td>MM Controls</td><td>Per-market: enable / disable, override spread, set max exposure, view P&amp;L</td></tr>
+                    <tr><td>Risk</td><td>Player exposure leaderboard, MM risk budget, platform risk dashboard</td></tr>
+                    <tr><td>Settlement</td><td>Verification queue (dual-source agreement), manual override, payout history</td></tr>
+                    <tr><td>Fraud</td><td>Real-time fraud alerts (spoofing, layering, wash trading), per-player drill-down</td></tr>
+                    <tr><td>AI Agents</td><td>Per-agent health, last run, token usage, enable / disable, manual trigger</td></tr>
+                    <tr><td>Withdrawals</td><td>Approve / reject queue, audit history</td></tr>
+                    <tr><td>Operators</td><td>Add operator, issue / rotate API key, webhook delivery log, manual webhook replay</td></tr>
+                    <tr><td>CMS</td><td>Edit public site copy (key/value) &mdash; Redis cache invalidated on save; Web reads fresh content immediately</td></tr>
+                    <tr><td>Admin Assistant</td><td>Natural-language operator chat &mdash; feed diagnosis, suspicious patterns, volume analysis</td></tr>
+                </table>
+
+                <h3>Admin styling conventions</h3>
+                <ul>
+                    <li>Admin pages may use inline <code>style="..."</code> for single-concern display pages</li>
+                    <li>Any style value used more than 3 times in the same file is extracted to a CSS variable or local constant</li>
+                    <li>New admin pages use the design token palette (<code>--color-wp-card</code>, <code>--color-wp-border</code>) via CSS, not hardcoded hex</li>
+                    <li>Admin icons use inline SVG (no Tailwind), Web icons use <code>Icon.razor</code></li>
+                </ul>
+
+                <h3>CMS module</h3>
+                <div class="seq-diagram">
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">1</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-blue">Content editor</span>
+                            <span class="seq-msg">Edits a key in Admin CMS (e.g. <code>home.hero.headline</code>) &mdash; rich text or plain</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">2</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-green">CmsService</span>
+                            <span class="seq-msg">Writes to <code>CmsContent</code> table, invalidates Redis key <code>cms:{key}</code></span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">3</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-teal">WePredict.Web</span>
+                            <span class="seq-msg">Next page load reads <code>cms:{key}</code> &mdash; cache miss &rarr; fetches from DB &rarr; repopulates cache</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== SERVICE ==================== -->
+        <div class="tab-panel" id="tab-service">
+            <div class="card">
+                <h2>WePredict.Service &mdash; Background Workers</h2>
+                <div class="callout callout-info">
+                    <strong><code>IHostedService</code>s</strong>
+                    All background work runs in one combined host. Each concern is a separate <code>IHostedService</code> in <code>Program.cs</code> &mdash; isolated in code, deployed together for simplicity.
+                </div>
+
+                <h3>Worker inventory</h3>
+
+                <h4>Feed workers &mdash; one per adapter</h4>
+                <table>
+                    <tr><th>Worker</th><th>Cadence</th><th>Publishes</th></tr>
+                    <tr><td><code>ManifoldFeedWorker</code></td><td>Configurable interval</td><td><code>MarketPriceUpdated</code>, <code>OrderBookUpdated</code></td></tr>
+                    <tr><td><code>PolymarketFeedWorker</code></td><td>Configurable interval</td><td>Same + <code>FeedHealthChanged</code> on degradation</td></tr>
+                    <tr><td><code>KalshiFeedWorker</code></td><td>Configurable interval + WebSocket</td><td>Same</td></tr>
+                    <tr><td><code>AugurFeedWorker</code></td><td>On-chain polling</td><td>Same</td></tr>
+                </table>
+                <p>Feed workers never touch SignalR directly &mdash; they publish to RabbitMQ and the event consumer broadcasts.</p>
+
+                <h4>Event consumer</h4>
+                <table>
+                    <tr><th>Worker</th><th>Role</th></tr>
+                    <tr><td><code>EventConsumerWorker</code></td><td>Single consumer; dispatches to handlers. Broadcasts to SignalR hubs in <code>WePredict.Web</code>. Writes audit log to SQL. Triggers <code>WalletService</code> credits on <code>SettlementVerified</code>. Fires operator webhooks on significant events.</td></tr>
+                </table>
+
+                <h4>Cron workers &mdash; one <code>IHostedService</code> per schedule</h4>
+                <table>
+                    <tr><th>Worker</th><th>Cadence</th><th>Purpose</th></tr>
+                    <tr><td><code>SettlementCheckWorker</code></td><td>Hourly</td><td>Queues markets past <code>EndsAt</code> for verification</td></tr>
+                    <tr><td><code>PnLRecalcWorker</code></td><td>Every minute</td><td>Recalculates unrealised P&amp;L per open position</td></tr>
+                    <tr><td><code>FeedHealthCheckWorker</code></td><td>Every 30 s</td><td>Publishes <code>FeedHealthCheckRequested</code> &mdash; AI agent does the diagnosis</td></tr>
+                    <tr><td><code>RiskReportWorker</code></td><td>Every 15 min</td><td>Publishes <code>RiskReportRequested</code></td></tr>
+                    <tr><td><code>OrderCleanupWorker</code></td><td>Daily</td><td>Cancels GTC orders &lt; 48 h before resolution; archives ancient cancelled orders</td></tr>
+                    <tr><td><code>WalletReconciliationWorker</code></td><td>Daily</td><td>Verifies sum of wallets matches sum of escrows + payouts</td></tr>
+                    <tr><td><code>WebhookRetryWorker</code></td><td>Every 5 min</td><td>Retries failed webhook deliveries with exponential backoff</td></tr>
+                    <tr><td><code>EmailWorker</code></td><td>Event-driven</td><td>Consumes <code>EmailRequested</code> events &mdash; sends via SendGrid</td></tr>
+                    <tr><td><code>LeaderboardSnapshotWorker</code></td><td>Every 15 min</td><td>Computes leaderboard rankings cache</td></tr>
+                    <tr><td><code>PortfolioSnapshotWorker</code></td><td>Nightly</td><td>Snapshots equity curve per player for the historical chart</td></tr>
+                </table>
+
+                <h4>AI agent workers (13 hosted)</h4>
+                <table>
+                    <tr><th>Worker</th><th>Trigger</th></tr>
+                    <tr><td><code>NewsWatcherWorker</code>, <code>SentimentWorker</code>, <code>FraudDetectionWorker</code></td><td>Continuous loops with skip-if-no-data guards</td></tr>
+                    <tr><td><code>OrderFlowWorker</code>, <code>ExecutionQualityWorker</code></td><td>Continuous; LLM only fires on threshold breach</td></tr>
+                    <tr><td><code>MarketAnalystWorker</code>, <code>RecommendationWorker</code>, <code>TradingBotWorker</code></td><td>Scheduled interval</td></tr>
+                    <tr><td><code>FeedHealthAgentWorker</code></td><td>Triggered by <code>FeedHealthCheckRequested</code> &mdash; AI diagnosis + self-healing</td></tr>
+                    <tr><td><code>MarketMakerWorker</code></td><td>On <code>MarketMispricingDetected</code> &mdash; zero LLM, pure arithmetic</td></tr>
+                    <tr><td><code>RiskMonitorWorker</code>, <code>PortfolioRebalancerWorker</code>, <code>SettlementVerificationWorker</code></td><td>Scheduled or event-triggered</td></tr>
+                </table>
+
+                <h4>Scoped agents &mdash; registered in Web/Admin, not here</h4>
+                <table>
+                    <tr><th>Agent</th><th>Invoked</th></tr>
+                    <tr><td><code>OrderRoutingAgent</code></td><td>Per order placement (only when L1 + L2 fail)</td></tr>
+                    <tr><td><code>FeedBuilderAgent</code></td><td>On-demand from Admin UI</td></tr>
+                    <tr><td><code>TradingAssistant</code>, <code>UserSupportAgent</code>, <code>AdminAssistant</code></td><td>Per chat turn (streaming)</td></tr>
+                </table>
+
+                <h3>Registration example</h3>
+                <pre><code>// WePredict.Service/Program.cs &mdash; all registrations in one place
+builder.Services.AddSingleton&lt;ILLMClientFactory&gt;(...);
+builder.Services.AddSingleton&lt;IEventBus&gt;(...);
+
+// Feed workers
+builder.Services.AddHostedService&lt;ManifoldFeedWorker&gt;();
+builder.Services.AddHostedService&lt;PolymarketFeedWorker&gt;();
+builder.Services.AddHostedService&lt;KalshiFeedWorker&gt;();
+
+// Event + Cron
+builder.Services.AddHostedService&lt;EventConsumerWorker&gt;();
+builder.Services.AddHostedService&lt;SettlementCheckWorker&gt;();
+builder.Services.AddHostedService&lt;PnLRecalcWorker&gt;();
+builder.Services.AddHostedService&lt;FeedHealthCheckWorker&gt;();
+// ... (RiskReport, OrderCleanup, WalletReconciliation, WebhookRetry, Email, Snapshot)
+
+// AI agent workers
+builder.Services.AddHostedService&lt;NewsWatcherWorker&gt;();
+builder.Services.AddHostedService&lt;SentimentWorker&gt;();
+builder.Services.AddHostedService&lt;FraudDetectionWorker&gt;();
+builder.Services.AddHostedService&lt;MarketAnalystWorker&gt;();
+builder.Services.AddHostedService&lt;RecommendationWorker&gt;();
+builder.Services.AddHostedService&lt;TradingBotWorker&gt;();
+builder.Services.AddHostedService&lt;FeedHealthAgentWorker&gt;();
+builder.Services.AddHostedService&lt;MarketMakerWorker&gt;();
+builder.Services.AddHostedService&lt;RiskMonitorWorker&gt;();
+builder.Services.AddHostedService&lt;PortfolioRebalancerWorker&gt;();
+builder.Services.AddHostedService&lt;SettlementVerificationWorker&gt;();</code></pre>
+            </div>
+        </div>
+
+        <!-- ==================== AI ==================== -->
+        <div class="tab-panel" id="tab-ai">
+            <div class="card">
+                <h2>&#x2728; AI &amp; Agents <span class="badge badge-blue">Multi-provider, fully autonomous</span></h2>
+                <div class="callout callout-success">
+                    <strong>AI is not bolted on &mdash; it runs the platform</strong>
+                    Market analysis, order routing, fraud detection, settlement verification, recommendations, and natural-language trading are all delivered by an event-driven agent suite. Providers are runtime-switchable: Gemini (default), Claude, OpenAI, Azure OpenAI, Ollama.
+                </div>
+
+                <h3>Provider abstraction</h3>
+                <p>Agents never import provider SDKs directly &mdash; they consume <code>Microsoft.Extensions.AI.IChatClient</code>. Swapping providers is a config change, not a code change.</p>
+                <pre><code>All Agents
+    &darr; use only
+IChatClient  (Microsoft.Extensions.AI)
+    &darr; resolved by DI from
+ILLMClientFactory
+    &darr; reads
+appsettings.json &rarr; "AI:Provider": "gemini" | "claude" | "openai" | "azureopenai" | "ollama"</code></pre>
+
+                <h3>Supported providers</h3>
+                <table>
+                    <tr><th>Provider</th><th>Package</th><th>Status</th></tr>
+                    <tr><td>Google Gemini</td><td>Google AI SDK + <code>IChatClient</code> wrapper</td><td><span class="status status-ready"><span class="status-dot"></span>Default</span></td></tr>
+                    <tr><td>Anthropic Claude</td><td>Anthropic SDK + <code>IChatClient</code> wrapper</td><td><span class="status status-ready"><span class="status-dot"></span>Swap via config</span></td></tr>
+                    <tr><td>OpenAI / ChatGPT</td><td><code>Microsoft.Extensions.AI.OpenAI</code></td><td><span class="status status-ready"><span class="status-dot"></span>Swap via config</span></td></tr>
+                    <tr><td>Azure OpenAI</td><td><code>Microsoft.Extensions.AI.OpenAI</code> (Azure endpoint)</td><td><span class="status status-ready"><span class="status-dot"></span>Swap via config</span></td></tr>
+                    <tr><td>Ollama (local)</td><td>OllamaSharp + <code>IChatClient</code> wrapper</td><td><span class="status status-ready"><span class="status-dot"></span>Offline / private</span></td></tr>
+                </table>
+
+                <h3>Tiered model resolution</h3>
+                <p><code>ILLMClientFactory</code> resolves a model per tier so each agent picks the right cost/capability trade-off:</p>
+                <pre><code>{
+  "AI": {
+    "Provider": "gemini",
+    "AgentsEnabled": false,            // &larr; default off, enable per env
+    "Providers": {
+      "gemini": {
+        "ApiKey": "...",
+        "Models": {
+          "Fast":     "gemini-2.5-flash",
+          "Standard": "gemini-2.5-flash",
+          "Advanced": "gemini-2.5-pro"
+        }
+      },
+      "claude": {
+        "ApiKey": "...",
+        "Models": {
+          "Fast":     "claude-haiku-4-5-20251001",
+          "Standard": "claude-sonnet-4-6",
+          "Advanced": "claude-opus-4-7"
+        }
+      },
+      "openai": {
+        "ApiKey": "...",
+        "Models": { "Fast": "gpt-4o-mini", "Standard": "gpt-4o", "Advanced": "o3" }
+      }
+    }
+  }
+}</code></pre>
+
+                <h3>Full agent inventory</h3>
+
+                <h4>Continuous &mdash; Fast tier (high frequency, cheap)</h4>
+                <table>
+                    <tr><th>Agent</th><th>Does</th></tr>
+                    <tr><td><code>NewsWatcherAgent</code></td><td>Polls Reuters / AP / news APIs &mdash; maps breaking news to open markets</td></tr>
+                    <tr><td><code>SentimentAgent</code></td><td>Aggregates Twitter / X, Reddit, Telegram signals per market</td></tr>
+                    <tr><td><code>FraudDetectionAgent</code></td><td>Wash trading, spoofing (large order cancelled &lt; 30 s), layering (&ge; 3 orders same level)</td></tr>
+                    <tr><td><code>OrderFlowAgent</code></td><td>Real-time YES vs NO volume imbalance per market &mdash; zero LLM, pure SQL aggregation</td></tr>
+                    <tr><td><code>ExecutionQualityAgent</code></td><td>Per-fill slippage vs mid-price &mdash; LLM only fires when slippage exceeds threshold</td></tr>
+                </table>
+
+                <h4>Scheduled &mdash; Standard tier</h4>
+                <table>
+                    <tr><th>Agent</th><th>Frequency</th><th>Does</th></tr>
+                    <tr><td><code>MarketAnalystAgent</code></td><td>Every 15 min</td><td>Fair value from news + sentiment + internal fill prices; flags mispricings; selects featured market</td></tr>
+                    <tr><td><code>MarketRecommendationAgent</code></td><td>Every 30 min</td><td>Personalized market surface per user based on preferences + history</td></tr>
+                    <tr><td><code>TradingBotAgent</code></td><td>Per strategy</td><td>Autonomous IOC limit orders within user-set spend limits</td></tr>
+                    <tr><td><code>FeedHealthAgent</code></td><td>Every 30 s</td><td>Self-healing &mdash; reconnects degraded feeds, switches backup sources</td></tr>
+                    <tr><td><code>FeedBuilderAgent</code></td><td>On-demand</td><td>Generates new <code>IFeedAdapter</code> from API docs or sample JSON</td></tr>
+                </table>
+
+                <h4>Critical &mdash; Advanced tier (high-stakes)</h4>
+                <table>
+                    <tr><th>Agent</th><th>Frequency</th><th>Does</th></tr>
+                    <tr><td><code>MarketMakerAgent</code></td><td>On <code>MarketMispricingDetected</code></td><td>Places spread-neutral bid/ask quotes from platform pool &mdash; seeds CLOB depth on new markets. <strong>Zero LLM</strong> &mdash; pure arithmetic.</td></tr>
+                    <tr><td><code>RiskMonitorAgent</code></td><td>Every minute</td><td>Net exposure alerts (warn &rarr; limit &rarr; suspend) per user + platform MM risk budget</td></tr>
+                    <tr><td><code>PortfolioRebalancerAgent</code></td><td>Scheduled</td><td>Correlated position analysis, auto-rebalance + close-position actions</td></tr>
+                    <tr><td><code>SettlementVerificationAgent</code></td><td>Per resolution</td><td>Cross-verifies YES/NO outcome from multiple independent sources before payout</td></tr>
+                    <tr><td><code>OrderRoutingAgent</code></td><td>Per order</td><td>CLOB-first check; LLM routing only when internal book is empty</td></tr>
+                </table>
+
+                <h4>Conversational &mdash; on-demand, streaming</h4>
+                <table>
+                    <tr><th>Agent</th><th>Used by</th><th>Does</th></tr>
+                    <tr><td><code>TradingAssistant</code></td><td>User chat panel</td><td>Natural-language trading + portfolio questions (<em>"Put $100 on Brazil winning"</em>)</td></tr>
+                    <tr><td><code>UserSupportAgent</code></td><td>User chat panel</td><td>Platform help, trade history, settlement, P&amp;L explanations</td></tr>
+                    <tr><td><code>AdminAssistant</code></td><td>Admin portal chat</td><td>Operator intelligence &mdash; feed diagnosis, suspicious patterns, volume analysis</td></tr>
+                </table>
+
+                <h3>Token governance &mdash; non-negotiable</h3>
+                <div class="callout callout-warning">
+                    <strong>Every LLM call costs money and burns quota</strong>
+                    Treat tokens like database writes &mdash; only do them when there is real work to do. Agents must react to domain events; not poll on a timer unless the work is inherently periodic.
+                </div>
+                <table>
+                    <tr><th>Trigger type</th><th>Correct pattern</th><th>Forbidden pattern</th></tr>
+                    <tr><td>Something happened (order placed, feed broke)</td><td>Subscribe to the domain event</td><td>Loop every N seconds and query DB</td></tr>
+                    <tr><td>Periodic batch (news fetch, analyst, recommendations)</td><td>Timer publishes an event &rarr; agent subscribes</td><td>Agent runs LLM unconditionally every tick</td></tr>
+                    <tr><td>On-demand (admin trigger, chat)</td><td>HTTP request &rarr; single LLM call</td><td>Proactive polling</td></tr>
+                </table>
+
+                <h4>Required guards before every LLM call</h4>
+                <pre><code>// &#10003; correct &mdash; skip LLM when no data
+if (recentOrders.Count &lt; VelocityThreshold) return "Skipped";
+
+// &#10003; correct &mdash; skip when no API configured
+if (string.IsNullOrEmpty(_newsApiUrl)) return;
+
+// &#10003; correct &mdash; skip when error is null (feed is healthy)
+if (string.IsNullOrWhiteSpace(error)) return;
+
+// &#10007; wrong &mdash; calls LLM unconditionally
+var response = await RunAsync(...);</code></pre>
+
+                <h4>Other token rules</h4>
+                <ul>
+                    <li><strong>N-multiplier agents are high-risk</strong>: any loop over users/markets/strategies must have a meaningful filter; document worst-case call count; consider batching</li>
+                    <li><strong>Background agents disabled by default</strong>: <code>AI:AgentsEnabled</code> defaults to <code>false</code>; enabled per-environment in config</li>
+                    <li><strong>Retry policy</strong>: Polly handles transient network errors only. Quota errors (<code>Google.GenAI.ClientError</code> etc.) are NOT retried &mdash; retrying multiplies consumption by 4&times;</li>
+                    <li><strong>Activity log</strong>: every agent invocation calls <code>AgentHealthTracker.RecordActivity()</code> &mdash; written to <code>AgentRun</code> table, visible in Admin "Agent Monitor"</li>
+                </ul>
+
+                <h3>Trade explanations</h3>
+                <p>Every <code>TradingBotAgent</code> order publishes a plain-English reason displayed in the Portfolio tab:</p>
+                <div class="callout callout-info">
+                    <em>"Bought 200 YES on Brazil at 34&cent; &mdash; fair value model shows 41&cent; based on Sportradar form data and positive sentiment shift in the last 2 hours."</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== INTEGRATION API ==================== -->
+        <div class="tab-panel" id="tab-integration">
+            <div class="card">
+                <h2>Operator Integration API</h2>
+                <div class="callout callout-info">
+                    <strong>Embed WePredict as a prediction market provider</strong>
+                    Any operator platform (PAM or otherwise) can integrate WePredict via <code>/integration/*</code> &mdash; same pattern PAM uses for casino and sportsbook providers.
+                </div>
+
+                <h3>Authentication &mdash; <code>X-Api-Key</code></h3>
+                <p>Every request must include one header:</p>
+                <pre><code>X-Api-Key:  {apiKey}    issued per operator in Admin portal &mdash; long random key, rotatable</code></pre>
+                <ul>
+                    <li>Missing or invalid key &rarr; <code>401</code></li>
+                    <li>Keys stored hashed in <code>Operator</code> table</li>
+                    <li>Each operator has one active key; rotation issues a new key and immediately invalidates the old</li>
+                    <li>The same key authenticates inbound calls AND outbound webhooks &mdash; one secret per operator</li>
+                </ul>
+
+                <h3>Endpoints &mdash; operators call WePredict</h3>
+
+                <h4>SSO &mdash; launch a user into WePredict</h4>
+                <pre><code>POST /integration/sso
+
+Body:
+{
+  "externalUserId": "pam-player-12345",
+  "displayName":    "JohnD",
+  "currency":       "USD",
+  "locale":         "en-US",
+  "returnUrl":      "https://operator.com/lobby"
+}
+
+Response 200:
+{
+  "sessionUrl":  "https://wepredict.ai/launch?token=abc123",
+  "expiresIn":   300   // seconds &mdash; token valid for 5 minutes
+}</code></pre>
+                <p>WePredict auto-creates the user account on first SSO call. Subsequent SSO calls for the same <code>externalUserId</code> log the existing user in.</p>
+
+                <h4>Balance</h4>
+                <pre><code>GET /integration/users/{externalUserId}/balance
+
+Response 200:
+{
+  "externalUserId": "pam-player-12345",
+  "balance":        150.00,
+  "currency":       "USD",
+  "updatedAt":      "2026-04-28T10:30:00Z"
+}
+
+Response 404: user not found (has not SSO'd yet)</code></pre>
+
+                <h4>Credit wallet</h4>
+                <pre><code>POST /integration/users/{externalUserId}/credit
+
+Body:
+{
+  "amount":        50.00,
+  "currency":      "USD",
+  "transactionId": "pam-txn-98765",   // idempotency key &mdash; safe to retry
+  "reference":     "deposit"
+}
+
+Response 200:
+{
+  "wePredictTransactionId": "wp-txn-11111",
+  "newBalance":             200.00,
+  "processedAt":            "2026-04-28T10:31:00Z"
+}
+
+Response 409: duplicate transactionId &mdash; already processed (idempotent)</code></pre>
+
+                <h4>Debit wallet</h4>
+                <pre><code>POST /integration/users/{externalUserId}/debit
+
+Body:
+{
+  "amount":        30.00,
+  "currency":      "USD",
+  "transactionId": "pam-txn-98766",
+  "reference":     "withdrawal"
+}
+
+Response 200:
+{
+  "wePredictTransactionId": "wp-txn-11112",
+  "newBalance":             170.00,
+  "processedAt":            "2026-04-28T10:32:00Z"
+}
+
+Response 422: insufficient balance
+{
+  "error": "InsufficientBalance",
+  "available": 150.00,
+  "requested":  30.00
+}</code></pre>
+
+                <h4>User positions</h4>
+                <pre><code>GET /integration/users/{externalUserId}/positions
+
+Response 200:
+{
+  "externalUserId": "pam-player-12345",
+  "positions": [
+    {
+      "marketId":     "btc-120k-july-2026",
+      "marketTitle":  "Will BTC exceed $120K before July 2026?",
+      "side":         "YES",
+      "shares":       200,
+      "entryPrice":   0.34,
+      "currentPrice": 0.58,
+      "unrealisedPnl": 48.00,
+      "feedSource":   "Kalshi"
+    }
+  ]
+}</code></pre>
+
+                <h4>Trade history</h4>
+                <pre><code>GET /integration/users/{externalUserId}/history?from=2026-01-01&amp;to=2026-04-28&amp;limit=50&amp;offset=0
+
+Response 200:
+{
+  "total": 142,
+  "items": [
+    {
+      "tradeId":     "wp-trade-555",
+      "marketTitle": "Will BTC exceed $120K?",
+      "side":        "YES",
+      "shares":      200,
+      "price":       0.34,
+      "amount":      68.00,
+      "outcome":     "WON",
+      "payout":      200.00,
+      "settledAt":   "2026-04-10T14:00:00Z"
+    }
+  ]
+}</code></pre>
+
+                <h4>Aggregate report</h4>
+                <pre><code>GET /integration/reports/summary?from=2026-04-01&amp;to=2026-04-28
+
+Response 200:
+{
+  "period":         { "from": "2026-04-01", "to": "2026-04-28" },
+  "totalUsers":     1420,
+  "activeUsers":    387,
+  "totalVolume":    82400.00,
+  "totalPayout":    76200.00,
+  "ggr":            6200.00,
+  "currency":       "USD"
+}</code></pre>
+
+                <h3>Webhooks &mdash; WePredict pushes to operator</h3>
+                <pre><code>POST {operatorWebhookUrl}
+
+Headers:
+  X-WePredict-Event:      TradeSettled
+  X-WePredict-Timestamp:  {unix timestamp}
+  X-Api-Key:              {sharedApiKey}    // same key as inbound
+
+Body (envelope):
+{
+  "event":          "TradeSettled",
+  "operatorId":     "pam",
+  "externalUserId": "pam-player-12345",
+  "occurredAt":     "2026-04-28T14:00:00Z",
+  "data":           { ... event-specific fields }
+}</code></pre>
+
+                <h4>Event payloads</h4>
+                <table>
+                    <tr><th>Event</th><th>Data fields</th></tr>
+                    <tr><td><code>UserRegistered</code></td><td><code>{ wePredictPlayerId, displayName, currency }</code></td></tr>
+                    <tr><td><code>TradeSettled</code></td><td><code>{ tradeId, marketTitle, side, shares, payout, outcome }</code></td></tr>
+                    <tr><td><code>BigWin</code></td><td><code>{ tradeId, marketTitle, payout, threshold }</code></td></tr>
+                    <tr><td><code>WithdrawalRequested</code></td><td><code>{ withdrawalId, amount, currency }</code> &mdash; operator must call approve/reject</td></tr>
+                    <tr><td><code>AccountSuspended</code></td><td><code>{ reason: "FraudDetected" | "RiskLimitBreached" | "ManualAdmin" }</code></td></tr>
+                </table>
+
+                <h4>Delivery guarantees</h4>
+                <ul>
+                    <li><code>WebhookRetryWorker</code> retries failed deliveries every 5 minutes</li>
+                    <li>Exponential backoff: 5 min &rarr; 10 min &rarr; 20 min &rarr; 1 h &rarr; 4 h &rarr; give up after 24 h</li>
+                    <li>All delivery attempts logged in Admin Operators page</li>
+                    <li>Operator can manually replay any webhook from Admin</li>
+                </ul>
+
+                <h3>Error codes</h3>
+                <table>
+                    <tr><th>Code</th><th>Meaning</th></tr>
+                    <tr><td><code>401</code></td><td>Missing or invalid <code>X-Api-Key</code></td></tr>
+                    <tr><td><code>403</code></td><td>Operator disabled or IP not whitelisted</td></tr>
+                    <tr><td><code>404</code></td><td>User not found &mdash; has not SSO'd yet</td></tr>
+                    <tr><td><code>409</code></td><td>Duplicate <code>transactionId</code> &mdash; already processed</td></tr>
+                    <tr><td><code>422</code></td><td>Insufficient balance</td></tr>
+                    <tr><td><code>429</code></td><td>Rate limit exceeded</td></tr>
+                </table>
+
+                <h3>Rate limits per operator</h3>
+                <table>
+                    <tr><th>Endpoint</th><th>Limit</th></tr>
+                    <tr><td><code>POST /integration/sso</code></td><td>60 req / min</td></tr>
+                    <tr><td><code>GET /integration/users/*/balance</code></td><td>300 req / min</td></tr>
+                    <tr><td><code>POST /integration/users/*/credit</code></td><td>120 req / min</td></tr>
+                    <tr><td><code>POST /integration/users/*/debit</code></td><td>120 req / min</td></tr>
+                    <tr><td><code>GET /integration/reports/*</code></td><td>10 req / min</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- ==================== FEEDS ==================== -->
+        <div class="tab-panel" id="tab-feeds">
+            <div class="card">
+                <h2>Feed Adapters</h2>
+                <p>Feed adapters normalize external prediction markets into WePredict's internal models. Every adapter implements <code>IFeedAdapter</code> from <code>WePredict.Core</code>.</p>
+
+                <h3>Supported feeds</h3>
+                <table>
+                    <tr><th>Feed</th><th>Auth for trading</th><th>Model</th></tr>
+                    <tr><td>Manifold</td><td>None &mdash; free REST</td><td>N/A &mdash; dev/testing baseline</td></tr>
+                    <tr><td>Kalshi</td><td>Kalshi API key (server-side)</td><td>Custodial &mdash; WePredict account</td></tr>
+                    <tr><td>Polymarket</td><td>USDC on Polygon (server-side pool wallet)</td><td>Custodial &mdash; pool wallet hidden from user</td></tr>
+                    <tr><td>Augur</td><td>ETH on Ethereum (server-side pool wallet)</td><td>Custodial &mdash; pool wallet hidden from user</td></tr>
+                    <tr><td>Sportradar</td><td>API key</td><td>Data only &mdash; no trading</td></tr>
+                </table>
+                <p>Users always trade in USD. Feed adapters handle on-chain / API auth internally &mdash; no user wallet needed.</p>
+
+                <h3><code>IFeedAdapter</code> contract</h3>
+                <pre><code>public interface IFeedAdapter
+{
+    string SourceName { get; }
+
+    Task&lt;IReadOnlyList&lt;MarketSnapshot&gt;&gt; FetchMarketsAsync(CancellationToken ct);
+
+    Task&lt;OrderBookSnapshot&gt; FetchOrderBookAsync(string externalMarketId, CancellationToken ct);
+
+    Task&lt;OrderResult&gt; PlaceOrderAsync(Order order, CancellationToken ct);
+    Task&lt;OrderResult&gt; CancelOrderAsync(string externalOrderId, CancellationToken ct);
+
+    Task&lt;HealthStatus&gt; CheckHealthAsync(CancellationToken ct);
+}</code></pre>
+
+                <h3>Manifold</h3>
+                <ul>
+                    <li>Free REST API &mdash; no auth, no real money</li>
+                    <li>~244 K active markets (the platform's largest dataset)</li>
+                    <li>Used as the dev/testing baseline &mdash; safe to overfetch</li>
+                    <li>Read-only in MVP; "trading" is simulated using internal accounts</li>
+                </ul>
+                <div class="callout callout-danger">
+                    <strong>Manifold queries are memory hot spots</strong>
+                    Every query against the <code>Markets</code> table where <code>FeedSource = "Manifold"</code> can return 244 K rows. Always <code>.Where(...).Take(N).AsNoTracking()</code>.
+                </div>
+
+                <h3>Polymarket</h3>
+                <ul>
+                    <li>CLOB API + Gamma API combined</li>
+                    <li>Trades on Polygon (USDC) via <code>IWeb3Service</code></li>
+                    <li>Pool wallet (server-side, hidden from user) executes &mdash; user trades USD, never touches Polygon</li>
+                    <li>Reconciled daily via <code>WalletReconciliationWorker</code></li>
+                </ul>
+
+                <h3>Kalshi</h3>
+                <ul>
+                    <li>REST + WebSocket</li>
+                    <li>Single WePredict-owned Kalshi account holds all routed trades</li>
+                    <li>WebSocket pushed events used to drive <code>MarketPriceUpdated</code> without polling</li>
+                </ul>
+
+                <h3><code>FeedBuilderAgent</code> &mdash; new adapters from API docs</h3>
+                <div class="seq-diagram">
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">1</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-blue">Admin operator</span>
+                            <span class="seq-msg">Pastes API docs URL or sample JSON into Admin &rarr; "Generate adapter"</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">2</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-yellow">FeedBuilderAgent</span>
+                            <span class="seq-msg">LLM produces a C# adapter class implementing <code>IFeedAdapter</code> based on the docs/sample</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">3</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-teal">Code review</span>
+                            <span class="seq-msg">Generated code committed to <code>WePredict.Feeds</code> &mdash; reviewed by engineer before production</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">4</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-green">Service registration</span>
+                            <span class="seq-msg">Register a new <code>FeedWorker</code> for the adapter in <code>WePredict.Service</code> &mdash; deploy</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== WALLET / WEB3 ==================== -->
+        <div class="tab-panel" id="tab-wallet">
+            <div class="card">
+                <h2>Wallet &amp; Web3 &mdash; Dual Track</h2>
+                <div class="callout callout-info">
+                    <strong>Two wallet tracks, same trading terminal</strong>
+                    Mainstream players use custodial USD (MoonPay/Transak on-ramp). Crypto-native players connect MetaMask for USDC. Players can have both wallets active simultaneously.
+                </div>
+
+                <h3>Track comparison</h3>
+                <table>
+                    <tr><th>Track</th><th>Users</th><th>How</th></tr>
+                    <tr><td><strong>Custodial USD</strong></td><td>Mainstream &mdash; iGaming players, anyone without crypto</td><td>MoonPay / Transak widget (card &rarr; USDC) &rarr; USD balance &rarr; bank withdrawal</td></tr>
+                    <tr><td><strong>Web3 / MetaMask</strong></td><td>Crypto-native users, DeFi audience, global markets</td><td>Connect MetaMask &rarr; USDC deposit &rarr; on-chain positions</td></tr>
+                </table>
+                <p><strong>Blockchain is always hidden for Track 1.</strong> Polymarket runs on USDC/Polygon, Augur on Ethereum &mdash; WePredict runs server-side pool wallets. Users trade in USD and never need MetaMask unless they choose Track 2.</p>
+
+                <h3><code>WalletAccount</code> &mdash; dual-type model</h3>
+                <table>
+                    <tr><th>Field</th><th>Notes</th></tr>
+                    <tr><td><code>playerId</code></td><td>FK to <code>Player</code></td></tr>
+                    <tr><td><code>type</code></td><td><code>Custodial</code> or <code>Web3</code></td></tr>
+                    <tr><td><code>walletAddress</code></td><td><code>null</code> for custodial; 0x address for Web3</td></tr>
+                    <tr><td><code>balance</code></td><td>Decimal</td></tr>
+                    <tr><td><code>currency</code></td><td><code>USD</code> or <code>USDC</code></td></tr>
+                </table>
+
+                <h3>WalletService rules</h3>
+                <ul>
+                    <li><strong>Debit on order placement</strong> &mdash; escrow held in platform pool, not in the player wallet</li>
+                    <li><strong>Credit on fill exit</strong> &mdash; when player closes / settles</li>
+                    <li><strong>Insufficient balance</strong> &rarr; returns <code>OrderResult(Success: false, Error: "InsufficientBalance")</code> &mdash; not an exception</li>
+                    <li><strong>Idempotent via <code>transactionId</code></strong> &mdash; safe to retry</li>
+                    <li><strong>Daily reconciliation</strong> via <code>WalletReconciliationWorker</code> verifies sum of wallets == sum of escrows + payouts</li>
+                </ul>
+
+                <h3><code>IWeb3Service</code> abstraction</h3>
+                <table>
+                    <tr><th>Implementation</th><th>Environment</th><th>Cost</th></tr>
+                    <tr><td><code>FakeWeb3Service</code></td><td>Unit / CI tests</td><td>Free, instant</td></tr>
+                    <tr><td><code>HardhatWeb3Service</code></td><td>Local dev (browser + MetaMask)</td><td>Free, pre-funded wallets</td></tr>
+                    <tr><td><code>PolygonAmoyWeb3Service</code></td><td>Staging</td><td>Free, faucet USDC</td></tr>
+                    <tr><td><code>PolygonMainnetWeb3Service</code></td><td>Production</td><td>Real USDC + gas</td></tr>
+                </table>
+                <p>Registered by environment via <code>Web3:Network</code> config key. Hardhat provides 20 deterministic wallets with 10 K ETH each &mdash; import any private key into MetaMask for local manual testing, zero real value.</p>
+
+                <h3>Web3 value beyond UX</h3>
+                <ul>
+                    <li><strong>Investor narrative</strong> &mdash; crypto VC, token round potential</li>
+                    <li><strong>Global reach</strong> &mdash; no fiat onboarding friction in unbanked markets</li>
+                    <li><strong>Zero on-ramp fees</strong> &mdash; vs MoonPay's ~4%</li>
+                    <li><strong>On-chain transparency</strong> &mdash; "provably fair" settlement</li>
+                    <li><strong>DeFi yield</strong> &mdash; idle pool USDC earns yield on Aave / Compound</li>
+                    <li><strong>DAO governance potential</strong> &mdash; future market resolution voting</li>
+                </ul>
+
+                <h3>E2E Web3 testing</h3>
+                <p>Synpress (Playwright + real MetaMask, automated) runs the full Web3 connect flow without a human. Hardhat-local environment provides funded test accounts; fake USDC minted into the test wallet for trade scenarios.</p>
+            </div>
+        </div>
+
+        <!-- ==================== SETTLEMENT ==================== -->
+        <div class="tab-panel" id="tab-settlement">
+            <div class="card">
+                <h2>Settlement &amp; Resolution</h2>
+                <div class="callout callout-danger">
+                    <strong>Never settle without dual-source agreement</strong>
+                    A single source can be wrong, hacked, or manipulated. <code>SettlementVerificationAgent</code> requires two or more independent sources to agree. Disagreement &rarr; market stays in pending queue until resolved (manual override possible from Admin with audit trail).
+                </div>
+
+                <h3>Settlement lifecycle</h3>
+                <div class="vflow">
+                    <div class="vflow-step flow-blue"><strong>Market past EndsAt</strong><br><small>SettlementCheckWorker (hourly) finds it</small></div>
+                    <div class="vflow-arrow">&darr;</div>
+                    <div class="vflow-step flow-yellow"><strong>Verification dispatched</strong><br><small>SettlementVerificationAgent queries 2+ sources</small></div>
+                    <div class="vflow-arrow">&darr;</div>
+                    <div class="vflow-step flow-teal"><strong>Cross-verify outcome</strong><br><small>LLM reasoning over conflicting / aligned data</small></div>
+                    <div class="vflow-arrow">&darr;</div>
+                    <div class="vflow-step flow-green"><strong>SettlementVerified published</strong><br><small>On agreement &mdash; otherwise queue stays pending</small></div>
+                    <div class="vflow-arrow">&darr;</div>
+                    <div class="vflow-step flow-green"><strong>SettlementEngine pays out</strong><br><small>Winners credited shares &times; $1.00, losers deleted</small></div>
+                    <div class="vflow-arrow">&darr;</div>
+                    <div class="vflow-step flow-blue"><strong>SignalR + Webhook + Email</strong><br><small>PortfolioHub, TradeSettled webhook, optional email</small></div>
+                </div>
+
+                <h3>Payout arithmetic</h3>
+                <pre><code>Market resolves YES:
+  For every Position where Side = YES:
+    Payout = Position.Shares &times; $1.00
+    WalletService.Credit(playerId, payout)
+    Position deleted
+
+  For every Position where Side = NO:
+    Position deleted (no payout &mdash; stake was already held in escrow)
+
+Market resolves NO: mirror image</code></pre>
+
+                <h3>Manual override</h3>
+                <p>Admin can force-resolve a stuck market from the Admin Settlement queue. Every override:</p>
+                <ul>
+                    <li>Requires the operator's reason text</li>
+                    <li>Records <code>EventAuditLog</code> entry tagged <code>SettlementOverride</code></li>
+                    <li>Stores operator ID + before/after state</li>
+                    <li>Surfaces in CLOB Health dashboard as a flagged event</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ==================== DATA ==================== -->
+        <div class="tab-panel" id="tab-data">
+            <div class="card">
+                <h2>Data Model &amp; Database</h2>
+
+                <h3>Key entities</h3>
+                <table>
+                    <tr><th>Entity</th><th>Key fields</th></tr>
+                    <tr><td><code>Player</code></td><td>id, email, passwordHash, displayName, roles, createdAt, kycStatus, isActive, isTest</td></tr>
+                    <tr><td><code>WalletAccount</code></td><td>playerId, type (Custodial/Web3), walletAddress, balance, currency, updatedAt</td></tr>
+                    <tr><td><code>WalletTransaction</code></td><td>id, walletId, amount, type (Deposit/Withdrawal/Payout/Fee), transactionId (idempotency), reference, processedAt</td></tr>
+                    <tr><td><code>Market</code></td><td>id, slug, title, category, feedSource, yesPrice, noPrice, volume, endsAt, status</td></tr>
+                    <tr><td><code>Order</code></td><td>id, playerId, marketId, side (YES/NO), shares, price, cost, fee, status, feedSource, routedBy, createdAt</td></tr>
+                    <tr><td><code>Position</code></td><td>id, playerId, marketId, side, shares, entryPrice, currentPrice, unrealisedPnl</td></tr>
+                    <tr><td><code>TradeExplanation</code></td><td>orderId, reason (AI-generated text), model, generatedAt</td></tr>
+                    <tr><td><code>BotStrategy</code></td><td>id, playerId, name, config (JSON), isActive, lastRunAt</td></tr>
+                    <tr><td><code>CmsContent</code></td><td>key, value (HTML/text), updatedAt</td></tr>
+                    <tr><td><code>Operator</code></td><td>id, name, webhookUrl, secretHash, isActive, createdAt</td></tr>
+                    <tr><td><code>WebhookDelivery</code></td><td>id, operatorId, event, payload, status, attempts, lastAttemptAt</td></tr>
+                    <tr><td><code>WithdrawalRequest</code></td><td>id, playerId, amount, currency, bankDetails (encrypted), status, reviewedBy, reviewedAt</td></tr>
+                    <tr><td><code>EmailLog</code></td><td>id, playerId, template, sentAt, status</td></tr>
+                    <tr><td><code>AgentRun</code></td><td>id, agentName, startedAt, completedAt, status, tokensIn, tokensOut, error</td></tr>
+                    <tr><td><code>EventAuditLog</code></td><td>id, eventType, occurredAt, playerId, operatorId, payload, source</td></tr>
+                </table>
+
+                <h3>Large-table safety budget</h3>
+                <table>
+                    <tr><th>Table</th><th>Approx rows</th><th>Max safe <code>Take</code></th></tr>
+                    <tr><td><code>Markets</code></td><td>244 K+ (Manifold alone)</td><td>500 for UI lists, 200 for sidebar panels</td></tr>
+                    <tr><td><code>TradeOrders</code></td><td>Grows with sim trades</td><td>200 per query</td></tr>
+                    <tr><td><code>PriceSnapshots</code></td><td>Grows with ticks</td><td>Must filter by <code>MarketId</code> AND <code>RecordedAt</code></td></tr>
+                    <tr><td><code>EventAuditLogs</code></td><td>Grows with every event</td><td>500 max, always filter by <code>EventType</code> + <code>OccurredAt</code></td></tr>
+                    <tr><td><code>Positions</code></td><td>Per player</td><td>Always filter by <code>PlayerId</code></td></tr>
+                    <tr><td><code>WalletTransactions</code></td><td>Per wallet</td><td>Always filter by <code>WalletId</code></td></tr>
+                </table>
+
+                <h3>Migrations are additive only</h3>
+                <ul>
+                    <li><strong>Never create migration <code>.cs</code> files manually.</strong> Always use <code>dotnet ef migrations add {Name} --project WePredict.DAL --startup-project WePredict.CommandLine.EF</code></li>
+                    <li><strong>Never edit <code>WePredictDbContextModelSnapshot.cs</code> manually.</strong> EF regenerates it; hand-editing corrupts the migration chain</li>
+                    <li><strong>Never edit an existing migration.</strong> Add a new one</li>
+                    <li><strong>Never use <code>EnsureCreated()</code> in production</strong> &mdash; only <code>MigrateAsync()</code></li>
+                    <li><strong>Rollback = new migration</strong> that reverses the schema change</li>
+                </ul>
+
+                <h3>Redis usage</h3>
+                <table>
+                    <tr><th>Key pattern</th><th>Purpose</th><th>TTL</th></tr>
+                    <tr><td><code>cms:{key}</code></td><td>Public site copy from <code>CmsContent</code></td><td>1 h (invalidated on Admin save)</td></tr>
+                    <tr><td><code>market:price:{marketId}</code></td><td>Latest tick</td><td>60 s (refreshed by feed worker)</td></tr>
+                    <tr><td><code>leaderboard:top:{period}</code></td><td>Rankings snapshot</td><td>15 min</td></tr>
+                    <tr><td><code>signalr-backplane</code></td><td>SignalR cross-host messaging</td><td>n/a</td></tr>
+                    <tr><td><code>recommendations:{playerId}</code></td><td>Personalized market list</td><td>30 min</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- ==================== AUTH ==================== -->
+        <div class="tab-panel" id="tab-auth">
+            <div class="card">
+                <h2>Auth &amp; Security</h2>
+                <div class="callout callout-info">
+                    <strong>Three auth surfaces, one platform</strong>
+                    Player cookie auth (<code>_wp.auth</code>) for Web. Operator API key (<code>X-Api-Key</code>) for the Integration API. MetaMask wallet signature for the Web3 track.
+                </div>
+
+                <h3>Player cookie auth</h3>
+                <pre><code>User fills login/register form on WePredict.Web (/login or /register)
+    &darr; POST credentials to /api/auth/login
+WePredict validates credentials against own user store
+    &darr; issues encrypted ASP.NET Core auth cookie (_wp.auth)
+    &darr; HttpOnly, Secure, SameSite=Strict
+Blazor Server reads cookie on every circuit connection automatically
+REST API /api/* controllers &mdash; same cookie, zero extra config
+SignalR /hubs/* &mdash; same cookie, no extra work
+[Authorize] attributes work natively throughout</code></pre>
+                <p><code>WePredict.Admin</code> uses the same auth system on its own domain &mdash; requires <code>Operator</code> role claim.</p>
+                <p><strong>JWT is NOT used for user auth.</strong> Cookie auth integrates natively with Blazor Server's <code>[Authorize]</code> attributes and works on the same host across Blazor pages, REST API, and SignalR with no extra configuration.</p>
+
+                <h3>Operator <code>X-Api-Key</code></h3>
+                <ul>
+                    <li>Issued and rotatable per operator in the Admin portal</li>
+                    <li>Stored hashed in <code>Operator</code> table</li>
+                    <li>One active key at a time; rotation immediately invalidates the old</li>
+                    <li>Same key authenticates inbound calls AND outbound webhook deliveries</li>
+                    <li>Rate-limited per operator (see Integration tab)</li>
+                </ul>
+
+                <h3>Web3 wallet auth</h3>
+                <div class="seq-diagram">
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">1</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-blue">Player</span>
+                            <span class="seq-msg">Clicks "Connect Wallet" &rarr; Web3Modal opens (MetaMask, WalletConnect, Coinbase Wallet)</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">2</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-yellow">Wagmi / Viem</span>
+                            <span class="seq-msg">Connects to Polygon. Player approves in wallet.</span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">3</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-green">SIWE challenge</span>
+                            <span class="seq-msg"><code>WePredict.Web</code> issues Sign-In-With-Ethereum nonce, player signs &mdash; signature verified by <code>IWeb3Service</code></span>
+                        </div>
+                    </div>
+                    <div class="seq-step">
+                        <div class="seq-line"><div class="seq-num">4</div></div>
+                        <div class="seq-content">
+                            <span class="seq-actor flow-green">Cookie issued</span>
+                            <span class="seq-msg">Same <code>_wp.auth</code> cookie, with wallet address linked to <code>Player</code> record</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>PII discipline</h3>
+                <ul>
+                    <li>Bank details on <code>WithdrawalRequest</code> are encrypted at rest</li>
+                    <li>AI agents that reach external LLMs never receive raw PII &mdash; sanitization layer tokenizes player names/emails before LLM calls</li>
+                    <li>Operator-linked players: PII ownership stays with the operator; WePredict stores only what's necessary to settle and report</li>
+                </ul>
+
+                <h3>Fraud detection layer</h3>
+                <p><code>FraudDetectionAgent</code> monitors continuously for:</p>
+                <ul>
+                    <li><strong>Spoofing</strong> &mdash; large order cancelled &lt; 30 s after placement (intent to move price without filling)</li>
+                    <li><strong>Layering</strong> &mdash; &ge; 3 orders stacked at adjacent price levels by same player on same side</li>
+                    <li><strong>Wash trading</strong> &mdash; same player on both sides of a fill (via linked accounts)</li>
+                </ul>
+                <p>Alerts published as <code>FraudAlertTriggered</code> &rarr; Admin Fraud queue. <code>RiskMonitorAgent</code> can escalate to automatic account suspension with <code>AccountSuspended</code> webhook fired to operator.</p>
+            </div>
+        </div>
+
+        <!-- ==================== REAL-TIME ==================== -->
+        <div class="tab-panel" id="tab-realtime">
+            <div class="card">
+                <h2>Real-time &amp; Event System</h2>
+                <div class="callout callout-info">
+                    <strong>RabbitMQ is the spine</strong>
+                    Producers publish domain events without knowing who consumes them. <code>EventConsumerWorker</code> in <code>WePredict.Service</code> is the central dispatcher &mdash; broadcasts to SignalR, writes audit log, triggers wallet credits, fires webhooks.
+                </div>
+
+                <h3>SignalR hubs</h3>
+                <table>
+                    <tr><th>Hub</th><th>Route</th><th>Pushes</th></tr>
+                    <tr><td><code>PriceTickHub</code></td><td><code>/hubs/prices</code></td><td>Live YES/NO price updates per market</td></tr>
+                    <tr><td><code>OrderBookHub</code></td><td><code>/hubs/orderbook</code></td><td>Bid/ask depth changes</td></tr>
+                    <tr><td><code>PortfolioHub</code></td><td><code>/hubs/portfolio</code></td><td>P&amp;L updates, position changes, balance changes</td></tr>
+                    <tr><td><code>AlertHub</code></td><td><code>/hubs/alerts</code></td><td>Risk alerts, fraud flags, AI notifications</td></tr>
+                    <tr><td><code>RecommendationHub</code></td><td><code>/hubs/recommendations</code></td><td>Personalized market suggestions</td></tr>
+                    <tr><td><code>ChatHub</code></td><td><code>/hubs/chat</code></td><td>Trading assistant + support response streaming</td></tr>
+                </table>
+
+                <h3>Event catalog</h3>
+                <table>
+                    <tr><th>Publisher</th><th>Events</th></tr>
+                    <tr><td><code>WePredict.Service</code> (FeedWorkers)</td><td><code>MarketPriceUpdated</code>, <code>OrderBookUpdated</code>, <code>FeedHealthChanged</code></td></tr>
+                    <tr><td><code>WePredict.Web</code> <code>/api/orders</code></td><td><code>OrderPlaced</code>, <code>OrderMatched</code>, <code>OrderFilled</code>, <code>OrderFailed</code></td></tr>
+                    <tr><td><code>WePredict.Service</code> (CronWorkers)</td><td><code>SettlementCheckRequested</code>, <code>RiskReportRequested</code>, <code>FeedHealthCheckRequested</code></td></tr>
+                    <tr><td><code>WePredict.Service</code> (AIAgentWorkers)</td><td><code>MarketMispricingDetected</code>, <code>OrderFlowSignalReady</code>, <code>ExecutionQualityAlert</code>, <code>RiskAlertTriggered</code>, <code>FraudAlertTriggered</code>, <code>BotOrderRequested</code>, <code>BotSpendLimitReached</code>, <code>OrderRoutingDecided</code>, <code>SettlementVerified</code>, <code>FeedAdapterGenerated</code>, <code>MarketRecommendationReady</code>, <code>TradeExplanationReady</code>, <code>AllBotsHalted</code></td></tr>
+                </table>
+
+                <h3>Why event-driven?</h3>
+                <ul>
+                    <li><strong>Decoupling</strong> &mdash; producers don't know about SignalR; consumers don't know about feeds</li>
+                    <li><strong>Replayable audit log</strong> &mdash; every state-changing event written to <code>EventAuditLog</code></li>
+                    <li><strong>Webhook delivery is one consumer</strong> among many for the same event</li>
+                    <li><strong>Token discipline</strong> &mdash; AI agents react to specific events rather than polling DB on a timer</li>
+                </ul>
+
+                <h3>Backplane</h3>
+                <p>SignalR uses a Redis backplane so that horizontally-scaled Blazor Server instances can broadcast to clients connected to any node. Same Redis instance also stores cache + leaderboard snapshots.</p>
+            </div>
+        </div>
+
+        <!-- ==================== APPENDIX ==================== -->
+        <div class="tab-panel" id="tab-appendix">
+            <div class="card">
+                <h2>Commands &amp; Reference</h2>
+
+                <h3>Prerequisites</h3>
+                <ul>
+                    <li>.NET 10 SDK</li>
+                    <li>SQL Server (local instance, database <code>WePredict</code>)</li>
+                    <li>Redis</li>
+                    <li>RabbitMQ</li>
+                    <li><code>dotnet workload install aspire</code></li>
+                </ul>
+
+                <h3>Setup</h3>
+                <pre><code>git clone &lt;repo-url&gt;
+cd src-WePredict
+dotnet restore
+dotnet ef database update --project WePredict.DAL --startup-project WePredict.CommandLine.EF</code></pre>
+                <p>Add <code>WePredict.AppHost/appsettings.Development.json</code> &mdash; see <code>CLAUDE.md</code> for full config template.</p>
+
+                <h3>Run</h3>
+                <pre><code>cd WePredict.AppHost &amp;&amp; dotnet run -c Debug
+# or F5 in VS Code</code></pre>
+
+                <h3>Local URLs</h3>
+                <table>
+                    <tr><th>Service</th><th>URL</th></tr>
+                    <tr><td>Aspire Dashboard</td><td><code>http://localhost:15888</code></td></tr>
+                    <tr><td>WePredict.Web</td><td><code>https://localhost:7001</code></td></tr>
+                    <tr><td>WePredict.Admin</td><td><code>https://localhost:7002</code></td></tr>
+                </table>
+
+                <h3>EF migrations</h3>
+                <pre><code># Add a new migration (after editing entities)
+dotnet ef migrations add &lt;Name&gt; --project WePredict.DAL --startup-project WePredict.CommandLine.EF
+
+# Apply migrations to the local DB
+dotnet ef database update --project WePredict.DAL --startup-project WePredict.CommandLine.EF
+
+# Generate idempotent SQL script for deploy
+dotnet ef migrations script --idempotent --project WePredict.DAL --startup-project WePredict.CommandLine.EF</code></pre>
+
+                <h3>Tests</h3>
+                <pre><code>dotnet test WePredict.Tests/WePredict.Tests.csproj -c Release</code></pre>
+
+                <h3>Web3 testing matrix</h3>
+                <table>
+                    <tr><th>Environment</th><th>Method</th><th>Cost</th></tr>
+                    <tr><td>Unit / CI</td><td><code>FakeWeb3Service</code> mock + mock <code>window.ethereum</code></td><td>Free, instant</td></tr>
+                    <tr><td>Local dev (browser)</td><td>Hardhat node + MetaMask test account</td><td>Free, pre-funded wallets</td></tr>
+                    <tr><td>Automated E2E</td><td>Synpress (Playwright + real MetaMask)</td><td>Free</td></tr>
+                    <tr><td>Staging</td><td>Polygon Amoy testnet + faucet USDC</td><td>Free</td></tr>
+                </table>
+
+                <h3>Config reference (selected keys)</h3>
+                <pre><code>{
+  "ConnectionStrings": {
+    "WePredict": "Server=...;Database=WePredict;..."
+  },
+  "Redis":  { "Host": "localhost", "Port": 6379 },
+  "RabbitMq": { "Host": "localhost", "Port": 5672 },
+  "Exchange": {
+    "MarketMakerId":                  "&laquo;guid&raquo;",
+    "MarketMakerWalletId":            "&laquo;guid&raquo;",
+    "PoolWalletId":                   "&laquo;guid&raquo;",
+    "BackstopMinDepthShares":         100,
+    "GtcExpiryHoursBeforeResolution": 48
+  },
+  "Web3": { "Network": "Hardhat" },     // FakeWeb3Service | Hardhat | PolygonAmoy | PolygonMainnet
+  "AI": {
+    "Provider":       "gemini",
+    "AgentsEnabled":  false,             // set true per environment to enable agents
+    "Providers":      { ... }
+  },
+  "Webhooks": {
+    "BigWinThresholdUsd": 1000,
+    "RetryBackoffMinutes": [5, 10, 20, 60, 240]
+  }
+}</code></pre>
+
+                <h3>HTTP quick reference</h3>
+                <table>
+                    <tr><th>Convention</th><th>Value</th></tr>
+                    <tr><td>Format</td><td>JSON (camelCase)</td></tr>
+                    <tr><td>200</td><td>Success</td></tr>
+                    <tr><td>400</td><td>Validation error</td></tr>
+                    <tr><td>401</td><td>Unauthorized</td></tr>
+                    <tr><td>403</td><td>Forbidden</td></tr>
+                    <tr><td>409</td><td>Duplicate (idempotency)</td></tr>
+                    <tr><td>422</td><td>Insufficient balance / unprocessable</td></tr>
+                    <tr><td>429</td><td>Rate limited</td></tr>
+                    <tr><td>Health</td><td><code>GET /_healthcheck</code></td></tr>
+                    <tr><td>Swagger</td><td><code>/swagger/v1/swagger.json</code></td></tr>
+                    <tr><td>SignalR</td><td><code>/hubs/prices</code>, <code>/hubs/orderbook</code>, <code>/hubs/portfolio</code>, <code>/hubs/alerts</code>, <code>/hubs/recommendations</code>, <code>/hubs/chat</code></td></tr>
+                </table>
+            </div>
+        </div>
+
+    </div><!-- /.main -->
+</div><!-- /.shell -->
+
+<div class="page-footer">
+    WePredict &mdash; System Documentation &nbsp;|&nbsp; A WebPrefer product &nbsp;|&nbsp; Last updated: May 2026
+</div>
+
+<script>
+    function switchTab(tabId) {
+        document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+        const activeLink = document.querySelector('.sidebar a[data-tab="' + tabId + '"]');
+        if (activeLink) activeLink.classList.add('active');
+
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        const panel = document.getElementById('tab-' + tabId);
+        if (panel) panel.classList.add('active');
+
+        history.replaceState(null, '', '#' + tabId);
+        document.querySelector('.main').scrollTo(0, 0);
+    }
+
+    document.querySelectorAll('.sidebar a[data-tab]').forEach(link => {
+        link.addEventListener('click', e => {
+            e.preventDefault();
+            switchTab(link.dataset.tab);
+        });
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const hash = window.location.hash.replace('#', '');
+        if (hash && document.getElementById('tab-' + hash)) {
+            switchTab(hash);
+        }
+    });
+
+    window.addEventListener('hashchange', () => {
+        const hash = window.location.hash.replace('#', '');
+        if (hash && document.getElementById('tab-' + hash)) {
+            switchTab(hash);
+        }
+    });
+</script>
+
+</body>
+</html>
