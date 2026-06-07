@@ -1420,6 +1420,9 @@
             <div id="form-success" class="hidden text-center text-green-600 font-medium text-sm py-2">
               Thank you! We'll be in touch shortly.
             </div>
+            <div id="form-error" class="hidden text-center text-red-600 font-medium text-sm py-2">
+              Please complete the reCAPTCHA.
+            </div>
           </form>
         </div>
       </div>
@@ -1472,12 +1475,20 @@
 
     document.getElementById('contact-form').addEventListener('submit', function(e) {
       e.preventDefault();
+      const errEl = document.getElementById('form-error');
+      const token = (window.grecaptcha && grecaptcha.getResponse) ? grecaptcha.getResponse() : '';
+      if (!token) {
+        if (errEl) errEl.classList.remove('hidden');
+        return;
+      }
+      if (errEl) errEl.classList.add('hidden');
       const btn = document.getElementById('submit-btn');
       btn.disabled = true;
       btn.textContent = 'Sending...';
       emailjs.sendForm('service_aefyiw9', 'template_q5n6qyl', this).then(() => {
         document.getElementById('form-success').classList.remove('hidden');
         this.reset();
+        if (window.grecaptcha) grecaptcha.reset();
         btn.textContent = 'Send message';
         btn.disabled = false;
       }, () => {
