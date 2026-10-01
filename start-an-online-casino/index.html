@@ -60,6 +60,7 @@
         <a href="../#partners" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Partners</a>
         <a href="../#contact" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Contact</a>
         <a href="../insights/" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Insights</a>
+        <a href="../start-an-online-casino/" class="nav-link text-sm font-medium text-gray-600 hover:text-brand">Start a Casino</a>
       </div>
       <a href="#contact" class="bg-brand hover:bg-[#134f82] text-white text-sm font-semibold px-5 py-2.5 rounded-lg hidden md:inline-flex">Book a Demo</a>
       <button id="mobile-menu-btn" aria-label="Toggle navigation menu" class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100">
@@ -72,6 +73,7 @@
       <a href="../pam/" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand">PAM</a>
       <a href="../#products" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand">Products</a>
       <a href="../insights/" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand">Insights</a>
+      <a href="../start-an-online-casino/" class="block py-2.5 text-sm font-medium text-gray-700 hover:text-brand">Start a Casino</a>
       <a href="#contact" class="block mt-2 bg-brand text-white text-sm font-semibold px-5 py-2.5 rounded-lg text-center">Book a Demo</a>
     </div>
   </header>
@@ -670,12 +672,12 @@
         <p class="text-sm text-gray-500 mb-6">Tell us what you're launching and we'll come back with a scoped plan.</p>
         <form id="launch-form" class="space-y-4">
           <div class="grid sm:grid-cols-2 gap-4">
-            <label class="block"><span class="text-xs font-semibold text-gray-700">Full name</span><input required name="name" type="text" class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"></label>
+            <label class="block"><span class="text-xs font-semibold text-gray-700">Full name</span><input required name="full-name" type="text" class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"></label>
             <label class="block"><span class="text-xs font-semibold text-gray-700">Company</span><input name="company" type="text" class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"></label>
           </div>
           <label class="block"><span class="text-xs font-semibold text-gray-700">Email</span><input required name="email" type="email" class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"></label>
           <label class="block"><span class="text-xs font-semibold text-gray-700">I'm planning to…</span>
-            <select name="plan" class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand">
+            <select name="position" class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand">
               <option>Launch my first casino brand</option>
               <option>Add a brand or enter a new market</option>
               <option>Migrate from another platform</option>
@@ -683,10 +685,39 @@
             </select>
           </label>
           <label class="block"><span class="text-xs font-semibold text-gray-700">Target markets</span><input name="markets" type="text" placeholder="e.g. Sweden, Finland" class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"></label>
-          <button type="submit" class="w-full bg-brand hover:bg-[#134f82] text-white font-semibold px-6 py-3 rounded-lg text-sm">Send</button>
+          <input type="hidden" name="message" value="">
+          <div class="g-recaptcha" data-sitekey="6LcY8hEqAAAAAEaeE9dyiAcgd8-rOsgukHVEfKON"></div>
+          <button type="submit" id="submit-btn" class="w-full bg-brand hover:bg-[#134f82] text-white font-semibold px-6 py-3 rounded-lg text-sm">Send</button>
+          <div id="form-success" class="hidden text-center text-green-600 font-medium text-sm py-2">Thank you! We'll be in touch shortly.</div>
+          <div id="form-error" class="hidden text-center text-red-600 font-medium text-sm py-2">Please complete the reCAPTCHA.</div>
         </form>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
         <script>
-          document.getElementById('launch-form').addEventListener('submit',function(e){e.preventDefault();const f=new FormData(this);const body=`Name: ${f.get('name')}\nCompany: ${f.get('company')}\nEmail: ${f.get('email')}\nPlan: ${f.get('plan')}\nMarkets: ${f.get('markets')}`;window.location.href='mailto:sales@webprefer.com?subject='+encodeURIComponent('Casino launch — '+(f.get('company')||f.get('name')))+'&body='+encodeURIComponent(body);});
+          emailjs.init({ publicKey: 'J-Ouq1kFXZl7x5bEZ' });
+          document.getElementById('launch-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const errEl = document.getElementById('form-error');
+            const token = (window.grecaptcha && grecaptcha.getResponse) ? grecaptcha.getResponse() : '';
+            if (!token) { errEl.classList.remove('hidden'); return; }
+            errEl.classList.add('hidden');
+            this.elements['message'].value = 'Casino launch enquiry (how-to-start-an-online-casino-in-2026)\nTarget markets: ' + (this.elements['markets'].value || '-');
+            const btn = document.getElementById('submit-btn');
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+            emailjs.sendForm('service_aefyiw9', 'template_q5n6qyl', this).then(() => {
+              document.getElementById('form-success').classList.remove('hidden');
+              this.reset();
+              if (window.grecaptcha) grecaptcha.reset();
+              btn.textContent = 'Send';
+              btn.disabled = false;
+            }, () => {
+              btn.textContent = 'Send';
+              btn.disabled = false;
+              errEl.textContent = 'Something went wrong. Please email sales@webprefer.com.';
+              errEl.classList.remove('hidden');
+            });
+          });
         </script>
       </div>
     </div>
